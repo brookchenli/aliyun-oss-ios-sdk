@@ -14,6 +14,7 @@
 @class OSSFederationToken;
 @class OSSTask;
 @class OSSClientConfiguration;
+@class OSSCORSRule;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -587,6 +588,41 @@ Sets the session Id for background file transmission
 @interface OSSPutBucketACLResult : OSSResult
 
 @end
+
+
+@interface OSSGetBucketCORSRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketCORSResult : OSSResult
+
+@property (nonatomic, copy, nullable) NSArray *bucketCORSRuleList;
+
+@end
+
+@interface OSSPutBucketCORSRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+@property (nonatomic, copy, nullable) NSArray <OSSCORSRule *>*bucketCORSRuleList;
+
+@end
+
+@interface OSSPutBucketCORSResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketCORSRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketCORSResult : OSSResult
+
+@end
+
 
 /**
  The request class to get object metadata
@@ -1585,6 +1621,19 @@ The result class of listing uploaded parts.
 @end
 
 @interface OSSImagePersistResult : OSSResult
+
+@end
+
+@interface OSSCORSRule : NSObject
+
+@property (nonatomic, strong, nonnull) NSString *ID;
+@property (nonatomic, strong, nonnull) NSArray<NSString*> *allowedMethodList;
+@property (nonatomic, strong, nonnull) NSArray<NSString*> *allowedOriginList;
+@property (nonatomic, strong, nonnull) NSArray<NSString*> *allowedHeaderList;
+@property (nonatomic, strong, nonnull) NSNumber *maxAgeSeconds;
+@property (nonatomic, strong, nonnull) NSArray<NSString*> *exposeHeaderList;
+
+- (NSString *)toRuleString;
 
 @end
 

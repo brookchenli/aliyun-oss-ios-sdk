@@ -250,6 +250,75 @@ static NSObject *lock;
 
 }
 
+- (OSSTask *)getBucketCORS:(OSSGetBucketCORSRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketCORS];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketCORS;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketCORS:(OSSPutBucketCORSRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketCORS];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"cors"];
+    
+    NSMutableString *rules = [NSMutableString new];
+    for (OSSCORSRule *rule in request.bucketCORSRuleList) {
+        [rules appendFormat:@"<CORSRule>%@</CORSRule>", [rule toRuleString]];
+    }
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><CORSConfiguration>%@</CORSConfiguration>", rules];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketCORS;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketCORS:(OSSDeleteBucketCORSRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketCORS];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"cors"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketCORS;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+
+
 # pragma mark - Private Methods
 
 - (void)enableCRC64WithFlag:(OSSRequestCRCFlag)flag requestDelegate:(OSSNetworkingRequestDelegate *)delegate

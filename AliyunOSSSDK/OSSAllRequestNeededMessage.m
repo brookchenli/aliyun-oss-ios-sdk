@@ -54,7 +54,10 @@
          && operType != OSSOperationTypeListService
          && operType != OSSOperationTypeQueryBucketExist
          && operType != OSSOperationTypeGetBucketLocation
-         && operType != OSSOperationTypePutBucketACL)) {
+         && operType != OSSOperationTypePutBucketACL
+         && operType != OSSOperationTypeGetBucketCORS
+         && operType != OSSOperationTypePutBucketCORS
+         && operType != OSSOperationTypeDeleteBucketCORS)) {
             errorMessage = @"Object key should not be nil";
         }
     

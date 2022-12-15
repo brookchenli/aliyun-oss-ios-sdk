@@ -53,6 +53,9 @@ typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypeGetBucketInfo,
     OSSOperationTypeGetBucketACL,
     OSSOperationTypePutBucketACL,
+    OSSOperationTypeGetBucketCORS,
+    OSSOperationTypePutBucketCORS,
+    OSSOperationTypeDeleteBucketCORS,
     
     OSSOperationTypeHeadObject,
     OSSOperationTypeGetObject,

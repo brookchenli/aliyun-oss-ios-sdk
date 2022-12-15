@@ -169,6 +169,67 @@
     }] waitUntilFinished];
 }
 
+//
+- (void)testAPI_getCORSList {
+    OSSGetBucketCORSRequest *request = [OSSGetBucketCORSRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client getBucketCORS:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_putCORSList {
+    OSSPutBucketCORSRequest *request = [OSSPutBucketCORSRequest new];
+    request.bucketName = @"test-chenli3";
+    
+    NSMutableArray <OSSCORSRule *>* tmpArray = [NSMutableArray array];
+    {
+        OSSCORSRule *rule1 = [OSSCORSRule new];
+        rule1.ID = @"123";
+        rule1.allowedOriginList = @[@"*"];
+        rule1.allowedMethodList = @[@"PUT", @"GET"];
+        rule1.allowedHeaderList = @[@"*"];
+        rule1.exposeHeaderList = @[@"x-oss-test"];
+        rule1.maxAgeSeconds = @(100);
+        [tmpArray addObject:rule1];
+    }
+    {
+        OSSCORSRule *rule1 = [OSSCORSRule new];
+        rule1.ID = @"456";
+        rule1.allowedOriginList = @[@"*"];
+        rule1.allowedMethodList = @[@"PUT", @"GET", @"DELETE"];
+        rule1.allowedHeaderList = @[@"*"];
+        rule1.exposeHeaderList = @[@"x-oss-test"];
+        rule1.maxAgeSeconds = @(100);
+        [tmpArray addObject:rule1];
+    }
+    request.bucketCORSRuleList = tmpArray;
+    OSSTask *task = [_client putBucketCORS:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_deleteBucketCORS {
+    NSString * bucket = @"test-chenli3";
+    OSSDeleteBucketCORSRequest *req = [OSSDeleteBucketCORSRequest new];
+    req.bucketName = bucket;
+    OSSTask *task = [_client deleteBucketCORS:req];
+    
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+}
+
 //查询桶是否存在
 - (void)testAPI_queryBucketExist {
     OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];

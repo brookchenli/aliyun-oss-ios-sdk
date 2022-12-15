@@ -178,6 +178,36 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypeGetBucketCORS: {
+            OSSGetBucketCORSResult *result = [OSSGetBucketCORSResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    result.bucketCORSRuleList = [parseDict objectForKey:OSSCORSRULETOKEN];
+                }
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketCORS: {
+            OSSPutBucketCORSResult *result = [OSSPutBucketCORSResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketCORS: {
+            OSSPutBucketCORSResult *result = [OSSPutBucketCORSResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
         case OSSOperationTypePutBucketACL: {
             OSSPutBucketACLResult *result = [OSSPutBucketACLResult new];
             if (_response)

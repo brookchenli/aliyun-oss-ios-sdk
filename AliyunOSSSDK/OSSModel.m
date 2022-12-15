@@ -713,6 +713,40 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
+
+@implementation OSSGetBucketCORSRequest
+
+- (NSDictionary *)requestParams {
+    return @{@"cors": @""};
+}
+
+@end
+
+@implementation OSSGetBucketCORSResult
+
+@end
+
+@implementation OSSPutBucketCORSRequest
+- (NSDictionary *)requestParams {
+    return @{@"cors": @""};
+}
+@end
+
+@implementation OSSPutBucketCORSResult
+
+@end
+
+@implementation OSSDeleteBucketCORSRequest
+- (NSDictionary *)requestParams {
+    return @{@"cors": @""};
+}
+@end
+
+@implementation OSSDeleteBucketCORSResult
+
+@end
+
+
 @implementation OSSHeadObjectRequest
 @end
 
@@ -926,4 +960,30 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @end
 
 @implementation OSSImagePersistResult
+@end
+
+@implementation OSSCORSRule
+
+- (NSString *)toRuleString {
+    NSMutableString *string = [NSMutableString new];
+    if (self.ID.length > 0) {
+        [string appendFormat:@"<ID>%@</ID>", self.ID];
+    }
+    for (NSString *origion in self.allowedOriginList) {
+        [string appendFormat:@"<AllowedOrigin>%@</AllowedOrigin>", origion];
+    }
+    for (NSString *method in self.allowedMethodList) {
+        [string appendFormat:@"<AllowedMethod>%@</AllowedMethod>", method];
+    }
+    for (NSString *header in self.allowedHeaderList) {
+        [string appendFormat:@"<AllowedHeader>%@</AllowedHeader>", header];
+    }
+    for (NSString *expose in self.exposeHeaderList) {
+        [string appendFormat:@"<ExposeHeader>%@</ExposeHeader>", expose];
+    }
+    [string appendFormat:@"<MaxAgeSeconds>%@</MaxAgeSeconds>", self.maxAgeSeconds];
+    return string;
+}
+
+
 @end

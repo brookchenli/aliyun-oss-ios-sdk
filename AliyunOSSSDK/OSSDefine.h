@@ -63,6 +63,7 @@
 
 #define OSSErrorMessageTOKEN                    @"ErrorMessage"
 #define OSSTextTOKEN                    @"__text"
+#define OSSCORSRULETOKEN                    @"CORSRule"
 
 #define OSSHttpHeaderContentDisposition         @"Content-Disposition"
 #define OSSHttpHeaderXOSSCallback               @"x-oss-callback"

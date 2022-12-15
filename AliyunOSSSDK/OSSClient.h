@@ -43,6 +43,9 @@
 @class OSSQueryBucketExistRequest;
 @class OSSGetBucketLocationRequest;
 @class OSSPutBucketACLRequest;
+@class OSSGetBucketCORSRequest;
+@class OSSPutBucketCORSRequest;
+@class OSSDeleteBucketCORSRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -160,6 +163,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request;
 
 - (OSSTask *)putBucketACL:(OSSPutBucketACLRequest *)request;
+
+- (OSSTask *)getBucketCORS:(OSSGetBucketCORSRequest *)request;
+
+- (OSSTask *)putBucketCORS:(OSSPutBucketCORSRequest *)request ;
+
+- (OSSTask *)deleteBucketCORS:(OSSDeleteBucketRequest *)request ;
 
 @end
 
