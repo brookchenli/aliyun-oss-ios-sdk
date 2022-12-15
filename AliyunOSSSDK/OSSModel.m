@@ -696,6 +696,23 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketACLResult
 @end
 
+@implementation OSSPutBucketACLRequest
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _acl = @"default";
+    }
+    return self;
+}
+
+@end
+
+@implementation OSSPutBucketACLResult
+
+@end
+
 @implementation OSSHeadObjectRequest
 @end
 

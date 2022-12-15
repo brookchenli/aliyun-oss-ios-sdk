@@ -42,6 +42,7 @@
 @class OSSListPageServiceRequest;
 @class OSSQueryBucketExistRequest;
 @class OSSGetBucketLocationRequest;
+@class OSSPutBucketACLRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -116,10 +117,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (OSSTask *)listService:(OSSListPageServiceRequest *)request;
 
-- (OSSTask *)queryBucketExist:(OSSQueryBucketExistRequest *)request;
-
-- (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request;
-
 @end
 
 
@@ -157,6 +154,12 @@ NS_ASSUME_NONNULL_BEGIN
  Gets the bucket ACL.
  */
 - (OSSTask *)getBucketACL:(OSSGetBucketACLRequest *)request;
+
+- (OSSTask *)queryBucketExist:(OSSQueryBucketExistRequest *)request;
+
+- (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request;
+
+- (OSSTask *)putBucketACL:(OSSPutBucketACLRequest *)request;
 
 @end
 

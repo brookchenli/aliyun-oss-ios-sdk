@@ -80,11 +80,11 @@
 - (void)testAPI_getBucketACL
 {
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
-    req.bucketName = @"oss-ios-get-bucket-acl-test";
+    req.bucketName = @"test-chenli3";
     [[_client createBucket:req] waitUntilFinished];
     
     OSSGetBucketACLRequest * request = [OSSGetBucketACLRequest new];
-    request.bucketName = @"oss-ios-get-bucket-acl-test";
+    request.bucketName = @"test-chenli3";
     OSSTask * task = [_client getBucketACL:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
@@ -95,6 +95,21 @@
     
     [OSSTestUtils cleanBucket:@"oss-ios-get-bucket-acl-test" with:_client];
 }
+
+//设置桶权限
+- (void)testAPI_putBucketACL {
+    OSSPutBucketACLRequest *request = [OSSPutBucketACLRequest new];
+    request.bucketName = @"test-chenli3";
+    request.acl = @"public-read";
+    OSSTask *task = [_client putBucketACL:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
 
 - (void)testAPI_getService
 {

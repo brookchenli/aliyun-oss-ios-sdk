@@ -178,6 +178,14 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypePutBucketACL: {
+            OSSPutBucketACLResult *result = [OSSPutBucketACLResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
         case OSSOperationTypeGetBucketLocation:{
             OSSGetBucketLocationResult *result = [OSSGetBucketLocationResult new];
             if (_response)

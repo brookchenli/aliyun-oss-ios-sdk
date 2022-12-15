@@ -53,7 +53,8 @@
          && operType != OSSOperationTypeGetBucketInfo
          && operType != OSSOperationTypeListService
          && operType != OSSOperationTypeQueryBucketExist
-         && operType != OSSOperationTypeGetBucketLocation)) {
+         && operType != OSSOperationTypeGetBucketLocation
+         && operType != OSSOperationTypePutBucketACL)) {
             errorMessage = @"Object key should not be nil";
         }
     
