@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, OSSNetworkingRetryType) {
  */
 typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypeGetService,
+    OSSOperationTypeListService,
     OSSOperationTypeCreateBucket,
     OSSOperationTypeDeleteBucket,
     OSSOperationTypeGetBucket,

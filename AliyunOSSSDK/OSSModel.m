@@ -560,6 +560,29 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetServiceResult
 @end
 
+@implementation OSSListPageServiceRequest
+
+- (NSDictionary *)requestParams {
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"details"];
+    [params oss_setObject:self.filterKey forKey:@"filterKey"];
+    if (self.pageNo > 0) {
+        [params oss_setObject:[@(self.pageNo) stringValue] forKey:@"pageNo"];
+    }
+    if (self.pageSize > 0) {
+        [params oss_setObject:[@(self.pageSize) stringValue] forKey:@"pageSize"];
+    }
+    
+    return [params copy];
+}
+
+@end
+
+@implementation OSSListServiceResult
+
+@end
+
 @implementation OSSCreateBucketRequest
 
 - (instancetype)init

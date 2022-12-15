@@ -37,7 +37,7 @@
         errorMessage = @"Endpoint should not be nil";
     }
     
-    if (!self.bucketName && operType != OSSOperationTypeGetService) {
+    if (!self.bucketName && operType != OSSOperationTypeGetService && operType != OSSOperationTypeListService) {
         errorMessage = @"Bucket name should not be nil";
     }
     
@@ -50,7 +50,8 @@
          && operType != OSSOperationTypeDeleteBucket && operType != OSSOperationTypeGetService
          && operType != OSSOperationTypeGetBucketACL&& operType != OSSOperationTypeDeleteMultipleObjects
          && operType != OSSOperationTypeListMultipartUploads
-         && operType != OSSOperationTypeGetBucketInfo)) {
+         && operType != OSSOperationTypeGetBucketInfo
+         && operType != OSSOperationTypeListService)) {
             errorMessage = @"Object key should not be nil";
         }
     

@@ -296,6 +296,26 @@ Sets the session Id for background file transmission
 
 @end
 
+@interface OSSListPageServiceRequest : OSSRequest
+
+/**
+ 
+ */
+@property (nonatomic, copy) NSString * filterKey;
+
+/**
+ 
+ */
+@property (nonatomic, assign) int32_t pageNo;
+
+/**
+ 
+ */
+@property (nonatomic, assign) int32_t pageSize;
+
+@end
+
+
 /**
  The result class of listing all buckets
  */
@@ -335,6 +355,29 @@ Sets the session Id for background file transmission
  The marker for the next ListBucket call. It's only set when there's remaining buckets to return.
  */
 @property (nonatomic, copy) NSString * nextMarker;
+
+/**
+ The container of the buckets. It's a dictionary array, in which every element has keys "Name", "CreationDate" and "Location".
+ */
+@property (nonatomic, strong, nullable) NSArray * buckets;
+@end
+
+@interface OSSListServiceResult : OSSResult
+
+/**
+ The owner Id
+ */
+@property (nonatomic, copy) NSString * ownerId;
+
+/**
+ Bucket owner name---currently it's same as owner Id.
+ */
+@property (nonatomic, copy) NSString * ownerDispName;
+
+@property (nonatomic, assign) int  pageNo;
+@property (nonatomic, assign) int  totalCount;
+@property (nonatomic, assign) int  pageSize;
+
 
 /**
  The container of the buckets. It's a dictionary array, in which every element has keys "Name", "CreationDate" and "Location".

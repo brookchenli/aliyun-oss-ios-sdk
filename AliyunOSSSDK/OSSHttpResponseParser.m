@@ -178,6 +178,36 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypeListService:{
+            OSSListServiceResult *listServiceResult = [OSSListServiceResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:listServiceResult];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                OSSLogVerbose(@"List service dict: %@", parseDict);
+                if (parseDict) {
+                    listServiceResult.ownerId = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSIDXMLTOKEN];
+                    listServiceResult.ownerDispName = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSDisplayNameXMLTOKEN];
+                    listServiceResult.pageNo = [[parseDict objectForKey:OSSPageNoXMLTOKEN] intValue];
+                    listServiceResult.pageSize = [[parseDict objectForKey:OSSPageSizeXMLTOKEN] intValue];
+                    listServiceResult.totalCount = [[parseDict objectForKey:OSSTotalCountXMLTOKEN] intValue];
+
+                    id bucketObject = [[parseDict objectForKey:OSSBucketsXMLTOKEN] objectForKey:OSSBucketXMLTOKEN];
+                    if ([bucketObject isKindOfClass:[NSArray class]]) {
+                        listServiceResult.buckets = bucketObject;
+                    } else if ([bucketObject isKindOfClass:[NSDictionary class]]) {
+                        NSArray * arr = [NSArray arrayWithObject:bucketObject];
+                        listServiceResult.buckets = arr;
+                    } else {
+                        listServiceResult.buckets = nil;
+                    }
+                }
+            }
+            
+            return listServiceResult;
+        }
         case OSSOperationTypeGetService:
         {
             OSSGetServiceResult * getServiceResult = [OSSGetServiceResult new];

@@ -116,6 +116,21 @@
     } while (result.isTruncated);
 }
 
+//分类列举桶
+- (void)testAPI_listPageService {
+    OSSListPageServiceRequest *request = [OSSListPageServiceRequest new];
+    request.pageNo = 2;
+    request.pageSize = 8;
+    OSSTask *task = [_client listService:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+
 - (void)testAPI_deleteBucket
 {
     NSString * bucket = @"oss-ios-delete-bucket-test";

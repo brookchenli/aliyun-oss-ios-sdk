@@ -39,6 +39,8 @@
 @class OSSDeleteObjectTaggingRequest;
 @class OSSPutObjectTaggingRequest;
 
+@class OSSListPageServiceRequest;
+
 @class OSSTask;
 @class OSSExecutor;
 @class OSSNetworking;
@@ -109,6 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
     If there're remaining buckets to return, the xml will have these nodes. The nextMarker is the value of marker in the next call.
  */
 - (OSSTask *)getService:(OSSGetServiceRequest *)request;
+
+- (OSSTask *)listService:(OSSListPageServiceRequest *)request;
 
 @end
 
