@@ -47,8 +47,20 @@
 @class OSSPutBucketCORSRequest;
 @class OSSDeleteBucketCORSRequest;
 @class OSSGetVersioningRequest;
-@class OSSPutVersioningRequst;
 @class OSSPutVersioningRequest;
+@class OSSGetBucketEncryptionRequest;
+@class OSSDeleteBucketEncryptionRequest;
+@class OSSPutBucketEncryptionRequest;
+@class OSSGetBucketWebsiteRequest;
+@class OSSPutBucketWebsiteRequest;
+@class OSSDeleteBucketWebsiteRequest;
+@class OSSGetBucketDomainRequest;
+@class OSSPutBucketDomainRequest;
+@class OSSDeleteBucketDomainRequest;
+@class OSSGetBucketLifeCycleRequest;
+@class OSSPutBucketLifeCycleRequest;
+@class OSSDeleteBucketLifeCycleRequest;
+
 
 @class OSSTask;
 @class OSSExecutor;
@@ -176,6 +188,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (OSSTask *)getBucketVersioning:(OSSGetVersioningRequest *)request;
 
 - (OSSTask *)putBucketVersioning:(OSSPutVersioningRequest *)request;
+
+//桶加密
+- (OSSTask *)getBucketEncryption:(OSSGetBucketEncryptionRequest *)request;
+- (OSSTask *)putBucketEncryption:(OSSPutBucketEncryptionRequest *)request;
+- (OSSTask *)deleteBucketEncryption:(OSSDeleteBucketEncryptionRequest *)request;
+
+//静态网站
+- (OSSTask *)getBucketWebsite:(OSSGetBucketWebsiteRequest *)request;
+- (OSSTask *)putBucketWebsite:(OSSPutBucketWebsiteRequest *)request;
+- (OSSTask *)deleteBucketWebsite:(OSSDeleteBucketWebsiteRequest *)request;
+
+//自定义域名
+- (OSSTask *)getBucketDomain:(OSSGetBucketDomainRequest *)request;
+- (OSSTask *)putBucketDomain:(OSSPutBucketDomainRequest *)request;
+- (OSSTask *)deleteBucketDomain:(OSSDeleteBucketDomainRequest *)request;
+
+//生命周期
+- (OSSTask *)getBucketLifeCycle:(OSSGetBucketLifeCycleRequest *)request;
+- (OSSTask *)putBucketLifeCycle:(OSSPutBucketLifeCycleRequest *)request;
+- (OSSTask *)deleteBucketLifeCycle:(OSSDeleteBucketLifeCycleRequest *)request;
 
     
 @end

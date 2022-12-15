@@ -178,6 +178,131 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypeGetBucketDomain: {
+            OSSGetBucketDomainResult *result = [OSSGetBucketDomainResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    
+                }
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketDomain: {
+            OSSPutBucketDomainResult *result = [OSSPutBucketDomainResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketDomain: {
+            OSSDeleteBucketDomainResult *result = [OSSDeleteBucketDomainResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+            
+        case OSSOperationTypeGetBucketLifeCycle: {
+            OSSGetBucketLifeCycleResult *result = [OSSGetBucketLifeCycleResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    
+                }
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketLifeCycle: {
+            OSSPutBucketLifeCycleResult *result = [OSSPutBucketLifeCycleResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketLifeCycle: {
+            OSSDeleteBucketLifeCycleResult *result = [OSSDeleteBucketLifeCycleResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+            
+        case OSSOperationTypeGetBucketWebsite: {
+            OSSGetBucketWebsiteResult *result = [OSSGetBucketWebsiteResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    
+                }
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketWebsite: {
+            OSSPutBucketWebsiteResult *result = [OSSPutBucketWebsiteResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketWebsite: {
+            OSSDeleteBucketWebsiteResult *result = [OSSDeleteBucketWebsiteResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+            
+        case OSSOperationTypeGetBucketEncryption: {
+            OSSGetBucketEncryptionResult *result = [OSSGetBucketEncryptionResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    result.sseAlgorithm = [[[parseDict objectForKey:OSSRULETOKEN] objectForKey:OSSServerSideEncryptionDefaultTOKEN] objectForKey:OSSServerSSETOKEN];
+                    result.masterId = [[[parseDict objectForKey:OSSRULETOKEN] objectForKey:OSSServerSideEncryptionDefaultTOKEN] objectForKey:OSSServerMasterIdTOKEN];
+                }
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketEncryption: {
+            OSSPutBucketEncryptionResult *result = [OSSPutBucketEncryptionResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketEncryption: {
+            OSSDeleteBucketEncryptionResult *result = [OSSDeleteBucketEncryptionResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+            
         case OSSOperationTypePutBucketVersioning: {
             OSSPutVersioningResult *result = [OSSPutVersioningResult new];
             if (_response)
@@ -191,6 +316,12 @@
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    result.enabled = [parseDict objectForKey:OSSSTATUSTOKEN];
+                }
             }
             return result;
         }

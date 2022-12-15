@@ -64,6 +64,11 @@
 #define OSSErrorMessageTOKEN                    @"ErrorMessage"
 #define OSSTextTOKEN                    @"__text"
 #define OSSCORSRULETOKEN                    @"CORSRule"
+#define OSSSTATUSTOKEN                    @"Status"
+#define OSSRULETOKEN                    @"Rule"
+#define OSSServerSideEncryptionDefaultTOKEN                    @"ApplyServerSideEncryptionByDefault"
+#define OSSServerSSETOKEN                    @"SSEAlgorithm"
+#define OSSServerMasterIdTOKEN                    @"KMSMasterKeyID"
 
 #define OSSHttpHeaderContentDisposition         @"Content-Disposition"
 #define OSSHttpHeaderXOSSCallback               @"x-oss-callback"

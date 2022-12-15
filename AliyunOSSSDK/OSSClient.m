@@ -343,7 +343,7 @@ static NSObject *lock;
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"versioning"];
     
-    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><VersioningConfiguration><Status>%@</Status></VersioningConfiguration>", request.enable ? @"Enabled" : @"Disabled"];
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><VersioningConfiguration><Status>%@</Status></VersioningConfiguration>", request.enable];
     requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
     
@@ -357,6 +357,272 @@ static NSObject *lock;
     requestDelegate.allNeededMessage = neededMsg;
     
     requestDelegate.operType = OSSOperationTypePutBucketVersioning;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)getBucketEncryption:(OSSGetBucketEncryptionRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketEncryption];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketEncryption;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+- (OSSTask *)putBucketEncryption:(OSSPutBucketEncryptionRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketEncryption];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"encryption"];
+    
+    NSMutableString *rule = [NSMutableString new];
+    [rule appendFormat:@"<SSEAlgorithm>%@</SSEAlgorithm>", request.sseAlgorithm ? : @""];
+    if (request.masterId) {
+        [rule appendFormat:@"<KMSMasterKeyID>%@</KMSMasterKeyID>", request.masterId];
+    }
+    NSString *serverSideDefault = [NSString stringWithFormat:@"<ApplyServerSideEncryptionByDefault>%@</ApplyServerSideEncryptionByDefault>",rule];
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><ServerSideEncryptionConfiguration><Rule>%@</Rule></ServerSideEncryptionConfiguration>", serverSideDefault];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketEncryption;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketEncryption:(OSSDeleteBucketEncryptionRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketEncryption];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"encryption"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketEncryption;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+
+- (OSSTask *)getBucketWebsite:(OSSGetBucketWebsiteRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketWebsite];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketWebsite;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketWebsite:(OSSPutBucketWebsiteRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketWebsite];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"website"];
+    
+    NSString *rule = @"";
+    
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><WebsiteConfiguration>%@</WebsiteConfiguration>", rule];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketEncryption;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketWebsite:(OSSDeleteBucketWebsiteRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketWebsite];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"website"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketWebsite;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+
+- (OSSTask *)getBucketDomain:(OSSGetBucketDomainRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketDomain];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketDomain;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketDomain:(OSSPutBucketDomainRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketDomain];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"domain"];
+    
+    NSString *rule = @"";
+    
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><WebsiteConfiguration>%@</WebsiteConfiguration>", rule];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketDomain;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketDomain:(OSSDeleteBucketDomainRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketDomain];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"domain"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketDomain;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+
+- (OSSTask *)getBucketLifeCycle:(OSSGetBucketLifeCycleRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLifeCycle];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketLifeCycle;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketLifeCycle:(OSSPutBucketLifeCycleRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketLifeCycle];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"lifecycle"];
+    
+    NSString *rule = @"";
+    
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><LifecycleConfiguration>%@</LifecycleConfiguration>", rule];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketLifeCycle;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketLifeCycle:(OSSDeleteBucketLifeCycleRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketLifeCycle];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"lifecycle"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketLifeCycle;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }

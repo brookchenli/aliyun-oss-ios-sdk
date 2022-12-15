@@ -629,16 +629,141 @@ Sets the session Id for background file transmission
 
 @interface OSSGetVersioningResult : OSSResult
 
-@property (nonatomic, assign) BOOL enabled;
+@property (nonatomic, copy) NSString *enabled;
 
 @end
 
 @interface OSSPutVersioningRequest : OSSRequest
-@property (nonatomic, assign) BOOL enable;
+@property (nonatomic, copy) NSString *enable;
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @end
 
 @interface OSSPutVersioningResult : OSSResult
+
+@end
+
+@interface OSSGetBucketEncryptionRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketEncryptionResult : OSSResult
+
+@property (nonatomic, copy, nullable) NSString *sseAlgorithm;
+@property (nonatomic, copy, nullable) NSString *masterId;
+
+@end
+
+@interface OSSPutBucketEncryptionRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+@property (nonatomic, copy, nullable) NSString *sseAlgorithm;
+@property (nonatomic, copy, nullable) NSString *masterId;
+
+@end
+
+@interface OSSPutBucketEncryptionResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketEncryptionRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketEncryptionResult : OSSResult
+
+@end
+
+@interface OSSGetBucketWebsiteRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketWebsiteResult : OSSResult
+
+@end
+
+@interface OSSPutBucketWebsiteRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSPutBucketWebsiteResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketWebsiteRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketWebsiteResult : OSSResult
+
+@end
+
+@interface OSSGetBucketDomainRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketDomainResult : OSSResult
+
+@end
+
+@interface OSSPutBucketDomainRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSPutBucketDomainResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketDomainRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketDomainResult : OSSResult
+
+@end
+
+@interface OSSGetBucketLifeCycleRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketLifeCycleResult : OSSResult
+
+@end
+
+@interface OSSPutBucketLifeCycleRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSPutBucketLifeCycleResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketLifeCycleRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketLifeCycleResult : OSSResult
 
 @end
 

@@ -341,7 +341,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         OSSSubResourceARRAY = @[@"acl", @"uploadId", @"partNumber", @"uploads", @"logging", @"website", @"location",
-                                @"lifecycle", @"referer", @"cors", @"delete", @"append", @"position", @"security-token", @"x-oss-process", @"sequential",@"bucketInfo",@"symlink", @"restore", @"tagging"];
+                                @"lifecycle", @"referer", @"cors", @"delete", @"append", @"position", @"security-token", @"x-oss-process", @"sequential",@"bucketInfo",@"symlink", @"restore", @"tagging", @"versioning", @"encryption", @"domain"];
     });
     /****************************************************************/
 
@@ -761,6 +761,92 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @implementation OSSPutVersioningResult
 @end
+
+@implementation OSSGetBucketEncryptionRequest
+- (NSDictionary *)requestParams {
+    return @{@"encryption": @""};
+}
+@end
+
+@implementation OSSGetBucketEncryptionResult
+@end
+
+@implementation OSSPutBucketEncryptionRequest
+@end
+
+@implementation OSSPutBucketEncryptionResult
+@end
+
+@implementation OSSDeleteBucketEncryptionRequest
+@end
+
+@implementation OSSDeleteBucketEncryptionResult
+@end
+
+
+@implementation OSSGetBucketWebsiteRequest
+- (NSDictionary *)requestParams {
+    return @{@"website": @""};
+}
+@end
+
+@implementation OSSGetBucketWebsiteResult
+@end
+
+@implementation OSSPutBucketWebsiteRequest
+@end
+
+@implementation OSSPutBucketWebsiteResult
+@end
+
+@implementation OSSDeleteBucketWebsiteRequest
+@end
+
+@implementation OSSDeleteBucketWebsiteResult
+@end
+
+@implementation OSSGetBucketDomainRequest
+- (NSDictionary *)requestParams {
+    return @{@"domain": @""};
+}
+@end
+
+@implementation OSSGetBucketDomainResult
+@end
+
+@implementation OSSPutBucketDomainRequest
+@end
+
+@implementation OSSPutBucketDomainResult
+@end
+
+@implementation OSSDeleteBucketDomainRequest
+@end
+
+@implementation OSSDeleteBucketDomainResult
+@end
+
+@implementation OSSGetBucketLifeCycleRequest
+- (NSDictionary *)requestParams {
+    return @{@"lifecycle": @""};
+}
+@end
+
+@implementation OSSGetBucketLifeCycleResult
+@end
+
+@implementation OSSPutBucketLifeCycleRequest
+@end
+
+@implementation OSSPutBucketLifeCycleResult
+@end
+
+@implementation OSSDeleteBucketLifeCycleRequest
+@end
+
+@implementation OSSDeleteBucketLifeCycleResult
+@end
+
 
 @implementation OSSHeadObjectRequest
 @end

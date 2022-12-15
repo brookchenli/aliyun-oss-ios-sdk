@@ -59,7 +59,20 @@
          && operType != OSSOperationTypePutBucketCORS
          && operType != OSSOperationTypeDeleteBucketCORS
          && operType != OSSOperationTypeGetBucketVersioning
-         && operType != OSSOperationTypePutBucketVersioning)) {
+         && operType != OSSOperationTypePutBucketVersioning
+         && operType != OSSOperationTypeGetBucketEncryption
+         && operType != OSSOperationTypePutBucketEncryption
+         && operType != OSSOperationTypeDeleteBucketEncryption
+         && operType != OSSOperationTypeGetBucketWebsite
+         && operType != OSSOperationTypePutBucketWebsite
+         && operType != OSSOperationTypeDeleteBucketWebsite
+         && operType != OSSOperationTypeGetBucketDomain
+         && operType != OSSOperationTypePutBucketDomain
+         && operType != OSSOperationTypeDeleteBucketDomain
+         
+         && operType != OSSOperationTypeGetBucketLifeCycle
+         && operType != OSSOperationTypePutBucketLifeCycle
+         && operType != OSSOperationTypeDeleteBucketLifeCycle)) {
             errorMessage = @"Object key should not be nil";
         }
     

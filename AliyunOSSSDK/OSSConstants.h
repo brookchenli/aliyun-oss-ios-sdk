@@ -59,6 +59,22 @@ typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypeGetBucketVersioning,
     OSSOperationTypePutBucketVersioning,
     
+    OSSOperationTypeGetBucketEncryption,
+    OSSOperationTypePutBucketEncryption,
+    OSSOperationTypeDeleteBucketEncryption,
+    
+    OSSOperationTypeGetBucketWebsite,
+    OSSOperationTypePutBucketWebsite,
+    OSSOperationTypeDeleteBucketWebsite,
+    
+    OSSOperationTypeGetBucketDomain,
+    OSSOperationTypePutBucketDomain,
+    OSSOperationTypeDeleteBucketDomain,
+    
+    OSSOperationTypeGetBucketLifeCycle,
+    OSSOperationTypePutBucketLifeCycle,
+    OSSOperationTypeDeleteBucketLifeCycle,
+    
     OSSOperationTypeHeadObject,
     OSSOperationTypeGetObject,
     OSSOperationTypeGetObjectACL,
