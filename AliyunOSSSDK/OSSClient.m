@@ -317,6 +317,49 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
+- (OSSTask *)getBucketVersioning:(OSSGetVersioningRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketVersioning];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketVersioning;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketVersioning:(OSSPutVersioningRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketVersioning];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"versioning"];
+    
+    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><VersioningConfiguration><Status>%@</Status></VersioningConfiguration>", request.enable ? @"Enabled" : @"Disabled"];
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketVersioning;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
 
 
 # pragma mark - Private Methods

@@ -46,6 +46,9 @@
 @class OSSGetBucketCORSRequest;
 @class OSSPutBucketCORSRequest;
 @class OSSDeleteBucketCORSRequest;
+@class OSSGetVersioningRequest;
+@class OSSPutVersioningRequst;
+@class OSSPutVersioningRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -170,6 +173,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (OSSTask *)deleteBucketCORS:(OSSDeleteBucketRequest *)request ;
 
+- (OSSTask *)getBucketVersioning:(OSSGetVersioningRequest *)request;
+
+- (OSSTask *)putBucketVersioning:(OSSPutVersioningRequest *)request;
+
+    
 @end
 
 

@@ -178,6 +178,22 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypePutBucketVersioning: {
+            OSSPutVersioningResult *result = [OSSPutVersioningResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+        case OSSOperationTypeGetBucketVersioning: {
+            OSSGetVersioningResult *result = [OSSGetVersioningResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
         case OSSOperationTypeGetBucketCORS: {
             OSSGetBucketCORSResult *result = [OSSGetBucketCORSResult new];
             if (_response)

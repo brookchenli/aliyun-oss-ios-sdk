@@ -217,6 +217,32 @@
     NSLog(@"%@", task);
 }
 
+- (void)testAPI_putBucketVersioning {
+    OSSPutVersioningRequest *request = [OSSPutVersioningRequest new];
+    request.bucketName = @"test-chenli3";
+    request.enable = YES;
+    
+    OSSTask *task = [_client putBucketVersioning:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_getVersioning {
+    OSSGetVersioningRequest *request = [OSSGetVersioningRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client getBucketVersioning:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
 - (void)testAPI_deleteBucketCORS {
     NSString * bucket = @"test-chenli3";
     OSSDeleteBucketCORSRequest *req = [OSSDeleteBucketCORSRequest new];

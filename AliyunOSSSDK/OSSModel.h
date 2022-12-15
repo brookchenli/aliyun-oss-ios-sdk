@@ -623,6 +623,24 @@ Sets the session Id for background file transmission
 
 @end
 
+@interface OSSGetVersioningRequest : OSSRequest
+@property (nonatomic, copy, nullable) NSString *bucketName;
+@end
+
+@interface OSSGetVersioningResult : OSSResult
+
+@property (nonatomic, assign) BOOL enabled;
+
+@end
+
+@interface OSSPutVersioningRequest : OSSRequest
+@property (nonatomic, assign) BOOL enable;
+@property (nonatomic, copy, nullable) NSString *bucketName;
+@end
+
+@interface OSSPutVersioningResult : OSSResult
+
+@end
 
 /**
  The request class to get object metadata

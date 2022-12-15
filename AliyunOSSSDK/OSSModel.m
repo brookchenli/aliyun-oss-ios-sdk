@@ -746,6 +746,21 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
+@implementation OSSGetVersioningRequest
+- (NSDictionary *)requestParams {
+    return @{@"versioning": @""};
+}
+@end
+
+@implementation OSSGetVersioningResult
+
+@end
+
+@implementation OSSPutVersioningRequest
+@end
+
+@implementation OSSPutVersioningResult
+@end
 
 @implementation OSSHeadObjectRequest
 @end
