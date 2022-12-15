@@ -167,6 +167,19 @@
     NSLog(@"%@", task);
 }
 
+//查询桶的位置
+- (void)testAPI_bucketLocation {
+    OSSGetBucketLocationRequest *request = [OSSGetBucketLocationRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client getBucketLocation:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
 
 - (void)testListMultipartUploads
 {

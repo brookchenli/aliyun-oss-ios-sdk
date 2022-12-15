@@ -62,6 +62,7 @@
 #define OSSServerErrorDomain                    @"com.aliyun.oss.serverError"
 
 #define OSSErrorMessageTOKEN                    @"ErrorMessage"
+#define OSSTextTOKEN                    @"__text"
 
 #define OSSHttpHeaderContentDisposition         @"Content-Disposition"
 #define OSSHttpHeaderXOSSCallback               @"x-oss-callback"

@@ -52,7 +52,8 @@
          && operType != OSSOperationTypeListMultipartUploads
          && operType != OSSOperationTypeGetBucketInfo
          && operType != OSSOperationTypeListService
-         && operType != OSSOperationTypeQueryBucketExist)) {
+         && operType != OSSOperationTypeQueryBucketExist
+         && operType != OSSOperationTypeGetBucketLocation)) {
             errorMessage = @"Object key should not be nil";
         }
     

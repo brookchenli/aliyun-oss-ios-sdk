@@ -591,6 +591,21 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
+@implementation OSSGetBucketLocationRequest
+
+- (NSDictionary *)requestParams {
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"location"];
+    return [params copy];
+}
+
+@end
+
+@implementation OSSGetBucketLocationResult
+
+@end
+
 @implementation OSSCreateBucketRequest
 
 - (instancetype)init

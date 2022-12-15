@@ -208,6 +208,23 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
+- (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLocation];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketLocation;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
 
 # pragma mark - Private Methods
 

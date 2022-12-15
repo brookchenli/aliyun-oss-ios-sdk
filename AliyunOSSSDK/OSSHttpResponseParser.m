@@ -178,6 +178,20 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypeGetBucketLocation:{
+            OSSGetBucketLocationResult *result = [OSSGetBucketLocationResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
+                if (parseDict) {
+                    result.region = [parseDict objectForKey:OSSTextTOKEN];
+                }
+            }
+            return result;
+        }
         case OSSOperationTypeQueryBucketExist:{
             OSSQueryBucketExistResult *queryResult = [OSSQueryBucketExistResult new];
             if (_response)

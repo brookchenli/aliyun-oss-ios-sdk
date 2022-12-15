@@ -41,6 +41,7 @@
 
 @class OSSListPageServiceRequest;
 @class OSSQueryBucketExistRequest;
+@class OSSGetBucketLocationRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -116,6 +117,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (OSSTask *)listService:(OSSListPageServiceRequest *)request;
 
 - (OSSTask *)queryBucketExist:(OSSQueryBucketExistRequest *)request;
+
+- (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request;
 
 @end
 

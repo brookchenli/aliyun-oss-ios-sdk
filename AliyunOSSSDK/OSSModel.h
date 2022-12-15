@@ -395,6 +395,20 @@ Sets the session Id for background file transmission
 
 @end
 
+@interface OSSGetBucketLocationRequest : OSSRequest
+
+@property (nonatomic, copy) NSString * bucketName;
+
+@end
+
+@interface OSSGetBucketLocationResult : OSSResult
+
+@property (nonatomic, copy) NSString * region;
+
+@end
+
+
+
 /**
  The request to create bucket
  */
