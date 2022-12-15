@@ -395,7 +395,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     /* construct CanonicalizedResource */
     resource = @"/";
     if (requestMessage.bucketName) {
-        resource = [NSString stringWithFormat:@"/%@/", requestMessage.bucketName];
+        resource = [NSString stringWithFormat:@"/%@", requestMessage.bucketName];
     }
     if (requestMessage.objectKey) {
         resource = [resource oss_stringByAppendingPathComponentForURL:requestMessage.objectKey];

@@ -34,15 +34,17 @@
 - (void)initOSSClient
 {
     OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    //OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
+    [OSSLog enableLog];
 }
 
 - (void)testAPI_creatBucket
 {
-    NSString *bucket = @"oss-ios-create-bucket-test";
+    NSString *bucket = @"test-brook-1114-2307";
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
     req.bucketName = bucket;
     req.xOssACL = @"public-read";

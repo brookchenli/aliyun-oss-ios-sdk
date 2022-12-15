@@ -448,8 +448,10 @@ static NSObject *lock;
     
     requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeCreateBucket];
     
+    /*
     NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><CreateBucketConfiguration><StorageClass>%@</StorageClass></CreateBucketConfiguration>", request.storageClassAsString];
     requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+     */
     NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
     
     OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
