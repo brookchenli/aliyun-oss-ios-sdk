@@ -40,6 +40,7 @@
 @class OSSPutObjectTaggingRequest;
 
 @class OSSListPageServiceRequest;
+@class OSSQueryBucketExistRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -113,6 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (OSSTask *)getService:(OSSGetServiceRequest *)request;
 
 - (OSSTask *)listService:(OSSListPageServiceRequest *)request;
+
+- (OSSTask *)queryBucketExist:(OSSQueryBucketExistRequest *)request;
 
 @end
 

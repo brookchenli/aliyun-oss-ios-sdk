@@ -154,6 +154,20 @@
     }] waitUntilFinished];
 }
 
+//查询桶是否存在
+- (void)testAPI_queryBucketExist {
+    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
+    request.bucketName = @"test-chenli4";
+    OSSTask *task = [_client queryBucketExist:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+
 - (void)testListMultipartUploads
 {
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];

@@ -385,6 +385,16 @@ Sets the session Id for background file transmission
 @property (nonatomic, strong, nullable) NSArray * buckets;
 @end
 
+@interface OSSQueryBucketExistRequest : OSSRequest
+
+@property (nonatomic, copy) NSString * bucketName;
+
+@end
+
+@interface OSSQueryBucketExistResult : OSSResult
+
+@end
+
 /**
  The request to create bucket
  */

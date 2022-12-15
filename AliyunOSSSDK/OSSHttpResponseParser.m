@@ -178,6 +178,14 @@
     
     switch (_operationTypeForThisParser)
     {
+        case OSSOperationTypeQueryBucketExist:{
+            OSSQueryBucketExistResult *queryResult = [OSSQueryBucketExistResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:queryResult];
+            }
+            return queryResult;
+        }
         case OSSOperationTypeListService:{
             OSSListServiceResult *listServiceResult = [OSSListServiceResult new];
             if (_response)

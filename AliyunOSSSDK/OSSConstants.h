@@ -45,11 +45,13 @@ typedef NS_ENUM(NSInteger, OSSNetworkingRetryType) {
 typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypeGetService,
     OSSOperationTypeListService,
+    OSSOperationTypeQueryBucketExist,
     OSSOperationTypeCreateBucket,
     OSSOperationTypeDeleteBucket,
     OSSOperationTypeGetBucket,
     OSSOperationTypeGetBucketInfo,
     OSSOperationTypeGetBucketACL,
+    
     OSSOperationTypeHeadObject,
     OSSOperationTypeGetObject,
     OSSOperationTypeGetObjectACL,

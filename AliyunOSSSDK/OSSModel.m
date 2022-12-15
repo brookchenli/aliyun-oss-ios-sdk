@@ -583,6 +583,14 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
+@implementation OSSQueryBucketExistRequest
+
+@end
+
+@implementation OSSQueryBucketExistResult
+
+@end
+
 @implementation OSSCreateBucketRequest
 
 - (instancetype)init
