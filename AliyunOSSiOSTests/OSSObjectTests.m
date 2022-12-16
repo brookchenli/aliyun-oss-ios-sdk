@@ -35,7 +35,9 @@
     NSArray<NSString *> *_fileNames;
     NSString *_privateBucketName;
     NSString *_publicBucketName;
+    NSString *_testBucketName;
     OSSClient *_specialClient;
+    
 }
 
 @end
@@ -47,8 +49,10 @@
     NSArray *array1 = [self.name componentsSeparatedByString:@" "];
     NSArray *array2 = [array1[1] componentsSeparatedByString:@"_"];
     NSString *testName = [[array2[1] substringToIndex:([array2[1] length] -1)] lowercaseString];
+    
     _privateBucketName = [@"oss-ios-private-" stringByAppendingString:testName];
     _publicBucketName = [@"oss-ios-public-" stringByAppendingString:testName];
+    _testBucketName = @"test-chenli3";
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [self setUpOSSClient];
     [self setUpLocalFiles];
@@ -62,12 +66,14 @@
     [OSSTestUtils cleanBucket:_publicBucketName with:_client];
 }
 
+/*
 - (void)setUpOSSClient
 {
     OSSClientConfiguration *config = [OSSClientConfiguration new];
 //    config.crc64Verifiable = YES;
     
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    //OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
@@ -93,6 +99,24 @@
     put.objectKey = OSS_IMAGE_KEY;
     put.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"hasky" withExtension:@"jpeg"];
     [[_client putObject:put] waitUntilFinished];
+}
+*/
+
+- (void)setUpOSSClient
+{
+    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    
+    OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+                               credentialProvider:authProv
+                              clientConfiguration:config];
+    
+    [OSSLog enableLog];
+    /*
+    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    createBucket1.bucketName = _testBucketName;
+    [[_client createBucket:createBucket1] waitUntilFinished];
+     */
 }
 
 - (void)setUpLocalFiles
@@ -131,6 +155,244 @@
     
 }
 
+#pragma mark - 列举文件
+- (void)testAPI_listObjects {
+    OSSGetBucketRequest * request = [OSSGetBucketRequest new];
+    request.bucketName = _testBucketName;
+   
+    OSSTask * task = [_client getBucket:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_putObjectFromFileTest {
+    
+    NSString *objectKey = _fileNames[0];
+    NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:objectKey];
+    NSURL * fileURL = [NSURL fileURLWithPath:filePath];
+    
+    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    request.bucketName = _testBucketName;
+    request.objectKey = objectKey;
+    request.uploadingFileURL = fileURL;
+    request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+
+    OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
+    request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"bytesSent: %lld, totalByteSent: %lld, totalBytesExpectedToSend: %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
+    };
+    
+    OSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        /*
+        BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
+                                          objectKey:objectKey
+                                      localFilePath:filePath];
+        XCTAssertTrue(isEqual);
+         */
+        return nil;
+    }] waitUntilFinished];
+    XCTAssertTrue([progressTest completeValidateProgress]);
+}
+
+
+
+- (void)testAPI_deleteObj {
+    OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
+    delete.bucketName = _testBucketName;
+    delete.objectKey = @"file1k";
+    OSSTask *task = [_client deleteObject:delete];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDeleteObjectResult * result = task.result;
+        XCTAssertEqual(204, result.httpResponseCode);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_copyObject {
+    OSSCopyObjectRequest * copy = [OSSCopyObjectRequest new];
+    copy.bucketName = _testBucketName;
+    copy.objectKey = @"file1k-copy";
+    copy.sourceBucketName = _testBucketName;
+    copy.sourceObjectKey = @"file1k";
+    OSSTask *task = [_client copyObject:copy];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_downloadObject{
+    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    request.bucketName = _testBucketName;
+    request.objectKey = @"file1k";
+    request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+    };
+    
+    OSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+// 追加上传
+
+- (void)testAPI_preSign{
+    OSSTask *task = [_client presignConstrainURLWithBucketName:_testBucketName withObjectKey:@"file1k" withExpirationInterval:30];
+    [task waitUntilFinished];
+    XCTAssertNil(task.error);
+}
+
+- (void)testAPI_queryObjectExistWithExistObject{
+    NSError * error = nil;
+    BOOL isExist = [_client doesObjectExistInBucket:_testBucketName objectKey:@"file1k" error:&error];
+    XCTAssertEqual(isExist, YES);
+    XCTAssertNil(error);
+}
+
+- (void)testAPI_queryObjectExistWithNoExistObject
+{
+    NSError * error = nil;
+    BOOL isExist = [_client doesObjectExistInBucket:_testBucketName objectKey:@"wrong-key" error:&error];
+    XCTAssertEqual(isExist, NO);
+    XCTAssertNil(error);
+}
+
+- (void)testAPI_removeMultipleObjects {
+    OSSDeleteMultipleObjectsRequest *request = [OSSDeleteMultipleObjectsRequest new];
+    request.bucketName = _testBucketName;
+    request.keys = @[@"file1k",@"file1k-copy"];
+    request.encodingType = @"url";
+    
+    OSSTask *task = [_client deleteMultipleObjects:request];
+    [[task continueWithBlock:^id(OSSTask *t) {
+        XCTAssertNil(t.error);
+        return nil;
+    }] waitUntilFinished];
+    
+}
+
+
+- (void)testAPI_tmpGetObjectACL{
+    OSSGetObjectACLRequest *request = [OSSGetObjectACLRequest new];
+    request.bucketName = _testBucketName;
+    request.objectName = @"file1k";
+    OSSTask *task = [_client getObjectACL:request];
+    [[task continueWithBlock:^id(OSSTask *t) {
+        XCTAssertNil(t.error);
+        return nil;
+    }] waitUntilFinished];
+    
+}
+
+
+- (void)testAPI_setObjectACL_private{
+    
+    OSSPutObjectACLRequest * putAclRequest = [OSSPutObjectACLRequest new];
+    putAclRequest.bucketName = _testBucketName;
+    putAclRequest.objectKey = @"file1k";
+    //putAclRequest.acl = @"public-read-write";
+    putAclRequest.acl = @"private";
+    OSSTask *task = [_client putObjectACL:putAclRequest];
+    [task waitUntilFinished];
+    
+    XCTAssertNil(task.error);
+}
+
+- (void)testAPI_setObjectACL_public{
+    
+    OSSPutObjectACLRequest * putAclRequest = [OSSPutObjectACLRequest new];
+    putAclRequest.bucketName = _testBucketName;
+    putAclRequest.objectKey = @"file1k";
+    putAclRequest.acl = @"public-read-write";
+    OSSTask *task = [_client putObjectACL:putAclRequest];
+    [task waitUntilFinished];
+    
+    XCTAssertNil(task.error);
+}
+
+
+
+
+- (void)testAPI_getMetaData{
+    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    request.bucketName = _testBucketName;
+    request.objectKey = @"file1k";
+    request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+    };
+    
+    OSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_setMetaData {
+    OSSPutObjectMetaRequest * putObjectRequest = [OSSPutObjectMetaRequest new];
+    putObjectRequest.bucketName = _testBucketName;
+    putObjectRequest.objectKey = @"file1k";
+    putObjectRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"meta2", @"x-oss-meta-test1", nil];
+    
+    OSSTask * task = [_client putObjectMetaData:putObjectRequest];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_getVersions{
+    OSSGetObjectVersionRequest * request = [[OSSGetObjectVersionRequest alloc] init];
+    
+    request.bucketName = _testBucketName;
+    OSSTask * task = [_client getObjectVersions:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_deleteVersion{
+    OSSGetObjectVersionRequest * request = [[OSSGetObjectVersionRequest alloc] init];
+    request.bucketName = _testBucketName;
+    OSSTask * task = [_client getObjectVersions:request];
+    [task waitUntilFinished];
+    XCTAssertNil(task.error);
+    
+    OSSGetObjectVersionResult *result = (OSSGetObjectVersionResult *)task.result;
+    NSArray *versionList = result.versionList;
+    NSMutableArray *versionIds = [NSMutableArray array];
+    [versionList enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *key = [obj objectForKey:@"Key"];
+        NSString *versionId = [obj objectForKey:@"VersionId"];
+
+        if (key && [key isEqualToString:@"file1k"] && versionId && versionId.length > 0 && ![versionId isEqualToString:@"null"]) {
+            [versionIds addObject:versionId];
+        }
+    }];
+    
+    NSString *lastVersionId = [versionIds lastObject];
+    
+    OSSDeleteObjectVersionRequest *deleteRequest = [OSSDeleteObjectVersionRequest new];
+    deleteRequest.bucketName = _testBucketName;
+    deleteRequest.versionId = lastVersionId;
+    deleteRequest.objectName = @"file1k";
+    OSSTask *deleteTask = [_client deleteObjectVersion:deleteRequest];
+    [[deleteTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+
 #pragma mark - putObject
 
 - (void)testAPI_putObjectFromNSData
@@ -161,8 +423,7 @@
     XCTAssertTrue([progressTest completeValidateProgress]);
 }
 
-- (void)testAPI_putObjectFromFile
-{
+- (void)testAPI_putObjectFromFile{
     for (NSUInteger pIdx = 0; pIdx < _fileNames.count; pIdx++)
     {
         NSString *objectKey = _fileNames[pIdx];
@@ -902,7 +1163,7 @@
 
 - (void)testAPI_get_Bucket_list_Objects
 {
-    NSString * bucket = @"oss-ios-get-bucket-list-object-test";
+    NSString * bucket = @"test-chenli3";
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
     req.bucketName = bucket;
     [[_client createBucket:req] waitUntilFinished];

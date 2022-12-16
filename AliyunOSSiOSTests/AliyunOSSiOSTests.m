@@ -98,7 +98,8 @@ id<OSSCredentialProvider> credential, authCredential;
     
     
     credential = [self newStsTokenCredentialProvider];
-    authCredential = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    //authCredential = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authCredential = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     OSSClientConfiguration * conf = [OSSClientConfiguration new];
     conf.maxRetryCount = 2;
     conf.timeoutIntervalForRequest = 30;
@@ -406,10 +407,10 @@ id<OSSCredentialProvider> credential, authCredential;
 - (void)testMultipartUploadNormal {
     OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
     multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
-    multipartUploadRequest.bucketName = _privateBucketName;
-    multipartUploadRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
+    multipartUploadRequest.bucketName = @"test-chenli4";
+    multipartUploadRequest.objectKey = nil;
     multipartUploadRequest.contentType = @"application/octet-stream";
-    multipartUploadRequest.partSize = 1024 * 1024;
+    multipartUploadRequest.partSize = 8 * 1024 * 1024;
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     multipartUploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);

@@ -29,6 +29,7 @@
 #import "OSSGetObjectTaggingRequest.h"
 #import "OSSPutObjectTaggingRequest.h"
 #import "OSSDeleteObjectTaggingRequest.h"
+#import "OSSGetObjectMetaDataRequest.h"
 
 static NSString * const kClientRecordNameWithCommonPrefix = @"oss_partInfos_storage_name";
 static NSString * const kClientRecordNameWithCRC64Suffix = @"-crc64";
@@ -456,7 +457,14 @@ static NSObject *lock;
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"website"];
     
-    NSString *rule = @"";
+    NSMutableString *rule = [NSMutableString new];
+    if (request.indexDocument) {
+        [rule appendFormat:@"<IndexDocument><Suffix>%@</Suffix></IndexDocument>", request.indexDocument];
+    }
+    
+    if (request.errroDocument) {
+        [rule appendFormat:@"<ErrorDocument><Key>%@</Key></ErrorDocument>", request.errroDocument];
+    }
     
     NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><WebsiteConfiguration>%@</WebsiteConfiguration>", rule];
     requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
@@ -521,11 +529,14 @@ static NSObject *lock;
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"domain"];
-    
-    NSString *rule = @"";
-    
-    NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><WebsiteConfiguration>%@</WebsiteConfiguration>", rule];
-    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+        
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:request.domainList options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString;
+    if (jsonData) {
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    requestDelegate.uploadingData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
     
     OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
@@ -626,6 +637,80 @@ static NSObject *lock;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
+
+- (OSSTask *)getBucketPolicy:(OSSGetBucketPolicyRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketPolicy];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.params = [request requestParams];
+    neededMsg.bucketName = request.bucketName;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetBucketPolicy;
+
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putBucketPolicy:(OSSPutBucketPolicyRequest *)request {
+    OSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
+    NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
+
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketPolicy];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"policy"];
+    
+    NSString *bodyString = @"";
+    NSDictionary *dictionary = @{
+        @"Version": request.policyVersion,
+        @"Statement": request.statementList
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                       options:NSJSONWritingSortedKeys
+                                                         error:nil];
+    if (jsonData) {
+        bodyString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    requestDelegate.uploadingData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.headerParams = headerParams;
+    neededMsg.contentMd5 = md5String;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutBucketLifeCycle;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)deleteBucketPolicy:(OSSDeleteBucketPolicyRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"policy"];
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketLifeCycle];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = params;
+    
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteBucketLifeCycle;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
 
 
 # pragma mark - Private Methods
@@ -1129,7 +1214,7 @@ static NSObject *lock;
         requestDelegate.retryCallback = request.uploadRetryCallback;
     }
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionary];
-    [headerParams oss_setObject:request.acl forKey:OSSHttpHeaderObjectACL];
+    [headerParams oss_setObject:request.acl forKey:OSSHttpHeaderBucketACL];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary]; 
     [params oss_setObject:@"" forKey:@"acl"];
@@ -1146,6 +1231,31 @@ static NSObject *lock;
     requestDelegate.allNeededMessage = neededMsg;
     
     requestDelegate.operType = OSSOperationTypePutObjectACL;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
+
+- (OSSTask *)putObjectMetaData:(OSSPutObjectMetaRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    if (request.uploadRetryCallback) {
+        requestDelegate.retryCallback = request.uploadRetryCallback;
+    }
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObjectMetaData];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params oss_setObject:@"" forKey:@"metadata"];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.objectKey = request.objectKey;
+    neededMsg.params = params;
+    neededMsg.headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
+    
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypePutObjectMetaData;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1235,6 +1345,7 @@ static NSObject *lock;
     }
     
     OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    request.quiet = NO;
     requestDelegate.uploadingData = [OSSUtil constructHttpBodyForDeleteMultipleObjects:request.keys quiet:request.quiet];
     requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteMultipleObjects];
     NSString *md5String = [OSSUtil base64Md5ForData:requestDelegate.uploadingData];
@@ -1408,7 +1519,42 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
+- (OSSTask *)getObjectVersions:(OSSGetObjectVersionRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectVersions];
+    
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.params = request.requestParams;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeGetObjectVersions;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
 
+- (OSSTask *)deleteObjectVersion:(OSSDeleteObjectVersionRequest *)request {
+    OSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
+    
+    requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteObjectVersions];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[request requestParams]];
+    [params oss_setObject:request.versionId forKey:@"versionId"];
+    [params oss_setObject:@"" forKey:@"versions"];
+
+    OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
+    neededMsg.endpoint = self.endpoint;
+    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.bucketName = request.bucketName;
+    neededMsg.objectKey = request.objectName;
+    neededMsg.params = params;
+    requestDelegate.allNeededMessage = neededMsg;
+    
+    requestDelegate.operType = OSSOperationTypeDeleteObjectVersions;
+    
+    return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
+}
 
 @end
 

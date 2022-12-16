@@ -178,8 +178,8 @@
     
     switch (_operationTypeForThisParser)
     {
-        case OSSOperationTypeGetBucketDomain: {
-            OSSGetBucketDomainResult *result = [OSSGetBucketDomainResult new];
+        case OSSOperationTypeGetObjectVersions: {
+            OSSGetObjectVersionResult *result = [OSSGetObjectVersionResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -187,8 +187,50 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    
+                    result.versionList = [parseDict objectForKey:@"Version"];
                 }
+            }
+            return result;
+        }
+        case OSSOperationTypeGetBucketPolicy: {
+            OSSGetBucketPolicyResult *result = [OSSGetBucketPolicyResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                result.jsonString = [[NSString alloc] initWithData:_collectingData encoding:NSUTF8StringEncoding];
+                
+            }
+            return result;
+        }
+        case OSSOperationTypePutBucketPolicy: {
+            OSSPutBucketPolicyResult *result = [OSSPutBucketPolicyResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+            }
+            return result;
+        }
+        case OSSOperationTypeDeleteBucketPolicy: {
+            OSSDeleteBucketPolicyResult *result = [OSSDeleteBucketPolicyResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            return result;
+        }
+            
+        case OSSOperationTypeGetBucketDomain: {
+            OSSGetBucketDomainResult *result = [OSSGetBucketDomainResult new];
+            if (_response)
+            {
+                [self parseResponseHeader:_response toResultObject:result];
+            }
+            if (_collectingData) {
+                result.domainJsonString = [[NSString alloc] initWithData:_collectingData encoding:NSUTF8StringEncoding];
             }
             return result;
         }
@@ -218,7 +260,7 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    
+                    result.lifeCycleConfigDictionary = [parseDict objectForKey:@"Rule"];
                 }
             }
             return result;
@@ -249,7 +291,8 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    
+                    result.errroDocument = [[parseDict objectForKey:@"ErrorDocument"] objectForKeyedSubscript:@"Key"];
+                    result.indexDocument = [[parseDict objectForKey:@"IndexDocument"] objectForKeyedSubscript:@"Suffix"];
                 }
             }
             return result;

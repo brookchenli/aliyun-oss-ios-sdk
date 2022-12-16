@@ -60,7 +60,12 @@
 @class OSSGetBucketLifeCycleRequest;
 @class OSSPutBucketLifeCycleRequest;
 @class OSSDeleteBucketLifeCycleRequest;
-
+@class OSSGetBucketPolicyRequest;
+@class OSSPutBucketPolicyRequest;
+@class OSSDeleteBucketPolicyRequest;
+@class OSSPutObjectMetaRequest;
+@class OSSGetObjectVersionRequest;
+@class OSSDeleteObjectVersionRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -183,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (OSSTask *)putBucketCORS:(OSSPutBucketCORSRequest *)request ;
 
-- (OSSTask *)deleteBucketCORS:(OSSDeleteBucketRequest *)request ;
+- (OSSTask *)deleteBucketCORS:(OSSDeleteBucketCORSRequest *)request ;
 
 - (OSSTask *)getBucketVersioning:(OSSGetVersioningRequest *)request;
 
@@ -209,7 +214,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (OSSTask *)putBucketLifeCycle:(OSSPutBucketLifeCycleRequest *)request;
 - (OSSTask *)deleteBucketLifeCycle:(OSSDeleteBucketLifeCycleRequest *)request;
 
-    
+//Policy
+- (OSSTask *)getBucketPolicy:(OSSGetBucketPolicyRequest *)request;
+- (OSSTask *)putBucketPolicy:(OSSPutBucketPolicyRequest *)request;
+- (OSSTask *)deleteBucketPolicy:(OSSDeleteBucketPolicyRequest *)request;
+
+
 @end
 
 
@@ -245,6 +255,9 @@ NS_ASSUME_NONNULL_BEGIN
  If succeeds, it returns HTTP status 200; otherwise it returns related error code and error messages.
  */
 - (OSSTask *)putObjectACL:(OSSPutObjectACLRequest *)request;
+
+- (OSSTask *)putObjectMetaData:(OSSPutObjectMetaRequest *)request;
+
 
 /**
  The corresponding RESTFul API: AppendObject
@@ -383,6 +396,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (OSSTask *)deleteObjectTagging:(OSSDeleteObjectTaggingRequest *)request;
 
+- (OSSTask *)getObjectVersions:(OSSGetObjectVersionRequest *)request;
+- (OSSTask *)deleteObjectVersion:(OSSDeleteObjectVersionRequest *)request;
 
 
 @end

@@ -42,12 +42,12 @@
     [OSSLog enableLog];
 }
 
-- (void)testAPI_creatBucket
+- (void)testAPI_creatBucket_public
 {
-    NSString *bucket = @"test-brook-1114-2307";
+    NSString *bucket = @"test-cl-public";
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
     req.bucketName = bucket;
-    req.xOssACL = @"public-read";
+    req.xOssACL = @"public-read-write";
     OSSTask *task = [_client createBucket:req];
     
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -55,10 +55,98 @@
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
     }] waitUntilFinished];
-    
-    [OSSTestUtils cleanBucket:bucket with:_client];
 }
 
+- (void)testAPI_creatBucket_private
+{
+    NSString *bucket = @"test-cl-private";
+    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
+    req.bucketName = bucket;
+    req.xOssACL = @"private";
+    OSSTask *task = [_client createBucket:req];
+    
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_deleteBucket
+{
+    NSString * bucket = @"test-cl-private";
+    OSSDeleteBucketRequest *request = [OSSDeleteBucketRequest new];
+    request.bucketName = bucket;
+    OSSTask *task = [_client deleteBucket:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_listBuckets{
+    OSSGetServiceRequest *request = [OSSGetServiceRequest new];
+    OSSTask * task = [_client getService:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+
+//分页列举桶
+- (void)testAPI_listPageService {
+    OSSListPageServiceRequest *request = [OSSListPageServiceRequest new];
+    request.pageNo = 2;
+    request.pageSize = 8;
+    OSSTask *task = [_client listService:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+//查询桶是否存在, 存在
+- (void)testAPI_queryBucketExistWhenExist {
+    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
+    request.bucketName = @"test-cl-public";
+    OSSTask *task = [_client queryBucketExist:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+//查询桶是否存在, 不存在
+- (void)testAPI_queryBucketExistWhenNotExist {
+    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
+    request.bucketName = @"test-cl-public-not-exist";
+    OSSTask *task = [_client queryBucketExist:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNotNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+//查询桶的位置
+- (void)testAPI_bucketLocation {
+    OSSGetBucketLocationRequest *request = [OSSGetBucketLocationRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client getBucketLocation:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+/*
 - (void)testAPI_getBucketInfo {
     NSString *bucketName = @"oss-ios-get-bucket-info-test";
     OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
@@ -76,13 +164,9 @@
     
     [OSSTestUtils cleanBucket:bucketName with:_client];
 }
+*/
 
-- (void)testAPI_getBucketACL
-{
-    //OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
-    //req.bucketName = @"test-chenli3";
-    //[[_client createBucket:req] waitUntilFinished];
-    
+- (void)testAPI_getBucketACL{
     OSSGetBucketACLRequest * request = [OSSGetBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask * task = [_client getBucketACL:request];
@@ -92,12 +176,10 @@
         XCTAssertEqualObjects(@"private", result.aclGranted);
         return nil;
     }] waitUntilFinished];
-    
-    [OSSTestUtils cleanBucket:@"oss-ios-get-bucket-acl-test" with:_client];
 }
 
-//设置桶权限
-- (void)testAPI_putBucketACL {
+//设置桶权限, 共有
+- (void)testAPI_putBucketACL_public {
     OSSPutBucketACLRequest *request = [OSSPutBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     request.acl = @"public-read";
@@ -110,33 +192,12 @@
     NSLog(@"%@", task);
 }
 
-
-- (void)testAPI_getService
-{
-    OSSGetServiceRequest *request = [OSSGetServiceRequest new];
-    OSSTask * task = [_client getService:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
-        XCTAssertNil(task.error);
-        return nil;
-    }] waitUntilFinished];
-    
-    OSSGetServiceResult *result = nil;
-    do {
-        request = [OSSGetServiceRequest new];
-        request.maxKeys = 2;
-        request.marker = result.nextMarker;
-        task = [_client getService:request];
-        [task waitUntilFinished];
-        result = task.result;
-    } while (result.isTruncated);
-}
-
-//分类列举桶
-- (void)testAPI_listPageService {
-    OSSListPageServiceRequest *request = [OSSListPageServiceRequest new];
-    request.pageNo = 2;
-    request.pageSize = 8;
-    OSSTask *task = [_client listService:request];
+//设置桶权限, 私有
+- (void)testAPI_putBucketACL_privite {
+    OSSPutBucketACLRequest *request = [OSSPutBucketACLRequest new];
+    request.bucketName = @"test-chenli3";
+    request.acl = @"private";
+    OSSTask *task = [_client putBucketACL:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
@@ -145,31 +206,6 @@
     NSLog(@"%@", task);
 }
 
-
-- (void)testAPI_deleteBucket
-{
-    NSString * bucket = @"oss-ios-delete-bucket-test";
-    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
-    req.bucketName = bucket;
-    req.xOssACL = @"public-read";
-    OSSTask *task = [_client createBucket:req];
-    
-    [[task continueWithBlock:^id(OSSTask *task) {
-        XCTAssertNil(task.error);
-        OSSDDLogVerbose(@"%@",task.result);
-        return nil;
-    }] waitUntilFinished];
-    
-    OSSDeleteBucketRequest *request = [OSSDeleteBucketRequest new];
-    request.bucketName = bucket;
-    task = [_client deleteBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
-        XCTAssertNil(task.error);
-        return nil;
-    }] waitUntilFinished];
-}
-
-//
 - (void)testAPI_getCORSList {
     OSSGetBucketCORSRequest *request = [OSSGetBucketCORSRequest new];
     request.bucketName = @"test-chenli3";
@@ -204,7 +240,7 @@
         rule1.allowedMethodList = @[@"PUT", @"GET", @"DELETE"];
         rule1.allowedHeaderList = @[@"*"];
         rule1.exposeHeaderList = @[@"x-oss-test"];
-        rule1.maxAgeSeconds = @(100);
+        rule1.maxAgeSeconds = @(200);
         [tmpArray addObject:rule1];
     }
     request.bucketCORSRuleList = tmpArray;
@@ -217,11 +253,38 @@
     NSLog(@"%@", task);
 }
 
-- (void)testAPI_putBucketVersioning {
+- (void)testAPI_deleteBucketCORS {
+    NSString * bucket = @"test-chenli3";
+    OSSDeleteBucketCORSRequest *req = [OSSDeleteBucketCORSRequest new];
+    req.bucketName = bucket;
+    OSSTask *task = [_client deleteBucketCORS:req];
+    
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+}
+
+- (void)testAPI_putBucketVersioning_enabled {
     OSSPutVersioningRequest *request = [OSSPutVersioningRequest new];
     request.bucketName = @"test-chenli3";
     //request.enable = @"Suspended";
     request.enable = @"Enabled";
+    
+    OSSTask *task = [_client putBucketVersioning:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_putBucketVersioning_suspend {
+    OSSPutVersioningRequest *request = [OSSPutVersioningRequest new];
+    request.bucketName = @"test-chenli3";
+    request.enable = @"Suspended";
     
     OSSTask *task = [_client putBucketVersioning:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -244,17 +307,24 @@
     NSLog(@"%@", task);
 }
 
-- (void)testAPI_deleteBucketCORS {
-    NSString * bucket = @"test-chenli3";
-    OSSDeleteBucketCORSRequest *req = [OSSDeleteBucketCORSRequest new];
-    req.bucketName = bucket;
-    OSSTask *task = [_client deleteBucketCORS:req];
-    
+- (void)testAPI_getService
+{
+    OSSGetServiceRequest *request = [OSSGetServiceRequest new];
+    OSSTask * task = [_client getService:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
-        OSSDDLogVerbose(@"%@",task.result);
         return nil;
     }] waitUntilFinished];
+    
+    OSSGetServiceResult *result = nil;
+    do {
+        request = [OSSGetServiceRequest new];
+        request.maxKeys = 2;
+        request.marker = result.nextMarker;
+        task = [_client getService:request];
+        [task waitUntilFinished];
+        result = task.result;
+    } while (result.isTruncated);
 }
 
 //查询桶加密
@@ -295,33 +365,7 @@
     }] waitUntilFinished];
 }
 
-//查询桶是否存在
-- (void)testAPI_queryBucketExist {
-    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
-    request.bucketName = @"test-chenli4";
-    OSSTask *task = [_client queryBucketExist:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
-        XCTAssertNil(task.error);
-        OSSDDLogVerbose(@"%@",task.result);
-        return nil;
-    }] waitUntilFinished];
-    NSLog(@"%@", task);
-}
-
-//查询桶的位置
-- (void)testAPI_bucketLocation {
-    OSSGetBucketLocationRequest *request = [OSSGetBucketLocationRequest new];
-    request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketLocation:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
-        XCTAssertNil(task.error);
-        OSSDDLogVerbose(@"%@",task.result);
-        return nil;
-    }] waitUntilFinished];
-    NSLog(@"%@", task);
-}
-
-//查询桶加密
+//查询静态网站托管
 - (void)testAPI_getBucketWebsite {
     OSSGetBucketWebsiteRequest *request = [OSSGetBucketWebsiteRequest new];
     request.bucketName = @"test-chenli3";
@@ -334,9 +378,12 @@
     NSLog(@"%@", task);
 }
 
+//设置静态网站托管
 - (void)testAPI_putBucketWebsite {
     OSSPutBucketWebsiteRequest *request = [OSSPutBucketWebsiteRequest new];
     request.bucketName = @"test-chenli3";
+    request.indexDocument = @"index.html";
+    request.errroDocument = @"error.html";
     OSSTask *task = [_client putBucketWebsite:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
@@ -346,6 +393,18 @@
     NSLog(@"%@", task);
 }
 
+- (void)testAPI_deleteBucketWebsite {
+    NSString * bucket = @"test-chenli3";
+    OSSDeleteBucketWebsiteRequest *req = [OSSDeleteBucketWebsiteRequest new];
+    req.bucketName = bucket;
+    OSSTask *task = [_client deleteBucketWebsite:req];
+    
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+}
 
 //自定义域名
 - (void)testAPI_getBucketDomain{
@@ -363,6 +422,12 @@
 - (void)testAPI_putBucketDomain {
     OSSPutBucketDomainRequest *request = [OSSPutBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
+    request.domainList = @[
+        @{
+            @"domainName" : @"www.ceshi.com",
+            @"isWebsite" : @"false"
+        }
+    ];
     OSSTask *task = [_client putBucketDomain:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
@@ -371,6 +436,33 @@
     }] waitUntilFinished];
     NSLog(@"%@", task);
 }
+
+/*
+- (void)testAPI_deleteBucket
+{
+    NSString * bucket = @"oss-ios-delete-bucket-test";
+    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
+    req.bucketName = bucket;
+    req.xOssACL = @"public-read";
+    OSSTask *task = [_client createBucket:req];
+    
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    
+    OSSDeleteBucketRequest *request = [OSSDeleteBucketRequest new];
+    request.bucketName = bucket;
+    task = [_client deleteBucket:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
+*/
+
+//
 
 - (void)testAPI_deleteDomain {
     OSSDeleteBucketDomainRequest *request = [OSSDeleteBucketDomainRequest new];
@@ -421,6 +513,55 @@
     }] waitUntilFinished];
     NSLog(@"%@", task);
 }
+
+//自定义域名
+- (void)testAPI_putBucketPolicy {
+    OSSPutBucketPolicyRequest *request = [OSSPutBucketPolicyRequest new];
+    request.bucketName = @"test-chenli3";
+    request.policyVersion = @"2012-10-17";
+    request.statementList = @[
+        @{
+            @"Action":@[@"s3:ListBucket", @"s3:GetObject"],
+            @"Resource": @[@"arn:aws:s3:::test-chenli3", @"arn:aws:s3:::test-chenli3/*"],
+            @"Effect": @"Allow",
+            @"Principal": @{
+                @"AWS":@[@"arn:aws:iam:::user/testid2", @"arn:aws:iam::tenanttwo:user/userthree"]
+            }
+        }
+    ];
+    OSSTask *task = [_client putBucketPolicy:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_getBucketPolicy{
+    OSSGetBucketPolicyRequest *request = [OSSGetBucketPolicyRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client getBucketPolicy:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
+- (void)testAPI_deletePolicy {
+    OSSDeleteBucketPolicyRequest *request = [OSSDeleteBucketPolicyRequest new];
+    request.bucketName = @"test-chenli3";
+    OSSTask *task = [_client deleteBucketPolicy:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        OSSDDLogVerbose(@"%@",task.result);
+        return nil;
+    }] waitUntilFinished];
+    NSLog(@"%@", task);
+}
+
 
 - (void)testListMultipartUploads
 {

@@ -72,7 +72,14 @@
          
          && operType != OSSOperationTypeGetBucketLifeCycle
          && operType != OSSOperationTypePutBucketLifeCycle
-         && operType != OSSOperationTypeDeleteBucketLifeCycle)) {
+         && operType != OSSOperationTypeDeleteBucketLifeCycle
+         
+         && operType != OSSOperationTypeGetBucketPolicy
+         && operType != OSSOperationTypePutBucketPolicy
+         && operType != OSSOperationTypeDeleteBucketPolicy
+         
+         && operType != OSSOperationTypeGetObjectVersions
+         && operType != OSSOperationTypeDeleteObjectVersions)) {
             errorMessage = @"Object key should not be nil";
         }
     

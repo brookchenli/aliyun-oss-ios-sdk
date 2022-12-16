@@ -685,11 +685,16 @@ Sets the session Id for background file transmission
 
 @interface OSSGetBucketWebsiteResult : OSSResult
 
+@property (nonatomic, copy, nullable) NSString *indexDocument;
+@property (nonatomic, copy, nullable) NSString *errroDocument;
+
 @end
 
 @interface OSSPutBucketWebsiteRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
+@property (nonatomic, copy, nullable) NSString *indexDocument;
+@property (nonatomic, copy, nullable) NSString *errroDocument;
 
 @end
 
@@ -715,11 +720,14 @@ Sets the session Id for background file transmission
 
 @interface OSSGetBucketDomainResult : OSSResult
 
+@property (nonatomic, copy, nullable) NSString *domainJsonString;
+
 @end
 
 @interface OSSPutBucketDomainRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
+@property (nonatomic, copy, nullable) NSArray <NSDictionary <NSString *, NSString *>*> *domainList;
 
 @end
 
@@ -745,6 +753,8 @@ Sets the session Id for background file transmission
 
 @interface OSSGetBucketLifeCycleResult : OSSResult
 
+@property (nonatomic, copy, nullable) NSString *lifeCycleConfigDictionary;
+
 @end
 
 @interface OSSPutBucketLifeCycleRequest : OSSRequest
@@ -766,6 +776,41 @@ Sets the session Id for background file transmission
 @interface OSSDeleteBucketLifeCycleResult : OSSResult
 
 @end
+
+@interface OSSGetBucketPolicyRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSGetBucketPolicyResult : OSSResult
+
+@property (nonatomic, strong, nonnull) NSString* jsonString;
+
+@end
+
+@interface OSSPutBucketPolicyRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+@property (nonatomic, strong, nonnull) NSString* policyVersion;
+@property (nonatomic, strong, nonnull) NSArray *statementList;
+
+@end
+
+@interface OSSPutBucketPolicyResult : OSSResult
+
+@end
+
+@interface OSSDeleteBucketPolicyRequest : OSSRequest
+
+@property (nonatomic, copy, nullable) NSString *bucketName;
+
+@end
+
+@interface OSSDeleteBucketPolicyResult : OSSResult
+
+@end
+
 
 /**
  The request class to get object metadata
@@ -970,6 +1015,10 @@ Sets the session Id for background file transmission
  *@brief:指定oss创建object时的访问权限,合法值:public-read、private、public-read-write
  */
 @property (nonatomic, copy, nullable) NSString *acl;
+
+@end
+
+@interface OSSPutObjectMetaRequest : OSSPutObjectRequest
 
 @end
 
@@ -1779,5 +1828,40 @@ The result class of listing uploaded parts.
 - (NSString *)toRuleString;
 
 @end
+
+@interface OSSDomainConfig : NSObject
+
+@end
+
+@interface OSSPolicyStatement : NSObject
+
+@end
+
+
+@interface OSSGetObjectVersionRequest : OSSRequest
+
+@property (nonatomic, copy) NSString *bucketName;
+
+@end
+
+@interface OSSGetObjectVersionResult : OSSResult
+
+@property (nonatomic, strong, nonnull) NSArray* versionList;
+
+@end
+
+
+@interface OSSDeleteObjectVersionRequest : OSSRequest
+
+@property (nonatomic, copy) NSString *bucketName;
+@property (nonatomic, copy) NSString *objectName;
+@property (nonatomic, copy) NSString *versionId;
+
+@end
+
+@interface OSSDeleteObjectVersionResult : OSSResult
+
+@end
+
 
 NS_ASSUME_NONNULL_END

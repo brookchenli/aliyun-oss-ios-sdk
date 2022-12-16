@@ -341,7 +341,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         OSSSubResourceARRAY = @[@"acl", @"uploadId", @"partNumber", @"uploads", @"logging", @"website", @"location",
-                                @"lifecycle", @"referer", @"cors", @"delete", @"append", @"position", @"security-token", @"x-oss-process", @"sequential",@"bucketInfo",@"symlink", @"restore", @"tagging", @"versioning", @"encryption", @"domain"];
+                                @"lifecycle", @"referer", @"cors", @"delete", @"append", @"position", @"security-token", @"x-oss-process", @"sequential",@"bucketInfo",@"symlink", @"restore", @"tagging", @"versioning", @"encryption", @"domain", @"policy", @"versions", @"versionId"];
     });
     /****************************************************************/
 
@@ -847,6 +847,30 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSDeleteBucketLifeCycleResult
 @end
 
+@implementation OSSGetBucketPolicyRequest
+- (NSDictionary *)requestParams {
+    return @{@"policy": @""};
+}
+@end
+
+@implementation OSSGetBucketPolicyResult
+@end
+
+@implementation OSSPutBucketPolicyRequest
+@end
+
+@implementation OSSPutBucketPolicyResult
+@end
+
+@implementation OSSDeleteBucketPolicyRequest
+- (NSDictionary *)requestParams {
+    return @{@"policy": @""};
+}
+@end
+
+@implementation OSSDeleteBucketPolicyResult
+@end
+
 
 @implementation OSSHeadObjectRequest
 @end
@@ -871,6 +895,12 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     return self;
 }
 
+@end
+
+@implementation OSSPutObjectMetaRequest
+- (NSDictionary *)requestParams {
+    return @{@"metadata": @""};
+}
 @end
 
 @implementation OSSPutObjectACLResult
@@ -1088,3 +1118,36 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 
 @end
+
+@implementation OSSDomainConfig
+
+- (NSString *)toRuleString {
+    return [NSString stringWithFormat:@""];
+}
+
+
+@end
+
+@implementation OSSPolicyStatement
+
+@end
+
+@implementation OSSGetObjectVersionRequest
+- (NSDictionary *)requestParams {
+    return @{@"versions": @""};
+}
+
+@end
+
+@implementation OSSGetObjectVersionResult
+
+@end
+
+@implementation OSSDeleteObjectVersionRequest
+
+@end
+
+@implementation OSSDeleteObjectVersionResult
+
+@end
+

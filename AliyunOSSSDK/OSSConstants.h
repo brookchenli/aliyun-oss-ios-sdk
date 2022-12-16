@@ -75,11 +75,16 @@ typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypePutBucketLifeCycle,
     OSSOperationTypeDeleteBucketLifeCycle,
     
+    OSSOperationTypeGetBucketPolicy,
+    OSSOperationTypePutBucketPolicy,
+    OSSOperationTypeDeleteBucketPolicy,
+    
     OSSOperationTypeHeadObject,
     OSSOperationTypeGetObject,
     OSSOperationTypeGetObjectACL,
     OSSOperationTypePutObject,
     OSSOperationTypePutObjectACL,
+    OSSOperationTypePutObjectMetaData,
     OSSOperationTypeAppendObject,
     OSSOperationTypeDeleteObject,
     OSSOperationTypeDeleteMultipleObjects,
@@ -98,6 +103,8 @@ typedef NS_ENUM(NSInteger, OSSOperationType) {
     OSSOperationTypeGetObjectTagging,
     OSSOperationTypePutObjectTagging,
     OSSOperationTypeDeleteObjectTagging,
+    OSSOperationTypeGetObjectVersions,
+    OSSOperationTypeDeleteObjectVersions
 };
 
 /**
