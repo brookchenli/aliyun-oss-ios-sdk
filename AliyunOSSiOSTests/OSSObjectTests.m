@@ -106,6 +106,34 @@
 {
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     config.timeoutIntervalForRequest = 120.0;
+    
+    OSSCustomSignerCredentialProvider *provider = [[OSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
+        
+        // 用户应该在此处将需要签名的字符串发送到自己的业务服务器(AK和SK都在业务服务器保存中,从业务服务器获取签名后的字符串)
+        OSSFederationToken *token = [OSSFederationToken new];
+        token.tAccessKey = OSS_ACCESSKEY_ID;
+        token.tSecretKey = OSS_SECRETKEY_ID;
+        sleep(0.15);
+        NSString *signedContent = [OSSUtil sign:contentToSign withToken:token];
+        return signedContent;
+    }];
+    
+    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+                               credentialProvider:provider
+                              clientConfiguration:config];
+    
+    [OSSLog enableLog];
+    /*
+    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    createBucket1.bucketName = _testBucketName;
+    [[_client createBucket:createBucket1] waitUntilFinished];
+     */
+}
+
+- (void)setUpOSSClient111
+{
+    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    config.timeoutIntervalForRequest = 120.0;
     OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
