@@ -167,6 +167,37 @@
     }] waitUntilFinished];
 }
 
+
+- (void)testAPI_putObjectFromFileTest_local_file {
+    
+    NSURL * fileURL = [[NSBundle mainBundle] URLForResource:@"ceshi" withExtension:@"png"];
+    
+    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    request.bucketName = _testBucketName;
+    request.objectKey = @"ceshi.png";
+    request.uploadingFileURL = fileURL;
+    request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
+    request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"bytesSent: %lld, totalByteSent: %lld, totalBytesExpectedToSend: %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
+    };
+    
+    OSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        /*
+        BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
+                                          objectKey:objectKey
+                                      localFilePath:filePath];
+        XCTAssertTrue(isEqual);
+         */
+        return nil;
+    }] waitUntilFinished];
+    XCTAssertTrue([progressTest completeValidateProgress]);
+}
+
+
 - (void)testAPI_putObjectFromFileTest {
     
     NSString *objectKey = _fileNames[0];
@@ -2772,6 +2803,49 @@
     partSize = [_client ceilPartSize:partSize];
     XCTAssertEqual(partSizeAlign * 2, partSize);
 }
+
+- (void)testAPI_image {
+    NSString * url =  [_client.imageProcess getURL:@"key" bucket:@"bucket" process:^(InspurImageAttributeMaker * _Nonnull maker) {
+        maker.rotato(30).flip(InspurImageFlipHorizontal);
+    }];
+    NSLog(@"url:%@", url);
+    XCTAssertNotNil(url);
+}
+
+- (void)testAPI_averageHue {
+    NSString *bucket = @"test-chenli3";
+    NSString *key = @"ceshi.png";
+    __block BOOL wait = YES;
+    [_client.imageProcess averageHue:key
+                              bucket:bucket
+                          completion:^(id  _Nullable obj, NSError * _Nullable error) {
+        NSLog(@"obj:%@", obj);
+        XCTAssertNotNil(obj);
+        wait = NO;
+    }];
+    
+    while (wait) {
+        [NSThread sleepForTimeInterval:0.1];
+    };
+}
+
+- (void)testAPI_exInfo {
+    NSString *bucket = @"test-chenli3";
+    NSString *key = @"ceshi.png";
+    __block BOOL wait = YES;
+    [_client.imageProcess exifInfo:key
+                            bucket:bucket
+                        completion:^(id  _Nullable obj, NSError * _Nullable error) {
+        NSLog(@"obj:%@", obj);
+        XCTAssertNotNil(obj);
+        wait = NO;
+    }];
+    
+    while (wait) {
+        [NSThread sleepForTimeInterval:0.1];
+    };
+}
+
 
 - (NSString *)getRecordFilePath:(OSSResumableUploadRequest *)resumableUpload {
     NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];

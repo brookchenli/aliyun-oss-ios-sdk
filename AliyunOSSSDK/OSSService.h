@@ -38,6 +38,8 @@
 #import "OSSDeleteObjectTaggingRequest.h"
 #import "OSSDeleteObjectTaggingResult.h"
 
+#import "OSSImageProcess.h"
+
 #import "OSSClient.h"
 #import "OSSModel.h"
 #import "OSSUtil.h"

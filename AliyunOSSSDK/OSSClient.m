@@ -15,6 +15,7 @@
 #import "OSSNetworking.h"
 #import "OSSXMLDictionary.h"
 #import "OSSIPv6Adapter.h"
+#import "OSSImageProcess.h"
 
 #import "OSSNetworkingRequestDelegate.h"
 #import "OSSAllRequestNeededMessage.h"
@@ -107,6 +108,8 @@ static NSObject *lock;
         self.endpoint = [endpoint oss_trim];
         self.credentialProvider = credentialProvider;
         self.clientConfiguration = conf;
+        
+        _imageProcess = [[OSSImageProcess alloc] initWithEndPoint:endpoint];
 
         OSSNetworkingConfiguration * netConf = [OSSNetworkingConfiguration new];
         if (conf) {

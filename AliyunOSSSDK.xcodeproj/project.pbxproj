@@ -41,6 +41,10 @@
 		D4204347294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4204344294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m */; };
 		D4204348294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4204344294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m */; };
 		D48B70D4294C54360051415E /* OSSService.h in Headers */ = {isa = PBXBuildFile; fileRef = D871833B1FC56358000DD9EC /* OSSService.h */; };
+		D48B70E2294CFD3E0051415E /* OSSImageProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = D48B70E0294CFD3E0051415E /* OSSImageProcess.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D48B70E3294CFD3E0051415E /* OSSImageProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = D48B70E0294CFD3E0051415E /* OSSImageProcess.h */; };
+		D48B70E4294CFD3E0051415E /* OSSImageProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = D48B70E1294CFD3E0051415E /* OSSImageProcess.m */; };
+		D48B70E5294CFD3E0051415E /* OSSImageProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = D48B70E1294CFD3E0051415E /* OSSImageProcess.m */; };
 		D80C81F51FC824E2008E3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80C81F41FC824D5008E3900 /* SystemConfiguration.framework */; };
 		D80C81F71FC824FF008E3900 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80C81F61FC824FF008E3900 /* CoreTelephony.framework */; };
 		D80C81FB1FC82541008E3900 /* OSSModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183091FC56358000DD9EC /* OSSModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -271,6 +275,8 @@
 		D420433E294B877300E0FAAD /* OSSGetObjectMetaDataRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectMetaDataRequest.m; sourceTree = "<group>"; };
 		D4204343294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectMetaDataResult.h; sourceTree = "<group>"; };
 		D4204344294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectMetaDataResult.m; sourceTree = "<group>"; };
+		D48B70E0294CFD3E0051415E /* OSSImageProcess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSImageProcess.h; sourceTree = "<group>"; };
+		D48B70E1294CFD3E0051415E /* OSSImageProcess.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSImageProcess.m; sourceTree = "<group>"; };
 		D80C81EC1FC824A8008E3900 /* AliyunOSSOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AliyunOSSOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80C81F41FC824D5008E3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		D80C81F61FC824FF008E3900 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
@@ -544,6 +550,8 @@
 				D420433E294B877300E0FAAD /* OSSGetObjectMetaDataRequest.m */,
 				D4204343294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.h */,
 				D4204344294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m */,
+				D48B70E0294CFD3E0051415E /* OSSImageProcess.h */,
+				D48B70E1294CFD3E0051415E /* OSSImageProcess.m */,
 			);
 			path = AliyunOSSSDK;
 			sourceTree = "<group>";
@@ -604,6 +612,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D48B70E2294CFD3E0051415E /* OSSImageProcess.h in Headers */,
 				D4204345294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.h in Headers */,
 				D8C41B1A1FCC2FD20091699B /* OSSModel.h in Headers */,
 				D8C41B1D1FCC2FD20091699B /* OSSCompat.h in Headers */,
@@ -720,6 +729,7 @@
 				D80C82011FC82559008E3900 /* OSSHttpdns.h in Headers */,
 				D827B40C21107169003A24F6 /* NSDate+OSS.h in Headers */,
 				D842D5A91FFCBA2800220913 /* AliyunOSSiOS.h in Headers */,
+				D48B70E3294CFD3E0051415E /* OSSImageProcess.h in Headers */,
 				D827B41221114E4B003A24F6 /* NSMutableDictionary+OSS.h in Headers */,
 				D8C5E54E1FCEB57600613BA5 /* NSMutableData+OSS_CRC.h in Headers */,
 				D80C81FD1FC82549008E3900 /* OSSUtil.h in Headers */,
@@ -872,6 +882,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D85277F32015BD5A00D7B1DE /* OSSNetworkingRequestDelegate.m in Sources */,
+				D48B70E4294CFD3E0051415E /* OSSImageProcess.m in Sources */,
 				D8C5E5431FCE915000613BA5 /* aos_crc64.c in Sources */,
 				D8C41AE61FCC2F920091699B /* OSSNetworking.m in Sources */,
 				D827B4372111ADF7003A24F6 /* OSSGetSymlinkResult.m in Sources */,
@@ -932,6 +943,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D85277F42015BD5A00D7B1DE /* OSSNetworkingRequestDelegate.m in Sources */,
+				D48B70E5294CFD3E0051415E /* OSSImageProcess.m in Sources */,
 				D8C5E5441FCE915000613BA5 /* aos_crc64.c in Sources */,
 				D8C41AA71FCC284F0091699B /* OSSNetworking.m in Sources */,
 				D827B4382111ADF7003A24F6 /* OSSGetSymlinkResult.m in Sources */,

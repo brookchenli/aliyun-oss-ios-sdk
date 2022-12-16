@@ -73,6 +73,8 @@
 @class OSSClientConfiguration;
 @protocol OSSCredentialProvider;
 
+@class OSSImageProcess;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -105,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
  oss operation task queue
  */
 @property (nonatomic, strong, readonly) OSSExecutor * ossOperationExecutor;
+
+@property (nonatomic, strong, readonly) OSSImageProcess *imageProcess;
 
 /**
  Initializes an OSSClient instance with the default client configuration.
