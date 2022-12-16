@@ -83,6 +83,7 @@
 #define OSSHttpHeaderObjectACL                  @"x-oss-object-acl"
 #define OSSHttpHeaderCopySource                 @"x-oss-copy-source"
 #define OSSHttpHeaderSymlinkTarget              @"x-oss-symlink-target"
+#define OSSHttpHeaderRandomObjectName              @"random-object-name"
 
 #define OSSHttpQueryProcess                     @"x-oss-process"
 

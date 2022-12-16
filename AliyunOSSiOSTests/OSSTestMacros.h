@@ -12,9 +12,12 @@
 //#define OSS_ACCESSKEY_ID                @"AccessKeyID"                              // 子账号id
 //#define OSS_SECRETKEY_ID                @"AccessKeySecret"                          // 子账号secret
 
-#if 0
+#if 0 //native
 #define OSS_ACCESSKEY_ID                @"inspur-a7f729b0-8615-4d48-9985-c92a795bc880-oss"                              // 子账号id
 #define OSS_SECRETKEY_ID                @"FlzDEO25QsVxI3hcQntciclDYKxAa4aB6zRveqZ6"                          // 子账号secret
+#elif 0 //共有云
+#define OSS_ACCESSKEY_ID                @"ZjQxNjgzMDQtYmY0ZC00MjdlLTg0MTctNThlZGE2OGYxNjU3"                              // 子账号id
+#define OSS_SECRETKEY_ID                @"NzAyMWM1ZDAtYTZjNC00ZmNhLTlhYTAtMmNjMDNhMmNmNTFl"                          // 子账号secret
 #else
 #define OSS_ACCESSKEY_ID                @"NTNiYWY3YWUtNTg0MS00MThmLThmZmUtMzE3ODUwMGM1YTg2"                              // 子账号id
 #define OSS_SECRETKEY_ID                @"MTVjY2RlZDktMDc5OC00ZWFkLWI0YjEtM2M2MjJmODUyOTI3"                          // 子账号secret
@@ -28,6 +31,8 @@
 #define OSS_BUCKET_PRIVATE              @"test"                           // bucket名称
 #if 0
 #define OSS_ENDPOINT                    @"http://10.110.62.51:8088"      // 访问的阿里云endpoint
+#elif 0 //共有云
+#define OSS_ENDPOINT                    @"https://cn-north-3.inspurcloudoss.com"
 #else
 #define OSS_ENDPOINT                    @"http://10.110.64.152:8088"
 

@@ -1038,6 +1038,9 @@ It's the MD5 value for put object request. If the object is created by other API
  If the callback is specified, this is the callback response result.
  */
 @property (nonatomic, copy) NSString * serverReturnJsonString;
+
+@property (nonatomic, copy) NSString * objectName;
+
 @end
 
 /**
@@ -1317,6 +1320,8 @@ It's the MD5 value for put object request. If the object is created by other API
  Multipart Upload id.
  */
 @property (nonatomic, copy) NSString * uploadId;
+
+@property (nonatomic, copy) NSString * randomObjectName;
 
 /**
  The part number of this part.
@@ -1715,6 +1720,8 @@ The result class of listing uploaded parts.
  * the md5 of content
  */
 @property (nonatomic, copy) NSString *md5String;
+
+@property (nonatomic, copy) NSString * randomObjectName;
 
 
 - (void)cancel;

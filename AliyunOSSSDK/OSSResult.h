@@ -39,4 +39,6 @@
  */
 @property (nonatomic, copy) NSString *localCRC64ecma;
 
+@property (nonatomic, copy) NSString *objectName;
+
 @end

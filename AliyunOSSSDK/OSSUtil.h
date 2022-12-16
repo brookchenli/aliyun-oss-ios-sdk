@@ -47,6 +47,7 @@
 + (BOOL)hasPhoneFreeSpace;
 + (NSString*)buildNetWorkConnectedMsg;
 + (NSString*)buildOperatorMsg;
++ (NSString*)randomObjectName;
 
 + (uint64_t)crc64ecma:(uint64_t)crc1 buffer:(void *)buffer length:(size_t)len;
 

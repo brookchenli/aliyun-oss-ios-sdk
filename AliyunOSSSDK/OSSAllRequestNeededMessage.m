@@ -79,7 +79,9 @@
          && operType != OSSOperationTypeDeleteBucketPolicy
          
          && operType != OSSOperationTypeGetObjectVersions
-         && operType != OSSOperationTypeDeleteObjectVersions)) {
+         && operType != OSSOperationTypeDeleteObjectVersions
+         
+         && operType != OSSOperationTypeInitMultipartUpload)) {
             errorMessage = @"Object key should not be nil";
         }
     

@@ -62,8 +62,8 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-    [OSSTestUtils cleanBucket:_privateBucketName with:_client];
-    [OSSTestUtils cleanBucket:_publicBucketName with:_client];
+    //[OSSTestUtils cleanBucket:_privateBucketName with:_client];
+    //[OSSTestUtils cleanBucket:_publicBucketName with:_client];
 }
 
 /*
@@ -105,7 +105,7 @@
 - (void)setUpOSSClient
 {
     OSSClientConfiguration *config = [OSSClientConfiguration new];
-    
+    config.timeoutIntervalForRequest = 120.0;
     OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
@@ -199,6 +199,30 @@
     XCTAssertTrue([progressTest completeValidateProgress]);
 }
 
+- (void)testAPI_putObjectFromFileTest_noKey {
+    
+    NSString *objectKey = _fileNames[0];
+    NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:objectKey];
+    NSURL * fileURL = [NSURL fileURLWithPath:filePath];
+    
+    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    request.bucketName = _testBucketName;
+    request.objectKey = nil;
+    request.uploadingFileURL = fileURL;
+    request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+
+    OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
+    request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"bytesSent: %lld, totalByteSent: %lld, totalBytesExpectedToSend: %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
+    };
+    
+    OSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        return nil;
+    }] waitUntilFinished];
+}
 
 
 - (void)testAPI_deleteObj {
@@ -392,6 +416,179 @@
     }] waitUntilFinished];
 }
 
+- (void)testAPI_MultipartUploadNormal {
+    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+//    multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    multipartUploadRequest.bucketName = @"test-chenli3";
+    multipartUploadRequest.objectKey = @"test.txt";
+    multipartUploadRequest.contentType = @"application/octet-stream";
+    multipartUploadRequest.partSize = 8 * 1024 * 1024;
+    OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
+    multipartUploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
+    };
+
+    multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"txt"];
+    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    
+    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNil(task.error);
+        if (task.error) {
+            NSLog(@"error: %@", task.error);
+            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+                // The upload cannot be resumed. Needs to re-initiate a upload.
+            }
+        } else {
+            BOOL isEqual = YES;
+            XCTAssertTrue(isEqual);
+        }
+        return nil;
+    }] waitUntilFinished];
+    XCTAssertTrue([progressTest completeValidateProgress]);
+}
+
+//断点续传
+- (void)testAPI_ResumbleUpload {
+    __block bool cancel = NO;
+    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload.bucketName = _testBucketName;
+    resumableUpload.objectKey = @"wf.pdf";
+    resumableUpload.deleteUploadIdOnCancelling = NO;
+    NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    resumableUpload.recordDirectoryPath = cachesDir;
+    resumableUpload.contentType = @"application/octet-stream";
+    resumableUpload.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    resumableUpload.partSize = 2 * 1024 * 1024;
+    resumableUpload.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        if(totalByteSent >= totalBytesExpectedToSend /2){
+            cancel = YES;
+        }
+    };
+    resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
+    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNotNil(task.error);
+        NSLog(@"error: %@", task.error);
+        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        return nil;
+    }];
+    
+    while (!cancel) {
+        [NSThread sleepForTimeInterval:0.1];
+    }
+    [resumableUpload cancel];
+    [resumeTask waitUntilFinished];
+}
+
+//取消后终止
+- (void)testAPI_ResumbleUploadAbort {
+    __block bool cancel = NO;
+    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload.bucketName = _testBucketName;
+    resumableUpload.objectKey = @"wf.pdf";
+    resumableUpload.deleteUploadIdOnCancelling = YES;
+    NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    resumableUpload.recordDirectoryPath = cachesDir;
+    resumableUpload.contentType = @"application/octet-stream";
+    resumableUpload.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    resumableUpload.partSize = 2 * 1024 * 1024;
+    resumableUpload.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        if(totalByteSent >= 6 * 1024 * 1024){
+            cancel = YES;
+        }
+    };
+    resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
+    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNotNil(task.error);
+        NSLog(@"error: %@", task.error);
+        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        return nil;
+    }];
+    
+    while (!cancel) {
+        [NSThread sleepForTimeInterval:0.1];
+    }
+    [resumableUpload cancel];
+    [resumeTask waitUntilFinished];
+}
+
+//
+- (void)testAPI_listParts {
+    __block bool cancel = NO;
+    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload.bucketName = _testBucketName;
+    resumableUpload.objectKey = @"wf.pdf";
+    resumableUpload.deleteUploadIdOnCancelling = NO;
+    NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    resumableUpload.recordDirectoryPath = cachesDir;
+    resumableUpload.contentType = @"application/octet-stream";
+    resumableUpload.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    resumableUpload.partSize = 1 * 1024 * 1024;
+    resumableUpload.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        if(totalByteSent >= 3 * 1024 * 1024){
+            cancel = YES;
+        }
+    };
+    resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
+    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNotNil(task.error);
+        NSLog(@"error: %@", task.error);
+        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        return nil;
+    }];
+    
+    while (!cancel) {
+        [NSThread sleepForTimeInterval:0.1];
+    }
+    [resumableUpload cancel];
+    [resumeTask waitUntilFinished];
+    NSString *uploadId = resumableUpload.uploadId;
+    NSString *objectName = resumableUpload.objectKey;
+    
+    OSSListPartsRequest * listParts = [OSSListPartsRequest new];
+    listParts.bucketName = _testBucketName;
+    listParts.objectKey = objectName;
+    listParts.uploadId = uploadId;
+    OSSTask * listPartsTask = [_client listParts:listParts];
+    [[listPartsTask continueWithBlock:^id(OSSTask *task) {
+            XCTAssertNotNil(task.error);
+            NSLog(@"error: %@", task.error);
+            return nil;
+        }] waitUntilFinished] ;
+    
+}
+
+- (void)testAPI_MultipartUploadCancel {
+    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    multipartUploadRequest.bucketName = @"test-chenli3";
+    multipartUploadRequest.objectKey = @"wf.pdf";
+    multipartUploadRequest.contentType = @"application/octet-stream";
+    multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
+    multipartUploadRequest.partSize = 8 * 1024 * 1024;
+    multipartUploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+        XCTAssertTrue(totalByteSent <= totalBytesExpectedToSend);
+    };
+    multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
+    OSSTask * resumeTask = [_client multipartUpload:multipartUploadRequest];
+    [resumeTask continueWithBlock:^id(OSSTask *task) {
+        XCTAssertNotNil(task.error);
+        NSLog(@"error: %@", task.error);
+        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        return nil;
+    }];
+    
+    [NSThread sleepForTimeInterval:3];
+    
+    [multipartUploadRequest cancel];
+    [resumeTask waitUntilFinished];
+}
 
 #pragma mark - putObject
 
@@ -641,7 +838,7 @@
 - (void)testAPI_appendObject
 {
     OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
-    delete.bucketName = _privateBucketName;
+    delete.bucketName = _testBucketName;
     delete.objectKey = @"appendObject";
     OSSTask * task = [_client deleteObject:delete];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -653,7 +850,7 @@
     
     NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:_fileNames[0]];
     OSSAppendObjectRequest * request = [OSSAppendObjectRequest new];
-    request.bucketName = _privateBucketName;
+    request.bucketName = _testBucketName;
     request.objectKey = @"appendObject";
     request.appendPosition = 0;
     request.uploadingFileURL = [NSURL fileURLWithPath:filePath];
@@ -675,7 +872,7 @@
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
     
-    request.bucketName = _privateBucketName;
+    request.bucketName = _testBucketName;
     request.objectKey = @"appendObject";
     request.appendPosition = nextAppendPosition;
     request.uploadingFileURL = [NSURL fileURLWithPath:filePath];
@@ -2574,6 +2771,14 @@
     partSize = 4 * 1024 + 1;
     partSize = [_client ceilPartSize:partSize];
     XCTAssertEqual(partSizeAlign * 2, partSize);
+}
+
+- (NSString *)getRecordFilePath:(OSSResumableUploadRequest *)resumableUpload {
+    NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
+    NSData *data = [[NSString stringWithFormat:@"%@%@%@%lu",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *recordFileName = [OSSUtil dataMD5String:data];
+    NSString *recordFilePath = [NSString stringWithFormat:@"%@/%@",resumableUpload.recordDirectoryPath,recordFileName];
+    return recordFilePath;
 }
 
 @end

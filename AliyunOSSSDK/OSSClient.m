@@ -768,11 +768,7 @@ static NSObject *lock;
 - (OSSTask *)checkNecessaryParamsOfRequest:(OSSMultipartUploadRequest *)request
 {
     NSError *error = nil;
-    if (![request.objectKey oss_isNotEmpty]) {
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeInvalidArgument
-                                userInfo:@{OSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull objectKey!"}];
-    }else if (![request.bucketName oss_isNotEmpty]) {
+    if (![request.bucketName oss_isNotEmpty]) {
         error = [NSError errorWithDomain:OSSClientErrorDomain
                                     code:OSSClientErrorCodeInvalidArgument
                                 userInfo:@{OSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull bucketName!"}];
@@ -1188,6 +1184,10 @@ static NSObject *lock;
     [headerParams oss_setObject:request.expires forKey:OSSHttpHeaderExpires];
     [headerParams oss_setObject:request.cacheControl forKey:OSSHttpHeaderCacheControl];
     
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    if (!request.objectKey || ![request.objectKey oss_isNotEmpty]) {
+        [params oss_setObject:@"true" forKey:OSSHttpHeaderRandomObjectName];
+    }
     OSSHttpResponseParser *responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObject];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     requestDelegate.responseParser = responseParser;
@@ -1197,6 +1197,10 @@ static NSObject *lock;
     neededMsg.httpMethod = OSSHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
+    neededMsg.params = params;
+    if (!request.objectKey || ![request.objectKey oss_isNotEmpty]) {
+        neededMsg.objectKey = [OSSUtil randomObjectName];
+    }
     neededMsg.contentMd5 = request.contentMd5;
     neededMsg.contentType = request.contentType;
     neededMsg.headerParams = headerParams;
@@ -1303,7 +1307,7 @@ static NSObject *lock;
     
     OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = OSSHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.contentType = request.contentType;
@@ -1593,13 +1597,16 @@ static NSObject *lock;
     if (request.sequential) {
         [params oss_setObject:@"" forKey:@"sequential"];
     }
+    if (!request.objectKey) {
+        [params oss_setObject:@"true" forKey:OSSHttpHeaderRandomObjectName];
+    }
     requestDelegate.responseParser = [[OSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeInitMultipartUpload];
     
     OSSAllRequestNeededMessage *neededMsg = [[OSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
     neededMsg.httpMethod = OSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
-    neededMsg.objectKey = request.objectKey;
+    neededMsg.objectKey = request.objectKey ? : [OSSUtil randomObjectName];
     neededMsg.contentType = request.contentType;
     neededMsg.params = params;
     neededMsg.headerParams = headerParams;
@@ -1800,7 +1807,7 @@ static NSObject *lock;
 {
     OSSCompleteMultipartUploadRequest * complete = [OSSCompleteMultipartUploadRequest new];
     complete.bucketName = request.bucketName;
-    complete.objectKey = request.objectKey;
+    complete.objectKey = request.objectKey ?: request.randomObjectName;
     complete.uploadId = request.uploadId;
     complete.partInfos = partInfos;
     complete.crcFlag = request.crcFlag;
@@ -2100,7 +2107,7 @@ static NSObject *lock;
     
     OSSUploadPartRequest * uploadPart = [OSSUploadPartRequest new];
     uploadPart.bucketName = request.bucketName;
-    uploadPart.objectkey = request.objectKey;
+    uploadPart.objectkey = request.objectKey ?: request.randomObjectName;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
     uploadPart.partNumber = idx;
@@ -2190,7 +2197,8 @@ static NSObject *lock;
         uploadedLength = 0;
         __block OSSTask * errorTask;
         __block NSString *uploadId;
-        
+        __block NSString *randomObjectName;
+
         NSError *error;
         unsigned long long uploadFileSize = [self getSizeWithFilePath:request.uploadingFileURL.path error:&error];
         if (error) {
@@ -2305,9 +2313,11 @@ static NSObject *lock;
             }
             OSSInitMultipartUploadResult *initResult = (OSSInitMultipartUploadResult *)task.result;
             uploadId = initResult.uploadId;
+            randomObjectName = initResult.objectName;
         }
         
         request.uploadId = uploadId;
+        request.randomObjectName = randomObjectName;
         localPartInfosPath = [[[NSString oss_documentDirectory] stringByAppendingPathComponent:kClientRecordNameWithCommonPrefix] stringByAppendingPathComponent:uploadId];
         
         if (request.isCancelled)

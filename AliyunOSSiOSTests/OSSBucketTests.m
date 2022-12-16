@@ -563,14 +563,9 @@
 }
 
 
-- (void)testListMultipartUploads
-{
-    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
-    req.bucketName = @"oss-ios-bucket-list-multipart-uploads-test";
-    [[_client createBucket:req] waitUntilFinished];
-    
+- (void)testListMultipartUploads{
     OSSListMultipartUploadsRequest *listreq = [OSSListMultipartUploadsRequest new];
-    listreq.bucketName = @"oss-ios-bucket-list-multipart-uploads-test";
+    listreq.bucketName = @"test-chenli3";
     listreq.maxUploads = 1000;
     OSSTask *task = [_client listMultipartUploads:listreq];
     
@@ -581,7 +576,6 @@
         return nil;
     }] waitUntilFinished];
     
-    [OSSTestUtils cleanBucket:@"oss-ios-bucket-list-multipart-uploads-test" with:_client];
 }
 
 @end

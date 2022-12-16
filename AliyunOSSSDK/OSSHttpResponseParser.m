@@ -144,6 +144,10 @@
         {
             result.remoteCRC64ecma = obj;
         }
+        else if ([keyString isEqualToString:@"object-name"])
+        {
+            result.objectName = obj;
+        }
     }];
 }
 
@@ -694,7 +698,9 @@
                 [_response.allHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                     if ([((NSString *)key) isEqualToString:@"Etag"]) {
                         putObjectResult.eTag = obj;
-                        *stop = YES;
+                    }
+                    else if ([((NSString *)key) isEqualToString:@"object-name"]) {
+                        putObjectResult.objectName = obj;
                     }
                 }];
             }
