@@ -6,11 +6,11 @@
 //  Copyright © 2017年 zhouzhuo. All rights reserved.
 //
 
-#import "OSSNSLogger.h"
+#import "InspurOSSNSLogger.h"
 
-static OSSNSLogger *sharedInstance;
+static InspurOSSNSLogger *sharedInstance;
 
-@implementation OSSNSLogger
+@implementation InspurOSSNSLogger
 + (instancetype)sharedInstance {
     static dispatch_once_t OSSNSLoggerOnceToken;
     

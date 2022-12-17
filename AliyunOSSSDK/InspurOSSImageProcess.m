@@ -6,7 +6,7 @@
 //  Copyright © 2022 aliyun. All rights reserved.
 //
 
-#import "OSSImageProcess.h"
+#import "InspurOSSImageProcess.h"
 
 #define InspurImageProcessStyle @"InspurImageProcessStyle"
 #define InspurImageProcessRotato @"InspurImageProcessRotato"
@@ -313,14 +313,14 @@
 
 @end
 
-@interface OSSImageProcess ()
+@interface InspurOSSImageProcess ()
 
 @property (nonatomic, strong) NSString *endPoint;
 @property (nonatomic, strong) NSURLSession *session;
 
 @end
 
-@implementation OSSImageProcess
+@implementation InspurOSSImageProcess
 
 - (instancetype)initWithEndPoint:(NSString *)endPoint {
     if (self = [super init]) {

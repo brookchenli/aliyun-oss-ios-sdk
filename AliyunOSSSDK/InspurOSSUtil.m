@@ -14,7 +14,7 @@
 #import "OSSLog.h"
 #import "InspurOSSHttpdns.h"
 #import "OSSIPv6Adapter.h"
-#import "OSSReachability.h"
+#import "InspurOSSReachability.h"
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "aos_crc64.h"
@@ -1084,7 +1084,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 
 + (NSString*)buildNetWorkConnectedMsg{
     NSString *tempMessage = @"[network_state]: disconnected";
-    OSSReachability *reach=[OSSReachability reachabilityWithHostName:@"www.apple.com"];
+    InspurOSSReachability *reach=[InspurOSSReachability reachabilityWithHostName:@"www.apple.com"];
     if(reach){
         switch([reach currentReachabilityStatus]){
             case OSSReachableViaWWAN:

@@ -6,8 +6,8 @@
 //  Copyright © 2022 aliyun. All rights reserved.
 //
 
-#import "OSSGetObjectMetaDataResult.h"
+#import "InspurOSSGetObjectMetaDataResult.h"
 
-@implementation OSSGetObjectMetaDataResult
+@implementation InspurOSSGetObjectMetaDataResult
 
 @end

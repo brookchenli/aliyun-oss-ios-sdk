@@ -15,7 +15,7 @@
 #import "InspurOSSNetworking.h"
 #import "OSSXMLDictionary.h"
 #import "OSSIPv6Adapter.h"
-#import "OSSImageProcess.h"
+#import "InspurOSSImageProcess.h"
 
 #import "InspurOSSNetworkingRequestDelegate.h"
 #import "InspurOSSAllRequestNeededMessage.h"
@@ -30,7 +30,7 @@
 #import "InspurOSSGetObjectTaggingRequest.h"
 #import "InspurOSSPutObjectTaggingRequest.h"
 #import "InspurOSSDeleteObjectTaggingRequest.h"
-#import "OSSGetObjectMetaDataRequest.h"
+#import "InspurOSSGetObjectMetaDataRequest.h"
 
 static NSString * const kClientRecordNameWithCommonPrefix = @"oss_partInfos_storage_name";
 static NSString * const kClientRecordNameWithCRC64Suffix = @"-crc64";
@@ -109,7 +109,7 @@ static NSObject *lock;
         self.credentialProvider = credentialProvider;
         self.clientConfiguration = conf;
         
-        _imageProcess = [[OSSImageProcess alloc] initWithEndPoint:endpoint];
+        _imageProcess = [[InspurOSSImageProcess alloc] initWithEndPoint:endpoint];
 
         InspurOSSNetworkingConfiguration * netConf = [InspurOSSNetworkingConfiguration new];
         if (conf) {

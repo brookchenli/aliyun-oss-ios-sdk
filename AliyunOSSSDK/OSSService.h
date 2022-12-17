@@ -38,7 +38,7 @@
 #import "InspurOSSDeleteObjectTaggingRequest.h"
 #import "InspurOSSDeleteObjectTaggingResult.h"
 
-#import "OSSImageProcess.h"
+#import "InspurOSSImageProcess.h"
 
 #import "InspurOSSClient.h"
 #import "OSSModel.h"

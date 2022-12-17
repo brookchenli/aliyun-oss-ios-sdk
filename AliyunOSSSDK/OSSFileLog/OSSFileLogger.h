@@ -20,7 +20,7 @@
 
 #import "OSSDDLog.h"
 
-@class OSSDDLogFileInfo;
+@class InspurOSSDDLogFileInfo;
 
 /**
  * This class provides a logger to write log statements to a file.
@@ -116,7 +116,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  * each representing an existing log file on disk,
  * and containing important information about the log file such as it's modification date and size.
  **/
-@property (nonatomic, readonly, strong) NSArray<OSSDDLogFileInfo *> *unsortedLogFileInfos;
+@property (nonatomic, readonly, strong) NSArray<InspurOSSDDLogFileInfo *> *unsortedLogFileInfos;
 
 /**
  * Just like the `unsortedLogFilePaths` method, but sorts the array.
@@ -137,7 +137,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  * The items in the array are sorted by creation date.
  * The first item in the array will be the most recently created log file.
  **/
-@property (nonatomic, readonly, strong) NSArray<OSSDDLogFileInfo *> *sortedLogFileInfos;
+@property (nonatomic, readonly, strong) NSArray<InspurOSSDDLogFileInfo *> *sortedLogFileInfos;
 
 // Private methods (only to be used by DDFileLogger)
 
@@ -179,7 +179,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  *
  * Archived log files are automatically deleted according to the `maximumNumberOfLogFiles` property.
  **/
-@interface OSSDDLogFileManagerDefault : NSObject <OSSDDLogFileManager>
+@interface InspurOSSDDLogFileManagerDefault : NSObject <OSSDDLogFileManager>
 
 /**
  *  Default initializer
@@ -303,7 +303,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  *  The standard implementation for a file logger
  */
 @interface OSSDDFileLogger : OSSDDAbstractLogger <OSSDDLogger> {
-	OSSDDLogFileInfo *_currentLogFileInfo;
+	InspurOSSDDLogFileInfo *_currentLogFileInfo;
 }
 
 /**
@@ -330,7 +330,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  *  Called when the logger checks archive or not current log file. 
  *  Override this method to exdend standart behavior. By default returns NO.
  */
-- (BOOL)shouldArchiveRecentLogFileInfo:(OSSDDLogFileInfo *)recentLogFileInfo;
+- (BOOL)shouldArchiveRecentLogFileInfo:(InspurOSSDDLogFileInfo *)recentLogFileInfo;
 
 /**
  * Log File Rolling:
@@ -417,7 +417,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  *
  * Otherwise a new file is created and returned.
  **/
-@property (nonatomic, readonly, strong) OSSDDLogFileInfo *currentLogFileInfo;
+@property (nonatomic, readonly, strong) InspurOSSDDLogFileInfo *currentLogFileInfo;
 
 @end
 
@@ -439,7 +439,7 @@ extern unsigned long long const osskDDDefaultLogFilesDiskQuota;
  * If you absolutely must get updated values,
  * you can invoke the reset method which will clear the cache.
  **/
-@interface OSSDDLogFileInfo : NSObject
+@interface InspurOSSDDLogFileInfo : NSObject
 
 @property (strong, nonatomic, readonly) NSString *filePath;
 @property (strong, nonatomic, readonly) NSString *fileName;

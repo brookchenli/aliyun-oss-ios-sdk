@@ -220,7 +220,7 @@ typedef NS_ENUM(NSUInteger, InspurImageResizeMode) {
 
 @end
 
-@interface OSSImageProcess : NSObject
+@interface InspurOSSImageProcess : NSObject
 
 - (instancetype)initWithEndPoint:(NSString *)endPoint;
 

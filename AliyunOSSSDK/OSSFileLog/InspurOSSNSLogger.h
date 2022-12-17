@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "OSSDDLog.h"
 
-@interface OSSNSLogger : OSSDDAbstractLogger <OSSDDLogger>
-@property (class, readonly, strong) OSSNSLogger *sharedInstance;
+@interface InspurOSSNSLogger : OSSDDAbstractLogger <OSSDDLogger>
+@property (class, readonly, strong) InspurOSSNSLogger *sharedInstance;
 @end

@@ -55,7 +55,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface OSSDDLogFileManagerDefault () {
+@interface InspurOSSDDLogFileManagerDefault () {
     NSUInteger _maximumNumberOfLogFiles;
     unsigned long long _logFilesDiskQuota;
     NSString *_logsDirectory;
@@ -69,7 +69,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 
 @end
 
-@implementation OSSDDLogFileManagerDefault
+@implementation InspurOSSDDLogFileManagerDefault
 
 @synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
@@ -186,7 +186,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
         unsigned long long used = 0;
 
         for (NSUInteger i = 0; i < sortedLogFileInfos.count; i++) {
-            OSSDDLogFileInfo *info = sortedLogFileInfos[i];
+            InspurOSSDDLogFileInfo *info = sortedLogFileInfos[i];
             used += info.fileSize;
 
             if (used > diskQuota) {
@@ -211,7 +211,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
         // So in most cases, we do not want to consider this file for deletion.
 
         if (sortedLogFileInfos.count > 0) {
-            OSSDDLogFileInfo *logFileInfo = sortedLogFileInfos[0];
+            InspurOSSDDLogFileInfo *logFileInfo = sortedLogFileInfos[0];
 
             if (!logFileInfo.isArchived) {
                 // Don't delete active file.
@@ -224,7 +224,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
         // removing all logfiles starting with firstIndexToDelete
 
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
-            OSSDDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
+            InspurOSSDDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
 
             OSSNSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
 
@@ -351,7 +351,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
     NSMutableArray *unsortedLogFileInfos = [NSMutableArray arrayWithCapacity:[unsortedLogFilePaths count]];
 
     for (NSString *filePath in unsortedLogFilePaths) {
-        OSSDDLogFileInfo *logFileInfo = [[OSSDDLogFileInfo alloc] initWithFilePath:filePath];
+        InspurOSSDDLogFileInfo *logFileInfo = [[InspurOSSDDLogFileInfo alloc] initWithFilePath:filePath];
 
         [unsortedLogFileInfos addObject:logFileInfo];
     }
@@ -364,7 +364,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 
     NSMutableArray *sortedLogFilePaths = [NSMutableArray arrayWithCapacity:[sortedLogFileInfos count]];
 
-    for (OSSDDLogFileInfo *logFileInfo in sortedLogFileInfos) {
+    for (InspurOSSDDLogFileInfo *logFileInfo in sortedLogFileInfos) {
         [sortedLogFilePaths addObject:[logFileInfo filePath]];
     }
 
@@ -376,7 +376,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 
     NSMutableArray *sortedLogFileNames = [NSMutableArray arrayWithCapacity:[sortedLogFileInfos count]];
 
-    for (OSSDDLogFileInfo *logFileInfo in sortedLogFileInfos) {
+    for (InspurOSSDDLogFileInfo *logFileInfo in sortedLogFileInfos) {
         [sortedLogFileNames addObject:[logFileInfo fileName]];
     }
 
@@ -384,7 +384,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 }
 
 - (NSArray *)sortedLogFileInfos {
-    return  [[self unsortedLogFileInfos] sortedArrayUsingComparator:^NSComparisonResult(OSSDDLogFileInfo   * _Nonnull obj1, OSSDDLogFileInfo   * _Nonnull obj2) {
+    return  [[self unsortedLogFileInfos] sortedArrayUsingComparator:^NSComparisonResult(InspurOSSDDLogFileInfo   * _Nonnull obj1, InspurOSSDDLogFileInfo   * _Nonnull obj2) {
         NSDate *date1 = [NSDate new];
         NSDate *date2 = [NSDate new];
 
@@ -564,7 +564,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
 @implementation OSSDDFileLogger
 
 - (instancetype)init {
-    OSSDDLogFileManagerDefault *defaultLogFileManager = [[OSSDDLogFileManagerDefault alloc] init];
+    InspurOSSDDLogFileManagerDefault *defaultLogFileManager = [[InspurOSSDDLogFileManagerDefault alloc] init];
 
     return [self initWithLogFileManager:defaultLogFileManager];
 }
@@ -868,12 +868,12 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
  *
  * Otherwise a new file is created and returned.
  **/
-- (OSSDDLogFileInfo *)currentLogFileInfo {
+- (InspurOSSDDLogFileInfo *)currentLogFileInfo {
     if (_currentLogFileInfo == nil) {
         NSArray *sortedLogFileInfos = [logFileManager sortedLogFileInfos];
 
         if ([sortedLogFileInfos count] > 0) {
-            OSSDDLogFileInfo *mostRecentLogFileInfo = sortedLogFileInfos[0];
+            InspurOSSDDLogFileInfo *mostRecentLogFileInfo = sortedLogFileInfos[0];
 
             BOOL shouldArchiveMostRecent = NO;
 
@@ -927,7 +927,7 @@ unsigned long long const osskDDDefaultLogFilesDiskQuota   = 5 * 1024 * 1024; // 
         if (_currentLogFileInfo == nil) {
             NSString *currentLogFilePath = [logFileManager createNewLogFile];
 
-            _currentLogFileInfo = [[OSSDDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
+            _currentLogFileInfo = [[InspurOSSDDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
         }
     }
 
@@ -1024,7 +1024,7 @@ static int exception_count = 0;
     [self maybeRollLogFileDueToSize];
 }
 
-- (BOOL)shouldArchiveRecentLogFileInfo:(OSSDDLogFileInfo *)recentLogFileInfo {
+- (BOOL)shouldArchiveRecentLogFileInfo:(InspurOSSDDLogFileInfo *)recentLogFileInfo {
     return NO;
 }
 
@@ -1050,7 +1050,7 @@ static int exception_count = 0;
     static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 #endif
 
-@interface OSSDDLogFileInfo () {
+@interface InspurOSSDDLogFileInfo () {
     __strong NSString *_filePath;
     __strong NSString *_fileName;
     
@@ -1065,7 +1065,7 @@ static int exception_count = 0;
 @end
 
 
-@implementation OSSDDLogFileInfo
+@implementation InspurOSSDDLogFileInfo
 
 @synthesize filePath;
 
@@ -1420,7 +1420,7 @@ static int exception_count = 0;
 
 - (BOOL)isEqual:(id)object {
     if ([object isKindOfClass:[self class]]) {
-        OSSDDLogFileInfo *another = (OSSDDLogFileInfo *)object;
+        InspurOSSDDLogFileInfo *another = (InspurOSSDDLogFileInfo *)object;
 
         return [filePath isEqualToString:[another filePath]];
     }

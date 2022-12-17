@@ -29,9 +29,9 @@
 {
     struct sockaddr sockaddr = {0};
     
-    OSSReachability *reachability = [OSSReachability reachabilityWithAddress:&sockaddr];
+    InspurOSSReachability *reachability = [InspurOSSReachability reachabilityWithAddress:&sockaddr];
     
-    reachability = [OSSReachability reachabilityForInternetConnection];
+    reachability = [InspurOSSReachability reachabilityForInternetConnection];
     [reachability startNotifier];
     [reachability connectionRequired];
 }

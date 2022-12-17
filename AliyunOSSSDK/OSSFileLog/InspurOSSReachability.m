@@ -13,7 +13,7 @@
 #import <netinet/in.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "OSSReachability.h"
+#import "InspurOSSReachability.h"
 
 #pragma mark IPv6 Support
 //Reachability fully support IPv6.  For full details, see ReadMe.md.
@@ -55,9 +55,9 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 #pragma unused (target, flags)
 	NSCAssert(info != NULL, @"info was NULL in ReachabilityCallback");
-	NSCAssert([(__bridge NSObject*) info isKindOfClass: [OSSReachability class]], @"info was wrong class in ReachabilityCallback");
+	NSCAssert([(__bridge NSObject*) info isKindOfClass: [InspurOSSReachability class]], @"info was wrong class in ReachabilityCallback");
 
-    OSSReachability* noteObject = (__bridge OSSReachability *)info;
+    InspurOSSReachability* noteObject = (__bridge InspurOSSReachability *)info;
     // Post a notification to notify the client that the network reachability changed.
     [[NSNotificationCenter defaultCenter] postNotificationName: ossReachabilityChangedNotification object: noteObject];
 }
@@ -65,14 +65,14 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 #pragma mark - Reachability implementation
 
-@implementation OSSReachability
+@implementation InspurOSSReachability
 {
 	SCNetworkReachabilityRef _reachabilityRef;
 }
 
 + (instancetype)reachabilityWithHostName:(NSString *)hostName
 {
-	OSSReachability* returnValue = NULL;
+	InspurOSSReachability* returnValue = NULL;
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
 	if (reachability != NULL)
 	{
@@ -93,7 +93,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, hostAddress);
 
-	OSSReachability* returnValue = NULL;
+	InspurOSSReachability* returnValue = NULL;
 
 	if (reachability != NULL)
 	{
