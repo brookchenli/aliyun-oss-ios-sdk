@@ -1,13 +1,13 @@
 //
-//  OSSGetSymlinkResult.m
+//  OSSPutSymlinkResult.m
 //  AliyunOSSSDK
 //
 //  Created by huaixu on 2018/8/1.
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSGetSymlinkResult.h"
+#import "InspurOSSPutSymlinkResult.h"
 
-@implementation OSSGetSymlinkResult
+@implementation InspurOSSPutSymlinkResult
 
 @end

@@ -6,8 +6,8 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSDeleteMultipleObjectsResult.h"
+#import "InspurOSSDeleteMultipleObjectsResult.h"
 
-@implementation OSSDeleteMultipleObjectsResult
+@implementation InspurOSSDeleteMultipleObjectsResult
 
 @end

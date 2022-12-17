@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@interface OSSInputStreamHelper : NSObject
+@interface InspurOSSInputStreamHelper : NSObject
 
 @property (nonatomic, assign) uint64_t crc64;
 

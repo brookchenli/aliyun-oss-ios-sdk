@@ -6,8 +6,8 @@
 //  Copyright © 2022 aliyun. All rights reserved.
 //
 
-#import "OSSDeleteObjectTaggingResult.h"
+#import "InspurOSSDeleteObjectTaggingResult.h"
 
-@implementation OSSDeleteObjectTaggingResult
+@implementation InspurOSSDeleteObjectTaggingResult
 
 @end

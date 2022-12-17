@@ -1,5 +1,5 @@
 //
-//  OSSGetSymlinkResult.h
+//  OSSPutSymlinkResult.h
 //  AliyunOSSSDK
 //
 //  Created by huaixu on 2018/8/1.
@@ -8,6 +8,6 @@
 
 #import "OSSResult.h"
 
-@interface OSSGetSymlinkResult : OSSResult
+@interface InspurOSSPutSymlinkResult : OSSResult
 
 @end

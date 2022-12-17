@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OSSHttpdns : NSObject
+@interface InspurOSSHttpdns : NSObject
 
 + (instancetype)sharedInstance;
 

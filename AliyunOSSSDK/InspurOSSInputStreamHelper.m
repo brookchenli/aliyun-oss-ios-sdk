@@ -6,11 +6,11 @@
 //  Copyright © 2017年 阿里云. All rights reserved.
 //
 
-#import "OSSInputStreamHelper.h"
+#import "InspurOSSInputStreamHelper.h"
 #import "OSSLog.h"
 #import "aos_crc64.h"
 
-@interface OSSInputStreamHelper ()
+@interface InspurOSSInputStreamHelper ()
 {
     NSInputStream *_inputStream;
     CFAbsoluteTime _startTime;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation OSSInputStreamHelper
+@implementation InspurOSSInputStreamHelper
 
 - (instancetype)initWithFileAtPath:(nonnull NSString *)path
 {

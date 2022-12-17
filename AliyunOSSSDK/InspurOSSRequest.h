@@ -12,7 +12,7 @@
 /**
  The base class of request to OSS.
  */
-@interface OSSRequest : NSObject
+@interface InspurOSSRequest : NSObject
 /**
  Flag of requiring authentication. It's per each request.
  */

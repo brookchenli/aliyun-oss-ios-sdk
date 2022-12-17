@@ -6,10 +6,10 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSRequest.h"
+#import "InspurOSSRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@interface InspurOSSGetObjectACLRequest : OSSRequest
+@interface InspurOSSGetObjectACLRequest : InspurOSSRequest
 
 /**
  the bucket's name which object stored

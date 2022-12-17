@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSRequest.h"
+#import "InspurOSSRequest.h"
 
-@interface InspurOSSGetSymlinkRequest : OSSRequest
+@interface InspurOSSGetSymlinkRequest : InspurOSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 

@@ -8,7 +8,7 @@
 
 #import "OSSResult.h"
 
-@interface OSSGetObjectACLResult : OSSResult
+@interface InspurOSSGetObjectACLResult : OSSResult
 
 /**
  the ACL of object,valid values: @"private",@"public-read",@"public-read-write".

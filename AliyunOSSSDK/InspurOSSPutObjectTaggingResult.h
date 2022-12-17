@@ -1,5 +1,5 @@
 //
-//  OSSDeleteObjectTaggingResult.h
+//  OSSPutObjectTaggingResult.h
 //  AliyunOSSSDK
 //
 //  Created by ws on 2021/5/25.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSDeleteObjectTaggingResult : OSSResult
+@interface InspurOSSPutObjectTaggingResult : OSSResult
 
 @end
 

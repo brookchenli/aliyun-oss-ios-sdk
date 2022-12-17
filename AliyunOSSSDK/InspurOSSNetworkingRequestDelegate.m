@@ -6,17 +6,17 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSNetworkingRequestDelegate.h"
+#import "InspurOSSNetworkingRequestDelegate.h"
 
 #import "OSSAllRequestNeededMessage.h"
 #import "OSSURLRequestRetryHandler.h"
-#import "OSSHttpResponseParser.h"
+#import "InspurOSSHttpResponseParser.h"
 #import "OSSDefine.h"
 #import "OSSUtil.h"
 #import "OSSLog.h"
 #import "OSSIPv6Adapter.h"
 
-@implementation OSSNetworkingRequestDelegate
+@implementation InspurOSSNetworkingRequestDelegate
 
 - (instancetype)init {
     if (self = [super init]) {

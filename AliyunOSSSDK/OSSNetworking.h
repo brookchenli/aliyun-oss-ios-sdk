@@ -10,7 +10,7 @@
 #import "OSSModel.h"
 
 @class OSSSyncMutableDictionary;
-@class OSSNetworkingRequestDelegate;
+@class InspurOSSNetworkingRequestDelegate;
 @class OSSExecutor;
 
 
@@ -42,5 +42,5 @@
 @property (nonatomic, strong) OSSExecutor * taskExecutor;
 
 - (instancetype)initWithConfiguration:(OSSNetworkingConfiguration *)configuration;
-- (OSSTask *)sendRequest:(OSSNetworkingRequestDelegate *)request;
+- (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request;
 @end

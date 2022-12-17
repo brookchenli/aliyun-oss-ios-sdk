@@ -1,5 +1,5 @@
 //
-//  OSSPutObjectTaggingResult.h
+//  GetObjectTaggingResult.h
 //  AliyunOSSSDK
 //
 //  Created by ws on 2021/5/25.
@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSPutObjectTaggingResult : OSSResult
+@interface InspurOSSGetObjectTaggingResult : OSSResult
+
+@property (nonatomic, strong) NSDictionary *tags;
 
 @end
 

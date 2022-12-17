@@ -12,7 +12,7 @@
 #import "CommonCrypto/CommonHMAC.h"
 #import "OSSModel.h"
 #import "OSSLog.h"
-#import "OSSHttpdns.h"
+#import "InspurOSSHttpdns.h"
 #import "OSSIPv6Adapter.h"
 #import "OSSReachability.h"
 #import <CoreTelephony/CTCarrier.h>
@@ -180,7 +180,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
         OSSLogDebug(@"current network is delegate state");
         return host;
     }
-    NSString * ip = [[OSSHttpdns sharedInstance] asynGetIpByHost:host];
+    NSString * ip = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host];
     OSSLogDebug(@"resolved host %@ and get ip: %@", host, ip);
 
     return ip ? [[OSSIPv6Adapter getInstance] handleIpv4Address:ip] : host;

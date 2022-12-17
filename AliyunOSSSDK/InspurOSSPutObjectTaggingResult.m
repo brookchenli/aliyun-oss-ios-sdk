@@ -6,8 +6,8 @@
 //  Copyright © 2021 aliyun. All rights reserved.
 //
 
-#import "OSSPutObjectTaggingResult.h"
+#import "InspurOSSPutObjectTaggingResult.h"
 
-@implementation OSSPutObjectTaggingResult
+@implementation InspurOSSPutObjectTaggingResult
 
 @end

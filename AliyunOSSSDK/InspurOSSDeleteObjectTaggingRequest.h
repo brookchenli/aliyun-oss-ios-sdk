@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InspurOSSDeleteObjectTaggingRequest : OSSRequest
+@interface InspurOSSDeleteObjectTaggingRequest : InspurOSSRequest
 
 /* bucket name */
 @property (nonatomic, copy) NSString *bucketName;

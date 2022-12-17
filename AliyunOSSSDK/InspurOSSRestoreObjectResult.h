@@ -1,13 +1,13 @@
 //
-//  OSSRestoreObjectResult.m
+//  OSSRestoreObjectResult.h
 //  AliyunOSSSDK
 //
 //  Created by huaixu on 2018/8/1.
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSRestoreObjectResult.h"
+#import "OSSResult.h"
 
-@implementation OSSRestoreObjectResult
+@interface InspurOSSRestoreObjectResult : OSSResult
 
 @end

@@ -978,7 +978,7 @@
     [[task continueWithBlock:^id(OSSTask *t) {
         XCTAssertNil(task.error);
         if (t.result != nil) {
-            OSSGetObjectACLResult *result = (OSSGetObjectACLResult *)t.result;
+            InspurOSSGetObjectACLResult *result = (InspurOSSGetObjectACLResult *)t.result;
             XCTAssertEqualObjects(result.grant, @"default");
         }
         
@@ -1221,7 +1221,7 @@
     
     [[getSymlinktask continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetSymlinkResult *result = (OSSGetSymlinkResult *)task.result;
+        InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
         NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
         NSString *metaLocation = (NSString *)[result.httpResponseHeaderFields valueForKey:@"x-oss-meta-location"];
         
@@ -1267,7 +1267,7 @@
     
     [[getSymlinktask continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetSymlinkResult *result = (OSSGetSymlinkResult *)task.result;
+        InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
         NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
         NSString *metaLocation = (NSString *)[result.httpResponseHeaderFields valueForKey:@"x-oss-meta-location"];
         
@@ -1306,7 +1306,7 @@
     OSSTask * restoreObjecTtask = [_client restoreObject:restoreObjectRequest];
     [[restoreObjecTtask continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
-        OSSRestoreObjectResult *result = (OSSRestoreObjectResult *)task.result;
+        InspurOSSRestoreObjectResult *result = (InspurOSSRestoreObjectResult *)task.result;
         XCTAssertEqual(result.httpResponseCode, 202);
         
         return nil;
@@ -1340,7 +1340,7 @@
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
     [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        OSSGetObjectTaggingResult *result = task.result;
+        InspurOSSGetObjectTaggingResult *result = task.result;
         for (NSString *key in [tags allKeys]) {
             XCTAssertTrue([tags[key] isEqualToString:result.tags[key]]);
         }
@@ -1360,7 +1360,7 @@
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
     [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        OSSGetObjectTaggingResult *result = task.result;
+        InspurOSSGetObjectTaggingResult *result = task.result;
         XCTAssertTrue([[result.tags allKeys] count] == 0);
         return nil;
     }] waitUntilFinished];
@@ -1380,7 +1380,7 @@
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
     [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        OSSGetObjectTaggingResult *result = task.result;
+        InspurOSSGetObjectTaggingResult *result = task.result;
         XCTAssertTrue([[result.tags allKeys] count] == 0);
         return nil;
     }] waitUntilFinished];

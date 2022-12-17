@@ -1289,17 +1289,17 @@ id<OSSCredentialProvider> credential, authCredential;
 - (void)testHttpdns {
     NSString * host1 = @"oss-ap-southeast-1.aliyuncs.com";
     NSString * host2 = @"oss-us-east-1.aliyuncs.com";
-    NSString * ip1 = [[OSSHttpdns sharedInstance] asynGetIpByHost:host1];
-    ip1 = [[OSSHttpdns sharedInstance] asynGetIpByHost:host1];
+    NSString * ip1 = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host1];
+    ip1 = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host1];
     XCTAssertNil(ip1);
     
-    NSString * ip2 = [[OSSHttpdns sharedInstance] asynGetIpByHost:host2];
+    NSString * ip2 = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host2];
     XCTAssertNil(ip2);
     
     sleep(3);
     
-    ip1 = [[OSSHttpdns sharedInstance] asynGetIpByHost:host1];
-    ip2 = [[OSSHttpdns sharedInstance] asynGetIpByHost:host2];
+    ip1 = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host1];
+    ip2 = [[InspurOSSHttpdns sharedInstance] asynGetIpByHost:host2];
     XCTAssertNotNil(ip1);
     XCTAssertNotNil(ip2);
 }

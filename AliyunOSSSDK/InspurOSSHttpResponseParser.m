@@ -6,7 +6,7 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSHttpResponseParser.h"
+#import "InspurOSSHttpResponseParser.h"
 
 #import "NSMutableData+OSS_CRC.h"
 #import "OSSXMLDictionary.h"
@@ -14,18 +14,18 @@
 #import "OSSModel.h"
 #import "OSSUtil.h"
 #import "OSSLog.h"
-#import "OSSGetObjectACLResult.h"
-#import "OSSDeleteMultipleObjectsResult.h"
-#import "OSSGetBucketInfoResult.h"
-#import "OSSRestoreObjectResult.h"
-#import "OSSPutSymlinkResult.h"
-#import "OSSGetSymlinkResult.h"
-#import "OSSGetObjectTaggingResult.h"
-#import "OSSPutObjectTaggingResult.h"
-#import "OSSDeleteObjectTaggingResult.h"
+#import "InspurOSSGetObjectACLResult.h"
+#import "InspurOSSDeleteMultipleObjectsResult.h"
+#import "InspurOSSGetBucketInfoResult.h"
+#import "InspurOSSRestoreObjectResult.h"
+#import "InspurOSSPutSymlinkResult.h"
+#import "InspurOSSGetSymlinkResult.h"
+#import "InspurOSSGetObjectTaggingResult.h"
+#import "InspurOSSPutObjectTaggingResult.h"
+#import "InspurOSSDeleteObjectTaggingResult.h"
 
 
-@implementation OSSHttpResponseParser {
+@implementation InspurOSSHttpResponseParser {
     
     OSSOperationType _operationTypeForThisParser;
     
@@ -672,7 +672,7 @@
         }
         case OSSOperationTypeGetObjectACL:
         {
-            OSSGetObjectACLResult * getObjectACLResult = [OSSGetObjectACLResult new];
+            InspurOSSGetObjectACLResult * getObjectACLResult = [InspurOSSGetObjectACLResult new];
             OSSLogDebug(@"GetObjectResponse: %@", _response);
             if (_response)
             {
@@ -735,7 +735,7 @@
             return deleteObjectResult;
         }
         case OSSOperationTypeDeleteMultipleObjects: {
-            OSSDeleteMultipleObjectsResult * deleteObjectResult = [OSSDeleteMultipleObjectsResult new];
+            InspurOSSDeleteMultipleObjectsResult * deleteObjectResult = [InspurOSSDeleteMultipleObjectsResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:deleteObjectResult];
             }
@@ -881,7 +881,7 @@
             return imagePersistResult;
         }
         case OSSOperationTypeGetBucketInfo: {
-            OSSGetBucketInfoResult *bucketInfoResult = [[OSSGetBucketInfoResult alloc] init];
+            InspurOSSGetBucketInfoResult *bucketInfoResult = [[InspurOSSGetBucketInfoResult alloc] init];
             if (_collectingData)
             {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
@@ -897,13 +897,13 @@
                     bucketInfoResult.creationDate = [result valueForKey:@"CreationDate"];
                     
                     if ([result valueForKey:@"Owner"]) {
-                        bucketInfoResult.owner = [[OSSBucketOwner alloc] init];
+                        bucketInfoResult.owner = [[InspurOSSBucketOwner alloc] init];
                         bucketInfoResult.owner.userName = [[result valueForKey:@"Owner"] valueForKey:@"DisplayName"];
                         bucketInfoResult.owner.userId = [[result valueForKey:@"Owner"] valueForKey:@"ID"];
                     }
                     
                     if ([result valueForKey:@"AccessControlList"]) {
-                        bucketInfoResult.acl = [OSSAccessControlList new];
+                        bucketInfoResult.acl = [InspurOSSAccessControlList new];
                         bucketInfoResult.acl.grant = [[result valueForKey:@"AccessControlList"] valueForKey:@"Grant"];
                     }
                 }
@@ -914,28 +914,28 @@
             return bucketInfoResult;
         }
         case OSSOperationTypeRestoreObject: {
-            OSSRestoreObjectResult * restoreObjectResult = [OSSRestoreObjectResult new];
+            InspurOSSRestoreObjectResult * restoreObjectResult = [InspurOSSRestoreObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:restoreObjectResult];
             }
             return restoreObjectResult;
         }
         case OSSOperationTypePutSymlink: {
-            OSSPutSymlinkResult * putSymlinkResult = [OSSPutSymlinkResult new];
+            InspurOSSPutSymlinkResult * putSymlinkResult = [InspurOSSPutSymlinkResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:putSymlinkResult];
             }
             return putSymlinkResult;
         }
         case OSSOperationTypeGetSymlink: {
-            OSSGetSymlinkResult * getSymlinkResult = [OSSGetSymlinkResult new];
+            InspurOSSGetSymlinkResult * getSymlinkResult = [InspurOSSGetSymlinkResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:getSymlinkResult];
             }
             return getSymlinkResult;
         }
         case OSSOperationTypeGetObjectTagging: {
-            OSSGetObjectTaggingResult *result = [OSSGetObjectTaggingResult new];
+            InspurOSSGetObjectTaggingResult *result = [InspurOSSGetObjectTaggingResult new];
             NSMutableDictionary *tags = [NSMutableDictionary dictionary];
             if (_collectingData)
             {
@@ -966,14 +966,14 @@
             return result;
         }
         case OSSOperationTypePutObjectTagging: {
-            OSSPutObjectTaggingResult *result = [OSSPutObjectTaggingResult new];
+            InspurOSSPutObjectTaggingResult *result = [InspurOSSPutObjectTaggingResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:result];
             }
             return result;
         }
         case OSSOperationTypeDeleteObjectTagging: {
-            OSSDeleteObjectTaggingResult *result = [OSSDeleteObjectTaggingResult new];
+            InspurOSSDeleteObjectTaggingResult *result = [InspurOSSDeleteObjectTaggingResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:result];
             }

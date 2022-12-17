@@ -8,7 +8,7 @@
 
 #import "OSSResult.h"
 
-@interface OSSDeleteMultipleObjectsResult : OSSResult
+@interface InspurOSSDeleteMultipleObjectsResult : OSSResult
 
 @property (nonatomic, copy) NSArray<NSString *> *deletedObjects;
 

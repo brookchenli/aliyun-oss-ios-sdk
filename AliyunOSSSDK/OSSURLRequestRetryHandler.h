@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OSSConstants.h"
 
-@class OSSNetworkingRequestDelegate;
+@class InspurOSSNetworkingRequestDelegate;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)defaultRetryHandler;
 
 - (OSSNetworkingRetryType)shouldRetry:(uint32_t)currentRetryCount
-                      requestDelegate:(OSSNetworkingRequestDelegate *)delegate
+                      requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate
                              response:(NSHTTPURLResponse *)response
                                 error:(NSError *)error;
 

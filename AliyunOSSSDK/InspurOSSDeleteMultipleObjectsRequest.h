@@ -6,11 +6,11 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 #import <Foundation/Foundation.h>
-#import "OSSRequest.h"
+#import "InspurOSSRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InspurOSSDeleteMultipleObjectsRequest : OSSRequest
+@interface InspurOSSDeleteMultipleObjectsRequest : InspurOSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 

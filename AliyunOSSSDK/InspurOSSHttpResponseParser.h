@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  HTTP response parser
  */
-@interface OSSHttpResponseParser : NSObject
+@interface InspurOSSHttpResponseParser : NSObject
 
 @property (nonatomic, copy) OSSNetworkingOnRecieveDataBlock onRecieveBlock;
 

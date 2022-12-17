@@ -8,7 +8,7 @@
 
 #import "OSSResult.h"
 
-@interface OSSBucketOwner : NSObject
+@interface InspurOSSBucketOwner : NSObject
 
 @property (nonatomic, copy) NSString *userName;
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface OSSAccessControlList : NSObject
+@interface InspurOSSAccessControlList : NSObject
 
 @property (nonatomic, copy) NSString *grant;
 
@@ -24,7 +24,7 @@
 
 
 
-@interface OSSGetBucketInfoResult : OSSResult
+@interface InspurOSSGetBucketInfoResult : OSSResult
 
 /// Created date.
 @property (nonatomic, copy) NSString *creationDate;
@@ -50,8 +50,8 @@
 @property (nonatomic, copy) NSString *extranetEndpoint;
 
 /// Bucket owner.
-@property (nonatomic, strong) OSSBucketOwner *owner;
+@property (nonatomic, strong) InspurOSSBucketOwner *owner;
 
-@property (nonatomic, strong) OSSAccessControlList *acl;
+@property (nonatomic, strong) InspurOSSAccessControlList *acl;
 
 @end

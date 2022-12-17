@@ -12,12 +12,12 @@
 
 @class OSSAllRequestNeededMessage;
 @class OSSURLRequestRetryHandler;
-@class OSSHttpResponseParser;
+@class InspurOSSHttpResponseParser;
 
 /**
  The proxy object class for each OSS request.
  */
-@interface OSSNetworkingRequestDelegate : NSObject
+@interface InspurOSSNetworkingRequestDelegate : NSObject
 
 @property (nonatomic, strong) NSMutableArray * interceptors;
 
@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) OSSAllRequestNeededMessage *allNeededMessage;
 @property (nonatomic, strong) OSSURLRequestRetryHandler *retryHandler;
-@property (nonatomic, strong) OSSHttpResponseParser *responseParser;
+@property (nonatomic, strong) InspurOSSHttpResponseParser *responseParser;
 
 @property (nonatomic, strong) NSData * uploadingData;
 @property (nonatomic, strong) NSURL * uploadingFileURL;

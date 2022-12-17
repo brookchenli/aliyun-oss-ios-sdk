@@ -7,7 +7,7 @@
 //
 
 #import "OSSLog.h"
-#import "OSSHttpdns.h"
+#import "InspurOSSHttpdns.h"
 #import "OSSIPv6Adapter.h"
 
 NSString * const OSS_HTTPDNS_SERVER_IP = @"203.107.1.1";
@@ -28,16 +28,16 @@ NSTimeInterval const PRERESOLVE_IN_ADVANCE_IN_SECOND = 10; // Once the remaining
 @end
 
 
-@implementation OSSHttpdns {
+@implementation InspurOSSHttpdns {
     NSMutableDictionary * gHostIpMap;
     NSMutableSet * penddingSet;
 }
 
 + (instancetype)sharedInstance {
-    static OSSHttpdns * sharedInstance = nil;
+    static InspurOSSHttpdns * sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [OSSHttpdns new];
+        sharedInstance = [InspurOSSHttpdns new];
     });
     return sharedInstance;
 }

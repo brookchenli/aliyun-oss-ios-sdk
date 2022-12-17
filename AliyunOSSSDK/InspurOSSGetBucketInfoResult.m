@@ -6,18 +6,18 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSGetBucketInfoResult.h"
+#import "InspurOSSGetBucketInfoResult.h"
 
-@implementation OSSBucketOwner
-
-@end
-
-@implementation OSSAccessControlList
+@implementation InspurOSSBucketOwner
 
 @end
 
+@implementation InspurOSSAccessControlList
+
+@end
 
 
-@implementation OSSGetBucketInfoResult
+
+@implementation InspurOSSGetBucketInfoResult
 
 @end

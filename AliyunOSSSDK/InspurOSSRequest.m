@@ -6,21 +6,21 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSRequest.h"
-#import "OSSNetworkingRequestDelegate.h"
+#import "InspurOSSRequest.h"
+#import "InspurOSSNetworkingRequestDelegate.h"
 
-@interface OSSRequest ()
+@interface InspurOSSRequest ()
 
-@property (nonatomic, strong) OSSNetworkingRequestDelegate *requestDelegate;
+@property (nonatomic, strong) InspurOSSNetworkingRequestDelegate *requestDelegate;
 
 @end
 
 
-@implementation OSSRequest
+@implementation InspurOSSRequest
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.requestDelegate = [OSSNetworkingRequestDelegate new];
+        self.requestDelegate = [InspurOSSNetworkingRequestDelegate new];
         self.isAuthenticationRequired = YES;
     }
     return self;

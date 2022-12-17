@@ -7,13 +7,13 @@
 //
 
 #import "OSSURLRequestRetryHandler.h"
-#import "OSSNetworkingRequestDelegate.h"
+#import "InspurOSSNetworkingRequestDelegate.h"
 #import "OSSDefine.h"
 
 @implementation OSSURLRequestRetryHandler
 
 - (OSSNetworkingRetryType)shouldRetry:(uint32_t)currentRetryCount
-                      requestDelegate:(OSSNetworkingRequestDelegate *)delegate
+                      requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate
                              response:(NSHTTPURLResponse *)response
                                 error:(NSError *)error {
     

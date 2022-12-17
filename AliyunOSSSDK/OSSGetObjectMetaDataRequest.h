@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSGetObjectMetaDataRequest : OSSRequest
+@interface OSSGetObjectMetaDataRequest : InspurOSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 @property (nonatomic, copy) NSString *objectName;

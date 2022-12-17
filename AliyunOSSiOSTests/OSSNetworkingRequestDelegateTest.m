@@ -48,7 +48,7 @@
     message.objectKey = OBJECT_KEY;
     message.isHostInCnameExcludeList = NO;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     [delegate buildInternalHttpRequest];
     NSString *url = delegate.internalRequest.URL.absoluteString;
@@ -63,7 +63,7 @@
     message.objectKey = OBJECT_KEY;
     message.isHostInCnameExcludeList = YES;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     [delegate buildInternalHttpRequest];
     NSString *url = delegate.internalRequest.URL.absoluteString;
@@ -78,7 +78,7 @@
     message.objectKey = OBJECT_KEY;
     message.isHostInCnameExcludeList = YES;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     delegate.isPathStyleAccessEnable = YES;
     [delegate buildInternalHttpRequest];
@@ -93,7 +93,7 @@
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     delegate.isPathStyleAccessEnable = YES;
     [delegate buildInternalHttpRequest];
@@ -106,7 +106,7 @@
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
     
-    delegate = [OSSNetworkingRequestDelegate new];
+    delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     delegate.isPathStyleAccessEnable = YES;
     [delegate buildInternalHttpRequest];
@@ -121,7 +121,7 @@
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     delegate.isCustomPathPrefixEnable = YES;
     [delegate buildInternalHttpRequest];
@@ -137,7 +137,7 @@
     message.objectKey = OBJECT_KEY;
     message.isHostInCnameExcludeList = YES;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     delegate.isCustomPathPrefixEnable = YES;
     delegate.isPathStyleAccessEnable = YES;
@@ -153,7 +153,7 @@
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     [delegate buildInternalHttpRequest];
     NSString *url = delegate.internalRequest.URL.absoluteString;
@@ -166,7 +166,7 @@
     message.endpoint = [SCHEME stringByAppendingString:ENDPOINT];
     message.bucketName = BUCKET_NAME;
     
-    OSSNetworkingRequestDelegate *delegate = [OSSNetworkingRequestDelegate new];
+    InspurOSSNetworkingRequestDelegate *delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     [delegate buildInternalHttpRequest];
     NSString *url = delegate.internalRequest.URL.absoluteString;
@@ -176,7 +176,7 @@
     message = [OSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:ENDPOINT];
     
-    delegate = [OSSNetworkingRequestDelegate new];
+    delegate = [InspurOSSNetworkingRequestDelegate new];
     delegate.allNeededMessage = message;
     [delegate buildInternalHttpRequest];
     url = delegate.internalRequest.URL.absoluteString;

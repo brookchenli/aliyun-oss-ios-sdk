@@ -13,10 +13,10 @@
 #import "OSSUtil.h"
 #import "OSSLog.h"
 #import "OSSXMLDictionary.h"
-#import "OSSInputStreamHelper.h"
-#import "OSSNetworkingRequestDelegate.h"
+#import "InspurOSSInputStreamHelper.h"
+#import "InspurOSSNetworkingRequestDelegate.h"
 #import "OSSURLRequestRetryHandler.h"
-#import "OSSHttpResponseParser.h"
+#import "InspurOSSHttpResponseParser.h"
 
 @implementation OSSNetworkingConfiguration
 @end
@@ -74,7 +74,7 @@
     return self;
 }
 
-- (OSSTask *)sendRequest:(OSSNetworkingRequestDelegate *)request {
+- (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         OSSLogVerbose(@"NetWorkConnectedMsg : %@",[OSSUtil buildNetWorkConnectedMsg]);
         NSString *operator = [OSSUtil buildOperatorMsg];
@@ -90,7 +90,7 @@
 
     OSSTaskCompletionSource * taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
 
-    __weak OSSNetworkingRequestDelegate *weakRequest= request;
+    __weak InspurOSSNetworkingRequestDelegate *weakRequest= request;
     request.completionHandler = ^(id responseObject, NSError * error) {
         [weakRequest reset];
         
@@ -109,7 +109,7 @@
     return taskCompletionSource.task;
 }
 
-- (void)checkForCrc64WithResult:(nonnull id)response requestDelegate:(OSSNetworkingRequestDelegate *)delegate taskCompletionSource:(OSSTaskCompletionSource *)source
+- (void)checkForCrc64WithResult:(nonnull id)response requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate taskCompletionSource:(OSSTaskCompletionSource *)source
 {
     OSSResult *result = (OSSResult *)response;
     BOOL hasRange = [delegate.internalRequest valueForHTTPHeaderField:@"Range"] != nil;
@@ -141,7 +141,7 @@
             OSSLogVerbose(@"delegate.uploadingFileURL : %@",delegate.uploadingFileURL);
             if (delegate.uploadingFileURL)
             {
-                OSSInputStreamHelper *helper = [[OSSInputStreamHelper alloc] initWithURL:delegate.uploadingFileURL];
+                InspurOSSInputStreamHelper *helper = [[InspurOSSInputStreamHelper alloc] initWithURL:delegate.uploadingFileURL];
                 [helper syncReadBuffers];
                 if (helper.crc64 != 0) {
                     result.localCRC64ecma = [NSString stringWithFormat:@"%llu",helper.crc64];
@@ -208,7 +208,7 @@
     }
 }
 
-- (void)dataTaskWithDelegate:(OSSNetworkingRequestDelegate *)requestDelegate {
+- (void)dataTaskWithDelegate:(InspurOSSNetworkingRequestDelegate *)requestDelegate {
 
     [[[[[OSSTask taskWithResult:nil] continueWithExecutor:self.taskExecutor withSuccessBlock:^id(OSSTask *task) {
         OSSLogVerbose(@"start to intercept request");
@@ -271,7 +271,7 @@
         OSSLogError(@"%@,error: %@", NSStringFromSelector(_cmd), error);
     }
     
-    OSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(sessionTask.taskIdentifier)];
+    InspurOSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(sessionTask.taskIdentifier)];
     [self.sessionDelagateManager removeObjectForKey:@(sessionTask.taskIdentifier)];
 
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *)sessionTask.response;
@@ -389,7 +389,7 @@
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
-    OSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(task.taskIdentifier)];
+    InspurOSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(task.taskIdentifier)];
     if (delegate.uploadProgress)
     {
         delegate.uploadProgress(bytesSent, totalBytesSent, totalBytesExpectedToSend);
@@ -449,7 +449,7 @@
     /* background upload task will not call back didRecieveResponse */
     OSSLogVerbose(@"%@,response: %@", NSStringFromSelector(_cmd), response);
     
-    OSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(dataTask.taskIdentifier)];
+    InspurOSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(dataTask.taskIdentifier)];
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *)response;
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 && httpResponse.statusCode != 203) {
         [delegate.responseParser consumeHttpResponse:httpResponse];
@@ -461,7 +461,7 @@
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-    OSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(dataTask.taskIdentifier)];
+    InspurOSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(dataTask.taskIdentifier)];
 
     /* background upload task will not call back didRecieveResponse.
        so if we recieve response data after background uploading file,
