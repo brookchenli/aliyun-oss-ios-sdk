@@ -46,7 +46,7 @@
 - (InspurOSSTask *)validateRequestParams {
     NSString * errorMessage = nil;
     
-    if ((self.operType == OSSOperationTypeAppendObject || self.operType == OSSOperationTypePutObject || self.operType == OSSOperationTypeUploadPart)
+    if ((self.operType == InspurOSSOperationTypeAppendObject || self.operType == InspurOSSOperationTypePutObject || self.operType == InspurOSSOperationTypeUploadPart)
         && !self.uploadingData && !self.uploadingFileURL) {
         errorMessage = @"This operation need data or file to upload but none is set";
     }
@@ -56,9 +56,9 @@
     }
     
     if (errorMessage) {
-        return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                          code:OSSClientErrorCodeInvalidArgument
-                                                      userInfo:@{OSSErrorMessageTOKEN: errorMessage}]];
+        return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                          code:InspurOSSClientErrorCodeInvalidArgument
+                                                      userInfo:@{InspurOSSErrorMessageTOKEN: errorMessage}]];
     } else {
         return [self.allNeededMessage validateRequestParamsInOperationType:self.operType];
     }

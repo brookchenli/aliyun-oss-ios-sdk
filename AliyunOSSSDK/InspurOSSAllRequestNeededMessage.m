@@ -30,14 +30,14 @@
     _headerParams = [headerParams mutableCopy];
 }
 
-- (InspurOSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType {
+- (InspurOSSTask *)validateRequestParamsInOperationType:(InspurOSSOperationType)operType {
     NSString * errorMessage = nil;
     
     if (!self.endpoint) {
         errorMessage = @"Endpoint should not be nil";
     }
     
-    if (!self.bucketName && operType != OSSOperationTypeGetService && operType != OSSOperationTypeListService) {
+    if (!self.bucketName && operType != InspurOSSOperationTypeGetService && operType != InspurOSSOperationTypeListService) {
         errorMessage = @"Bucket name should not be nil";
     }
     
@@ -46,42 +46,42 @@
     }
     
     if (!self.objectKey &&
-        (operType != OSSOperationTypeGetBucket && operType != OSSOperationTypeCreateBucket
-         && operType != OSSOperationTypeDeleteBucket && operType != OSSOperationTypeGetService
-         && operType != OSSOperationTypeGetBucketACL&& operType != OSSOperationTypeDeleteMultipleObjects
-         && operType != OSSOperationTypeListMultipartUploads
-         && operType != OSSOperationTypeGetBucketInfo
-         && operType != OSSOperationTypeListService
-         && operType != OSSOperationTypeQueryBucketExist
-         && operType != OSSOperationTypeGetBucketLocation
-         && operType != OSSOperationTypePutBucketACL
-         && operType != OSSOperationTypeGetBucketCORS
-         && operType != OSSOperationTypePutBucketCORS
-         && operType != OSSOperationTypeDeleteBucketCORS
-         && operType != OSSOperationTypeGetBucketVersioning
-         && operType != OSSOperationTypePutBucketVersioning
-         && operType != OSSOperationTypeGetBucketEncryption
-         && operType != OSSOperationTypePutBucketEncryption
-         && operType != OSSOperationTypeDeleteBucketEncryption
-         && operType != OSSOperationTypeGetBucketWebsite
-         && operType != OSSOperationTypePutBucketWebsite
-         && operType != OSSOperationTypeDeleteBucketWebsite
-         && operType != OSSOperationTypeGetBucketDomain
-         && operType != OSSOperationTypePutBucketDomain
-         && operType != OSSOperationTypeDeleteBucketDomain
+        (operType != InspurOSSOperationTypeGetBucket && operType != InspurOSSOperationTypeCreateBucket
+         && operType != InspurOSSOperationTypeDeleteBucket && operType != InspurOSSOperationTypeGetService
+         && operType != InspurOSSOperationTypeGetBucketACL&& operType != InspurOSSOperationTypeDeleteMultipleObjects
+         && operType != InspurOSSOperationTypeListMultipartUploads
+         && operType != InspurOSSOperationTypeGetBucketInfo
+         && operType != InspurOSSOperationTypeListService
+         && operType != InspurOSSOperationTypeQueryBucketExist
+         && operType != InspurOSSOperationTypeGetBucketLocation
+         && operType != InspurOSSOperationTypePutBucketACL
+         && operType != InspurOSSOperationTypeGetBucketCORS
+         && operType != InspurOSSOperationTypePutBucketCORS
+         && operType != InspurOSSOperationTypeDeleteBucketCORS
+         && operType != InspurOSSOperationTypeGetBucketVersioning
+         && operType != InspurOSSOperationTypePutBucketVersioning
+         && operType != InspurOSSOperationTypeGetBucketEncryption
+         && operType != InspurOSSOperationTypePutBucketEncryption
+         && operType != InspurOSSOperationTypeDeleteBucketEncryption
+         && operType != InspurOSSOperationTypeGetBucketWebsite
+         && operType != InspurOSSOperationTypePutBucketWebsite
+         && operType != InspurOSSOperationTypeDeleteBucketWebsite
+         && operType != InspurOSSOperationTypeGetBucketDomain
+         && operType != InspurOSSOperationTypePutBucketDomain
+         && operType != InspurOSSOperationTypeDeleteBucketDomain
          
-         && operType != OSSOperationTypeGetBucketLifeCycle
-         && operType != OSSOperationTypePutBucketLifeCycle
-         && operType != OSSOperationTypeDeleteBucketLifeCycle
+         && operType != InspurOSSOperationTypeGetBucketLifeCycle
+         && operType != InspurOSSOperationTypePutBucketLifeCycle
+         && operType != InspurOSSOperationTypeDeleteBucketLifeCycle
          
-         && operType != OSSOperationTypeGetBucketPolicy
-         && operType != OSSOperationTypePutBucketPolicy
-         && operType != OSSOperationTypeDeleteBucketPolicy
+         && operType != InspurOSSOperationTypeGetBucketPolicy
+         && operType != InspurOSSOperationTypePutBucketPolicy
+         && operType != InspurOSSOperationTypeDeleteBucketPolicy
          
-         && operType != OSSOperationTypeGetObjectVersions
-         && operType != OSSOperationTypeDeleteObjectVersions
+         && operType != InspurOSSOperationTypeGetObjectVersions
+         && operType != InspurOSSOperationTypeDeleteObjectVersions
          
-         && operType != OSSOperationTypeInitMultipartUpload)) {
+         && operType != InspurOSSOperationTypeInitMultipartUpload)) {
             errorMessage = @"Object key should not be nil";
         }
     
@@ -92,9 +92,9 @@
     }
     
     if (errorMessage) {
-        return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                          code:OSSClientErrorCodeInvalidArgument
-                                                      userInfo:@{OSSErrorMessageTOKEN: errorMessage}]];
+        return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                          code:InspurOSSClientErrorCodeInvalidArgument
+                                                      userInfo:@{InspurOSSErrorMessageTOKEN: errorMessage}]];
     } else {
         return [InspurOSSTask taskWithResult:nil];
     }

@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL crc64Verifiable;
 
-- (instancetype)initForOperationType:(OSSOperationType)operationType;
+- (instancetype)initForOperationType:(InspurOSSOperationType)operationType;
 - (void)consumeHttpResponse:(NSHTTPURLResponse *)response;
 - (InspurOSSTask *)consumeHttpResponseBody:(NSData *)data;
 - (nullable id)constructResultObject;

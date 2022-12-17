@@ -424,7 +424,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -458,7 +458,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     
     [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(task.error.code, OSSClientErrorCodeExcpetionCatched);
+        XCTAssertEqual(task.error.code, InspurOSSClientErrorCodeExcpetionCatched);
         return nil;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
@@ -493,7 +493,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -525,7 +525,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -563,7 +563,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -617,7 +617,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
         InspurOSSResumableUploadResult * resumableUploadResult = task.result;
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -655,7 +655,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
         if (isDelete){
             XCTAssertTrue(![[NSFileManager defaultManager] fileExistsAtPath:recordFilePath]);
@@ -703,7 +703,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -767,7 +767,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -855,7 +855,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }] waitUntilFinished];
 
@@ -905,7 +905,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
     InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
     [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeInvalidArgument, task.error.code);
         NSLog(@"task.error: %@", task.error);
         return nil;
     }] waitUntilFinished];
@@ -1113,7 +1113,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
                                                    onCompleted:^(BOOL isSuccess, NSError *error) {
                                                        NSLog(@"1. error: %@", error);
                                                        XCTAssertFalse(isSuccess);
-                                                       XCTAssertEqual(error.code, OSSClientErrorCodeTaskCancelled);
+                                                       XCTAssertEqual(error.code, InspurOSSClientErrorCodeTaskCancelled);
                                                    } onProgress:^(float progress) {
                                                        NSLog(@"1. progress: %f", progress);
                                                        progValue = progress;
@@ -1582,7 +1582,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
             XCTAssertNil(task.error);
             if (task.error) {
                 NSLog(@"error: %@", task.error);
-                if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+                if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                     // The upload cannot be resumed. Needs to re-initiate a upload.
                 }
             } else {
@@ -1610,7 +1610,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
             XCTAssertNil(task.error);
             if (task.error) {
                 NSLog(@"error: %@", task.error);
-                if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+                if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                     // The upload cannot be resumed. Needs to re-initiate a upload.
                 }
             } else {

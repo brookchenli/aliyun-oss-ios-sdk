@@ -104,9 +104,9 @@
     {
         if (error != nil)
         {
-            *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                         code:OSSClientErrorCodeSignFailed
-                                     userInfo:@{OSSErrorMessageTOKEN: @"accessKey or secretKey can't be null"}];
+            *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                         code:InspurOSSClientErrorCodeSignFailed
+                                     userInfo:@{InspurOSSErrorMessageTOKEN: @"accessKey or secretKey can't be null"}];
         }
         
         return nil;
@@ -136,8 +136,8 @@
         signature = self.signContent(content, error);
     }
     if (*error) {
-        *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                     code:OSSClientErrorCodeSignFailed
+        *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                     code:InspurOSSClientErrorCodeSignFailed
                                  userInfo:[[NSDictionary alloc] initWithDictionary:[*error userInfo]]];
         return nil;
     }
@@ -187,9 +187,9 @@
     {
         if (error != nil)
         {
-            *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                         code:OSSClientErrorCodeSignFailed
-                                     userInfo:@{OSSErrorMessageTOKEN: @"Can't get a federation token"}];
+            *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                         code:InspurOSSClientErrorCodeSignFailed
+                                     userInfo:@{InspurOSSErrorMessageTOKEN: @"Can't get a federation token"}];
         }
         
         return nil;
@@ -290,13 +290,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.maxRetryCount = OSSDefaultRetryCount;
-        self.maxConcurrentRequestCount = OSSDefaultMaxConcurrentNum;
+        self.maxRetryCount = InspurOSSDefaultRetryCount;
+        self.maxConcurrentRequestCount = InspurOSSDefaultMaxConcurrentNum;
         self.enableBackgroundTransmitService = NO;
         self.isHttpdnsEnable = NO;
         self.backgroundSesseionIdentifier = BACKGROUND_SESSION_IDENTIFIER;
-        self.timeoutIntervalForRequest = OSSDefaultTimeoutForRequestInSecond;
-        self.timeoutIntervalForResource = OSSDefaultTimeoutForResourceInSecond;
+        self.timeoutIntervalForRequest = InspurOSSDefaultTimeoutForRequestInSecond;
+        self.timeoutIntervalForResource = InspurOSSDefaultTimeoutForResourceInSecond;
         self.isPathStyleAccessEnable = NO;
         self.isCustomPathPrefixEnable = NO;
         self.cnameExcludeList = @[];
@@ -374,7 +374,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
         [requestMessage.headerParams oss_setObject:federationToken.tToken forKey:@"x-oss-security-token"];
     }
     
-    [requestMessage.headerParams oss_setObject:requestMessage.contentSHA1 forKey:OSSHttpHeaderHashSHA1];
+    [requestMessage.headerParams oss_setObject:requestMessage.contentSHA1 forKey:InspurOSSHttpHeaderHashSHA1];
         
     /* construct CanonicalizedOSSHeaders */
     if (requestMessage.headerParams) {
@@ -481,12 +481,12 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
         if (self.clientConfiguration.isAllowUACarrySystemInfo) {
             NSString *systemName = [[[UIDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
             NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-            userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, OSSSDKVersion, systemName, systemVersion, localeIdentifier];
+            userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, InspurOSSSDKVersion, systemName, systemVersion, localeIdentifier];
         } else {
-            userAgent = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, OSSSDKVersion, localeIdentifier];
+            userAgent = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, InspurOSSSDKVersion, localeIdentifier];
         }
 #elif TARGET_OS_OSX
-        userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, OSSSDKVersion, @"OSX", [NSProcessInfo processInfo].operatingSystemVersionString, localeIdentifier];
+        userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, InspurOSSSDKVersion, @"OSX", [NSProcessInfo processInfo].operatingSystemVersionString, localeIdentifier];
 #endif
     });
     if(customUserAgent){
@@ -612,7 +612,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
 {
     self = [super init];
     if (self) {
-        _storageClass = OSSBucketStorageClassStandard;
+        _storageClass = InspurOSSBucketStorageClassStandard;
     }
     return self;
 }
@@ -620,13 +620,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
 - (NSString *)storageClassAsString {
     NSString *storageClassString = nil;
     switch (_storageClass) {
-        case OSSBucketStorageClassStandard:
+        case InspurOSSBucketStorageClassStandard:
             storageClassString = @"Standard";
             break;
-        case OSSBucketStorageClassIA:
+        case InspurOSSBucketStorageClassIA:
             storageClassString = @"IA";
             break;
-        case OSSBucketStorageClassArchive:
+        case InspurOSSBucketStorageClassArchive:
             storageClassString = @"Archive";
             break;
         default:

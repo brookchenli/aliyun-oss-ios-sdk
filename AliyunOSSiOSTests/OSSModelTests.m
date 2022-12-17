@@ -57,7 +57,7 @@
     
     InspurOSSAllRequestNeededMessage *allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];
-    NSString *expectValue = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, OSSSDKVersion, location];
+    NSString *expectValue = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, InspurOSSSDKVersion, location];
     XCTAssertTrue([allRequestMessage.headerParams[ua] isEqualToString:expectValue]);
     
     clientConfig = [InspurOSSClientConfiguration new];
@@ -67,7 +67,7 @@
     
     allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];
-    expectValue = [NSString stringWithFormat:@"%@/%@(/%@)/%@", OSSUAPrefix, OSSSDKVersion, location, clientConfig.userAgentMark];
+    expectValue = [NSString stringWithFormat:@"%@/%@(/%@)/%@", OSSUAPrefix, InspurOSSSDKVersion, location, clientConfig.userAgentMark];
     XCTAssertTrue([allRequestMessage.headerParams[ua] isEqualToString:expectValue]);
 }
 

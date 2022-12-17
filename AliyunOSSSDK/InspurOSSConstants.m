@@ -8,14 +8,14 @@
 
 #import "InspurOSSConstants.h"
 
-NSString * const OSSXMLDictionaryAttributesKey = @"__attributes";
-NSString * const OSSXMLDictionaryCommentsKey = @"__comments";
-NSString * const OSSXMLDictionaryTextKey = @"__text";
-NSString * const OSSXMLDictionaryNodeNameKey = @"__name";
-NSString * const OSSXMLDictionaryAttributePrefix = @"_";
+NSString * const InspurOSSXMLDictionaryAttributesKey = @"__attributes";
+NSString * const InspurOSSXMLDictionaryCommentsKey = @"__comments";
+NSString * const InspurOSSXMLDictionaryTextKey = @"__text";
+NSString * const InspurOSSXMLDictionaryNodeNameKey = @"__name";
+NSString * const InspurXMLDictionaryAttributePrefix = @"_";
 
-NSString * const OSSHTTPMethodHEAD = @"HEAD";
-NSString * const OSSHTTPMethodGET = @"GET";
-NSString * const OSSHTTPMethodPUT = @"PUT";
-NSString * const OSSHTTPMethodPOST = @"POST";
-NSString * const OSSHTTPMethodDELETE = @"DELETE";
+NSString * const InspurOSSHTTPMethodHEAD = @"HEAD";
+NSString * const InspurHTTPMethodGET = @"GET";
+NSString * const InspurHTTPMethodPUT = @"PUT";
+NSString * const InspurOSSHTTPMethodPOST = @"POST";
+NSString * const InspurOSSHTTPMethodDELETE = @"DELETE";

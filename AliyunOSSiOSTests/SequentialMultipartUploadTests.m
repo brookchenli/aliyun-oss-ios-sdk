@@ -80,7 +80,7 @@
     InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
     [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(t.error.code, InspurOSSClientErrorCodeTaskCancelled);
         
         return nil;
     }] waitUntilFinished];
@@ -104,7 +104,7 @@
     InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
     [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(t.error.code, InspurOSSClientErrorCodeTaskCancelled);
         
         return nil;
     }] waitUntilFinished];
@@ -128,7 +128,7 @@
     InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
     [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(t.error.code, InspurOSSClientErrorCodeTaskCancelled);
         
         return nil;
     }] waitUntilFinished];
@@ -168,7 +168,7 @@
     InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
     [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(t.error.code, InspurOSSClientErrorCodeTaskCancelled);
         
         return nil;
     }] waitUntilFinished];
@@ -209,7 +209,7 @@
     InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
     [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(t.error.code, InspurOSSClientErrorCodeTaskCancelled);
         
         return nil;
     }] waitUntilFinished];

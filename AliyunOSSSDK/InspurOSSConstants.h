@@ -42,125 +42,125 @@ typedef NS_ENUM(NSInteger, OSSNetworkingRetryType) {
 /**
  * @brief: The following constants are provided by OSSNetworking as possible operation types.
  */
-typedef NS_ENUM(NSInteger, OSSOperationType) {
-    OSSOperationTypeGetService,
-    OSSOperationTypeListService,
-    OSSOperationTypeQueryBucketExist,
-    OSSOperationTypeCreateBucket,
-    OSSOperationTypeDeleteBucket,
-    OSSOperationTypeGetBucket,
-    OSSOperationTypeGetBucketLocation,
-    OSSOperationTypeGetBucketInfo,
-    OSSOperationTypeGetBucketACL,
-    OSSOperationTypePutBucketACL,
-    OSSOperationTypeGetBucketCORS,
-    OSSOperationTypePutBucketCORS,
-    OSSOperationTypeDeleteBucketCORS,
-    OSSOperationTypeGetBucketVersioning,
-    OSSOperationTypePutBucketVersioning,
+typedef NS_ENUM(NSInteger, InspurOSSOperationType) {
+    InspurOSSOperationTypeGetService,
+    InspurOSSOperationTypeListService,
+    InspurOSSOperationTypeQueryBucketExist,
+    InspurOSSOperationTypeCreateBucket,
+    InspurOSSOperationTypeDeleteBucket,
+    InspurOSSOperationTypeGetBucket,
+    InspurOSSOperationTypeGetBucketLocation,
+    InspurOSSOperationTypeGetBucketInfo,
+    InspurOSSOperationTypeGetBucketACL,
+    InspurOSSOperationTypePutBucketACL,
+    InspurOSSOperationTypeGetBucketCORS,
+    InspurOSSOperationTypePutBucketCORS,
+    InspurOSSOperationTypeDeleteBucketCORS,
+    InspurOSSOperationTypeGetBucketVersioning,
+    InspurOSSOperationTypePutBucketVersioning,
     
-    OSSOperationTypeGetBucketEncryption,
-    OSSOperationTypePutBucketEncryption,
-    OSSOperationTypeDeleteBucketEncryption,
+    InspurOSSOperationTypeGetBucketEncryption,
+    InspurOSSOperationTypePutBucketEncryption,
+    InspurOSSOperationTypeDeleteBucketEncryption,
     
-    OSSOperationTypeGetBucketWebsite,
-    OSSOperationTypePutBucketWebsite,
-    OSSOperationTypeDeleteBucketWebsite,
+    InspurOSSOperationTypeGetBucketWebsite,
+    InspurOSSOperationTypePutBucketWebsite,
+    InspurOSSOperationTypeDeleteBucketWebsite,
     
-    OSSOperationTypeGetBucketDomain,
-    OSSOperationTypePutBucketDomain,
-    OSSOperationTypeDeleteBucketDomain,
+    InspurOSSOperationTypeGetBucketDomain,
+    InspurOSSOperationTypePutBucketDomain,
+    InspurOSSOperationTypeDeleteBucketDomain,
     
-    OSSOperationTypeGetBucketLifeCycle,
-    OSSOperationTypePutBucketLifeCycle,
-    OSSOperationTypeDeleteBucketLifeCycle,
+    InspurOSSOperationTypeGetBucketLifeCycle,
+    InspurOSSOperationTypePutBucketLifeCycle,
+    InspurOSSOperationTypeDeleteBucketLifeCycle,
     
-    OSSOperationTypeGetBucketPolicy,
-    OSSOperationTypePutBucketPolicy,
-    OSSOperationTypeDeleteBucketPolicy,
+    InspurOSSOperationTypeGetBucketPolicy,
+    InspurOSSOperationTypePutBucketPolicy,
+    InspurOSSOperationTypeDeleteBucketPolicy,
     
-    OSSOperationTypeHeadObject,
-    OSSOperationTypeGetObject,
-    OSSOperationTypeGetObjectACL,
-    OSSOperationTypePutObject,
-    OSSOperationTypePutObjectACL,
-    OSSOperationTypePutObjectMetaData,
-    OSSOperationTypeAppendObject,
-    OSSOperationTypeDeleteObject,
-    OSSOperationTypeDeleteMultipleObjects,
-    OSSOperationTypeCopyObject,
-    OSSOperationTypeInitMultipartUpload,
-    OSSOperationTypeUploadPart,
-    OSSOperationTypeCompleteMultipartUpload,
-    OSSOperationTypeAbortMultipartUpload,
-    OSSOperationTypeListMultipart,
-    OSSOperationTypeListMultipartUploads,
-    OSSOperationTypeTriggerCallBack,
-    OSSOperationTypeImagePersist,
-    OSSOperationTypeRestoreObject,
-    OSSOperationTypePutSymlink,
-    OSSOperationTypeGetSymlink,
-    OSSOperationTypeGetObjectTagging,
-    OSSOperationTypePutObjectTagging,
-    OSSOperationTypeDeleteObjectTagging,
-    OSSOperationTypeGetObjectVersions,
-    OSSOperationTypeDeleteObjectVersions
+    InspurOSSOperationTypeHeadObject,
+    InspurOSSOperationTypeGetObject,
+    InspurOSSOperationTypeGetObjectACL,
+    InspurOSSOperationTypePutObject,
+    InspurOSSOperationTypePutObjectACL,
+    InspurOSSOperationTypePutObjectMetaData,
+    InspurOSSOperationTypeAppendObject,
+    InspurOSSOperationTypeDeleteObject,
+    InspurOSSOperationTypeDeleteMultipleObjects,
+    InspurOSSOperationTypeCopyObject,
+    InspurOSSOperationTypeInitMultipartUpload,
+    InspurOSSOperationTypeUploadPart,
+    InspurOSSOperationTypeCompleteMultipartUpload,
+    InspurOSSOperationTypeAbortMultipartUpload,
+    InspurOSSOperationTypeListMultipart,
+    InspurOSSOperationTypeListMultipartUploads,
+    InspurOSSOperationTypeTriggerCallBack,
+    InspurOSSOperationTypeImagePersist,
+    InspurOSSOperationTypeRestoreObject,
+    InspurOSSOperationTypePutSymlink,
+    InspurOSSOperationTypeGetSymlink,
+    InspurOSSOperationTypeGetObjectTagging,
+    InspurOSSOperationTypePutObjectTagging,
+    InspurOSSOperationTypeDeleteObjectTagging,
+    InspurOSSOperationTypeGetObjectVersions,
+    InspurOSSOperationTypeDeleteObjectVersions
 };
 
 /**
  * @brief: The following constants are provided by OSSClient as possible error codes.
  */
-typedef NS_ENUM(NSInteger, OSSClientErrorCODE) {
-    OSSClientErrorCodeNetworkingFailWithResponseCode0,
-    OSSClientErrorCodeSignFailed,
-    OSSClientErrorCodeFileCantWrite,
-    OSSClientErrorCodeInvalidArgument,
-    OSSClientErrorCodeNilUploadid,
-    OSSClientErrorCodeTaskCancelled,
-    OSSClientErrorCodeNetworkError,
-    OSSClientErrorCodeInvalidCRC,
-    OSSClientErrorCodeCannotResumeUpload,
-    OSSClientErrorCodeExcpetionCatched,
-    OSSClientErrorCodeNotKnown,
-    OSSClientErrorCodeFileCantRead
+typedef NS_ENUM(NSInteger, InspurOSSClientErrorCode) {
+    InspurOSSClientErrorCodeNetworkingFailWithResponseCode0,
+    InspurOSSClientErrorCodeSignFailed,
+    InspurOSSClientErrorCodeFileCantWrite,
+    InspurOSSClientErrorCodeInvalidArgument,
+    InspurOSSClientErrorCodeNilUploadid,
+    InspurOSSClientErrorCodeTaskCancelled,
+    InspurOSSClientErrorCodeNetworkError,
+    InspurOSSClientErrorCodeInvalidCRC,
+    InspurOSSClientErrorCodeCannotResumeUpload,
+    InspurOSSClientErrorCodeExcpetionCatched,
+    InspurOSSClientErrorCodeNotKnown,
+    InspurOSSClientErrorCodeFileCantRead
 };
 
-typedef NS_ENUM(NSInteger, OSSXMLDictionaryAttributesMode)
+typedef NS_ENUM(NSInteger, InspurOSSXMLDictionaryAttributesMode)
 {
-    OSSXMLDictionaryAttributesModePrefixed = 0, //default
-    OSSXMLDictionaryAttributesModeDictionary,
-    OSSXMLDictionaryAttributesModeUnprefixed,
-    OSSXMLDictionaryAttributesModeDiscard
+    InspurOSSXMLDictionaryAttributesModePrefixed = 0, //default
+    InspurOSSXMLDictionaryAttributesModeDictionary,
+    InspurOSSXMLDictionaryAttributesModeUnprefixed,
+    InspurOSSXMLDictionaryAttributesModeDiscard
 };
 
 
-typedef NS_ENUM(NSInteger, OSSXMLDictionaryNodeNameMode)
+typedef NS_ENUM(NSInteger, InspurOSSXMLDictionaryNodeNameMode)
 {
-    OSSXMLDictionaryNodeNameModeRootOnly = 0, //default
-    OSSXMLDictionaryNodeNameModeAlways,
-    OSSXMLDictionaryNodeNameModeNever
+    InspurOSSXMLDictionaryNodeNameModeRootOnly = 0, //default
+    InspurOSSXMLDictionaryNodeNameModeAlways,
+    InspurOSSXMLDictionaryNodeNameModeNever
 };
 
-typedef NS_ENUM(NSInteger, OSSBucketStorageClass)
+typedef NS_ENUM(NSInteger, InspurOSSBucketStorageClass)
 {
-    OSSBucketStorageClassStandard,
-    OSSBucketStorageClassIA,
-    OSSBucketStorageClassArchive
+    InspurOSSBucketStorageClassStandard,
+    InspurOSSBucketStorageClassIA,
+    InspurOSSBucketStorageClassArchive
 };
 
-typedef NSString * OSSXMLDictionaryAttributeName NS_EXTENSIBLE_STRING_ENUM;
+typedef NSString * InspurOSSXMLDictionaryAttributeName NS_EXTENSIBLE_STRING_ENUM;
 
-OBJC_EXTERN OSSXMLDictionaryAttributeName const OSSXMLDictionaryAttributesKey;
-OBJC_EXTERN OSSXMLDictionaryAttributeName const OSSXMLDictionaryCommentsKey;
-OBJC_EXTERN OSSXMLDictionaryAttributeName const OSSXMLDictionaryTextKey;
-OBJC_EXTERN OSSXMLDictionaryAttributeName const OSSXMLDictionaryNodeNameKey;
-OBJC_EXTERN OSSXMLDictionaryAttributeName const OSSXMLDictionaryAttributePrefix;
+OBJC_EXTERN InspurOSSXMLDictionaryAttributeName const InspurOSSXMLDictionaryAttributesKey;
+OBJC_EXTERN InspurOSSXMLDictionaryAttributeName const InspurOSSXMLDictionaryCommentsKey;
+OBJC_EXTERN InspurOSSXMLDictionaryAttributeName const InspurOSSXMLDictionaryTextKey;
+OBJC_EXTERN InspurOSSXMLDictionaryAttributeName const InspurOSSXMLDictionaryNodeNameKey;
+OBJC_EXTERN InspurOSSXMLDictionaryAttributeName const InspurXMLDictionaryAttributePrefix;
 
-OBJC_EXTERN NSString * const OSSHTTPMethodHEAD;
-OBJC_EXTERN NSString * const OSSHTTPMethodGET;
-OBJC_EXTERN NSString * const OSSHTTPMethodPUT;
-OBJC_EXTERN NSString * const OSSHTTPMethodPOST;
-OBJC_EXTERN NSString * const OSSHTTPMethodDELETE;
+OBJC_EXTERN NSString * const InspurOSSHTTPMethodHEAD;
+OBJC_EXTERN NSString * const InspurHTTPMethodGET;
+OBJC_EXTERN NSString * const InspurHTTPMethodPUT;
+OBJC_EXTERN NSString * const InspurOSSHTTPMethodPOST;
+OBJC_EXTERN NSString * const InspurOSSHTTPMethodDELETE;
 
 
 NS_ASSUME_NONNULL_END

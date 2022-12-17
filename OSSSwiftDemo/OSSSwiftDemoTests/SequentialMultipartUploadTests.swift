@@ -81,7 +81,7 @@ class SequentialMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(error.code, OSSClientErrorCODE.codeTaskCancelled.rawValue)
+            XCTAssertEqual(error.code, InspurOSSClientErrorCode.codeTaskCancelled.rawValue)
             
             return nil
         }).waitUntilFinished()
@@ -105,7 +105,7 @@ class SequentialMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error);
             let error = t.error! as NSError
-            XCTAssertEqual(error.code, OSSClientErrorCODE.codeTaskCancelled.rawValue)
+            XCTAssertEqual(error.code, InspurOSSClientErrorCode.codeTaskCancelled.rawValue)
             
             return nil;
         }).waitUntilFinished()
@@ -132,7 +132,7 @@ class SequentialMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(error.code, OSSClientErrorCODE.codeTaskCancelled.rawValue)
+            XCTAssertEqual(error.code, InspurOSSClientErrorCode.codeTaskCancelled.rawValue)
             
             return nil;
         }).waitUntilFinished()
@@ -178,7 +178,7 @@ class SequentialMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(error.code, OSSClientErrorCODE.codeTaskCancelled.rawValue)
+            XCTAssertEqual(error.code, InspurOSSClientErrorCode.codeTaskCancelled.rawValue)
             
             return nil;
         }).waitUntilFinished()
@@ -224,7 +224,7 @@ class SequentialMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(error.code, OSSClientErrorCODE.codeTaskCancelled.rawValue)
+            XCTAssertEqual(error.code, InspurOSSClientErrorCode.codeTaskCancelled.rawValue)
             
             return nil;
         }).waitUntilFinished()

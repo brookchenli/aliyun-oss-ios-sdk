@@ -29,8 +29,8 @@
         return OSSNetworkingRetryTypeShouldNotRetry;
     }
     
-    if ([error.domain isEqualToString:OSSClientErrorDomain]) {
-        if (error.code == OSSClientErrorCodeTaskCancelled) {
+    if ([error.domain isEqualToString:InspurOSSClientErrorDomain]) {
+        if (error.code == InspurOSSClientErrorCodeTaskCancelled) {
             return OSSNetworkingRetryTypeShouldNotRetry;
         } else {
             return OSSNetworkingRetryTypeShouldRetry;
@@ -64,7 +64,7 @@
 
 + (instancetype)defaultRetryHandler {
     InspurOSSURLRequestRetryHandler * retryHandler = [InspurOSSURLRequestRetryHandler new];
-    retryHandler.maxRetryCount = OSSDefaultRetryCount;
+    retryHandler.maxRetryCount = InspurOSSDefaultRetryCount;
     return retryHandler;
 }
 

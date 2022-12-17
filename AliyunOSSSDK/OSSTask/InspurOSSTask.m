@@ -399,9 +399,9 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
         @try {
             result = block(self);
         } @catch (NSException *exception) {
-            NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                                 code:OSSClientErrorCodeExcpetionCatched
-                                             userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", exception]}];
+            NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                 code:InspurOSSClientErrorCodeExcpetionCatched
+                                             userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", exception]}];
             tcs.error = error;
             OSSLogError(@"exception name: %@",[exception name]);
             OSSLogError(@"exception reason: %@",[exception reason]);
@@ -414,9 +414,9 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
                 if (cancellationToken.cancellationRequested || task.cancelled) {
                     [tcs cancel];
                 } else if (task.exception) {
-                    NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                                         code:OSSClientErrorCodeExcpetionCatched
-                                                     userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}];
+                    NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                         code:InspurOSSClientErrorCodeExcpetionCatched
+                                                     userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}];
                     tcs.error = error;
                 } else if (task.error) {
                     tcs.error = task.error;
@@ -555,15 +555,15 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 - (NSError *)toError {
     if (self.cancelled) {
-        return [NSError errorWithDomain:OSSClientErrorDomain
-                                   code:OSSClientErrorCodeTaskCancelled
-                               userInfo:@{OSSErrorMessageTOKEN: @"This task is cancelled"}];
+        return [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                   code:InspurOSSClientErrorCodeTaskCancelled
+                               userInfo:@{InspurOSSErrorMessageTOKEN: @"This task is cancelled"}];
     } else if (self.error) {
         return self.error;
     } else if (self.exception) {
-        return [NSError errorWithDomain:OSSClientErrorDomain
-                                   code:OSSClientErrorCodeExcpetionCatched
-                               userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", self.exception]}];
+        return [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                   code:InspurOSSClientErrorCodeExcpetionCatched
+                               userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", self.exception]}];
     }
     return nil;
 }

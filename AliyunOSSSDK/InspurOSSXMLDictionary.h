@@ -45,8 +45,8 @@
 @property (nonatomic, assign) BOOL preserveComments;  // defaults to NO
 @property (nonatomic, assign) BOOL wrapRootNode;      // defaults to NO
 
-@property (nonatomic, assign) OSSXMLDictionaryAttributesMode attributesMode;
-@property (nonatomic, assign) OSSXMLDictionaryNodeNameMode nodeNameMode;
+@property (nonatomic, assign) InspurOSSXMLDictionaryAttributesMode attributesMode;
+@property (nonatomic, assign) InspurOSSXMLDictionaryNodeNameMode nodeNameMode;
 
 - (NSDictionary *)dictionaryWithParser:(NSXMLParser *)parser;
 - (NSDictionary *)dictionaryWithData:(NSData *)data;

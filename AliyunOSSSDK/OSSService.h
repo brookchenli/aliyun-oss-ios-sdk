@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define OSS_IOS_SDK_VERSION OSSSDKVersion
+#define OSS_IOS_SDK_VERSION InspurOSSSDKVersion
 
 #import "InspurOSSDefine.h"
 #import "InspurOSSConstants.h"

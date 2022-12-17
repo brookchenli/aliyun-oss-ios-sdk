@@ -268,7 +268,7 @@
         return [InspurOSSTask taskWithError:originalError];
     }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
-        XCTAssertEqual(OSSClientErrorCodeExcpetionCatched, t.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeExcpetionCatched, t.error.code);
         return nil;
     }];
     [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
@@ -351,8 +351,8 @@
     InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
-        XCTAssertEqual(error.domain, OSSClientErrorDomain);
-        XCTAssertEqual(error.code, OSSClientErrorCodeExcpetionCatched);
+        XCTAssertEqual(error.domain, InspurOSSClientErrorDomain);
+        XCTAssertEqual(error.code, InspurOSSClientErrorCodeExcpetionCatched);
     }];
     [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.exception = [NSException exceptionWithName:NSInvalidArgumentException
@@ -368,8 +368,8 @@
     InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
-        XCTAssertEqual(error.domain, OSSClientErrorDomain);
-        XCTAssertEqual(error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(error.domain, InspurOSSClientErrorDomain);
+        XCTAssertEqual(error.code, InspurOSSClientErrorCodeTaskCancelled);
     }];
     [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         [tcs cancel];

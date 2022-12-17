@@ -28,6 +28,6 @@
 @property (nonatomic, assign) BOOL isHostInCnameExcludeList;
 
 
-- (InspurOSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType;
+- (InspurOSSTask *)validateRequestParamsInOperationType:(InspurOSSOperationType)operType;
 
 @end

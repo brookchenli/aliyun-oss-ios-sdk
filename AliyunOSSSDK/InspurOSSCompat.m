@@ -240,15 +240,15 @@
         return [self resumableUpload:resumableUpload];
     }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.cancelled) {
-            onComplete(NO, [NSError errorWithDomain:OSSClientErrorDomain
-                                               code:OSSClientErrorCodeTaskCancelled
-                                           userInfo:@{OSSErrorMessageTOKEN: @"This task is cancelled"}]);
+            onComplete(NO, [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                               code:InspurOSSClientErrorCodeTaskCancelled
+                                           userInfo:@{InspurOSSErrorMessageTOKEN: @"This task is cancelled"}]);
         } else if (task.error) {
             onComplete(NO, task.error);
         } else if (task.faulted) {
-            onComplete(NO, [NSError errorWithDomain:OSSClientErrorDomain
-                                               code:OSSClientErrorCodeExcpetionCatched
-                                           userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}]);
+            onComplete(NO, [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                               code:InspurOSSClientErrorCodeExcpetionCatched
+                                           userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}]);
         } else {
             onComplete(YES, nil);
         }

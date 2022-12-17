@@ -175,18 +175,18 @@
 	if ([_text length])
 	{
         NSMutableDictionary *top = [_stack lastObject];
-		id existing = top[OSSXMLDictionaryTextKey];
+		id existing = top[InspurOSSXMLDictionaryTextKey];
         if ([existing isKindOfClass:[NSArray class]])
         {
             [existing addObject:_text];
         }
         else if (existing)
         {
-            top[OSSXMLDictionaryTextKey] = [@[existing, _text] mutableCopy];
+            top[InspurOSSXMLDictionaryTextKey] = [@[existing, _text] mutableCopy];
         }
 		else
 		{
-			top[OSSXMLDictionaryTextKey] = _text;
+			top[InspurOSSXMLDictionaryTextKey] = _text;
 		}
 	}
 	_text = nil;
@@ -237,20 +237,20 @@
 	NSMutableDictionary *node = [NSMutableDictionary dictionary];
 	switch (_nodeNameMode)
 	{
-        case OSSXMLDictionaryNodeNameModeRootOnly:
+        case InspurOSSXMLDictionaryNodeNameModeRootOnly:
         {
             if (!_root)
             {
-                node[OSSXMLDictionaryNodeNameKey] = elementName;
+                node[InspurOSSXMLDictionaryNodeNameKey] = elementName;
             }
             break;
         }
-        case OSSXMLDictionaryNodeNameModeAlways:
+        case InspurOSSXMLDictionaryNodeNameModeAlways:
         {
-            node[OSSXMLDictionaryNodeNameKey] = elementName;
+            node[InspurOSSXMLDictionaryNodeNameKey] = elementName;
             break;
         }
-        case OSSXMLDictionaryNodeNameModeNever:
+        case InspurOSSXMLDictionaryNodeNameModeNever:
         {
             break;
         }
@@ -260,25 +260,25 @@
 	{
         switch (_attributesMode)
         {
-            case OSSXMLDictionaryAttributesModePrefixed:
+            case InspurOSSXMLDictionaryAttributesModePrefixed:
             {
                 for (NSString *key in [attributeDict allKeys])
                 {
-                    node[[OSSXMLDictionaryAttributePrefix stringByAppendingString:key]] = attributeDict[key];
+                    node[[InspurXMLDictionaryAttributePrefix stringByAppendingString:key]] = attributeDict[key];
                 }
                 break;
             }
-            case OSSXMLDictionaryAttributesModeDictionary:
+            case InspurOSSXMLDictionaryAttributesModeDictionary:
             {
-                node[OSSXMLDictionaryAttributesKey] = attributeDict;
+                node[InspurOSSXMLDictionaryAttributesKey] = attributeDict;
                 break;
             }
-            case OSSXMLDictionaryAttributesModeUnprefixed:
+            case InspurOSSXMLDictionaryAttributesModeUnprefixed:
             {
                 [node addEntriesFromDictionary:attributeDict];
                 break;
             }
-            case OSSXMLDictionaryAttributesModeDiscard:
+            case InspurOSSXMLDictionaryAttributesModeDiscard:
             {
                 break;
             }
@@ -357,7 +357,7 @@
             }
             else if (!top.oss_innerText && !_collapseTextNodes && !_stripEmptyNodes)
             {
-                top[OSSXMLDictionaryTextKey] = @"";
+                top[InspurOSSXMLDictionaryTextKey] = @"";
             }
         }
 	}
@@ -378,11 +378,11 @@
 	if (_preserveComments)
 	{
         NSMutableDictionary *top = [_stack lastObject];
-		NSMutableArray *comments = top[OSSXMLDictionaryCommentsKey];
+		NSMutableArray *comments = top[InspurOSSXMLDictionaryCommentsKey];
 		if (!comments)
 		{
 			comments = [@[comment] mutableCopy];
-			top[OSSXMLDictionaryCommentsKey] = comments;
+			top[InspurOSSXMLDictionaryCommentsKey] = comments;
 		}
 		else
 		{
@@ -418,7 +418,7 @@
 
 - (NSDictionary *)oss_attributes
 {
-	NSDictionary *attributes = self[OSSXMLDictionaryAttributesKey];
+	NSDictionary *attributes = self[InspurOSSXMLDictionaryAttributesKey];
 	if (attributes)
 	{
 		return [attributes count]? attributes: nil;
@@ -426,13 +426,13 @@
 	else
 	{
 		NSMutableDictionary *filteredDict = [NSMutableDictionary dictionaryWithDictionary:self];
-        [filteredDict removeObjectsForKeys:@[OSSXMLDictionaryCommentsKey, OSSXMLDictionaryTextKey, OSSXMLDictionaryNodeNameKey]];
+        [filteredDict removeObjectsForKeys:@[InspurOSSXMLDictionaryCommentsKey, InspurOSSXMLDictionaryTextKey, InspurOSSXMLDictionaryNodeNameKey]];
         for (NSString *key in [filteredDict allKeys])
         {
             [filteredDict removeObjectForKey:key];
-            if ([key hasPrefix:OSSXMLDictionaryAttributePrefix])
+            if ([key hasPrefix:InspurXMLDictionaryAttributePrefix])
             {
-                filteredDict[[key substringFromIndex:[OSSXMLDictionaryAttributePrefix length]]] = self[key];
+                filteredDict[[key substringFromIndex:[InspurXMLDictionaryAttributePrefix length]]] = self[key];
             }
         }
         return [filteredDict count]? filteredDict: nil;
@@ -443,10 +443,10 @@
 - (NSDictionary *)oss_childNodes
 {	
 	NSMutableDictionary *filteredDict = [self mutableCopy];
-	[filteredDict removeObjectsForKeys:@[OSSXMLDictionaryAttributesKey, OSSXMLDictionaryCommentsKey, OSSXMLDictionaryTextKey, OSSXMLDictionaryNodeNameKey]];
+	[filteredDict removeObjectsForKeys:@[InspurOSSXMLDictionaryAttributesKey, InspurOSSXMLDictionaryCommentsKey, InspurOSSXMLDictionaryTextKey, InspurOSSXMLDictionaryNodeNameKey]];
 	for (NSString *key in [filteredDict allKeys])
     {
-        if ([key hasPrefix:OSSXMLDictionaryAttributePrefix])
+        if ([key hasPrefix:InspurXMLDictionaryAttributePrefix])
         {
             [filteredDict removeObjectForKey:key];
         }
@@ -456,17 +456,17 @@
 
 - (NSArray *)oss_comments
 {
-	return self[OSSXMLDictionaryCommentsKey];
+	return self[InspurOSSXMLDictionaryCommentsKey];
 }
 
 - (NSString *)oss_nodeName
 {
-	return self[OSSXMLDictionaryNodeNameKey];
+	return self[InspurOSSXMLDictionaryNodeNameKey];
 }
 
 - (id)oss_innerText
 {	
-	id text = self[OSSXMLDictionaryTextKey];
+	id text = self[InspurOSSXMLDictionaryTextKey];
 	if ([text isKindOfClass:[NSArray class]])
 	{
 		return [text componentsJoinedByString:@"\n"];
@@ -547,7 +547,7 @@
     }
     if ([value isKindOfClass:[NSString class]])
     {
-        return @{OSSXMLDictionaryTextKey: value};
+        return @{InspurOSSXMLDictionaryTextKey: value};
     }
     return value;
 }

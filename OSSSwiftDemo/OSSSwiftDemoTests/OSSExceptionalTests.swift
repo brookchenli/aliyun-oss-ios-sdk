@@ -39,7 +39,7 @@ class OSSExceptionalTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(OSSClientErrorCODE.codeInvalidArgument.rawValue, error.code);
+            XCTAssertEqual(InspurOSSClientErrorCode.codeInvalidArgument.rawValue, error.code);
             return nil
         }).waitUntilFinished()
     }
@@ -58,7 +58,7 @@ class OSSExceptionalTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(OSSClientErrorCODE.codeInvalidArgument.rawValue, error.code);
+            XCTAssertEqual(InspurOSSClientErrorCode.codeInvalidArgument.rawValue, error.code);
             return nil
         }).waitUntilFinished()
     }
@@ -104,7 +104,7 @@ class OSSExceptionalTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(OSSClientErrorCODE.codeSignFailed.rawValue, error.code)
+            XCTAssertEqual(InspurOSSClientErrorCode.codeSignFailed.rawValue, error.code)
             return nil
         }).waitUntilFinished()
     }

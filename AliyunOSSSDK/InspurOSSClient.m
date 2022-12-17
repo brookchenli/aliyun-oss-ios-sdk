@@ -166,15 +166,15 @@ static NSObject *lock;
 - (InspurOSSTask *)getService:(InspurOSSGetServiceRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetService];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetService];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetService;
+    requestDelegate.operType = InspurOSSOperationTypeGetService;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -182,15 +182,15 @@ static NSObject *lock;
 - (InspurOSSTask *)listService:(InspurOSSListPageServiceRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeListService];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeListService];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeListService;
+    requestDelegate.operType = InspurOSSOperationTypeListService;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -198,16 +198,16 @@ static NSObject *lock;
 - (InspurOSSTask *)queryBucketExist:(InspurOSSQueryBucketExistRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeQueryBucketExist];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeQueryBucketExist];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodHEAD;
+    neededMsg.httpMethod = InspurOSSHTTPMethodHEAD;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeQueryBucketExist;
+    requestDelegate.operType = InspurOSSOperationTypeQueryBucketExist;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -215,16 +215,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketLocation:(InspurOSSGetBucketLocationRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLocation];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketLocation];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketLocation;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketLocation;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -233,22 +233,22 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionary];
-    [headerParams oss_setObject:request.acl forKey:OSSHttpHeaderBucketACL];
+    [headerParams oss_setObject:request.acl forKey:InspurOSSHttpHeaderBucketACL];
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"acl"];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketACL];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketACL];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     neededMsg.headerParams = headerParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketACL;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketACL;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 
@@ -257,16 +257,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketCORS:(InspurOSSGetBucketCORSRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketCORS];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketCORS];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketCORS;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketCORS;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -275,7 +275,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketCORS];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketCORS];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"cors"];
@@ -290,14 +290,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketCORS;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketCORS;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -305,18 +305,18 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucketCORS:(InspurOSSDeleteBucketCORSRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketCORS];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketCORS];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"cors"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketCORS;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketCORS;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -324,16 +324,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketVersioning:(InspurOSSGetVersioningRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketVersioning];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketVersioning];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketVersioning;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketVersioning;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -342,7 +342,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketVersioning];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketVersioning];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"versioning"];
@@ -353,14 +353,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketVersioning;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketVersioning;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -368,16 +368,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketEncryption:(InspurOSSGetBucketEncryptionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketEncryption];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketEncryption];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketEncryption;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketEncryption;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -385,7 +385,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketEncryption];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketEncryption];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"encryption"];
@@ -402,14 +402,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketEncryption;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketEncryption;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -417,18 +417,18 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucketEncryption:(InspurOSSDeleteBucketEncryptionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketEncryption];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketEncryption];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"encryption"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketEncryption;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketEncryption;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -437,16 +437,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketWebsite:(InspurOSSGetBucketWebsiteRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketWebsite];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketWebsite];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketWebsite;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketWebsite;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -455,7 +455,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketWebsite];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketWebsite];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"website"];
@@ -475,14 +475,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketEncryption;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketEncryption;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -490,18 +490,18 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucketWebsite:(InspurOSSDeleteBucketWebsiteRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketWebsite];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketWebsite];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"website"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketWebsite;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketWebsite;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -510,16 +510,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketDomain:(InspurOSSGetBucketDomainRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketDomain];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketDomain];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketDomain;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketDomain;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -528,7 +528,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketDomain];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketDomain];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"domain"];
@@ -544,14 +544,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketDomain;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketDomain;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -559,18 +559,18 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucketDomain:(InspurOSSDeleteBucketDomainRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketDomain];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketDomain];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"domain"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketDomain;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketDomain;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -579,16 +579,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketLifeCycle:(InspurOSSGetBucketLifeCycleRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLifeCycle];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketLifeCycle];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketLifeCycle;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketLifeCycle;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -597,7 +597,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketLifeCycle];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketLifeCycle];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"lifecycle"];
@@ -610,14 +610,14 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketLifeCycle;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketLifeCycle;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -625,18 +625,18 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucketLifeCycle:(InspurOSSDeleteBucketLifeCycleRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketLifeCycle];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketLifeCycle];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"lifecycle"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketLifeCycle;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketLifeCycle;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -644,16 +644,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketPolicy:(InspurOSSGetBucketPolicyRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketPolicy];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketPolicy];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.params = [request requestParams];
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketPolicy;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketPolicy;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -662,7 +662,7 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutBucketPolicy];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutBucketPolicy];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"policy"];
@@ -683,14 +683,14 @@ static NSObject *lock;
     NSString *md5String = [InspurOSSUtil base64Md5ForData:requestDelegate.uploadingData];
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutBucketLifeCycle;
+    requestDelegate.operType = InspurOSSOperationTypePutBucketLifeCycle;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -699,17 +699,17 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"policy"];
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketLifeCycle];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucketLifeCycle];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucketLifeCycle;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucketLifeCycle;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -772,13 +772,13 @@ static NSObject *lock;
 {
     NSError *error = nil;
     if (![request.bucketName oss_isNotEmpty]) {
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeInvalidArgument
-                                userInfo:@{OSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull bucketName!"}];
+        error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                    code:InspurOSSClientErrorCodeInvalidArgument
+                                userInfo:@{InspurOSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull bucketName!"}];
     }else if (![request.uploadingFileURL.path oss_isNotEmpty]) {
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeInvalidArgument
-                                userInfo:@{OSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull uploadingFileURL!"}];
+        error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                    code:InspurOSSClientErrorCodeInvalidArgument
+                                userInfo:@{InspurOSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull uploadingFileURL!"}];
     }
     
     InspurOSSTask *errorTask = nil;
@@ -795,9 +795,9 @@ static NSObject *lock;
     unsigned long long fileSize = [self getSizeWithFilePath:request.uploadingFileURL.path error:nil];
     
     if (request.partSize == 0 || (fileSize > 102400 && request.partSize < 102400)) {
-        NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                             code:OSSClientErrorCodeInvalidArgument
-                                         userInfo:@{OSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
+        NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                             code:InspurOSSClientErrorCodeInvalidArgument
+                                         userInfo:@{InspurOSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
         errorTask = [InspurOSSTask taskWithError:error];
     }
     return errorTask;
@@ -893,9 +893,9 @@ static NSObject *lock;
     NSString *filePath = [[[NSString oss_documentDirectory] stringByAppendingPathComponent:kClientRecordNameWithCommonPrefix] stringByAppendingPathComponent:uploadId];
     if (![partInfos writeToFile:filePath atomically:YES])
     {
-        NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                             code:OSSClientErrorCodeFileCantWrite
-                                         userInfo:@{OSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
+        NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                             code:InspurOSSClientErrorCodeFileCantWrite
+                                         userInfo:@{InspurOSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
         OSSLogDebug(@"[Error]: %@", error);
         return [InspurOSSTask taskWithError:error];
     }
@@ -905,17 +905,17 @@ static NSObject *lock;
 - (InspurOSSTask *)checkPutObjectFileURL:(InspurOSSPutObjectRequest *)request {
     NSError *error = nil;
     if (!request.uploadingFileURL || ![request.uploadingFileURL.path oss_isNotEmpty]) {
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeInvalidArgument
-                                userInfo:@{OSSErrorMessageTOKEN: @"Please check your request's uploadingFileURL!"}];
+        error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                    code:InspurOSSClientErrorCodeInvalidArgument
+                                userInfo:@{InspurOSSErrorMessageTOKEN: @"Please check your request's uploadingFileURL!"}];
     } else {
         NSFileManager *dfm = [NSFileManager defaultManager];
         NSDictionary *attributes = [dfm attributesOfItemAtPath:request.uploadingFileURL.path error:&error];
         unsigned long long fileSize = [attributes[NSFileSize] unsignedLongLongValue];
         if (!error && fileSize == 0) {
-            error = [NSError errorWithDomain:OSSClientErrorDomain
-                                        code:OSSClientErrorCodeInvalidArgument
-                                    userInfo:@{OSSErrorMessageTOKEN: kClientErrorMessageForEmptyFile}];
+            error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                        code:InspurOSSClientErrorCodeInvalidArgument
+                                    userInfo:@{InspurOSSErrorMessageTOKEN: kClientErrorMessageForEmptyFile}];
         }
     }
     
@@ -929,9 +929,9 @@ static NSObject *lock;
 - (InspurOSSTask *)checkFileSizeWithRequest:(InspurOSSMultipartUploadRequest *)request {
     NSError *error = nil;
     if (!request.uploadingFileURL || ![request.uploadingFileURL.path oss_isNotEmpty]) {
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeInvalidArgument
-                                userInfo:@{OSSErrorMessageTOKEN: @"Please check your request's uploadingFileURL!"}];
+        error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                    code:InspurOSSClientErrorCodeInvalidArgument
+                                userInfo:@{InspurOSSErrorMessageTOKEN: @"Please check your request's uploadingFileURL!"}];
     }
     else
     {
@@ -939,9 +939,9 @@ static NSObject *lock;
         NSDictionary *attributes = [dfm attributesOfItemAtPath:request.uploadingFileURL.path error:&error];
         unsigned long long fileSize = [attributes[NSFileSize] unsignedLongLongValue];
         if (!error && fileSize == 0) {
-            error = [NSError errorWithDomain:OSSClientErrorDomain
-                                        code:OSSClientErrorCodeInvalidArgument
-                                    userInfo:@{OSSErrorMessageTOKEN: kClientErrorMessageForEmptyFile}];
+            error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                        code:InspurOSSClientErrorCodeInvalidArgument
+                                    userInfo:@{InspurOSSErrorMessageTOKEN: kClientErrorMessageForEmptyFile}];
         }
     }
     
@@ -956,9 +956,9 @@ static NSObject *lock;
     static NSError *error = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        error = [NSError errorWithDomain:OSSClientErrorDomain
-                                    code:OSSClientErrorCodeTaskCancelled
-                                userInfo:@{OSSErrorMessageTOKEN: kClientErrorMessageForCancelledTask}];
+        error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                    code:InspurOSSClientErrorCodeTaskCancelled
+                                userInfo:@{InspurOSSErrorMessageTOKEN: kClientErrorMessageForCancelledTask}];
     });
     return error;
 }
@@ -975,13 +975,13 @@ static NSObject *lock;
 - (InspurOSSTask *)createBucket:(InspurOSSCreateBucketRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
-    [headerParams oss_setObject:request.xOssACL forKey:OSSHttpHeaderBucketACL];
+    [headerParams oss_setObject:request.xOssACL forKey:InspurOSSHttpHeaderBucketACL];
     
     if (request.location) {
         requestDelegate.uploadingData = [InspurOSSUtil constructHttpBodyForCreateBucketWithLocation:request.location];
     }
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeCreateBucket];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeCreateBucket];
     
     /*
     NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><CreateBucketConfiguration><StorageClass>%@</StorageClass></CreateBucketConfiguration>", request.storageClassAsString];
@@ -991,13 +991,13 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.headerParams = headerParams;
     neededMsg.contentMd5 = md5String;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeCreateBucket;
+    requestDelegate.operType = InspurOSSOperationTypeCreateBucket;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1005,15 +1005,15 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteBucket:(InspurOSSDeleteObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucket];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteBucket];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteBucket;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteBucket;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1021,16 +1021,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucket:(InspurOSSGetBucketRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucket];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucket];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucket;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucket;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1038,16 +1038,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketInfo:(InspurOSSGetBucketInfoRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketInfo];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketInfo];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketInfo;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketInfo;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1055,16 +1055,16 @@ static NSObject *lock;
 - (InspurOSSTask *)getBucketACL:(InspurOSSGetBucketACLRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketACL];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetBucketACL];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetBucketACL;
+    requestDelegate.operType = InspurOSSOperationTypeGetBucketACL;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1078,16 +1078,16 @@ static NSObject *lock;
 - (InspurOSSTask *)headObject:(InspurOSSHeadObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeHeadObject];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeHeadObject];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodHEAD;
+    neededMsg.httpMethod = InspurOSSHTTPMethodHEAD;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeHeadObject;
+    requestDelegate.operType = InspurOSSOperationTypeHeadObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1106,10 +1106,10 @@ static NSObject *lock;
         requestDelegate.onRecieveData = request.onRecieveData;
     }
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params oss_setObject:request.xOssProcess forKey:OSSHttpQueryProcess];
+    [params oss_setObject:request.xOssProcess forKey:InspurOSSHttpQueryProcess];
     
     [self enableCRC64WithFlag:request.crcFlag requestDelegate:requestDelegate];
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObject];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetObject];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     
     requestDelegate.responseParser = responseParser;
@@ -1117,7 +1117,7 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.range = rangeString;
@@ -1125,7 +1125,7 @@ static NSObject *lock;
     neededMsg.headerParams = request.headerFields;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetObject;
+    requestDelegate.operType = InspurOSSOperationTypeGetObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1133,20 +1133,20 @@ static NSObject *lock;
 - (InspurOSSTask *)getObjectACL:(InspurOSSGetObjectACLRequest *)request
 {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectACL];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetObjectACL];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"acl"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetObjectACL;
+    requestDelegate.operType = InspurOSSOperationTypeGetObjectACL;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1180,24 +1180,24 @@ static NSObject *lock;
         requestDelegate.retryCallback = request.uploadRetryCallback;
     }
     
-    [headerParams oss_setObject:[request.callbackParam base64JsonString] forKey:OSSHttpHeaderXOSSCallback];
-    [headerParams oss_setObject:[request.callbackVar base64JsonString] forKey:OSSHttpHeaderXOSSCallbackVar];
-    [headerParams oss_setObject:request.contentDisposition forKey:OSSHttpHeaderContentDisposition];
-    [headerParams oss_setObject:request.contentEncoding forKey:OSSHttpHeaderContentEncoding];
-    [headerParams oss_setObject:request.expires forKey:OSSHttpHeaderExpires];
-    [headerParams oss_setObject:request.cacheControl forKey:OSSHttpHeaderCacheControl];
+    [headerParams oss_setObject:[request.callbackParam base64JsonString] forKey:InspurOSSHttpHeaderXOSSCallback];
+    [headerParams oss_setObject:[request.callbackVar base64JsonString] forKey:InspurOSSHttpHeaderXOSSCallbackVar];
+    [headerParams oss_setObject:request.contentDisposition forKey:InspurOSSHttpHeaderContentDisposition];
+    [headerParams oss_setObject:request.contentEncoding forKey:InspurOSSHttpHeaderContentEncoding];
+    [headerParams oss_setObject:request.expires forKey:InspurOSSHttpHeaderExpires];
+    [headerParams oss_setObject:request.cacheControl forKey:InspurOSSHttpHeaderCacheControl];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     if (!request.objectKey || ![request.objectKey oss_isNotEmpty]) {
-        [params oss_setObject:@"true" forKey:OSSHttpHeaderRandomObjectName];
+        [params oss_setObject:@"true" forKey:InspurOSSHttpHeaderRandomObjectName];
     }
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObject];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutObject];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = params;
@@ -1210,7 +1210,7 @@ static NSObject *lock;
     neededMsg.contentSHA1 = request.contentSHA1;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutObject;
+    requestDelegate.operType = InspurOSSOperationTypePutObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1221,23 +1221,23 @@ static NSObject *lock;
         requestDelegate.retryCallback = request.uploadRetryCallback;
     }
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionary];
-    [headerParams oss_setObject:request.acl forKey:OSSHttpHeaderBucketACL];
+    [headerParams oss_setObject:request.acl forKey:InspurOSSHttpHeaderBucketACL];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary]; 
     [params oss_setObject:@"" forKey:@"acl"];
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObjectACL];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutObjectACL];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = params;
     neededMsg.headerParams = headerParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutObjectACL;
+    requestDelegate.operType = InspurOSSOperationTypePutObjectACL;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1248,13 +1248,13 @@ static NSObject *lock;
         requestDelegate.retryCallback = request.uploadRetryCallback;
     }
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObjectMetaData];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutObjectMetaData];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"metadata"];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = params;
@@ -1262,7 +1262,7 @@ static NSObject *lock;
     
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutObjectMetaData;
+    requestDelegate.operType = InspurOSSOperationTypePutObjectMetaData;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1295,22 +1295,22 @@ static NSObject *lock;
     }
     
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
-    [headerParams oss_setObject:request.contentDisposition forKey:OSSHttpHeaderContentDisposition];
-    [headerParams oss_setObject:request.contentEncoding forKey:OSSHttpHeaderContentEncoding];
-    [headerParams oss_setObject:request.expires forKey:OSSHttpHeaderExpires];
-    [headerParams oss_setObject:request.cacheControl forKey:OSSHttpHeaderCacheControl];
+    [headerParams oss_setObject:request.contentDisposition forKey:InspurOSSHttpHeaderContentDisposition];
+    [headerParams oss_setObject:request.contentEncoding forKey:InspurOSSHttpHeaderContentEncoding];
+    [headerParams oss_setObject:request.expires forKey:InspurOSSHttpHeaderExpires];
+    [headerParams oss_setObject:request.cacheControl forKey:InspurOSSHttpHeaderCacheControl];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"append"];
     [params oss_setObject:[@(request.appendPosition) stringValue] forKey:@"position"];
     
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeAppendObject];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeAppendObject];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.contentType = request.contentType;
@@ -1320,7 +1320,7 @@ static NSObject *lock;
     neededMsg.contentSHA1 = request.contentSHA1;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeAppendObject;
+    requestDelegate.operType = InspurOSSOperationTypeAppendObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1328,16 +1328,16 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteObject:(InspurOSSDeleteObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObject];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutObject];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteObject;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1345,16 +1345,16 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteMultipleObjects:(InspurOSSDeleteMultipleObjectsRequest *)request
 {
     if ([request.keys count] == 0) {
-        NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                             code:OSSClientErrorCodeInvalidArgument
-                                         userInfo:@{OSSErrorMessageTOKEN: @"keys should not be empty"}];
+        NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                             code:InspurOSSClientErrorCodeInvalidArgument
+                                         userInfo:@{InspurOSSErrorMessageTOKEN: @"keys should not be empty"}];
         return [InspurOSSTask taskWithError:error];
     }
     
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     request.quiet = NO;
     requestDelegate.uploadingData = [InspurOSSUtil constructHttpBodyForDeleteMultipleObjects:request.keys quiet:request.quiet];
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteMultipleObjects];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteMultipleObjects];
     NSString *md5String = [InspurOSSUtil base64Md5ForData:requestDelegate.uploadingData];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -1363,13 +1363,13 @@ static NSObject *lock;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteMultipleObjects;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteMultipleObjects;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1380,12 +1380,12 @@ static NSObject *lock;
         copySourceHeader = request.sourceCopyFrom;
     } else {
         if (![request.sourceBucketName oss_isNotEmpty]) {
-            NSError *error = [NSError errorWithDomain:OSSClientErrorDomain code:OSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceBucketName should not be empty!"}];
+            NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain code:InspurOSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceBucketName should not be empty!"}];
             return [InspurOSSTask taskWithError:error];
         }
         
         if (![request.sourceObjectKey oss_isNotEmpty]) {
-            NSError *error = [NSError errorWithDomain:OSSClientErrorDomain code:OSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceObjectKey should not be empty!"}];
+            NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain code:InspurOSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceObjectKey should not be empty!"}];
             return [InspurOSSTask taskWithError:error];
         }
         
@@ -1394,13 +1394,13 @@ static NSObject *lock;
     
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
-    [headerParams oss_setObject:copySourceHeader forKey:OSSHttpHeaderCopySource];
+    [headerParams oss_setObject:copySourceHeader forKey:InspurOSSHttpHeaderCopySource];
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeCopyObject];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeCopyObject];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.contentType = request.contentType;
@@ -1409,7 +1409,7 @@ static NSObject *lock;
     neededMsg.contentSHA1 = request.contentSHA1;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeCopyObject;
+    requestDelegate.operType = InspurOSSOperationTypeCopyObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1417,86 +1417,86 @@ static NSObject *lock;
 - (InspurOSSTask *)putSymlink:(InspurOSSPutSymlinkRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutSymlink];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutSymlink];
     
     NSMutableDictionary *headerFields = [NSMutableDictionary dictionary];
-    [headerFields oss_setObject:[request.targetObjectName oss_urlEncodedString] forKey:OSSHttpHeaderSymlinkTarget];
+    [headerFields oss_setObject:[request.targetObjectName oss_urlEncodedString] forKey:InspurOSSHttpHeaderSymlinkTarget];
     if (request.objectMeta) {
         [headerFields addEntriesFromDictionary:request.objectMeta];
     }
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
     neededMsg.headerParams = headerFields;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypePutSymlink;
+    requestDelegate.operType = InspurOSSOperationTypePutSymlink;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)getSymlink:(InspurOSSGetSymlinkRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetSymlink];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetSymlink];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetSymlink;
+    requestDelegate.operType = InspurOSSOperationTypeGetSymlink;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)restoreObject:(InspurOSSRestoreObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeRestoreObject];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeRestoreObject];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeRestoreObject;
+    requestDelegate.operType = InspurOSSOperationTypeRestoreObject;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)getObjectTagging:(InspurOSSGetObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectTagging];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetObjectTagging];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetObjectTagging;
+    requestDelegate.operType = InspurOSSOperationTypeGetObjectTagging;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)putObjectTagging:(InspurOSSPutObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObjectTagging];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypePutObjectTagging];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
@@ -1504,40 +1504,40 @@ static NSObject *lock;
     
     NSString *xmlString = [[request entityToDictionary] oss_XMLString];
     requestDelegate.uploadingData = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
-    requestDelegate.operType = OSSOperationTypePutObjectTagging;
+    requestDelegate.operType = InspurOSSOperationTypePutObjectTagging;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)deleteObjectTagging:(InspurOSSDeleteObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteObjectTagging];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteObjectTagging];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteObjectTagging;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteObjectTagging;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
 - (InspurOSSTask *)getObjectVersions:(InspurOSSGetObjectVersionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectVersions];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeGetObjectVersions];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = request.requestParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeGetObjectVersions;
+    requestDelegate.operType = InspurOSSOperationTypeGetObjectVersions;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1545,20 +1545,20 @@ static NSObject *lock;
 - (InspurOSSTask *)deleteObjectVersion:(InspurOSSDeleteObjectVersionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteObjectVersions];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeDeleteObjectVersions];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[request requestParams]];
     [params oss_setObject:request.versionId forKey:@"versionId"];
     [params oss_setObject:@"" forKey:@"versions"];
 
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeDeleteObjectVersions;
+    requestDelegate.operType = InspurOSSOperationTypeDeleteObjectVersions;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1572,16 +1572,16 @@ static NSObject *lock;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[request requestParams]];
     [params oss_setObject:@"" forKey:@"uploads"];
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeListMultipartUploads];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeListMultipartUploads];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeListMultipartUploads;
+    requestDelegate.operType = InspurOSSOperationTypeListMultipartUploads;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1590,10 +1590,10 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
     
-    [headerParams oss_setObject:request.contentDisposition forKey:OSSHttpHeaderContentDisposition];
-    [headerParams oss_setObject:request.contentEncoding forKey:OSSHttpHeaderContentEncoding];
-    [headerParams oss_setObject:request.expires forKey:OSSHttpHeaderExpires];
-    [headerParams oss_setObject:request.cacheControl forKey:OSSHttpHeaderCacheControl];
+    [headerParams oss_setObject:request.contentDisposition forKey:InspurOSSHttpHeaderContentDisposition];
+    [headerParams oss_setObject:request.contentEncoding forKey:InspurOSSHttpHeaderContentEncoding];
+    [headerParams oss_setObject:request.expires forKey:InspurOSSHttpHeaderExpires];
+    [headerParams oss_setObject:request.cacheControl forKey:InspurOSSHttpHeaderCacheControl];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"uploads"];
@@ -1601,13 +1601,13 @@ static NSObject *lock;
         [params oss_setObject:@"" forKey:@"sequential"];
     }
     if (!request.objectKey) {
-        [params oss_setObject:@"true" forKey:OSSHttpHeaderRandomObjectName];
+        [params oss_setObject:@"true" forKey:InspurOSSHttpHeaderRandomObjectName];
     }
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeInitMultipartUpload];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeInitMultipartUpload];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey ? : [InspurOSSUtil randomObjectName];
     neededMsg.contentType = request.contentType;
@@ -1615,7 +1615,7 @@ static NSObject *lock;
     neededMsg.headerParams = headerParams;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeInitMultipartUpload;
+    requestDelegate.operType = InspurOSSOperationTypeInitMultipartUpload;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1643,13 +1643,13 @@ static NSObject *lock;
         requestDelegate.uploadProgress = request.uploadPartProgress;
     }
     
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeUploadPart];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeUploadPart];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPUT;
+    neededMsg.httpMethod = InspurHTTPMethodPUT;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectkey;
     neededMsg.contentMd5 = request.contentMd5;
@@ -1657,7 +1657,7 @@ static NSObject *lock;
     neededMsg.contentSHA1 = request.contentSHA1;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeUploadPart;
+    requestDelegate.operType = InspurOSSOperationTypeUploadPart;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1670,21 +1670,21 @@ static NSObject *lock;
         requestDelegate.uploadingData = [InspurOSSUtil constructHttpBodyFromPartInfos:request.partInfos];
     }
     
-    [headerParams oss_setObject:[request.callbackParam base64JsonString] forKey:OSSHttpHeaderXOSSCallback];
-    [headerParams oss_setObject:[request.callbackVar base64JsonString] forKey:OSSHttpHeaderXOSSCallbackVar];
+    [headerParams oss_setObject:[request.callbackParam base64JsonString] forKey:InspurOSSHttpHeaderXOSSCallback];
+    [headerParams oss_setObject:[request.callbackVar base64JsonString] forKey:InspurOSSHttpHeaderXOSSCallbackVar];
     
     if (request.completeMetaHeader) {
         [headerParams addEntriesFromDictionary:request.completeMetaHeader];
     }
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObjectsAndKeys:request.uploadId, @"uploadId", nil];
     
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeCompleteMultipartUpload];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeCompleteMultipartUpload];
     responseParser.crc64Verifiable = requestDelegate.crc64Verifiable;
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.contentMd5 = request.contentMd5;
@@ -1693,7 +1693,7 @@ static NSObject *lock;
     neededMsg.contentSHA1 = request.contentSHA1;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeCompleteMultipartUpload;
+    requestDelegate.operType = InspurOSSOperationTypeCompleteMultipartUpload;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1705,17 +1705,17 @@ static NSObject *lock;
     [params oss_setObject: request.uploadId forKey: @"uploadId"];
     [params oss_setObject: [NSString stringWithFormat:@"%d",request.partNumberMarker] forKey: @"part-number-marker"];
     
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeListMultipart];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeListMultipart];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodGET;
+    neededMsg.httpMethod = InspurHTTPMethodGET;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeListMultipart;
+    requestDelegate.operType = InspurOSSOperationTypeListMultipart;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1724,17 +1724,17 @@ static NSObject *lock;
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObjectsAndKeys:request.uploadId, @"uploadId", nil];
-    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeAbortMultipartUpload];
+    requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeAbortMultipartUpload];
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodDELETE;
+    neededMsg.httpMethod = InspurOSSHTTPMethodDELETE;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectKey;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeAbortMultipartUpload;
+    requestDelegate.operType = InspurOSSOperationTypeAbortMultipartUpload;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -1863,9 +1863,9 @@ static NSObject *lock;
                 if (remote_crc64 != clientCrc64)
                 {
                     NSString *errorMessage = [NSString stringWithFormat:@"local_crc64(%llu) is not equal to remote_crc64(%llu)!",clientCrc64,remote_crc64];
-                    NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                                         code:OSSClientErrorCodeInvalidCRC
-                                                     userInfo:@{OSSErrorMessageTOKEN:errorMessage}];
+                    NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                         code:InspurOSSClientErrorCodeInvalidCRC
+                                                     userInfo:@{InspurOSSErrorMessageTOKEN:errorMessage}];
                     return [InspurOSSTask taskWithError:error];
                 }
             }
@@ -1907,7 +1907,7 @@ static NSObject *lock;
         {
             isTruncated = NO;
             [uploadedParts removeAllObjects];
-            if ([listPartsTask.error.domain isEqualToString: OSSServerErrorDomain] && labs(listPartsTask.error.code) == 404)
+            if ([listPartsTask.error.domain isEqualToString: InspurOSSServerErrorDomain] && labs(listPartsTask.error.code) == 404)
             {
                 OSSLogVerbose(@"local record existes but the remote record is deleted");
                 *uploadId = nil;
@@ -1925,7 +1925,7 @@ static NSObject *lock;
             if (res.parts.count > 0) {
                 for (NSDictionary *part in res.parts) {
                     unsigned long long iPartSize = 0;
-                    NSString *partSizeString = [part objectForKey:OSSSizeXMLTOKEN];
+                    NSString *partSizeString = [part objectForKey:InspurOSSSizeXMLTOKEN];
                     NSScanner *scanner = [NSScanner scannerWithString:partSizeString];
                     [scanner scanUnsignedLongLong:&iPartSize];
                     if (partSize == iPartSize) {
@@ -1940,9 +1940,9 @@ static NSObject *lock;
     
     if (totalSize < bUploadedLength)
     {
-        NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                             code:OSSClientErrorCodeCannotResumeUpload
-                                         userInfo:@{OSSErrorMessageTOKEN: @"The uploading file is inconsistent with before"}];
+        NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                             code:InspurOSSClientErrorCodeCannotResumeUpload
+                                         userInfo:@{InspurOSSErrorMessageTOKEN: @"The uploading file is inconsistent with before"}];
         return [InspurOSSTask taskWithError: error];
     }
     return nil;
@@ -1959,8 +1959,8 @@ static NSObject *lock;
         if (![result.uploadId oss_isNotEmpty])
         {
             NSString *errorMessage = [NSString stringWithFormat:@"Can not get uploadId!"];
-            NSError *error = [NSError errorWithDomain:OSSServerErrorDomain
-                                                 code:OSSClientErrorCodeNilUploadid userInfo:@{OSSErrorMessageTOKEN:   errorMessage}];
+            NSError *error = [NSError errorWithDomain:InspurOSSServerErrorDomain
+                                                 code:InspurOSSClientErrorCodeNilUploadid userInfo:@{InspurOSSErrorMessageTOKEN:   errorMessage}];
             return [InspurOSSTask taskWithError:error];
         }
         
@@ -1968,9 +1968,9 @@ static NSObject *lock;
         if (![defaultFM fileExistsAtPath:recordFilePath])
         {
             if (![defaultFM createFileAtPath:recordFilePath contents:nil attributes:nil]) {
-                NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
-                                                     code:OSSClientErrorCodeFileCantWrite
-                                                 userInfo:@{OSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
+                NSError *error = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                     code:InspurOSSClientErrorCodeFileCantWrite
+                                                 userInfo:@{InspurOSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
                 OSSLogDebug(@"[Error]: %@", error);
                 return [InspurOSSTask taskWithError:error];
             }
@@ -2048,8 +2048,8 @@ static NSObject *lock;
                 [fileHande seekToOffset:request.partSize * (idx - 1) error:&error];
                 if (error) {
                     hasError = YES;
-                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                           code:OSSClientErrorCodeFileCantRead
+                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                           code:InspurOSSClientErrorCodeFileCantRead
                                                                        userInfo:[error userInfo]]];
                     break;
                 }
@@ -2057,8 +2057,8 @@ static NSObject *lock;
                 uploadPartData = [fileHande readDataUpToLength:realPartLength error:&error];
                 if (error) {
                     hasError = YES;
-                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                           code:OSSClientErrorCodeFileCantRead
+                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                           code:InspurOSSClientErrorCodeFileCantRead
                                                                        userInfo:[error userInfo]]];
                     break;
                 }
@@ -2181,9 +2181,9 @@ static NSObject *lock;
 {
     if (resumable) {
         if (![request isKindOfClass:[InspurOSSResumableUploadRequest class]]) {
-            NSError *typoError = [NSError errorWithDomain:OSSClientErrorDomain
-                                                     code:OSSClientErrorCodeInvalidArgument
-                                                 userInfo:@{OSSErrorMessageTOKEN: @"resumable multipart request should use instance of class OSSMultipartUploadRequest!"}];
+            NSError *typoError = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                     code:InspurOSSClientErrorCodeInvalidArgument
+                                                 userInfo:@{InspurOSSErrorMessageTOKEN: @"resumable multipart request should use instance of class OSSMultipartUploadRequest!"}];
             return [InspurOSSTask taskWithError: typoError];
         }
     }
@@ -2211,9 +2211,9 @@ static NSObject *lock;
         NSUInteger partCount = [self judgePartSizeForMultipartRequest:request fileSize:uploadFileSize];
         
         if (partCount > 1 && request.partSize < 102400) {
-            NSError *checkPartSizeError = [NSError errorWithDomain:OSSClientErrorDomain
-                                                 code:OSSClientErrorCodeInvalidArgument
-                                             userInfo:@{OSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
+            NSError *checkPartSizeError = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                 code:InspurOSSClientErrorCodeInvalidArgument
+                                             userInfo:@{InspurOSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
             return [InspurOSSTask taskWithError:checkPartSizeError];
         }
         
@@ -2260,14 +2260,14 @@ static NSObject *lock;
             
             [uploadedPart enumerateObjectsUsingBlock:^(NSDictionary *partInfo, NSUInteger idx, BOOL * _Nonnull stop) {
                 unsigned long long remotePartNumber = 0;
-                NSString *partNumberString = [partInfo objectForKey: OSSPartNumberXMLTOKEN];
+                NSString *partNumberString = [partInfo objectForKey: InspurOSSPartNumberXMLTOKEN];
                 NSScanner *scanner = [NSScanner scannerWithString: partNumberString];
                 [scanner scanUnsignedLongLong: &remotePartNumber];
                 
-                NSString *remotePartEtag = [partInfo objectForKey:OSSETagXMLTOKEN];
+                NSString *remotePartEtag = [partInfo objectForKey:InspurOSSETagXMLTOKEN];
                 
                 unsigned long long remotePartSize = 0;
-                NSString *partSizeString = [partInfo objectForKey:OSSSizeXMLTOKEN];
+                NSString *partSizeString = [partInfo objectForKey:InspurOSSSizeXMLTOKEN];
                 scanner = [NSScanner scannerWithString:partSizeString];
                 [scanner scanUnsignedLongLong:&remotePartSize];
                 
@@ -2359,7 +2359,7 @@ static NSObject *lock;
             if(resumable)
             {
                 InspurOSSResumableUploadRequest *resumableRequest = (InspurOSSResumableUploadRequest *)request;
-                if (resumableRequest.deleteUploadIdOnCancelling || errorTask.error.code == OSSClientErrorCodeFileCantWrite) {
+                if (resumableRequest.deleteUploadIdOnCancelling || errorTask.error.code == InspurOSSClientErrorCodeFileCantWrite) {
                     abortTask = [self abortMultipartUpload:request sequential:sequential resumable:resumable];
                 }
             }else
@@ -2571,8 +2571,8 @@ static NSObject *lock;
                                    contentType:(nullable NSString *)contentType
                                     contentMd5:(nullable NSString *)contentMd5 {
     NSMutableDictionary *header = [NSMutableDictionary dictionary];
-    [header oss_setObject:contentType forKey:OSSHttpHeaderContentType];
-    [header oss_setObject:contentMd5 forKey:OSSHttpHeaderContentMD5];
+    [header oss_setObject:contentType forKey:InspurOSSHttpHeaderContentType];
+    [header oss_setObject:contentMd5 forKey:InspurHttpHeaderContentMD5];
 
     return [self presignConstrainURLWithBucketName:bucketName
                                      withObjectKey:objectKey
@@ -2593,8 +2593,8 @@ static NSObject *lock;
         NSString * resource = [NSString stringWithFormat:@"/%@/%@", bucketName, objectKey];
         NSString * expires = [@((int64_t)[[NSDate oss_clockSkewFixedDate] timeIntervalSince1970] + interval) stringValue];
         NSString * xossHeader = @"";
-        NSString * contentType = headers[OSSHttpHeaderContentType];
-        NSString * contentMd5 = headers[OSSHttpHeaderContentMD5];
+        NSString * contentType = headers[InspurOSSHttpHeaderContentType];
+        NSString * contentMd5 = headers[InspurHttpHeaderContentMD5];
         NSString * patchContentType = contentType == nil ? @"" : contentType;
         NSString * patchContentMd5 = contentMd5 == nil ? @"" : contentMd5;
 
@@ -2653,9 +2653,9 @@ static NSObject *lock;
         NSArray * splitResult = [wholeSign componentsSeparatedByString:@":"];
         if ([splitResult count] != 2
             || ![((NSString *)[splitResult objectAtIndex:0]) hasPrefix:@"OSS "]) {
-            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                              code:OSSClientErrorCodeSignFailed
-                                                          userInfo:@{OSSErrorMessageTOKEN: @"the returned signature is invalid"}]];
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                              code:InspurOSSClientErrorCodeSignFailed
+                                                          userInfo:@{InspurOSSErrorMessageTOKEN: @"the returned signature is invalid"}]];
         }
         NSString * accessKey = [(NSString *)[splitResult objectAtIndex:0] substringFromIndex:4];
         NSString * signature = [splitResult objectAtIndex:1];
@@ -2783,7 +2783,7 @@ static NSObject *lock;
     if (!headError) {
         return YES;
     } else {
-        if ([headError.domain isEqualToString: OSSServerErrorDomain] && labs(headError.code) == 404) {
+        if ([headError.domain isEqualToString: InspurOSSServerErrorDomain] && labs(headError.code) == 404) {
             return NO;
         } else {
             if (error != nil) {
@@ -2806,29 +2806,29 @@ static NSObject *lock;
         || ![request.toObject oss_isNotEmpty]
         || ![request.action oss_isNotEmpty]) {
         NSError *error = [NSError errorWithDomain:OSSTaskErrorDomain
-                                             code:OSSClientErrorCodeInvalidArgument
-                                         userInfo:@{OSSErrorMessageTOKEN: @"imagePersist parameters not be empty!"}];
+                                             code:InspurOSSClientErrorCodeInvalidArgument
+                                         userInfo:@{InspurOSSErrorMessageTOKEN: @"imagePersist parameters not be empty!"}];
         return [InspurOSSTask taskWithError:error];
     }
     
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params oss_setObject:@"" forKey:OSSHttpQueryProcess];
+    [params oss_setObject:@"" forKey:InspurOSSHttpQueryProcess];
     
     requestDelegate.uploadingData = [InspurOSSUtil constructHttpBodyForImagePersist:request.action toBucket:request.toBucket toObjectKey:request.toObject];
     
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeImagePersist];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeImagePersist];
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.fromBucket;
     neededMsg.objectKey = request.fromObject;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeImagePersist;
+    requestDelegate.operType = InspurOSSOperationTypeImagePersist;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
@@ -2841,25 +2841,25 @@ static NSObject *lock;
 {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params oss_setObject:@"" forKey:OSSHttpQueryProcess];
+    [params oss_setObject:@"" forKey:InspurOSSHttpQueryProcess];
     NSString *paramString = [request.callbackParam base64JsonString];
     NSString *variblesString = [request.callbackVar base64JsonString];
     requestDelegate.uploadingData = [InspurOSSUtil constructHttpBodyForTriggerCallback:paramString callbackVaribles:variblesString];
     NSString *md5String = [InspurOSSUtil base64Md5ForData:requestDelegate.uploadingData];
     
-    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeTriggerCallBack];
+    InspurOSSHttpResponseParser *responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:InspurOSSOperationTypeTriggerCallBack];
     requestDelegate.responseParser = responseParser;
     
     InspurOSSAllRequestNeededMessage *neededMsg = [[InspurOSSAllRequestNeededMessage alloc] init];
     neededMsg.endpoint = self.endpoint;
-    neededMsg.httpMethod = OSSHTTPMethodPOST;
+    neededMsg.httpMethod = InspurOSSHTTPMethodPOST;
     neededMsg.bucketName = request.bucketName;
     neededMsg.objectKey = request.objectName;
     neededMsg.contentMd5 = md5String;
     neededMsg.params = params;
     requestDelegate.allNeededMessage = neededMsg;
     
-    requestDelegate.operType = OSSOperationTypeTriggerCallBack;
+    requestDelegate.operType = InspurOSSOperationTypeTriggerCallBack;
     
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }

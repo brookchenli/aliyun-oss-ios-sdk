@@ -27,7 +27,7 @@
 
 @implementation InspurOSSHttpResponseParser {
     
-    OSSOperationType _operationTypeForThisParser;
+    InspurOSSOperationType _operationTypeForThisParser;
     
     NSFileHandle * _fileHandle;
     NSMutableData * _collectingData;
@@ -41,7 +41,7 @@
     _response = nil;
 }
 
-- (instancetype)initForOperationType:(OSSOperationType)operationType {
+- (instancetype)initForOperationType:(InspurOSSOperationType)operationType {
     if (self = [super init]) {
         _operationTypeForThisParser = operationType;
     }
@@ -54,7 +54,7 @@
 
 - (InspurOSSTask *)consumeHttpResponseBody:(NSData *)data
 {
-    if (_crc64Verifiable&&(_operationTypeForThisParser == OSSOperationTypeGetObject))
+    if (_crc64Verifiable&&(_operationTypeForThisParser == InspurOSSOperationTypeGetObject))
     {
         NSMutableData *mutableData = [NSMutableData dataWithData:data];
         if (_crc64ecma != 0)
@@ -86,22 +86,22 @@
             }
             if (![fm fileExistsAtPath:dirName] || error)
             {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                  code:OSSClientErrorCodeFileCantWrite
-                                                              userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create dir at %@", dirName]}]];
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                  code:InspurOSSClientErrorCodeFileCantWrite
+                                                              userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create dir at %@", dirName]}]];
             }
             [fm createFileAtPath:[self.downloadingFileURL path] contents:nil attributes:nil];
             if (![fm fileExistsAtPath:[self.downloadingFileURL path]])
             {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                  code:OSSClientErrorCodeFileCantWrite
-                                                              userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create file at %@", [self.downloadingFileURL path]]}]];
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                  code:InspurOSSClientErrorCodeFileCantWrite
+                                                              userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create file at %@", [self.downloadingFileURL path]]}]];
             }
             _fileHandle = [NSFileHandle fileHandleForWritingToURL:self.downloadingFileURL error:&error];
             if (error)
             {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                  code:OSSClientErrorCodeFileCantWrite
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                  code:InspurOSSClientErrorCodeFileCantWrite
                                                               userInfo:[error userInfo]]];
             }
             [_fileHandle writeData:data];
@@ -111,9 +111,9 @@
                 [_fileHandle writeData:data];
             }
             @catch (NSException *exception) {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
-                                                                  code:OSSClientErrorCodeFileCantWrite
-                                                              userInfo:@{OSSErrorMessageTOKEN: [exception description]}]];
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSServerErrorDomain
+                                                                  code:InspurOSSClientErrorCodeFileCantWrite
+                                                              userInfo:@{InspurOSSErrorMessageTOKEN: [exception description]}]];
             }
         }
     } else
@@ -182,7 +182,7 @@
     
     switch (_operationTypeForThisParser)
     {
-        case OSSOperationTypeGetObjectVersions: {
+        case InspurOSSOperationTypeGetObjectVersions: {
             InspurOSSGetObjectVersionResult *result = [InspurOSSGetObjectVersionResult new];
             if (_response)
             {
@@ -196,7 +196,7 @@
             }
             return result;
         }
-        case OSSOperationTypeGetBucketPolicy: {
+        case InspurOSSOperationTypeGetBucketPolicy: {
             InspurOSSGetBucketPolicyResult *result = [InspurOSSGetBucketPolicyResult new];
             if (_response)
             {
@@ -208,7 +208,7 @@
             }
             return result;
         }
-        case OSSOperationTypePutBucketPolicy: {
+        case InspurOSSOperationTypePutBucketPolicy: {
             InspurOSSPutBucketPolicyResult *result = [InspurOSSPutBucketPolicyResult new];
             if (_response)
             {
@@ -218,7 +218,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketPolicy: {
+        case InspurOSSOperationTypeDeleteBucketPolicy: {
             InspurOSSDeleteBucketPolicyResult *result = [InspurOSSDeleteBucketPolicyResult new];
             if (_response)
             {
@@ -227,7 +227,7 @@
             return result;
         }
             
-        case OSSOperationTypeGetBucketDomain: {
+        case InspurOSSOperationTypeGetBucketDomain: {
             InspurOSSGetBucketDomainResult *result = [InspurOSSGetBucketDomainResult new];
             if (_response)
             {
@@ -238,7 +238,7 @@
             }
             return result;
         }
-        case OSSOperationTypePutBucketDomain: {
+        case InspurOSSOperationTypePutBucketDomain: {
             InspurOSSPutBucketDomainResult *result = [InspurOSSPutBucketDomainResult new];
             if (_response)
             {
@@ -246,7 +246,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketDomain: {
+        case InspurOSSOperationTypeDeleteBucketDomain: {
             InspurOSSDeleteBucketDomainResult *result = [InspurOSSDeleteBucketDomainResult new];
             if (_response)
             {
@@ -255,7 +255,7 @@
             return result;
         }
             
-        case OSSOperationTypeGetBucketLifeCycle: {
+        case InspurOSSOperationTypeGetBucketLifeCycle: {
             InspurOSSGetBucketLifeCycleResult *result = [InspurOSSGetBucketLifeCycleResult new];
             if (_response)
             {
@@ -269,7 +269,7 @@
             }
             return result;
         }
-        case OSSOperationTypePutBucketLifeCycle: {
+        case InspurOSSOperationTypePutBucketLifeCycle: {
             InspurOSSPutBucketLifeCycleResult *result = [InspurOSSPutBucketLifeCycleResult new];
             if (_response)
             {
@@ -277,7 +277,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketLifeCycle: {
+        case InspurOSSOperationTypeDeleteBucketLifeCycle: {
             InspurOSSDeleteBucketLifeCycleResult *result = [InspurOSSDeleteBucketLifeCycleResult new];
             if (_response)
             {
@@ -286,7 +286,7 @@
             return result;
         }
             
-        case OSSOperationTypeGetBucketWebsite: {
+        case InspurOSSOperationTypeGetBucketWebsite: {
             InspurOSSGetBucketWebsiteResult *result = [InspurOSSGetBucketWebsiteResult new];
             if (_response)
             {
@@ -301,7 +301,7 @@
             }
             return result;
         }
-        case OSSOperationTypePutBucketWebsite: {
+        case InspurOSSOperationTypePutBucketWebsite: {
             InspurOSSPutBucketWebsiteResult *result = [InspurOSSPutBucketWebsiteResult new];
             if (_response)
             {
@@ -309,7 +309,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketWebsite: {
+        case InspurOSSOperationTypeDeleteBucketWebsite: {
             InspurOSSDeleteBucketWebsiteResult *result = [InspurOSSDeleteBucketWebsiteResult new];
             if (_response)
             {
@@ -318,7 +318,7 @@
             return result;
         }
             
-        case OSSOperationTypeGetBucketEncryption: {
+        case InspurOSSOperationTypeGetBucketEncryption: {
             InspurOSSGetBucketEncryptionResult *result = [InspurOSSGetBucketEncryptionResult new];
             if (_response)
             {
@@ -327,13 +327,13 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    result.sseAlgorithm = [[[parseDict objectForKey:OSSRULETOKEN] objectForKey:OSSServerSideEncryptionDefaultTOKEN] objectForKey:OSSServerSSETOKEN];
-                    result.masterId = [[[parseDict objectForKey:OSSRULETOKEN] objectForKey:OSSServerSideEncryptionDefaultTOKEN] objectForKey:OSSServerMasterIdTOKEN];
+                    result.sseAlgorithm = [[[parseDict objectForKey:InspurOSSRULETOKEN] objectForKey:InspurOSSServerSideEncryptionDefaultTOKEN] objectForKey:InspurOSSServerSSETOKEN];
+                    result.masterId = [[[parseDict objectForKey:InspurOSSRULETOKEN] objectForKey:InspurOSSServerSideEncryptionDefaultTOKEN] objectForKey:InspurOSSServerMasterIdTOKEN];
                 }
             }
             return result;
         }
-        case OSSOperationTypePutBucketEncryption: {
+        case InspurOSSOperationTypePutBucketEncryption: {
             InspurOSSPutBucketEncryptionResult *result = [InspurOSSPutBucketEncryptionResult new];
             if (_response)
             {
@@ -341,7 +341,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketEncryption: {
+        case InspurOSSOperationTypeDeleteBucketEncryption: {
             InspurOSSDeleteBucketEncryptionResult *result = [InspurOSSDeleteBucketEncryptionResult new];
             if (_response)
             {
@@ -350,7 +350,7 @@
             return result;
         }
             
-        case OSSOperationTypePutBucketVersioning: {
+        case InspurOSSOperationTypePutBucketVersioning: {
             InspurOSSPutVersioningResult *result = [InspurOSSPutVersioningResult new];
             if (_response)
             {
@@ -358,7 +358,7 @@
             }
             return result;
         }
-        case OSSOperationTypeGetBucketVersioning: {
+        case InspurOSSOperationTypeGetBucketVersioning: {
             InspurOSSGetVersioningResult *result = [InspurOSSGetVersioningResult new];
             if (_response)
             {
@@ -367,12 +367,12 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    result.enabled = [parseDict objectForKey:OSSSTATUSTOKEN];
+                    result.enabled = [parseDict objectForKey:InspurOSSSTATUSTOKEN];
                 }
             }
             return result;
         }
-        case OSSOperationTypeGetBucketCORS: {
+        case InspurOSSOperationTypeGetBucketCORS: {
             InspurOSSGetBucketCORSResult *result = [InspurOSSGetBucketCORSResult new];
             if (_response)
             {
@@ -381,12 +381,12 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    result.bucketCORSRuleList = [parseDict objectForKey:OSSCORSRULETOKEN];
+                    result.bucketCORSRuleList = [parseDict objectForKey:InspurOSSCORSRULETOKEN];
                 }
             }
             return result;
         }
-        case OSSOperationTypePutBucketCORS: {
+        case InspurOSSOperationTypePutBucketCORS: {
             InspurOSSPutBucketCORSResult *result = [InspurOSSPutBucketCORSResult new];
             if (_response)
             {
@@ -394,7 +394,7 @@
             }
             return result;
         }
-        case OSSOperationTypeDeleteBucketCORS: {
+        case InspurOSSOperationTypeDeleteBucketCORS: {
             InspurOSSPutBucketCORSResult *result = [InspurOSSPutBucketCORSResult new];
             if (_response)
             {
@@ -402,7 +402,7 @@
             }
             return result;
         }
-        case OSSOperationTypePutBucketACL: {
+        case InspurOSSOperationTypePutBucketACL: {
             InspurOSSPutBucketACLResult *result = [InspurOSSPutBucketACLResult new];
             if (_response)
             {
@@ -410,7 +410,7 @@
             }
             return result;
         }
-        case OSSOperationTypeGetBucketLocation:{
+        case InspurOSSOperationTypeGetBucketLocation:{
             InspurOSSGetBucketLocationResult *result = [InspurOSSGetBucketLocationResult new];
             if (_response)
             {
@@ -419,12 +419,12 @@
             if (_collectingData) {
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parseDict) {
-                    result.region = [parseDict objectForKey:OSSTextTOKEN];
+                    result.region = [parseDict objectForKey:InspurOSSTextTOKEN];
                 }
             }
             return result;
         }
-        case OSSOperationTypeQueryBucketExist:{
+        case InspurOSSOperationTypeQueryBucketExist:{
             InspurOSSQueryBucketExistResult *queryResult = [InspurOSSQueryBucketExistResult new];
             if (_response)
             {
@@ -432,7 +432,7 @@
             }
             return queryResult;
         }
-        case OSSOperationTypeListService:{
+        case InspurOSSOperationTypeListService:{
             InspurOSSListServiceResult *listServiceResult = [InspurOSSListServiceResult new];
             if (_response)
             {
@@ -442,13 +442,13 @@
                 NSDictionary * parseDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 OSSLogVerbose(@"List service dict: %@", parseDict);
                 if (parseDict) {
-                    listServiceResult.ownerId = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSIDXMLTOKEN];
-                    listServiceResult.ownerDispName = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSDisplayNameXMLTOKEN];
-                    listServiceResult.pageNo = [[parseDict objectForKey:OSSPageNoXMLTOKEN] intValue];
-                    listServiceResult.pageSize = [[parseDict objectForKey:OSSPageSizeXMLTOKEN] intValue];
-                    listServiceResult.totalCount = [[parseDict objectForKey:OSSTotalCountXMLTOKEN] intValue];
+                    listServiceResult.ownerId = [[parseDict objectForKey:InspurOSSOwnerXMLTOKEN] objectForKey:InspurOSSIDXMLTOKEN];
+                    listServiceResult.ownerDispName = [[parseDict objectForKey:InspurOSSOwnerXMLTOKEN] objectForKey:InspurOSSDisplayNameXMLTOKEN];
+                    listServiceResult.pageNo = [[parseDict objectForKey:InspurOSSPageNoXMLTOKEN] intValue];
+                    listServiceResult.pageSize = [[parseDict objectForKey:InspurOSSPageSizeXMLTOKEN] intValue];
+                    listServiceResult.totalCount = [[parseDict objectForKey:InspurOSSTotalCountXMLTOKEN] intValue];
 
-                    id bucketObject = [[parseDict objectForKey:OSSBucketsXMLTOKEN] objectForKey:OSSBucketXMLTOKEN];
+                    id bucketObject = [[parseDict objectForKey:InspurOSSBucketsXMLTOKEN] objectForKey:InspurOSSBucketXMLTOKEN];
                     if ([bucketObject isKindOfClass:[NSArray class]]) {
                         listServiceResult.buckets = bucketObject;
                     } else if ([bucketObject isKindOfClass:[NSDictionary class]]) {
@@ -462,7 +462,7 @@
             
             return listServiceResult;
         }
-        case OSSOperationTypeGetService:
+        case InspurOSSOperationTypeGetService:
         {
             InspurOSSGetServiceResult * getServiceResult = [InspurOSSGetServiceResult new];
             if (_response)
@@ -475,15 +475,15 @@
                 OSSLogVerbose(@"Get service dict: %@", parseDict);
                 if (parseDict)
                 {
-                    getServiceResult.ownerId = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSIDXMLTOKEN];
-                    getServiceResult.ownerDispName = [[parseDict objectForKey:OSSOwnerXMLTOKEN] objectForKey:OSSDisplayNameXMLTOKEN];
-                    getServiceResult.prefix = [parseDict objectForKey:OSSPrefixXMLTOKEN];
-                    getServiceResult.marker = [parseDict objectForKey:OSSMarkerXMLTOKEN];
-                    getServiceResult.maxKeys = [[parseDict objectForKey:OSSMaxKeysXMLTOKEN] intValue];
-                    getServiceResult.isTruncated = [[parseDict objectForKey:OSSIsTruncatedXMLTOKEN] boolValue];
-                    getServiceResult.nextMarker = [parseDict objectForKey:OSSNextMarkerXMLTOKEN];
+                    getServiceResult.ownerId = [[parseDict objectForKey:InspurOSSOwnerXMLTOKEN] objectForKey:InspurOSSIDXMLTOKEN];
+                    getServiceResult.ownerDispName = [[parseDict objectForKey:InspurOSSOwnerXMLTOKEN] objectForKey:InspurOSSDisplayNameXMLTOKEN];
+                    getServiceResult.prefix = [parseDict objectForKey:InspurOSSPrefixXMLTOKEN];
+                    getServiceResult.marker = [parseDict objectForKey:InspurOSSMarkerXMLTOKEN];
+                    getServiceResult.maxKeys = [[parseDict objectForKey:InspurOSSMaxKeysXMLTOKEN] intValue];
+                    getServiceResult.isTruncated = [[parseDict objectForKey:InspurOSSIsTruncatedXMLTOKEN] boolValue];
+                    getServiceResult.nextMarker = [parseDict objectForKey:InspurOSSNextMarkerXMLTOKEN];
 
-                    id bucketObject = [[parseDict objectForKey:OSSBucketsXMLTOKEN] objectForKey:OSSBucketXMLTOKEN];
+                    id bucketObject = [[parseDict objectForKey:InspurOSSBucketsXMLTOKEN] objectForKey:InspurOSSBucketXMLTOKEN];
                     if ([bucketObject isKindOfClass:[NSArray class]]) {
                         getServiceResult.buckets = bucketObject;
                     } else if ([bucketObject isKindOfClass:[NSDictionary class]]) {
@@ -497,7 +497,7 @@
             return getServiceResult;
         }
             
-        case OSSOperationTypeCreateBucket:
+        case InspurOSSOperationTypeCreateBucket:
         {
             InspurOSSCreateBucketResult * createBucketResult = [InspurOSSCreateBucketResult new];
             if (_response)
@@ -513,7 +513,7 @@
             return createBucketResult;
         }
             
-        case OSSOperationTypeGetBucketACL:
+        case InspurOSSOperationTypeGetBucketACL:
         {
             InspurOSSGetBucketACLResult * getBucketACLResult = [InspurOSSGetBucketACLResult new];
             if (_response)
@@ -526,13 +526,13 @@
                 OSSLogVerbose(@"Get service dict: %@", parseDict);
                 if (parseDict)
                 {
-                    getBucketACLResult.aclGranted = [[parseDict objectForKey:OSSAccessControlListXMLTOKEN] objectForKey:OSSGrantXMLTOKEN];
+                    getBucketACLResult.aclGranted = [[parseDict objectForKey:InspurOSSAccessControlListXMLTOKEN] objectForKey:InspurOSSGrantXMLTOKEN];
                 }
             }
             return getBucketACLResult;
         }
             
-        case OSSOperationTypeDeleteBucket:
+        case InspurOSSOperationTypeDeleteBucket:
         {
             InspurOSSDeleteBucketResult * deleteBucketResult = [InspurOSSDeleteBucketResult new];
             if (_response) {
@@ -541,7 +541,7 @@
             return deleteBucketResult;
         }
             
-        case OSSOperationTypeGetBucket:
+        case InspurOSSOperationTypeGetBucket:
         {
             InspurOSSGetBucketResult * getBucketResult = [InspurOSSGetBucketResult new];
             if (_response) {
@@ -552,15 +552,15 @@
                 OSSLogVerbose(@"Get bucket dict: %@", parsedDict);
                 
                 if (parsedDict) {
-                    getBucketResult.bucketName = [parsedDict objectForKey:OSSNameXMLTOKEN];
-                    getBucketResult.prefix = [parsedDict objectForKey:OSSPrefixXMLTOKEN];
-                    getBucketResult.marker = [parsedDict objectForKey:OSSMarkerXMLTOKEN];
-                    getBucketResult.nextMarker = [parsedDict objectForKey:OSSNextMarkerXMLTOKEN];
-                    getBucketResult.maxKeys = (int32_t)[[parsedDict objectForKey:OSSMaxKeysXMLTOKEN] integerValue];
-                    getBucketResult.delimiter = [parsedDict objectForKey:OSSDelimiterXMLTOKEN];
-                    getBucketResult.isTruncated = [[parsedDict objectForKey:OSSIsTruncatedXMLTOKEN] boolValue];
+                    getBucketResult.bucketName = [parsedDict objectForKey:InspurOSSNameXMLTOKEN];
+                    getBucketResult.prefix = [parsedDict objectForKey:InspurOSSPrefixXMLTOKEN];
+                    getBucketResult.marker = [parsedDict objectForKey:InspurOSSMarkerXMLTOKEN];
+                    getBucketResult.nextMarker = [parsedDict objectForKey:InspurOSSNextMarkerXMLTOKEN];
+                    getBucketResult.maxKeys = (int32_t)[[parsedDict objectForKey:InspurOSSMaxKeysXMLTOKEN] integerValue];
+                    getBucketResult.delimiter = [parsedDict objectForKey:InspurOSSDelimiterXMLTOKEN];
+                    getBucketResult.isTruncated = [[parsedDict objectForKey:InspurOSSIsTruncatedXMLTOKEN] boolValue];
                     
-                    id contentObject = [parsedDict objectForKey:OSSContentsXMLTOKEN];
+                    id contentObject = [parsedDict objectForKey:InspurOSSContentsXMLTOKEN];
                     if ([contentObject isKindOfClass:[NSArray class]]) {
                         getBucketResult.contents = contentObject;
                     } else if ([contentObject isKindOfClass:[NSDictionary class]]) {
@@ -571,7 +571,7 @@
                     }
                     
                     NSMutableArray * commentPrefixesArr = [NSMutableArray new];
-                    id commentPrefixes = [parsedDict objectForKey:OSSCommonPrefixesXMLTOKEN];
+                    id commentPrefixes = [parsedDict objectForKey:InspurOSSCommonPrefixesXMLTOKEN];
                     if ([commentPrefixes isKindOfClass:[NSArray class]]) {
                         for (NSDictionary * prefix in commentPrefixes) {
                             [commentPrefixesArr addObject:[prefix objectForKey:@"Prefix"]];
@@ -588,7 +588,7 @@
             return getBucketResult;
         }
             
-        case OSSOperationTypeListMultipartUploads:
+        case InspurOSSOperationTypeListMultipartUploads:
         {
             InspurOSSListMultipartUploadsResult * listMultipartUploadsResult = [InspurOSSListMultipartUploadsResult new];
             if (_response) {
@@ -599,17 +599,17 @@
                 OSSLogVerbose(@"List multipart uploads dict: %@", parsedDict);
                 
                 if (parsedDict) {
-                    listMultipartUploadsResult.bucketName = [parsedDict objectForKey:OSSBucketXMLTOKEN];
-                    listMultipartUploadsResult.prefix = [parsedDict objectForKey:OSSPrefixXMLTOKEN];
-                    listMultipartUploadsResult.uploadIdMarker = [parsedDict objectForKey:OSSUploadIdMarkerXMLTOKEN];
-                    listMultipartUploadsResult.nextUploadIdMarker = [parsedDict objectForKey:OSSUploadIdMarkerXMLTOKEN];
-                    listMultipartUploadsResult.keyMarker = [parsedDict objectForKey:OSSKeyMarkerXMLTOKEN];
-                    listMultipartUploadsResult.nextKeyMarker = [parsedDict objectForKey:OSSNextKeyMarkerXMLTOKEN];
-                    listMultipartUploadsResult.maxUploads = (int32_t)[[parsedDict objectForKey:OSSMaxUploadsXMLTOKEN] integerValue];
-                    listMultipartUploadsResult.delimiter = [parsedDict objectForKey:OSSDelimiterXMLTOKEN];
-                    listMultipartUploadsResult.isTruncated = [[parsedDict objectForKey:OSSIsTruncatedXMLTOKEN] boolValue];
+                    listMultipartUploadsResult.bucketName = [parsedDict objectForKey:InspurOSSBucketXMLTOKEN];
+                    listMultipartUploadsResult.prefix = [parsedDict objectForKey:InspurOSSPrefixXMLTOKEN];
+                    listMultipartUploadsResult.uploadIdMarker = [parsedDict objectForKey:InspurOSSUploadIdMarkerXMLTOKEN];
+                    listMultipartUploadsResult.nextUploadIdMarker = [parsedDict objectForKey:InspurOSSUploadIdMarkerXMLTOKEN];
+                    listMultipartUploadsResult.keyMarker = [parsedDict objectForKey:InpsurOSSKeyMarkerXMLTOKEN];
+                    listMultipartUploadsResult.nextKeyMarker = [parsedDict objectForKey:InspurOSSNextKeyMarkerXMLTOKEN];
+                    listMultipartUploadsResult.maxUploads = (int32_t)[[parsedDict objectForKey:InspurOSSMaxUploadsXMLTOKEN] integerValue];
+                    listMultipartUploadsResult.delimiter = [parsedDict objectForKey:InspurOSSDelimiterXMLTOKEN];
+                    listMultipartUploadsResult.isTruncated = [[parsedDict objectForKey:InspurOSSIsTruncatedXMLTOKEN] boolValue];
                     
-                    id contentObject = [parsedDict objectForKey:OSSUploadXMLTOKEN];
+                    id contentObject = [parsedDict objectForKey:InspurOSSUploadXMLTOKEN];
                     if ([contentObject isKindOfClass:[NSArray class]]) {
                         listMultipartUploadsResult.uploads = contentObject;
                     } else if ([contentObject isKindOfClass:[NSDictionary class]]) {
@@ -620,7 +620,7 @@
                     }
                     
                     NSMutableArray * commentPrefixesArr = [NSMutableArray new];
-                    id commentPrefixes = [parsedDict objectForKey:OSSCommonPrefixesXMLTOKEN];
+                    id commentPrefixes = [parsedDict objectForKey:InspurOSSCommonPrefixesXMLTOKEN];
                     if ([commentPrefixes isKindOfClass:[NSArray class]]) {
                         for (NSDictionary * prefix in commentPrefixes) {
                             [commentPrefixesArr addObject:[prefix objectForKey:@"Prefix"]];
@@ -637,7 +637,7 @@
             return listMultipartUploadsResult;
         }
             
-        case OSSOperationTypeHeadObject:
+        case InspurOSSOperationTypeHeadObject:
         {
             InspurOSSHeadObjectResult * headObjectResult = [InspurOSSHeadObjectResult new];
             if (_response)
@@ -648,7 +648,7 @@
             return headObjectResult;
         }
             
-        case OSSOperationTypeGetObject:
+        case InspurOSSOperationTypeGetObject:
         {
             InspurOSSGetObjectResult * getObejctResult = [InspurOSSGetObjectResult new];
             OSSLogDebug(@"GetObjectResponse: %@", _response);
@@ -670,7 +670,7 @@
             }
             return getObejctResult;
         }
-        case OSSOperationTypeGetObjectACL:
+        case InspurOSSOperationTypeGetObjectACL:
         {
             InspurOSSGetObjectACLResult * getObjectACLResult = [InspurOSSGetObjectACLResult new];
             OSSLogDebug(@"GetObjectResponse: %@", _response);
@@ -689,7 +689,7 @@
             return getObjectACLResult;
         }
             
-        case OSSOperationTypePutObject:
+        case InspurOSSOperationTypePutObject:
         {
             InspurOSSPutObjectResult * putObjectResult = [InspurOSSPutObjectResult new];
             if (_response)
@@ -710,7 +710,7 @@
             return putObjectResult;
         }
             
-        case OSSOperationTypeAppendObject:
+        case InspurOSSOperationTypeAppendObject:
         {
             InspurOSSAppendObjectResult * appendObjectResult = [InspurOSSAppendObjectResult new];
             if (_response) {
@@ -727,14 +727,14 @@
             return appendObjectResult;
         }
             
-        case OSSOperationTypeDeleteObject: {
+        case InspurOSSOperationTypeDeleteObject: {
             InspurOSSDeleteObjectResult * deleteObjectResult = [InspurOSSDeleteObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:deleteObjectResult];
             }
             return deleteObjectResult;
         }
-        case OSSOperationTypeDeleteMultipleObjects: {
+        case InspurOSSOperationTypeDeleteMultipleObjects: {
             InspurOSSDeleteMultipleObjectsResult * deleteObjectResult = [InspurOSSDeleteMultipleObjectsResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:deleteObjectResult];
@@ -748,7 +748,7 @@
             
             return deleteObjectResult;
         }
-        case OSSOperationTypePutObjectACL: {
+        case InspurOSSOperationTypePutObjectACL: {
             InspurOSSPutObjectACLResult * putObjectACLResult = [InspurOSSPutObjectACLResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:putObjectACLResult];
@@ -756,7 +756,7 @@
             return putObjectACLResult;
         }
             
-        case OSSOperationTypeCopyObject: {
+        case InspurOSSOperationTypeCopyObject: {
             InspurOSSCopyObjectResult * copyObjectResult = [InspurOSSCopyObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:copyObjectResult];
@@ -765,14 +765,14 @@
                 OSSLogVerbose(@"copy object dict: %@", [NSDictionary oss_dictionaryWithXMLData:_collectingData]);
                 NSDictionary * parsedDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 if (parsedDict) {
-                    copyObjectResult.lastModifed = [parsedDict objectForKey:OSSLastModifiedXMLTOKEN];
-                    copyObjectResult.eTag = [parsedDict objectForKey:OSSETagXMLTOKEN];
+                    copyObjectResult.lastModifed = [parsedDict objectForKey:InspurOSSLastModifiedXMLTOKEN];
+                    copyObjectResult.eTag = [parsedDict objectForKey:InspurOSSETagXMLTOKEN];
                 }
             }
             return copyObjectResult;
         }
             
-        case OSSOperationTypeInitMultipartUpload: {
+        case InspurOSSOperationTypeInitMultipartUpload: {
             InspurOSSInitMultipartUploadResult * initMultipartUploadResult = [InspurOSSInitMultipartUploadResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:initMultipartUploadResult];
@@ -781,13 +781,13 @@
                 NSDictionary * parsedDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 OSSLogVerbose(@"init multipart upload result: %@", parsedDict);
                 if (parsedDict) {
-                    initMultipartUploadResult.uploadId = [parsedDict objectForKey:OSSUploadIdXMLTOKEN];
+                    initMultipartUploadResult.uploadId = [parsedDict objectForKey:InspurOSSUploadIdXMLTOKEN];
                 }
             }
             return initMultipartUploadResult;
         }
             
-        case OSSOperationTypeUploadPart: {
+        case InspurOSSOperationTypeUploadPart: {
             InspurOSSUploadPartResult * uploadPartResult = [InspurOSSUploadPartResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:uploadPartResult];
@@ -801,18 +801,18 @@
             return uploadPartResult;
         }
             
-        case OSSOperationTypeCompleteMultipartUpload: {
+        case InspurOSSOperationTypeCompleteMultipartUpload: {
             OSSCompleteMultipartUploadResult * completeMultipartUploadResult = [OSSCompleteMultipartUploadResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:completeMultipartUploadResult];
             }
             if (_collectingData) {
-                if ([[[_response.allHeaderFields objectForKey:OSSHttpHeaderContentType] description] isEqual:@"application/xml"]) {
+                if ([[[_response.allHeaderFields objectForKey:InspurOSSHttpHeaderContentType] description] isEqual:@"application/xml"]) {
                     OSSLogVerbose(@"complete multipart upload result: %@", [NSDictionary oss_dictionaryWithXMLData:_collectingData]);
                     NSDictionary * parsedDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                     if (parsedDict) {
-                        completeMultipartUploadResult.location = [parsedDict objectForKey:OSSLocationXMLTOKEN];
-                        completeMultipartUploadResult.eTag = [parsedDict objectForKey:OSSETagXMLTOKEN];
+                        completeMultipartUploadResult.location = [parsedDict objectForKey:InspurOSSLocationXMLTOKEN];
+                        completeMultipartUploadResult.eTag = [parsedDict objectForKey:InspurOSSETagXMLTOKEN];
                     }
                 } else {
                     completeMultipartUploadResult.serverReturnJsonString = [[NSString alloc] initWithData:_collectingData encoding:NSUTF8StringEncoding];
@@ -821,7 +821,7 @@
             return completeMultipartUploadResult;
         }
             
-        case OSSOperationTypeListMultipart: {
+        case InspurOSSOperationTypeListMultipart: {
             InspurOSSListPartsResult * listPartsReuslt = [InspurOSSListPartsResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:listPartsReuslt];
@@ -830,11 +830,11 @@
                 NSDictionary * parsedDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                 OSSLogVerbose(@"list multipart upload result: %@", parsedDict);
                 if (parsedDict) {
-                    listPartsReuslt.nextPartNumberMarker = [[parsedDict objectForKey:OSSNextPartNumberMarkerXMLTOKEN] intValue];
-                    listPartsReuslt.maxParts = [[parsedDict objectForKey:OSSMaxPartsXMLTOKEN] intValue];
-                    listPartsReuslt.isTruncated = [[parsedDict objectForKey:OSSIsTruncatedXMLTOKEN] boolValue];
+                    listPartsReuslt.nextPartNumberMarker = [[parsedDict objectForKey:InspurOSSNextPartNumberMarkerXMLTOKEN] intValue];
+                    listPartsReuslt.maxParts = [[parsedDict objectForKey:InspurOSSMaxPartsXMLTOKEN] intValue];
+                    listPartsReuslt.isTruncated = [[parsedDict objectForKey:InspurOSSIsTruncatedXMLTOKEN] boolValue];
                     
-                    id partsObject = [parsedDict objectForKey:OSSPartXMLTOKEN];
+                    id partsObject = [parsedDict objectForKey:InspurOSSPartXMLTOKEN];
                     if ([partsObject isKindOfClass:[NSArray class]]) {
                         listPartsReuslt.parts = partsObject;
                     } else if ([partsObject isKindOfClass:[NSDictionary class]]) {
@@ -848,39 +848,39 @@
             return listPartsReuslt;
         }
             
-        case OSSOperationTypeAbortMultipartUpload: {
+        case InspurOSSOperationTypeAbortMultipartUpload: {
             InspurOSSAbortMultipartUploadResult * abortMultipartUploadResult = [InspurOSSAbortMultipartUploadResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:abortMultipartUploadResult];
             }
             return abortMultipartUploadResult;
         }
-        case OSSOperationTypeTriggerCallBack: {
+        case InspurOSSOperationTypeTriggerCallBack: {
             InspurOSSCallBackResult *callbackResult = [InspurOSSCallBackResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:callbackResult];
             }
             
             if (_collectingData) {
-                if ([[[_response.allHeaderFields objectForKey:OSSHttpHeaderContentType] description] isEqual:@"application/xml"]) {
+                if ([[[_response.allHeaderFields objectForKey:InspurOSSHttpHeaderContentType] description] isEqual:@"application/xml"]) {
                     NSDictionary * parsedDict = [NSDictionary oss_dictionaryWithXMLData:_collectingData];
                     OSSLogVerbose(@"callback trigger result<xml>: %@", parsedDict);
                     callbackResult.serverReturnXML = parsedDict;
-                } else if ([[[_response.allHeaderFields objectForKey:OSSHttpHeaderContentType] description] isEqual:@"application/json"]) {
+                } else if ([[[_response.allHeaderFields objectForKey:InspurOSSHttpHeaderContentType] description] isEqual:@"application/json"]) {
                     callbackResult.serverReturnJsonString = [[NSString alloc] initWithData:_collectingData encoding:NSUTF8StringEncoding];
                     OSSLogVerbose(@"callback trigger result<json>: %@", callbackResult.serverReturnJsonString);
                 }
             }
             return callbackResult;
         }
-        case OSSOperationTypeImagePersist: {
+        case InspurOSSOperationTypeImagePersist: {
             InspurOSSImagePersistResult *imagePersistResult = [InspurOSSImagePersistResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:imagePersistResult];
             }
             return imagePersistResult;
         }
-        case OSSOperationTypeGetBucketInfo: {
+        case InspurOSSOperationTypeGetBucketInfo: {
             InspurOSSGetBucketInfoResult *bucketInfoResult = [[InspurOSSGetBucketInfoResult alloc] init];
             if (_collectingData)
             {
@@ -913,28 +913,28 @@
             }
             return bucketInfoResult;
         }
-        case OSSOperationTypeRestoreObject: {
+        case InspurOSSOperationTypeRestoreObject: {
             InspurOSSRestoreObjectResult * restoreObjectResult = [InspurOSSRestoreObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:restoreObjectResult];
             }
             return restoreObjectResult;
         }
-        case OSSOperationTypePutSymlink: {
+        case InspurOSSOperationTypePutSymlink: {
             InspurOSSPutSymlinkResult * putSymlinkResult = [InspurOSSPutSymlinkResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:putSymlinkResult];
             }
             return putSymlinkResult;
         }
-        case OSSOperationTypeGetSymlink: {
+        case InspurOSSOperationTypeGetSymlink: {
             InspurOSSGetSymlinkResult * getSymlinkResult = [InspurOSSGetSymlinkResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:getSymlinkResult];
             }
             return getSymlinkResult;
         }
-        case OSSOperationTypeGetObjectTagging: {
+        case InspurOSSOperationTypeGetObjectTagging: {
             InspurOSSGetObjectTaggingResult *result = [InspurOSSGetObjectTaggingResult new];
             NSMutableDictionary *tags = [NSMutableDictionary dictionary];
             if (_collectingData)
@@ -965,14 +965,14 @@
             }
             return result;
         }
-        case OSSOperationTypePutObjectTagging: {
+        case InspurOSSOperationTypePutObjectTagging: {
             InspurOSSPutObjectTaggingResult *result = [InspurOSSPutObjectTaggingResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:result];
             }
             return result;
         }
-        case OSSOperationTypeDeleteObjectTagging: {
+        case InspurOSSOperationTypeDeleteObjectTagging: {
             InspurOSSDeleteObjectTaggingResult *result = [InspurOSSDeleteObjectTaggingResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:result];

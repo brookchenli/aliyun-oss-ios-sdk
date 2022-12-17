@@ -231,7 +231,7 @@
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -264,7 +264,7 @@
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"resumbleUpload 001 error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     

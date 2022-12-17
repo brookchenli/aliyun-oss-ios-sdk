@@ -91,7 +91,7 @@ class OSSMultipartUploadTests: OSSSwiftDemoTests {
         task.continue({ (t) -> Any? in
             XCTAssertNotNil(t.error)
             let error = t.error! as NSError
-            XCTAssertEqual(OSSClientErrorCODE.codeTaskCancelled.rawValue, error.code)
+            XCTAssertEqual(InspurOSSClientErrorCode.codeTaskCancelled.rawValue, error.code)
             tcs.setError(error)
             
             return nil

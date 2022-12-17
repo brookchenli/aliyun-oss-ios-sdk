@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray * interceptors;
 
 @property (nonatomic, strong) NSMutableURLRequest *internalRequest;
-@property (nonatomic, assign) OSSOperationType operType;
+@property (nonatomic, assign) InspurOSSOperationType operType;
 @property (nonatomic, assign) BOOL isAccessViaProxy;
 
 @property (nonatomic, assign) BOOL isRequestCancelled;

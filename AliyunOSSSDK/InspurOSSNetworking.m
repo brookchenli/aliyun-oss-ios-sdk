@@ -195,9 +195,9 @@
             {
                 NSString *errorMessage = [NSString stringWithFormat:@"crc validation fails(local_crc64ecma: %@,remote_crc64ecma: %@)",result.localCRC64ecma,result.remoteCRC64ecma];
                 
-                NSError *crcError = [NSError errorWithDomain:OSSClientErrorDomain
-                                                        code:OSSClientErrorCodeInvalidCRC
-                                                    userInfo:@{OSSErrorMessageTOKEN:errorMessage}];
+                NSError *crcError = [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                        code:InspurOSSClientErrorCodeInvalidCRC
+                                                    userInfo:@{InspurOSSErrorMessageTOKEN:errorMessage}];
                 [source setError:crcError];
             }
         }
@@ -242,8 +242,8 @@
         requestDelegate.httpRequestNotSuccessResponseBody = [NSMutableData new];
         [self.sessionDelagateManager setObject:requestDelegate forKey:@(sessionTask.taskIdentifier)];
         if (requestDelegate.isRequestCancelled) {
-            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                              code:OSSClientErrorCodeTaskCancelled
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                              code:InspurOSSClientErrorCodeTaskCancelled
                                                           userInfo:nil]];
         }
         [sessionTask resume];
@@ -255,9 +255,9 @@
         if (task.error) {
             requestDelegate.completionHandler(nil, task.error);
         } else if (task.isFaulted) {
-            requestDelegate.completionHandler(nil, [NSError errorWithDomain:OSSClientErrorDomain
-                                                                       code:OSSClientErrorCodeExcpetionCatched
-                                                                   userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}]);
+            requestDelegate.completionHandler(nil, [NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                       code:InspurOSSClientErrorCodeExcpetionCatched
+                                                                   userInfo:@{InspurOSSErrorMessageTOKEN: [NSString stringWithFormat:@"Catch exception - %@", task.exception]}]);
         }
         return nil;
     }];
@@ -299,14 +299,14 @@
         if (delegate.error) {
             OSSLogDebug(@"networking request completed with error: %@", error);
             if ([delegate.error.domain isEqualToString:NSURLErrorDomain] && delegate.error.code == NSURLErrorCancelled) {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                 code:OSSClientErrorCodeTaskCancelled
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                 code:InspurOSSClientErrorCodeTaskCancelled
                                                              userInfo:[error userInfo]]];
             } else {
                 NSMutableDictionary * userInfo = [NSMutableDictionary dictionaryWithDictionary:[error userInfo]];
                 [userInfo setObject:[NSString stringWithFormat:@"%ld", (long)error.code] forKey:@"OriginErrorCode"];
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                 code:OSSClientErrorCodeNetworkError
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                 code:InspurOSSClientErrorCodeNetworkError
                                                              userInfo:userInfo]];
             }
         }
@@ -314,15 +314,15 @@
     }] continueWithSuccessBlock:^id(InspurOSSTask *task) {
         if (delegate.isHttpRequestNotSuccessResponse) {
             if (httpResponse.statusCode == 0) {
-                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
-                                                                 code:OSSClientErrorCodeNetworkingFailWithResponseCode0
-                                                             userInfo:@{OSSErrorMessageTOKEN: @"Request failed, response code 0"}]];
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSClientErrorDomain
+                                                                 code:InspurOSSClientErrorCodeNetworkingFailWithResponseCode0
+                                                             userInfo:@{InspurOSSErrorMessageTOKEN: @"Request failed, response code 0"}]];
             }
             NSString * notSuccessResponseBody = [[NSString alloc] initWithData:delegate.httpRequestNotSuccessResponseBody encoding:NSUTF8StringEncoding];
             OSSLogError(@"http error response: %@", notSuccessResponseBody);
             NSDictionary * dict = [NSDictionary oss_dictionaryWithXMLString:notSuccessResponseBody];
 
-            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:InspurOSSServerErrorDomain
                                                              code:(-1 * httpResponse.statusCode)
                                                          userInfo:dict]];
         }

@@ -495,7 +495,7 @@
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
-            if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
+            if ([task.error.domain isEqualToString:InspurOSSClientErrorDomain] && task.error.code == InspurOSSClientErrorCodeCannotResumeUpload) {
                 // The upload cannot be resumed. Needs to re-initiate a upload.
             }
         } else {
@@ -530,7 +530,7 @@
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -564,7 +564,7 @@
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -598,7 +598,7 @@
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -639,7 +639,7 @@
     [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         return nil;
     }];
     
@@ -1222,7 +1222,7 @@
     [[getSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
-        NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
+        NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:InspurOSSHttpHeaderSymlinkTarget];
         NSString *metaLocation = (NSString *)[result.httpResponseHeaderFields valueForKey:@"x-oss-meta-location"];
         
         XCTAssertTrue([targetObjectName isEqualToString:@"test-symlink-targetObjectName"]);
@@ -1268,7 +1268,7 @@
     [[getSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
-        NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
+        NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:InspurOSSHttpHeaderSymlinkTarget];
         NSString *metaLocation = (NSString *)[result.httpResponseHeaderFields valueForKey:@"x-oss-meta-location"];
         
         XCTAssertTrue([targetObjectName isEqualToString:@"test-symlink-targetObjectName"]);
@@ -1284,7 +1284,7 @@
     
     InspurOSSCreateBucketRequest *createBucketRequest = [InspurOSSCreateBucketRequest new];
     createBucketRequest.bucketName = bucketName;
-    createBucketRequest.storageClass = OSSBucketStorageClassArchive;
+    createBucketRequest.storageClass = InspurOSSBucketStorageClassArchive;
     [[_client createBucket:createBucketRequest] waitUntilFinished];
     
     NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:_fileNames[2]];
@@ -1822,7 +1822,7 @@
     [task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         OSSLogError(@"error should be raised:%@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         cancelled = YES;
         return nil;
     }];
@@ -1850,7 +1850,7 @@
     [task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         OSSLogError(@"error should be raise: %@", task.error);
-        XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeTaskCancelled, task.error.code);
         completed = YES;
         return nil;
     }];
@@ -1871,7 +1871,7 @@
     InspurOSSTask * getTask = [_client getObject:getRequest];
     [getTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(task.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(task.error.code, InspurOSSClientErrorCodeTaskCancelled);
         [tcs setResult:nil];
         return nil;
     }];
@@ -1890,7 +1890,7 @@
     InspurOSSTask * getTask = [_client getObject:getRequest];
     [getTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(task.error.code, OSSClientErrorCodeTaskCancelled);
+        XCTAssertEqual(task.error.code, InspurOSSClientErrorCodeTaskCancelled);
         [tcs setResult:nil];
         return nil;
     }];
@@ -1944,7 +1944,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
+        XCTAssertTrue([InspurOSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 404, task.error.code);
         return nil;
     }] waitUntilFinished];
@@ -1963,7 +1963,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
+        XCTAssertTrue([InspurOSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 404, task.error.code);
         return nil;
     }] waitUntilFinished];
@@ -1988,7 +1988,7 @@
     InspurOSSTask * task = [_client putObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
@@ -2013,7 +2013,7 @@
     InspurOSSTask * task = [_client putObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
+        XCTAssertEqual(InspurOSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
@@ -2033,7 +2033,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
+        XCTAssertTrue([InspurOSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 403, task.error.code);
         return nil;
     }] waitUntilFinished];
@@ -2052,8 +2052,8 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertTrue([OSSClientErrorDomain isEqualToString:task.error.domain]);
-        XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
+        XCTAssertTrue([InspurOSSClientErrorDomain isEqualToString:task.error.domain]);
+        XCTAssertEqual(InspurOSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
     }] waitUntilFinished];
 }
@@ -2073,8 +2073,8 @@
     InspurOSSTask * task = [_client putObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
-        XCTAssertTrue([OSSClientErrorDomain isEqualToString:task.error.domain]);
-        XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
+        XCTAssertTrue([InspurOSSClientErrorDomain isEqualToString:task.error.domain]);
+        XCTAssertEqual(InspurOSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
@@ -2104,12 +2104,12 @@
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         return nil;
-        XCTAssertEqualObjects(OSSClientErrorDomain, task.error.domain);
+        XCTAssertEqualObjects(InspurOSSClientErrorDomain, task.error.domain);
     }] waitUntilFinished];
     
     task = [tempClient presignConstrainURLWithBucketName:_privateBucketName withObjectKey:@"file1m" withExpirationInterval:3600];
     [task waitUntilFinished];
-    XCTAssertTrue([OSSClientErrorDomain isEqualToString:task.error.domain]);
+    XCTAssertTrue([InspurOSSClientErrorDomain isEqualToString:task.error.domain]);
     XCTAssertTrue([progressTest completeValidateProgress]);
 }
 
@@ -2380,8 +2380,8 @@
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = method;
-    [request setValue:contentType forHTTPHeaderField:OSSHttpHeaderContentType];
-    [request setValue:contentMd5 forHTTPHeaderField:OSSHttpHeaderContentMD5];
+    [request setValue:contentType forHTTPHeaderField:InspurOSSHttpHeaderContentType];
+    [request setValue:contentMd5 forHTTPHeaderField:InspurHttpHeaderContentMD5];
     NSURLSession *session = [NSURLSession sharedSession];
     InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     NSURLSessionTask *sesstionTask = [session uploadTaskWithRequest:request fromFile:[NSURL fileURLWithPath:filePath] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -2411,8 +2411,8 @@
     NSString *contentType = @"image/png";
     NSString *contentMd5 = [InspurOSSUtil base64Md5ForFilePath:filePath];
     NSDictionary *headers = @{@"x-oss-meta-text-key": @"test-value",
-                              OSSHttpHeaderContentType: contentType,
-                              OSSHttpHeaderContentMD5: contentMd5};
+                              InspurOSSHttpHeaderContentType: contentType,
+                              InspurHttpHeaderContentMD5: contentMd5};
 
     InspurOSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
                                                  withObjectKey:objectKey
@@ -2426,7 +2426,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = method;
     [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
-    [request setValue:contentMd5 forHTTPHeaderField:OSSHttpHeaderContentMD5];
+    [request setValue:contentMd5 forHTTPHeaderField:InspurHttpHeaderContentMD5];
     [request setValue:@"test-value" forHTTPHeaderField:@"x-oss-meta-text-key"];
     NSURLSession *session = [NSURLSession sharedSession];
     InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
@@ -2450,7 +2450,7 @@
         XCTAssertNil(task.error);
         InspurOSSHeadObjectResult * headResult = task.result;
         [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            if (![key isEqualToString:OSSHttpHeaderContentMD5]) {
+            if (![key isEqualToString:InspurHttpHeaderContentMD5]) {
                 XCTAssertTrue([[headResult.objectMeta objectForKey:key] isEqualToString:obj]);
             }
         }];
