@@ -45,11 +45,11 @@
 
 - (void)setUpOSSClient
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     // 通过ClientConfiguration配置开启全局的crc64校验
     config.crc64Verifiable = YES;
     
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     
     
     _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
@@ -143,7 +143,7 @@
     InspurOSSTask * task = [_client appendObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSAppendObjectResult * result = task.result;
+        InspurOSSAppendObjectResult * result = task.result;
         nextAppendPosition = result.xOssNextAppendPosition;
         lastCrc64ecma = result.remoteCRC64ecma;
         return nil;
@@ -194,7 +194,7 @@
     InspurOSSTask * task = [_client getObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult *result = task.result;
+        InspurOSSGetObjectResult *result = task.result;
         if (result.remoteCRC64ecma) {
             NSScanner *scanner = [NSScanner scannerWithString:result.remoteCRC64ecma];
             [scanner scanUnsignedLongLong:&remoteCrc64];

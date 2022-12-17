@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OSSWrapper.h"
-#import "OSSManager.h"
+#import "InspurOSSManager.h"
 #import "OSSTestMacros.h"
 
 @interface OSSWrapper ()
@@ -43,7 +43,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
     };
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        InspurOSSTask * task = [[OSSManager sharedManager].imageClient getObject:_normalDloadRequest];
+        InspurOSSTask * task = [[InspurOSSManager sharedManager].imageClient getObject:_normalDloadRequest];
         [task continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (task.error) {
@@ -79,7 +79,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
                                            @"callbackBody": @"filename=${object}"
                                            };
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        InspurOSSTask * task = [[OSSManager sharedManager].defaultClient putObject:_normalUploadRequest];
+        InspurOSSTask * task = [[InspurOSSManager sharedManager].defaultClient putObject:_normalUploadRequest];
         [task continueWithBlock:^id(InspurOSSTask *task) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (task.error) {
@@ -115,7 +115,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
         request.callbackVar = @{@"var1": @"value1",
                                 @"var2": @"value2"};
         
-        InspurOSSTask *triggerCBTask = [[OSSManager sharedManager].defaultClient triggerCallBack:request];
+        InspurOSSTask *triggerCBTask = [[InspurOSSManager sharedManager].defaultClient triggerCallBack:request];
         [triggerCBTask waitUntilFinished];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -153,7 +153,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
         };
         
         //
-        InspurOSSTask * resumeTask = [[OSSManager sharedManager].defaultClient resumableUpload:resumableUpload];
+        InspurOSSTask * resumeTask = [[InspurOSSManager sharedManager].defaultClient resumableUpload:resumableUpload];
         [resumeTask waitUntilFinished];                             // 阻塞当前线程直到上传任务完成
         
         dispatch_async(dispatch_get_main_queue(), ^{

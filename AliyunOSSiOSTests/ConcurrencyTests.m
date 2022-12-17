@@ -31,7 +31,7 @@
     for (int i = 0; i < 10000; i++) {
         [queue addOperationWithBlock:^{
             @autoreleasepool{
-            OSSAuthCredentialProvider *credential = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+            InspurOSSAuthCredentialProvider *credential = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
             InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential];
             }
         }];

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OSSModel.h"
 
-@class OSSSyncMutableDictionary;
+@class InspurOSSSyncMutableDictionary;
 @class InspurOSSNetworkingRequestDelegate;
 @class InspurOSSExecutor;
 
@@ -37,7 +37,7 @@
 @interface InspurOSSNetworking : NSObject <NSURLSessionDelegate, NSURLSessionDataDelegate>
 @property (nonatomic, strong) NSURLSession * session;
 @property (nonatomic, assign) BOOL isUsingBackgroundSession;
-@property (nonatomic, strong) OSSSyncMutableDictionary * sessionDelagateManager;
+@property (nonatomic, strong) InspurOSSSyncMutableDictionary * sessionDelagateManager;
 @property (nonatomic, strong) InspurOSSNetworkingConfiguration * configuration;
 @property (nonatomic, strong) InspurOSSExecutor * taskExecutor;
 

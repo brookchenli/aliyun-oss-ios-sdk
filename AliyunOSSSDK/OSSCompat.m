@@ -86,7 +86,7 @@
         if (task.error) {
             onCompleted(nil, task.error);
         } else {
-            OSSGetObjectResult * result = task.result;
+            InspurOSSGetObjectResult * result = task.result;
             onCompleted(result.downloadedData, nil);
         }
         return nil;

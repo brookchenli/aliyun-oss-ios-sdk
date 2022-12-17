@@ -27,8 +27,8 @@
 
 - (void)setupClient {
     //    OSSAuthCredentialProvider *provider = [OSSAuthCredentialProvider new];
-    OSSPlainTextAKSKPairCredentialProvider *provider = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSPlainTextAKSKPairCredentialProvider *provider = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     conf.maxRetryCount = 2;
     conf.timeoutIntervalForRequest = 30;
     conf.timeoutIntervalForResource = 24 * 60 * 60;

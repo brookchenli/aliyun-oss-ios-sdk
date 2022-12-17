@@ -13,7 +13,7 @@
 #import "NSMutableData+OSS_CRC.h"
 #import "NSDate+OSS.h"
 
-@class OSSFederationToken;
+@class InspurOSSFederationToken;
 
 @interface InspurOSSUtil : NSObject
 
@@ -41,7 +41,7 @@
 + (NSString *)populateSubresourceStringFromParameter:(NSDictionary *)parameters;
 + (NSString *)populateQueryStringFromParameter:(NSDictionary *)parameters;
 + (BOOL)isSubresource:(NSString *)param;
-+ (NSString *)sign:(NSString *)content withToken:(OSSFederationToken *)token;
++ (NSString *)sign:(NSString *)content withToken:(InspurOSSFederationToken *)token;
 + (NSString *)getRelativePath:(NSString *)fullPath;
 + (NSString *)detemineMimeTypeForFilePath:(NSString *)filePath uploadName:(NSString *)uploadName;
 + (BOOL)hasPhoneFreeSpace;

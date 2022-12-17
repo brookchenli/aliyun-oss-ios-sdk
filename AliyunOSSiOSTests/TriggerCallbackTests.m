@@ -23,7 +23,7 @@
     NSString *testName = [[array1[1] substringToIndex:([array1[1] length] -1)] lowercaseString];
     _privateBucketName = [@"oss-ios-" stringByAppendingString:testName];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    OSSPlainTextAKSKPairCredentialProvider *provider = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSPlainTextAKSKPairCredentialProvider *provider = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     self.client = [[InspurOSSClient alloc] initWithEndpoint:@"http://oss-cn-shenzhen.aliyuncs.com" credentialProvider:provider];
     InspurOSSCreateBucketRequest *createBucket1 = [InspurOSSCreateBucketRequest new];
     createBucket1.bucketName = _privateBucketName;

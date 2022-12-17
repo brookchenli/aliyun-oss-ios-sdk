@@ -63,7 +63,7 @@
                                             delegateQueue:delegateQueue];
 
         self.isUsingBackgroundSession = configuration.enableBackgroundTransmitService;
-        _sessionDelagateManager = [OSSSyncMutableDictionary new];
+        _sessionDelagateManager = [InspurOSSSyncMutableDictionary new];
 
         NSOperationQueue * operationQueue = [NSOperationQueue new];
         if (configuration.maxConcurrentRequestCount > 0) {
@@ -212,7 +212,7 @@
 
     [[[[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.taskExecutor withSuccessBlock:^id(InspurOSSTask *task) {
         OSSLogVerbose(@"start to intercept request");
-        for (id<OSSRequestInterceptor> interceptor in requestDelegate.interceptors) {
+        for (id<InspurOSSRequestInterceptor> interceptor in requestDelegate.interceptors) {
             task = [interceptor interceptRequestMessage:requestDelegate.allNeededMessage];
             if (task.error) {
                 return task;
@@ -358,7 +358,7 @@
                         OSSLogError(@"Date header does not exist, unable to fix the clock skew");
                     }
                     
-                    [delegate.interceptors insertObject:[OSSTimeSkewedFixingInterceptor new] atIndex:0];
+                    [delegate.interceptors insertObject:[InspurOSSTimeSkewedFixingInterceptor new] atIndex:0];
                     break;
                 }
 

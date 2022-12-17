@@ -17,7 +17,7 @@
     listObject.maxKeys = 1000;
     InspurOSSTask *listObjectTask = [client getBucket:listObject];
     [[listObjectTask continueWithBlock:^id(InspurOSSTask * task) {
-        OSSGetBucketResult * listObjectResult = task.result;
+        InspurOSSGetBucketResult * listObjectResult = task.result;
         for (NSDictionary *dict in listObjectResult.contents) {
             NSString * objectKey = [dict objectForKey:@"Key"];
             NSLog(@"delete object %@", objectKey);
@@ -36,7 +36,7 @@
     InspurOSSTask *listMultipartUploadsTask = [client listMultipartUploads:listMultipartUploads];
     
     [[listMultipartUploadsTask continueWithBlock:^id(InspurOSSTask *task) {
-        OSSListMultipartUploadsResult * result = task.result;
+        InspurOSSListMultipartUploadsResult * result = task.result;
         for (NSDictionary *dict in result.uploads) {
             NSString * uploadId = [dict objectForKey:@"UploadId"];
             NSString * objectKey = [dict objectForKey:@"Key"];

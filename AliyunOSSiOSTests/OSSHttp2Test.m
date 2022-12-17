@@ -42,9 +42,9 @@
 
 - (void)setUpOSSClient
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     _client = [[InspurOSSClient alloc] initWithEndpoint:_http2endpoint
                                credentialProvider:authProv
                               clientConfiguration:config];

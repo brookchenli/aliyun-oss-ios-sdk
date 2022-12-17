@@ -183,7 +183,7 @@
     switch (_operationTypeForThisParser)
     {
         case OSSOperationTypeGetObjectVersions: {
-            OSSGetObjectVersionResult *result = [OSSGetObjectVersionResult new];
+            InspurOSSGetObjectVersionResult *result = [InspurOSSGetObjectVersionResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -197,7 +197,7 @@
             return result;
         }
         case OSSOperationTypeGetBucketPolicy: {
-            OSSGetBucketPolicyResult *result = [OSSGetBucketPolicyResult new];
+            InspurOSSGetBucketPolicyResult *result = [InspurOSSGetBucketPolicyResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -209,7 +209,7 @@
             return result;
         }
         case OSSOperationTypePutBucketPolicy: {
-            OSSPutBucketPolicyResult *result = [OSSPutBucketPolicyResult new];
+            InspurOSSPutBucketPolicyResult *result = [InspurOSSPutBucketPolicyResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -219,7 +219,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketPolicy: {
-            OSSDeleteBucketPolicyResult *result = [OSSDeleteBucketPolicyResult new];
+            InspurOSSDeleteBucketPolicyResult *result = [InspurOSSDeleteBucketPolicyResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -228,7 +228,7 @@
         }
             
         case OSSOperationTypeGetBucketDomain: {
-            OSSGetBucketDomainResult *result = [OSSGetBucketDomainResult new];
+            InspurOSSGetBucketDomainResult *result = [InspurOSSGetBucketDomainResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -239,7 +239,7 @@
             return result;
         }
         case OSSOperationTypePutBucketDomain: {
-            OSSPutBucketDomainResult *result = [OSSPutBucketDomainResult new];
+            InspurOSSPutBucketDomainResult *result = [InspurOSSPutBucketDomainResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -247,7 +247,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketDomain: {
-            OSSDeleteBucketDomainResult *result = [OSSDeleteBucketDomainResult new];
+            InspurOSSDeleteBucketDomainResult *result = [InspurOSSDeleteBucketDomainResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -256,7 +256,7 @@
         }
             
         case OSSOperationTypeGetBucketLifeCycle: {
-            OSSGetBucketLifeCycleResult *result = [OSSGetBucketLifeCycleResult new];
+            InspurOSSGetBucketLifeCycleResult *result = [InspurOSSGetBucketLifeCycleResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -270,7 +270,7 @@
             return result;
         }
         case OSSOperationTypePutBucketLifeCycle: {
-            OSSPutBucketLifeCycleResult *result = [OSSPutBucketLifeCycleResult new];
+            InspurOSSPutBucketLifeCycleResult *result = [InspurOSSPutBucketLifeCycleResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -278,7 +278,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketLifeCycle: {
-            OSSDeleteBucketLifeCycleResult *result = [OSSDeleteBucketLifeCycleResult new];
+            InspurOSSDeleteBucketLifeCycleResult *result = [InspurOSSDeleteBucketLifeCycleResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -287,7 +287,7 @@
         }
             
         case OSSOperationTypeGetBucketWebsite: {
-            OSSGetBucketWebsiteResult *result = [OSSGetBucketWebsiteResult new];
+            InspurOSSGetBucketWebsiteResult *result = [InspurOSSGetBucketWebsiteResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -302,7 +302,7 @@
             return result;
         }
         case OSSOperationTypePutBucketWebsite: {
-            OSSPutBucketWebsiteResult *result = [OSSPutBucketWebsiteResult new];
+            InspurOSSPutBucketWebsiteResult *result = [InspurOSSPutBucketWebsiteResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -310,7 +310,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketWebsite: {
-            OSSDeleteBucketWebsiteResult *result = [OSSDeleteBucketWebsiteResult new];
+            InspurOSSDeleteBucketWebsiteResult *result = [InspurOSSDeleteBucketWebsiteResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -319,7 +319,7 @@
         }
             
         case OSSOperationTypeGetBucketEncryption: {
-            OSSGetBucketEncryptionResult *result = [OSSGetBucketEncryptionResult new];
+            InspurOSSGetBucketEncryptionResult *result = [InspurOSSGetBucketEncryptionResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -334,7 +334,7 @@
             return result;
         }
         case OSSOperationTypePutBucketEncryption: {
-            OSSPutBucketEncryptionResult *result = [OSSPutBucketEncryptionResult new];
+            InspurOSSPutBucketEncryptionResult *result = [InspurOSSPutBucketEncryptionResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -342,7 +342,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketEncryption: {
-            OSSDeleteBucketEncryptionResult *result = [OSSDeleteBucketEncryptionResult new];
+            InspurOSSDeleteBucketEncryptionResult *result = [InspurOSSDeleteBucketEncryptionResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -351,7 +351,7 @@
         }
             
         case OSSOperationTypePutBucketVersioning: {
-            OSSPutVersioningResult *result = [OSSPutVersioningResult new];
+            InspurOSSPutVersioningResult *result = [InspurOSSPutVersioningResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -359,7 +359,7 @@
             return result;
         }
         case OSSOperationTypeGetBucketVersioning: {
-            OSSGetVersioningResult *result = [OSSGetVersioningResult new];
+            InspurOSSGetVersioningResult *result = [InspurOSSGetVersioningResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -373,7 +373,7 @@
             return result;
         }
         case OSSOperationTypeGetBucketCORS: {
-            OSSGetBucketCORSResult *result = [OSSGetBucketCORSResult new];
+            InspurOSSGetBucketCORSResult *result = [InspurOSSGetBucketCORSResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -387,7 +387,7 @@
             return result;
         }
         case OSSOperationTypePutBucketCORS: {
-            OSSPutBucketCORSResult *result = [OSSPutBucketCORSResult new];
+            InspurOSSPutBucketCORSResult *result = [InspurOSSPutBucketCORSResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -395,7 +395,7 @@
             return result;
         }
         case OSSOperationTypeDeleteBucketCORS: {
-            OSSPutBucketCORSResult *result = [OSSPutBucketCORSResult new];
+            InspurOSSPutBucketCORSResult *result = [InspurOSSPutBucketCORSResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -403,7 +403,7 @@
             return result;
         }
         case OSSOperationTypePutBucketACL: {
-            OSSPutBucketACLResult *result = [OSSPutBucketACLResult new];
+            InspurOSSPutBucketACLResult *result = [InspurOSSPutBucketACLResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -411,7 +411,7 @@
             return result;
         }
         case OSSOperationTypeGetBucketLocation:{
-            OSSGetBucketLocationResult *result = [OSSGetBucketLocationResult new];
+            InspurOSSGetBucketLocationResult *result = [InspurOSSGetBucketLocationResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:result];
@@ -425,7 +425,7 @@
             return result;
         }
         case OSSOperationTypeQueryBucketExist:{
-            OSSQueryBucketExistResult *queryResult = [OSSQueryBucketExistResult new];
+            InspurOSSQueryBucketExistResult *queryResult = [InspurOSSQueryBucketExistResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:queryResult];
@@ -433,7 +433,7 @@
             return queryResult;
         }
         case OSSOperationTypeListService:{
-            OSSListServiceResult *listServiceResult = [OSSListServiceResult new];
+            InspurOSSListServiceResult *listServiceResult = [InspurOSSListServiceResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:listServiceResult];
@@ -464,7 +464,7 @@
         }
         case OSSOperationTypeGetService:
         {
-            OSSGetServiceResult * getServiceResult = [OSSGetServiceResult new];
+            InspurOSSGetServiceResult * getServiceResult = [InspurOSSGetServiceResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:getServiceResult];
@@ -499,7 +499,7 @@
             
         case OSSOperationTypeCreateBucket:
         {
-            OSSCreateBucketResult * createBucketResult = [OSSCreateBucketResult new];
+            InspurOSSCreateBucketResult * createBucketResult = [InspurOSSCreateBucketResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:createBucketResult];
@@ -515,7 +515,7 @@
             
         case OSSOperationTypeGetBucketACL:
         {
-            OSSGetBucketACLResult * getBucketACLResult = [OSSGetBucketACLResult new];
+            InspurOSSGetBucketACLResult * getBucketACLResult = [InspurOSSGetBucketACLResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:getBucketACLResult];
@@ -543,7 +543,7 @@
             
         case OSSOperationTypeGetBucket:
         {
-            OSSGetBucketResult * getBucketResult = [OSSGetBucketResult new];
+            InspurOSSGetBucketResult * getBucketResult = [InspurOSSGetBucketResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:getBucketResult];
             }
@@ -590,7 +590,7 @@
             
         case OSSOperationTypeListMultipartUploads:
         {
-            OSSListMultipartUploadsResult * listMultipartUploadsResult = [OSSListMultipartUploadsResult new];
+            InspurOSSListMultipartUploadsResult * listMultipartUploadsResult = [InspurOSSListMultipartUploadsResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:listMultipartUploadsResult];
             }
@@ -639,7 +639,7 @@
             
         case OSSOperationTypeHeadObject:
         {
-            OSSHeadObjectResult * headObjectResult = [OSSHeadObjectResult new];
+            InspurOSSHeadObjectResult * headObjectResult = [InspurOSSHeadObjectResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:headObjectResult];
@@ -650,7 +650,7 @@
             
         case OSSOperationTypeGetObject:
         {
-            OSSGetObjectResult * getObejctResult = [OSSGetObjectResult new];
+            InspurOSSGetObjectResult * getObejctResult = [InspurOSSGetObjectResult new];
             OSSLogDebug(@"GetObjectResponse: %@", _response);
             if (_response)
             {
@@ -691,7 +691,7 @@
             
         case OSSOperationTypePutObject:
         {
-            OSSPutObjectResult * putObjectResult = [OSSPutObjectResult new];
+            InspurOSSPutObjectResult * putObjectResult = [InspurOSSPutObjectResult new];
             if (_response)
             {
                 [self parseResponseHeader:_response toResultObject:putObjectResult];
@@ -712,7 +712,7 @@
             
         case OSSOperationTypeAppendObject:
         {
-            OSSAppendObjectResult * appendObjectResult = [OSSAppendObjectResult new];
+            InspurOSSAppendObjectResult * appendObjectResult = [InspurOSSAppendObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:appendObjectResult];
                 [_response.allHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -728,7 +728,7 @@
         }
             
         case OSSOperationTypeDeleteObject: {
-            OSSDeleteObjectResult * deleteObjectResult = [OSSDeleteObjectResult new];
+            InspurOSSDeleteObjectResult * deleteObjectResult = [InspurOSSDeleteObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:deleteObjectResult];
             }
@@ -749,7 +749,7 @@
             return deleteObjectResult;
         }
         case OSSOperationTypePutObjectACL: {
-            OSSPutObjectACLResult * putObjectACLResult = [OSSPutObjectACLResult new];
+            InspurOSSPutObjectACLResult * putObjectACLResult = [InspurOSSPutObjectACLResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:putObjectACLResult];
             }
@@ -757,7 +757,7 @@
         }
             
         case OSSOperationTypeCopyObject: {
-            OSSCopyObjectResult * copyObjectResult = [OSSCopyObjectResult new];
+            InspurOSSCopyObjectResult * copyObjectResult = [InspurOSSCopyObjectResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:copyObjectResult];
             }
@@ -773,7 +773,7 @@
         }
             
         case OSSOperationTypeInitMultipartUpload: {
-            OSSInitMultipartUploadResult * initMultipartUploadResult = [OSSInitMultipartUploadResult new];
+            InspurOSSInitMultipartUploadResult * initMultipartUploadResult = [InspurOSSInitMultipartUploadResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:initMultipartUploadResult];
             }
@@ -788,7 +788,7 @@
         }
             
         case OSSOperationTypeUploadPart: {
-            OSSUploadPartResult * uploadPartResult = [OSSUploadPartResult new];
+            InspurOSSUploadPartResult * uploadPartResult = [InspurOSSUploadPartResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:uploadPartResult];
                 [_response.allHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -822,7 +822,7 @@
         }
             
         case OSSOperationTypeListMultipart: {
-            OSSListPartsResult * listPartsReuslt = [OSSListPartsResult new];
+            InspurOSSListPartsResult * listPartsReuslt = [InspurOSSListPartsResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:listPartsReuslt];
             }
@@ -849,14 +849,14 @@
         }
             
         case OSSOperationTypeAbortMultipartUpload: {
-            OSSAbortMultipartUploadResult * abortMultipartUploadResult = [OSSAbortMultipartUploadResult new];
+            InspurOSSAbortMultipartUploadResult * abortMultipartUploadResult = [InspurOSSAbortMultipartUploadResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:abortMultipartUploadResult];
             }
             return abortMultipartUploadResult;
         }
         case OSSOperationTypeTriggerCallBack: {
-            OSSCallBackResult *callbackResult = [OSSCallBackResult new];
+            InspurOSSCallBackResult *callbackResult = [InspurOSSCallBackResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:callbackResult];
             }
@@ -874,7 +874,7 @@
             return callbackResult;
         }
         case OSSOperationTypeImagePersist: {
-            OSSImagePersistResult *imagePersistResult = [OSSImagePersistResult new];
+            InspurOSSImagePersistResult *imagePersistResult = [InspurOSSImagePersistResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:imagePersistResult];
             }

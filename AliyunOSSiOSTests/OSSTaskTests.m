@@ -317,7 +317,7 @@
 }
 
 - (void)testCompleteWithSuccess {
-    InspurOSSResult *putResult = [OSSPutObjectResult new];
+    InspurOSSResult *putResult = [InspurOSSPutObjectResult new];
     InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertTrue(isSuccess);

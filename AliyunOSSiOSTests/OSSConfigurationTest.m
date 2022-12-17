@@ -38,8 +38,8 @@
 }
 
 - (void)testDefault {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:endpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
@@ -52,11 +52,11 @@
 }
 
 - (void)testPathStyleAccessEnable {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[cname];
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
@@ -71,10 +71,10 @@
 
 - (void)testSupportCnameEnable {
     NSArray *cnameExcludeList = @[cname];
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
     config.cnameExcludeList = cnameExcludeList;
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
@@ -86,7 +86,7 @@
         return task;
     }] waitUntilFinished];
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
     client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     get = [InspurOSSGetObjectRequest new];
@@ -102,10 +102,10 @@
 
 - (void)testCustomPathPrefixEnable {
     NSString *endpointPath = [NSString stringWithFormat:@"%@/%@", cnameEndpoint, OSS_BUCKET_PUBLIC];
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
     config.isCustomPathPrefixEnable = YES;
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:endpointPath credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
@@ -119,10 +119,10 @@
 }
 
 - (void)testCustomPathPrefixEnableWithNoPathEndpont {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
     config.isCustomPathPrefixEnable = YES;
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
@@ -136,9 +136,9 @@
 }
 
 - (void)testCustomPathPrefixEnableWithNullObject {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.maxRetryCount = 0;
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetBucketRequest *get = [InspurOSSGetBucketRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;

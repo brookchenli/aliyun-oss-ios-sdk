@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSManager : NSObject
+@interface InspurOSSManager : NSObject
 
 @property (nonatomic, strong) InspurOSSClient *defaultClient;
 

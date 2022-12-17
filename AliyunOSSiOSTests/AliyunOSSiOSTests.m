@@ -36,7 +36,7 @@ static NSArray * fileSizeArray;
 static InspurOSSClient * client;
 static dispatch_queue_t test_queue;
 
-id<OSSCredentialProvider> credential, authCredential;
+id<InspurOSSCredentialProvider> credential, authCredential;
 
 @implementation oss_ios_sdk_newTests
 
@@ -99,8 +99,8 @@ id<OSSCredentialProvider> credential, authCredential;
     
     credential = [self newStsTokenCredentialProvider];
     //authCredential = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    authCredential = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    authCredential = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     conf.maxRetryCount = 2;
     conf.timeoutIntervalForRequest = 30;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
@@ -113,7 +113,7 @@ id<OSSCredentialProvider> credential, authCredential;
 // Initializes an OSSClient object with STS token and AK pairs.
 // In this case, the OSSClient will not auto refresh the token. The caller needs to check if the token has been expired and refresh a new STS token.
 // If the expired token is not updated, the authentication will fail for subsequential requests.
-- (id<OSSCredentialProvider>)newStsTokenCredentialProvider {
+- (id<InspurOSSCredentialProvider>)newStsTokenCredentialProvider {
     
     // Assuming the following is the returned data from app servers
     // {"accessKeyId":"STS.iA645eTOXEqP3cg3VeHf",
@@ -152,7 +152,7 @@ id<OSSCredentialProvider> credential, authCredential;
         NSString * token = [object objectForKey:@"SecurityToken"];
         OSSLogDebug(@"token: %@ %@ %@", accessKey, secretKey, token);
         
-        return [[OSSStsTokenCredentialProvider alloc] initWithAccessKeyId:accessKey secretKeyId:secretKey securityToken:token];
+        return [[InspurOSSStsTokenCredentialProvider alloc] initWithAccessKeyId:accessKey secretKeyId:secretKey securityToken:token];
     }
 }
 
@@ -173,7 +173,7 @@ id<OSSCredentialProvider> credential, authCredential;
     InspurOSSTask * task = [client multipartUploadInit:init];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSInitMultipartUploadResult * result = task.result;
+        InspurOSSInitMultipartUploadResult * result = task.result;
         XCTAssertNotNil(result.uploadId);
         uploadId = result.uploadId;
         return nil;
@@ -189,12 +189,12 @@ id<OSSCredentialProvider> credential, authCredential;
     [abortTask waitUntilFinished];
     
     XCTAssertNil(abortTask.error);
-    OSSAbortMultipartUploadResult * abortResult = abortTask.result;
+    InspurOSSAbortMultipartUploadResult * abortResult = abortTask.result;
     XCTAssertEqual(204, abortResult.httpResponseCode);
 }
 
 - (void)testAccessViaHttpProxy {
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     
     conf.proxyHost = @"test";
     if ([conf.proxyHost isEqualToString:@"test"]) {
@@ -228,7 +228,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testUserAgentConfig {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     
     conf.userAgentMark = @"customUserAgent";
     
@@ -254,7 +254,7 @@ id<OSSCredentialProvider> credential, authCredential;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
     
-    OSSClientConfiguration * conf1 = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf1 = [InspurOSSClientConfiguration new];
     
     conf1.userAgentMark = @"customUserAgentOther";
     
@@ -281,7 +281,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testMultiClientInstance {
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     conf.maxRetryCount = 3;
     conf.timeoutIntervalForRequest = 15;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
@@ -290,7 +290,7 @@ id<OSSCredentialProvider> credential, authCredential;
                                            credentialProvider:credential
                                           clientConfiguration:conf];
     
-    conf = [OSSClientConfiguration new];
+    conf = [InspurOSSClientConfiguration new];
     conf.maxRetryCount = 3;
     conf.enableBackgroundTransmitService = YES;
     conf.backgroundSesseionIdentifier = @"test_other_backgroundservice-enbaled_client";
@@ -323,7 +323,7 @@ id<OSSCredentialProvider> credential, authCredential;
         if (task.error) {
             OSSLogError(@"%@", task.error);
         }
-        OSSPutObjectResult * result = task.result;
+        InspurOSSPutObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         NSLog(@"Result - requestId: %@, headerFields: %@",
               result.requestId,
@@ -351,7 +351,7 @@ id<OSSCredentialProvider> credential, authCredential;
         if (task.error) {
             OSSLogError(@"%@", task.error);
         }
-        OSSPutObjectResult * result = task.result;
+        InspurOSSPutObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         NSLog(@"Result - requestId: %@, headerFields: %@",
               result.requestId,
@@ -362,7 +362,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testClientInitWithNoneSchemeEndpoint {
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     conf.maxRetryCount = 3;
     conf.timeoutIntervalForRequest = 15;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
@@ -394,7 +394,7 @@ id<OSSCredentialProvider> credential, authCredential;
         if (task.error) {
             OSSLogError(@"%@", task.error);
         }
-        OSSPutObjectResult * result = task.result;
+        InspurOSSPutObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         NSLog(@"Result - requestId: %@, headerFields: %@",
               result.requestId,
@@ -614,7 +614,7 @@ id<OSSCredentialProvider> credential, authCredential;
     InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
     [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSResumableUploadResult * resumableUploadResult = task.result;
+        InspurOSSResumableUploadResult * resumableUploadResult = task.result;
         if (task.error) {
             NSLog(@"error: %@", task.error);
             if ([task.error.domain isEqualToString:OSSClientErrorDomain] && task.error.code == OSSClientErrorCodeCannotResumeUpload) {
@@ -977,7 +977,7 @@ id<OSSCredentialProvider> credential, authCredential;
                 if (task.error) {
                     OSSLogError(@"%@", task.error);
                 }
-                OSSPutObjectResult * result = task.result;
+                InspurOSSPutObjectResult * result = task.result;
                 XCTAssertEqual(200, result.httpResponseCode);
                 NSLog(@"Result - requestId: %@, headerFields: %@",
                       result.requestId,
@@ -1008,7 +1008,7 @@ id<OSSCredentialProvider> credential, authCredential;
             InspurOSSTask * task = [client getObject:request];
             [[task continueWithBlock:^id(InspurOSSTask *task) {
                 XCTAssertNil(task.error);
-                OSSGetObjectResult * result = task.result;
+                InspurOSSGetObjectResult * result = task.result;
                 XCTAssertEqual(200, result.httpResponseCode);
                 XCTAssertEqual(1024 * 1024 * 1, [result.downloadedData length]);
                 XCTAssertEqualObjects(@"1048576", [result.objectMeta objectForKey:@"Content-Length"]);
@@ -1031,7 +1031,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testSerialGetObjectWithConfiguration {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSClientConfiguration * configuration = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * configuration = [InspurOSSClientConfiguration new];
     configuration.maxRetryCount = 2;
     configuration.timeoutIntervalForRequest = 30;
     configuration.timeoutIntervalForResource = 24 * 60 * 60;
@@ -1048,7 +1048,7 @@ id<OSSCredentialProvider> credential, authCredential;
             InspurOSSTask * task = [client getObject:request];
             [[task continueWithBlock:^id(InspurOSSTask *task) {
                 XCTAssertNil(task.error);
-                OSSGetObjectResult * result = task.result;
+                InspurOSSGetObjectResult * result = task.result;
                 XCTAssertEqual(200, result.httpResponseCode);
                 XCTAssertEqual(1024 * 1024 * 1, [result.downloadedData length]);
                 XCTAssertEqualObjects(@"1048576", [result.objectMeta objectForKey:@"Content-Length"]);
@@ -1440,7 +1440,7 @@ id<OSSCredentialProvider> credential, authCredential;
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    id<OSSCredentialProvider> provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    id<InspurOSSCredentialProvider> provider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     
     InspurOSSClient * client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
     
@@ -1448,7 +1448,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         XCTAssertEqual(1024 * 1024, [result.downloadedData length]);
         XCTAssertEqualObjects(@"1048576", [result.objectMeta objectForKey:@"Content-Length"]);
@@ -1473,7 +1473,7 @@ id<OSSCredentialProvider> credential, authCredential;
     InspurOSSTask * task = [client multipartUploadInit:init];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSInitMultipartUploadResult * result = task.result;
+        InspurOSSInitMultipartUploadResult * result = task.result;
         XCTAssertNotNil(result.uploadId);
         uploadId = result.uploadId;
         return nil;
@@ -1512,7 +1512,7 @@ id<OSSCredentialProvider> credential, authCredential;
         task = [client uploadPart:uploadPart];
         [[task continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
-            OSSUploadPartResult * result = task.result;
+            InspurOSSUploadPartResult * result = task.result;
             XCTAssertNotNil(result.eTag);
             
             uint64_t remoteCrc64ecma;
@@ -1522,7 +1522,7 @@ id<OSSCredentialProvider> credential, authCredential;
                 remoteCrc64ecma += 1;
             }
             
-            [partInfos addObject:[OSSPartInfo partInfoWithPartNum:i+1 eTag:result.eTag size:partSize crc64:remoteCrc64ecma]];
+            [partInfos addObject:[InspurOSSPartInfo partInfoWithPartNum:i+1 eTag:result.eTag size:partSize crc64:remoteCrc64ecma]];
             return nil;
         }] waitUntilFinished];
         NSTimeInterval endUpload = [[NSDate date] timeIntervalSince1970];
@@ -1531,7 +1531,7 @@ id<OSSCredentialProvider> credential, authCredential;
     }
     
     __block uint64_t localCrc64 = 0;
-    [partInfos enumerateObjectsUsingBlock:^(OSSPartInfo *partInfo, NSUInteger idx, BOOL * _Nonnull stop) {
+    [partInfos enumerateObjectsUsingBlock:^(InspurOSSPartInfo *partInfo, NSUInteger idx, BOOL * _Nonnull stop) {
         if (localCrc64 == 0)
         {
             localCrc64 = partInfo.crc64;
@@ -1603,7 +1603,7 @@ id<OSSCredentialProvider> credential, authCredential;
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
     };
     request.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    InspurOSSClient *newClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:[[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL]];
+    InspurOSSClient *newClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:[[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL]];
     InspurOSSTask * otherTask = [newClient multipartUpload:request];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[otherTask continueWithBlock:^id(InspurOSSTask *task) {

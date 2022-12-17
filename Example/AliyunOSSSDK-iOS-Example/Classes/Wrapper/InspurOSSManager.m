@@ -6,15 +6,15 @@
 //  Copyright © 2018 aliyun. All rights reserved.
 //
 
-#import "OSSManager.h"
+#import "InspurOSSManager.h"
 
-@implementation OSSManager
+@implementation InspurOSSManager
 
 + (instancetype)sharedManager {
-    static OSSManager *_manager = nil;
+    static InspurOSSManager *_manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _manager = [[OSSManager alloc] init];
+        _manager = [[InspurOSSManager alloc] init];
     });
     
     return _manager;

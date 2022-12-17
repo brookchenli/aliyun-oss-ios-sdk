@@ -71,7 +71,7 @@
 		D87183D11FC58201000DD9EC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87182F61FC55F36000DD9EC /* SystemConfiguration.framework */; };
 		D87183D21FC5820B000DD9EC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87182FA1FC560D6000DD9EC /* CoreTelephony.framework */; };
 		D87A0E022057F54B006D2F48 /* ConcurrencyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D87A0E012057F54B006D2F48 /* ConcurrencyTests.m */; };
-		D88AD7EB2180205600B34D47 /* OSSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D88AD7E52180205600B34D47 /* OSSManager.m */; };
+		D88AD7EB2180205600B34D47 /* InspurOSSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D88AD7E52180205600B34D47 /* InspurOSSManager.m */; };
 		D88AD7EC2180205600B34D47 /* OSSWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D88AD7E62180205600B34D47 /* OSSWrapper.m */; };
 		D88AD7ED2180205600B34D47 /* DownloadService.m in Sources */ = {isa = PBXBuildFile; fileRef = D88AD7EA2180205600B34D47 /* DownloadService.m */; };
 		D8C41A641FCC002C0091699B /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83D58F91FC700C70022761B /* test.xml */; };
@@ -181,10 +181,10 @@
 		D87183C01FC572C6000DD9EC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D87183C11FC572C6000DD9EC /* OSSReachabilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSReachabilityTests.m; sourceTree = "<group>"; };
 		D87A0E012057F54B006D2F48 /* ConcurrencyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConcurrencyTests.m; sourceTree = "<group>"; };
-		D88AD7E52180205600B34D47 /* OSSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSManager.m; sourceTree = "<group>"; };
+		D88AD7E52180205600B34D47 /* InspurOSSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspurOSSManager.m; sourceTree = "<group>"; };
 		D88AD7E62180205600B34D47 /* OSSWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSWrapper.m; sourceTree = "<group>"; };
 		D88AD7E72180205600B34D47 /* DownloadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadService.h; sourceTree = "<group>"; };
-		D88AD7E82180205600B34D47 /* OSSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSManager.h; sourceTree = "<group>"; };
+		D88AD7E82180205600B34D47 /* InspurOSSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspurOSSManager.h; sourceTree = "<group>"; };
 		D88AD7E92180205600B34D47 /* OSSWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSWrapper.h; sourceTree = "<group>"; };
 		D88AD7EA2180205600B34D47 /* DownloadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -377,10 +377,10 @@
 		D88AD7E42180205600B34D47 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
-				D88AD7E52180205600B34D47 /* OSSManager.m */,
+				D88AD7E52180205600B34D47 /* InspurOSSManager.m */,
 				D88AD7E62180205600B34D47 /* OSSWrapper.m */,
 				D88AD7E72180205600B34D47 /* DownloadService.h */,
-				D88AD7E82180205600B34D47 /* OSSManager.h */,
+				D88AD7E82180205600B34D47 /* InspurOSSManager.h */,
 				D88AD7E92180205600B34D47 /* OSSWrapper.h */,
 				D88AD7EA2180205600B34D47 /* DownloadService.m */,
 			);
@@ -558,7 +558,7 @@
 				D83D58E21FC6B61F0022761B /* main.m in Sources */,
 				D83D58CE1FC6B3100022761B /* ViewController.m in Sources */,
 				D88AD7ED2180205600B34D47 /* DownloadService.m in Sources */,
-				D88AD7EB2180205600B34D47 /* OSSManager.m in Sources */,
+				D88AD7EB2180205600B34D47 /* InspurOSSManager.m in Sources */,
 				D88AD7EC2180205600B34D47 /* OSSWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

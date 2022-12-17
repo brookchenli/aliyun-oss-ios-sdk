@@ -41,7 +41,7 @@
 
 - (void)testForOSSSyncMutableDictionary
 {
-    OSSSyncMutableDictionary *syncMutableDict = [[OSSSyncMutableDictionary alloc] init];
+    InspurOSSSyncMutableDictionary *syncMutableDict = [[InspurOSSSyncMutableDictionary alloc] init];
     [syncMutableDict setObject:@"hello" forKey:@"verb"];
     [syncMutableDict setObject:@"world" forKey:@"noun"];
     XCTAssertNotNil(syncMutableDict.allKeys);
@@ -51,19 +51,19 @@
     NSString *ua = @"User-Agent";
     NSString *location = [[NSLocale currentLocale] localeIdentifier];
 
-    OSSClientConfiguration *clientConfig = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *clientConfig = [InspurOSSClientConfiguration new];
     clientConfig.isAllowUACarrySystemInfo = NO;
-    OSSUASettingInterceptor *interceptor = [[OSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
+    InspurOSSUASettingInterceptor *interceptor = [[InspurOSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
     
     InspurOSSAllRequestNeededMessage *allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];
     NSString *expectValue = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, OSSSDKVersion, location];
     XCTAssertTrue([allRequestMessage.headerParams[ua] isEqualToString:expectValue]);
     
-    clientConfig = [OSSClientConfiguration new];
+    clientConfig = [InspurOSSClientConfiguration new];
     clientConfig.isAllowUACarrySystemInfo = NO;
     clientConfig.userAgentMark = @"userAgent";
-    interceptor = [[OSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
+    interceptor = [[InspurOSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
     
     allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];

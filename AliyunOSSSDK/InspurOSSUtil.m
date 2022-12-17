@@ -109,8 +109,8 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 + (NSData *)constructHttpBodyFromPartInfos:(NSArray *)partInfos {
     NSMutableString * body = [NSMutableString stringWithString:@"<CompleteMultipartUpload>\n"];
     [partInfos enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[OSSPartInfo class]]) {
-            OSSPartInfo * thePart = obj;
+        if ([obj isKindOfClass:[InspurOSSPartInfo class]]) {
+            InspurOSSPartInfo * thePart = obj;
             [body appendFormat:@"<Part>\n<PartNumber>%d</PartNumber>\n<ETag>%@</ETag>\n</Part>\n", thePart.partNum, thePart.eTag];
         }
     }];
@@ -350,7 +350,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
     return [subresource componentsJoinedByString:@"&"];
 }
 
-+ (NSString *)sign:(NSString *)content withToken:(OSSFederationToken *)token {
++ (NSString *)sign:(NSString *)content withToken:(InspurOSSFederationToken *)token {
     NSString * sign = [InspurOSSUtil calBase64Sha1WithData:content withSecret:token.tSecretKey];
     return [NSString stringWithFormat:@"OSS %@:%@", token.tAccessKey, sign];
 }

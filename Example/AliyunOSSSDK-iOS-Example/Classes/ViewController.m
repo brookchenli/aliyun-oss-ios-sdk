@@ -284,10 +284,10 @@
 }
 
 - (IBAction)customSignButtonClicked:(id)sender{
-    OSSCustomSignerCredentialProvider *provider = [[OSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
+    InspurOSSCustomSignerCredentialProvider *provider = [[InspurOSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
         
         // 用户应该在此处将需要签名的字符串发送到自己的业务服务器(AK和SK都在业务服务器保存中,从业务服务器获取签名后的字符串)
-        OSSFederationToken *token = [OSSFederationToken new];
+        InspurOSSFederationToken *token = [InspurOSSFederationToken new];
         token.tAccessKey = OSS_ACCESSKEY_ID;
         token.tSecretKey = OSS_SECRETKEY_ID;
         
@@ -320,7 +320,7 @@
 }
 
 - (void)initDownloadURLs {
-    OSSPlainTextAKSKPairCredentialProvider *pCredential = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSPlainTextAKSKPairCredentialProvider *pCredential = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _mClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:pCredential];
     InspurOSSTask *downloadURLTask = [_mClient presignConstrainURLWithBucketName:@"aliyun-dhc-shanghai" withObjectKey:OSS_DOWNLOAD_FILE_NAME withExpirationInterval:1800];
     _downloadURLString = downloadURLTask.result;

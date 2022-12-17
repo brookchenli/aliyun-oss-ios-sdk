@@ -104,13 +104,13 @@
 
 - (void)setUpOSSClient
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.timeoutIntervalForRequest = 120.0;
     
-    OSSCustomSignerCredentialProvider *provider = [[OSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
+    InspurOSSCustomSignerCredentialProvider *provider = [[InspurOSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
         
         // 用户应该在此处将需要签名的字符串发送到自己的业务服务器(AK和SK都在业务服务器保存中,从业务服务器获取签名后的字符串)
-        OSSFederationToken *token = [OSSFederationToken new];
+        InspurOSSFederationToken *token = [InspurOSSFederationToken new];
         token.tAccessKey = OSS_ACCESSKEY_ID;
         token.tSecretKey = OSS_SECRETKEY_ID;
         sleep(0.15);
@@ -132,9 +132,9 @@
 
 - (void)setUpOSSClient111
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.timeoutIntervalForRequest = 120.0;
-    OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSPlainTextAKSKPairCredentialProvider *authProv = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
@@ -291,7 +291,7 @@
     InspurOSSTask *task = [_client deleteObject:delete];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSDeleteObjectResult * result = task.result;
+        InspurOSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
         return nil;
     }] waitUntilFinished];
@@ -450,7 +450,7 @@
     [task waitUntilFinished];
     XCTAssertNil(task.error);
     
-    OSSGetObjectVersionResult *result = (OSSGetObjectVersionResult *)task.result;
+    InspurOSSGetObjectVersionResult *result = (InspurOSSGetObjectVersionResult *)task.result;
     NSArray *versionList = result.versionList;
     NSMutableArray *versionIds = [NSMutableArray array];
     [versionList enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -770,7 +770,7 @@
     head.objectKey = objectKeyWithoutContentType;
     [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSHeadObjectResult * headResult = task.result;
+        InspurOSSHeadObjectResult * headResult = task.result;
         XCTAssertNotNil([headResult.objectMeta objectForKey:@"Content-Type"]);
         return nil;
     }] waitUntilFinished];
@@ -808,7 +808,7 @@
         if (task.error) {
             OSSLogError(@"%@", task.error);
         }
-        OSSPutObjectResult * result = task.result;
+        InspurOSSPutObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         return nil;
     }] waitUntilFinished];
@@ -820,7 +820,7 @@
     
     [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSHeadObjectResult * headResult = task.result;
+        InspurOSSHeadObjectResult * headResult = task.result;
         XCTAssertEqualObjects([headResult.objectMeta objectForKey:@"Content-Type"], @"application/special");
         return nil;
     }] waitUntilFinished];
@@ -902,7 +902,7 @@
     InspurOSSTask * task = [_client deleteObject:delete];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSDeleteObjectResult * result = task.result;
+        InspurOSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
         return nil;
     }] waitUntilFinished];
@@ -924,7 +924,7 @@
     task = [_client appendObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSAppendObjectResult * result = task.result;
+        InspurOSSAppendObjectResult * result = task.result;
         nextAppendPosition = result.xOssNextAppendPosition;
         lastCrc64ecma = result.remoteCRC64ecma;
         return nil;
@@ -1033,7 +1033,7 @@
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         // if onRecieveData is setting, it will not return whole data
         XCTAssertEqual(0, [result.downloadedData length]);
         return nil;
@@ -1078,7 +1078,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertEqual(206, result.httpResponseCode);
         XCTAssertEqual(100, [result.downloadedData length]);
         XCTAssertEqualObjects(@"100", [result.objectMeta objectForKey:@"Content-Length"]);
@@ -1105,7 +1105,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         XCTAssertEqual(1024 * 1024, [recieveData length]);
         return nil;
@@ -1132,7 +1132,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         NSFileManager * fm = [NSFileManager defaultManager];
         XCTAssertTrue([fm fileExistsAtPath:request.downloadToFileURL.path]);
@@ -1160,7 +1160,7 @@
     InspurOSSTask * task = [_client getObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertNil(result.downloadedData);
         return nil;
     }] waitUntilFinished];
@@ -1176,7 +1176,7 @@
     task = [_client getObject:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertNil(result.downloadedData);
         return nil;
     }] waitUntilFinished];
@@ -1510,7 +1510,7 @@
 {
     NSError * error = nil;
     // invalid credentialProvider
-    id<OSSCredentialProvider> c = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:@"" secretKey:@""];
+    id<InspurOSSCredentialProvider> c = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:@"" secretKey:@""];
     InspurOSSClient * tClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:c];
     BOOL isExist = [tClient doesObjectExistInBucket:_privateBucketName objectKey:_fileNames[3] error:&error];
     XCTAssertEqual(isExist, NO);
@@ -1547,7 +1547,7 @@
     task = [_client deleteObject:delete];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSDeleteObjectResult * result = task.result;
+        InspurOSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
         return nil;
     }] waitUntilFinished];
@@ -1595,7 +1595,7 @@
     InspurOSSTask *dTask = [_client deleteObject:delete];
     [[dTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSDeleteObjectResult * result = task.result;
+        InspurOSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
         return nil;
     }] waitUntilFinished];
@@ -1769,9 +1769,9 @@
 {
     [OSSTestUtils putTestDataWithKey:_fileNames[3] withClient:_client withBucket:_publicBucketName];
 
-    OSSClientConfiguration * conf = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration * conf = [InspurOSSClientConfiguration new];
     conf.cnameExcludeList = @[@"oss-cn-hangzhou.aliyuncs.com", @"vpc.sample.com"];
-    id<OSSCredentialProvider> provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    id<InspurOSSCredentialProvider> provider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
 
     InspurOSSClient * tClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                            credentialProvider:provider
@@ -1789,7 +1789,7 @@
 
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetObjectResult * result = task.result;
+        InspurOSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
         XCTAssertEqual(1024 * 1024, [result.downloadedData length]);
         XCTAssertEqualObjects(@"1048576", [result.objectMeta objectForKey:@"Content-Length"]);
@@ -2116,7 +2116,7 @@
 #pragma mark - cname
 - (void)testAPI_cnameUrlCheck
 {
-    id<OSSCredentialProvider> provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    id<InspurOSSCredentialProvider> provider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient * tClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_CNAME_URL
                                            credentialProvider:provider];
     InspurOSSTask * tk = [tClient presignConstrainURLWithBucketName:_privateBucketName
@@ -2162,8 +2162,8 @@
 
 - (void)testAPI_presignConstrainURLWithDefaultConfig {
     
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2174,9 +2174,9 @@
 
 - (void)testAPI_presignConstrainURLWithPathStyleConfig {
     
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2184,9 +2184,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2194,10 +2194,10 @@
     urlString = [NSString stringWithFormat:@"%@%@/%@", SCHEME, CNAME_ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[CNAME_ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2205,10 +2205,10 @@
     urlString = [NSString stringWithFormat:@"%@%@/%@/%@", SCHEME, CNAME_ENDPOINT, BUCKET_NAME, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2219,9 +2219,9 @@
 }
 
 - (void)testAPI_presignConstrainURLWithCname {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.cnameExcludeList = @[CNAME_ENDPOINT];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2229,10 +2229,10 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CNAME_ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2242,9 +2242,9 @@
 }
 
 - (void)testAPI_presignConstrainURLWithCustomPath {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.isCustomPathPrefixEnable = YES;
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CUSTOMPATH(ENDPOINT) credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2254,8 +2254,8 @@
 }
 
 - (void)testAPI_presignConstrainURLWithIpEndpoint {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:[@"http://" stringByAppendingString:IP_ENDPOINT] credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
@@ -2267,8 +2267,8 @@
 
 - (void)testAPI_presignPublicURLWithDefaultConfig {
     
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
@@ -2278,38 +2278,38 @@
 
 - (void)testAPI_presignPublicURLWithPathStyleConfig {
     
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     urlString = [NSString stringWithFormat:@"%@%@/%@", SCHEME, CNAME_ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[CNAME_ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     urlString = [NSString stringWithFormat:@"%@%@/%@/%@", SCHEME, CNAME_ENDPOINT, BUCKET_NAME, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
@@ -2319,19 +2319,19 @@
 }
 
 - (void)testAPI_presignPublicURLWithCname {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.cnameExcludeList = @[CNAME_ENDPOINT];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CNAME_ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
     
-    config = [OSSClientConfiguration new];
+    config = [InspurOSSClientConfiguration new];
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[ENDPOINT];
-    authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
     tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
@@ -2340,9 +2340,9 @@
 }
 
 - (void)testAPI_presignPublicURLWithCustomPath {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.isCustomPathPrefixEnable = YES;
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CUSTOMPATH(ENDPOINT) credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
@@ -2351,8 +2351,8 @@
 }
 
 - (void)testAPI_presignPublicURLWithIpEndpoint {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
-    OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
+    InspurOSSAuthCredentialProvider *authProv = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:[@"http://" stringByAppendingString:IP_ENDPOINT] credentialProvider:authProv clientConfiguration:config];
     InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
@@ -2448,7 +2448,7 @@
     head.objectKey = OBJECT_KEY;
     [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSHeadObjectResult * headResult = task.result;
+        InspurOSSHeadObjectResult * headResult = task.result;
         [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             if (![key isEqualToString:OSSHttpHeaderContentMD5]) {
                 XCTAssertTrue([[headResult.objectMeta objectForKey:key] isEqualToString:obj]);

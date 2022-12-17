@@ -71,13 +71,13 @@ static NSString * const kClientErrorMessageForCancelledTask = @"This task has be
 
 static NSObject *lock;
 
-- (instancetype)initWithEndpoint:(NSString *)endpoint credentialProvider:(id<OSSCredentialProvider>)credentialProvider {
-    return [self initWithEndpoint:endpoint credentialProvider:credentialProvider clientConfiguration:[OSSClientConfiguration new]];
+- (instancetype)initWithEndpoint:(NSString *)endpoint credentialProvider:(id<InspurOSSCredentialProvider>)credentialProvider {
+    return [self initWithEndpoint:endpoint credentialProvider:credentialProvider clientConfiguration:[InspurOSSClientConfiguration new]];
 }
 
 - (instancetype)initWithEndpoint:(NSString *)endpoint
-              credentialProvider:(id<OSSCredentialProvider>)credentialProvider
-             clientConfiguration:(OSSClientConfiguration *)conf {
+              credentialProvider:(id<InspurOSSCredentialProvider>)credentialProvider
+             clientConfiguration:(InspurOSSClientConfiguration *)conf {
     if (self = [super init]) {
         if (!lock) {
             lock = [NSObject new];
@@ -144,12 +144,12 @@ static NSObject *lock;
         }
     }];
 
-    id<OSSRequestInterceptor> uaSetting = [[OSSUASettingInterceptor alloc] initWithClientConfiguration:self.clientConfiguration];
+    id<InspurOSSRequestInterceptor> uaSetting = [[InspurOSSUASettingInterceptor alloc] initWithClientConfiguration:self.clientConfiguration];
     [request.interceptors addObject:uaSetting];
 
     /* check if the authentication is required */
     if (requireAuthentication) {
-        id<OSSRequestInterceptor> signer = [[OSSSignerInterceptor alloc] initWithCredentialProvider:self.credentialProvider];
+        id<InspurOSSRequestInterceptor> signer = [[InspurOSSSignerInterceptor alloc] initWithCredentialProvider:self.credentialProvider];
         [request.interceptors addObject:signer];
     }
 
@@ -281,7 +281,7 @@ static NSObject *lock;
     [params oss_setObject:@"" forKey:@"cors"];
     
     NSMutableString *rules = [NSMutableString new];
-    for (OSSCORSRule *rule in request.bucketCORSRuleList) {
+    for (InspurOSSCORSRule *rule in request.bucketCORSRuleList) {
         [rules appendFormat:@"<CORSRule>%@</CORSRule>", [rule toRuleString]];
     }
     NSString *bodyString = [NSString stringWithFormat:@"<?xml version='1.0' encoding='UTF-8'?><CORSConfiguration>%@</CORSConfiguration>", rules];
@@ -1806,7 +1806,7 @@ static NSObject *lock;
     return [self multipartUpload: request resumable: NO sequential: NO];
 }
 
-- (InspurOSSTask *)processCompleteMultipartUpload:(InspurOSSMultipartUploadRequest *)request partInfos:(NSArray<OSSPartInfo *> *)partInfos clientCrc64:(uint64_t)clientCrc64 recordFilePath:(NSString *)recordFilePath localPartInfosPath:(NSString *)localPartInfosPath
+- (InspurOSSTask *)processCompleteMultipartUpload:(InspurOSSMultipartUploadRequest *)request partInfos:(NSArray<InspurOSSPartInfo *> *)partInfos clientCrc64:(uint64_t)clientCrc64 recordFilePath:(NSString *)recordFilePath localPartInfosPath:(NSString *)localPartInfosPath
 {
     InspurOSSCompleteMultipartUploadRequest * complete = [InspurOSSCompleteMultipartUploadRequest new];
     complete.bucketName = request.bucketName;
@@ -1871,7 +1871,7 @@ static NSObject *lock;
             }
         }
         
-        OSSResumableUploadResult * result = [OSSResumableUploadResult new];
+        InspurOSSResumableUploadResult * result = [InspurOSSResumableUploadResult new];
         result.requestId = completeResult.requestId;
         result.httpResponseCode = completeResult.httpResponseCode;
         result.httpResponseHeaderFields = completeResult.httpResponseHeaderFields;
@@ -1918,7 +1918,7 @@ static NSObject *lock;
         }
         else
         {
-            OSSListPartsResult *res = listPartsTask.result;
+            InspurOSSListPartsResult *res = listPartsTask.result;
             isTruncated = res.isTruncated;
             nextPartNumberMarker = res.nextPartNumberMarker;
             OSSLogVerbose(@"resumableUpload listpart ok");
@@ -1955,7 +1955,7 @@ static NSObject *lock;
     
     if(task.result && [recordFilePath oss_isNotEmpty])
     {
-        OSSInitMultipartUploadResult *result = task.result;
+        InspurOSSInitMultipartUploadResult *result = task.result;
         if (![result.uploadId oss_isNotEmpty])
         {
             NSString *errorMessage = [NSString stringWithFormat:@"Can not get uploadId!"];
@@ -2127,8 +2127,8 @@ static NSObject *lock;
             *errorTask = uploadPartTask;
         }
     } else {
-        OSSUploadPartResult * result = uploadPartTask.result;
-        OSSPartInfo * partInfo = [OSSPartInfo new];
+        InspurOSSUploadPartResult * result = uploadPartTask.result;
+        InspurOSSPartInfo * partInfo = [InspurOSSPartInfo new];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
         partInfo.partNum = idx;
@@ -2165,7 +2165,7 @@ static NSObject *lock;
     }
 }
 
-- (void)processForLocalPartInfos:(NSMutableDictionary *)localPartInfoDict partInfo:(OSSPartInfo *)partInfo uploadId:(NSString *)uploadId
+- (void)processForLocalPartInfos:(NSMutableDictionary *)localPartInfoDict partInfo:(InspurOSSPartInfo *)partInfo uploadId:(NSString *)uploadId
 {
     NSDictionary *partInfoDict = [partInfo entityToDictionary];
     NSString *keyString = [NSString stringWithFormat:@"%i",partInfo.partNum];
@@ -2226,7 +2226,7 @@ static NSObject *lock;
         NSString *localPartInfosPath = nil;
         NSDictionary *localPartInfos = nil;
         
-        NSMutableArray<OSSPartInfo *> *uploadedPartInfos = [NSMutableArray array];
+        NSMutableArray<InspurOSSPartInfo *> *uploadedPartInfos = [NSMutableArray array];
         NSMutableArray * alreadyUploadIndex = [NSMutableArray array];
         
         if (resumable) {
@@ -2274,7 +2274,7 @@ static NSObject *lock;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
                 
-                OSSPartInfo * info = [[OSSPartInfo alloc] init];
+                InspurOSSPartInfo * info = [[InspurOSSPartInfo alloc] init];
                 info.partNum = remotePartNumber;
                 info.size = remotePartSize;
                 info.eTag = remotePartEtag;
@@ -2314,7 +2314,7 @@ static NSObject *lock;
             {
                 return task;
             }
-            OSSInitMultipartUploadResult *initResult = (OSSInitMultipartUploadResult *)task.result;
+            InspurOSSInitMultipartUploadResult *initResult = (InspurOSSInitMultipartUploadResult *)task.result;
             uploadId = initResult.uploadId;
             randomObjectName = initResult.objectName;
         }
@@ -2371,7 +2371,7 @@ static NSObject *lock;
             return errorTask;
         }
         
-        [uploadedPartInfos sortUsingComparator:^NSComparisonResult(OSSPartInfo *part1,OSSPartInfo* part2) {
+        [uploadedPartInfos sortUsingComparator:^NSComparisonResult(InspurOSSPartInfo *part1,InspurOSSPartInfo* part2) {
             if(part1.partNum < part2.partNum){
                 return NSOrderedAscending;
             }else if(part1.partNum > part2.partNum){
@@ -2473,7 +2473,7 @@ static NSObject *lock;
                     break;
                 } else {
                     NSDictionary *partDict = uploadPartTask.error.userInfo;
-                    OSSPartInfo *partInfo = [[OSSPartInfo alloc] init];
+                    InspurOSSPartInfo *partInfo = [[InspurOSSPartInfo alloc] init];
                     partInfo.eTag = partDict[@"PartEtag"];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
@@ -2485,8 +2485,8 @@ static NSObject *lock;
                     [alreadyUploadPart addObject:partInfo];
                 }
             } else {
-                OSSUploadPartResult * result = uploadPartTask.result;
-                OSSPartInfo * partInfo = [OSSPartInfo new];
+                InspurOSSUploadPartResult * result = uploadPartTask.result;
+                InspurOSSPartInfo * partInfo = [InspurOSSPartInfo new];
                 partInfo.partNum = i;
                 partInfo.eTag = result.eTag;
                 partInfo.size = realPartLength;
@@ -2619,20 +2619,20 @@ static NSObject *lock;
         }
         
         NSString * wholeSign = nil;
-        OSSFederationToken *token = nil;
+        InspurOSSFederationToken *token = nil;
         NSError *error = nil;
         
-        if ([self.credentialProvider isKindOfClass:[OSSFederationCredentialProvider class]]) {
-            token = [(OSSFederationCredentialProvider *)self.credentialProvider getToken:&error];
+        if ([self.credentialProvider isKindOfClass:[InspurOSSFederationCredentialProvider class]]) {
+            token = [(InspurOSSFederationCredentialProvider *)self.credentialProvider getToken:&error];
             if (error) {
                 return [InspurOSSTask taskWithError:error];
             }
-        } else if ([self.credentialProvider isKindOfClass:[OSSStsTokenCredentialProvider class]]) {
-            token = [(OSSStsTokenCredentialProvider *)self.credentialProvider getToken];
+        } else if ([self.credentialProvider isKindOfClass:[InspurOSSStsTokenCredentialProvider class]]) {
+            token = [(InspurOSSStsTokenCredentialProvider *)self.credentialProvider getToken];
         }
         
-        if ([self.credentialProvider isKindOfClass:[OSSFederationCredentialProvider class]]
-            || [self.credentialProvider isKindOfClass:[OSSStsTokenCredentialProvider class]])
+        if ([self.credentialProvider isKindOfClass:[InspurOSSFederationCredentialProvider class]]
+            || [self.credentialProvider isKindOfClass:[InspurOSSStsTokenCredentialProvider class]])
         {
             [params oss_setObject:token.tToken forKey:@"security-token"];
             resource = [NSString stringWithFormat:@"%@?%@", resource, [InspurOSSUtil populateSubresourceStringFromParameter:params]];

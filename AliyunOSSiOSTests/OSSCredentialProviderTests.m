@@ -13,7 +13,7 @@
 
 @interface OSSCredentialProviderTests : XCTestCase
 {
-    OSSFederationToken *_token;
+    InspurOSSFederationToken *_token;
     NSString *_privateBucketName;
 }
 
@@ -55,7 +55,7 @@
                                                             options:kNilOptions
                                                               error:nil];
     XCTAssertNotNil(result);
-    _token = [OSSFederationToken new];
+    _token = [InspurOSSFederationToken new];
     _token.tAccessKey = result[@"AccessKeyId"];
     _token.tSecretKey = result[@"AccessKeySecret"];
     _token.tToken = result[@"SecurityToken"];
@@ -64,9 +64,9 @@
     NSLog(@"tokenInfo: %@", _token);
 }
 
-- (void)headObjectWithBackgroundSessionIdentifier:(nonnull NSString *)identifier provider:(id<OSSCredentialProvider>)provider
+- (void)headObjectWithBackgroundSessionIdentifier:(nonnull NSString *)identifier provider:(id<InspurOSSCredentialProvider>)provider
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     config.backgroundSesseionIdentifier = identifier;
     config.enableBackgroundTransmitService = YES;
     
@@ -93,7 +93,7 @@
 
 - (void)testForFederationCredentialProvider
 {
-    OSSFederationCredentialProvider *provider = [[OSSFederationCredentialProvider alloc] initWithFederationTokenGetter:^OSSFederationToken *{
+    InspurOSSFederationCredentialProvider *provider = [[InspurOSSFederationCredentialProvider alloc] initWithFederationTokenGetter:^InspurOSSFederationToken *{
         return _token;
     }];
     
@@ -102,15 +102,15 @@
 
 - (void)testGetStsTokenCredentialProvider
 {
-    OSSStsTokenCredentialProvider *provider = [[OSSStsTokenCredentialProvider alloc] initWithAccessKeyId:_token.tAccessKey secretKeyId:_token.tSecretKey securityToken:_token.tToken];
+    InspurOSSStsTokenCredentialProvider *provider = [[InspurOSSStsTokenCredentialProvider alloc] initWithAccessKeyId:_token.tAccessKey secretKeyId:_token.tSecretKey securityToken:_token.tToken];
     [self headObjectWithBackgroundSessionIdentifier:@"com.aliyun.testcases.ststokencredentialprovider.identifier" provider:provider];
 }
 
 - (void)testCustomSignerCredentialProvider
 {
-    OSSCustomSignerCredentialProvider *provider = [[OSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
+    InspurOSSCustomSignerCredentialProvider *provider = [[InspurOSSCustomSignerCredentialProvider alloc] initWithImplementedSigner:^NSString *(NSString *contentToSign, NSError *__autoreleasing *error) {
         
-        OSSFederationToken *token = [OSSFederationToken new];
+        InspurOSSFederationToken *token = [InspurOSSFederationToken new];
         token.tAccessKey = OSS_ACCESSKEY_ID;
         token.tSecretKey = OSS_SECRETKEY_ID;
         
@@ -124,22 +124,22 @@
 -(void)testPlainTextAKSKPairCredentialProvider
 {
     // invalid credentialProvider
-    OSSPlainTextAKSKPairCredentialProvider *provider = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSPlainTextAKSKPairCredentialProvider *provider = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     [self headObjectWithBackgroundSessionIdentifier:@"com.aliyun.testcases.plainakskpaircredentialprovider.identifier" provider:provider];
 }
 
 -(void)testAuthCredentialProvider
 {
     // invalid credentialProvider
-    OSSAuthCredentialProvider *provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
+    InspurOSSAuthCredentialProvider *provider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     
     [self headObjectWithBackgroundSessionIdentifier:@"com.aliyun.testcases.authcredentialprovider.identifier" provider:provider];
 }
 
 - (void)testAuthCredentialProviderWithDecoder
 {
-    id<OSSCredentialProvider> provider =
-    [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL responseDecoder:^NSData *(NSData *data) {
+    id<InspurOSSCredentialProvider> provider =
+    [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL responseDecoder:^NSData *(NSData *data) {
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSData* decodeData = [str dataUsingEncoding:NSUTF8StringEncoding];
         if (decodeData) {

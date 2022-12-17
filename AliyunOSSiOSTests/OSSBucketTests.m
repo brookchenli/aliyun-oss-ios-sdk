@@ -33,9 +33,9 @@
 
 - (void)initOSSClient
 {
-    OSSClientConfiguration *config = [OSSClientConfiguration new];
+    InspurOSSClientConfiguration *config = [InspurOSSClientConfiguration new];
     //OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
+    InspurOSSPlainTextAKSKPairCredentialProvider *authProv = [[InspurOSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
     _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
@@ -172,7 +172,7 @@
     InspurOSSTask * task = [_client getBucketACL:request];
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSGetBucketACLResult * result = task.result;
+        InspurOSSGetBucketACLResult * result = task.result;
         XCTAssertEqualObjects(@"private", result.aclGranted);
         return nil;
     }] waitUntilFinished];
@@ -222,9 +222,9 @@
     InspurOSSPutBucketCORSRequest *request = [InspurOSSPutBucketCORSRequest new];
     request.bucketName = @"test-chenli3";
     
-    NSMutableArray <OSSCORSRule *>* tmpArray = [NSMutableArray array];
+    NSMutableArray <InspurOSSCORSRule *>* tmpArray = [NSMutableArray array];
     {
-        OSSCORSRule *rule1 = [OSSCORSRule new];
+        InspurOSSCORSRule *rule1 = [InspurOSSCORSRule new];
         rule1.ID = @"123";
         rule1.allowedOriginList = @[@"*"];
         rule1.allowedMethodList = @[@"PUT", @"GET"];
@@ -234,7 +234,7 @@
         [tmpArray addObject:rule1];
     }
     {
-        OSSCORSRule *rule1 = [OSSCORSRule new];
+        InspurOSSCORSRule *rule1 = [InspurOSSCORSRule new];
         rule1.ID = @"456";
         rule1.allowedOriginList = @[@"*"];
         rule1.allowedMethodList = @[@"PUT", @"GET", @"DELETE"];
@@ -316,7 +316,7 @@
         return nil;
     }] waitUntilFinished];
     
-    OSSGetServiceResult *result = nil;
+    InspurOSSGetServiceResult *result = nil;
     do {
         request = [InspurOSSGetServiceRequest new];
         request.maxKeys = 2;
@@ -571,7 +571,7 @@
     
     [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
-        OSSListMultipartUploadsResult * result = task.result;
+        InspurOSSListMultipartUploadsResult * result = task.result;
         XCTAssertTrue(result.maxUploads == 1000);
         return nil;
     }] waitUntilFinished];

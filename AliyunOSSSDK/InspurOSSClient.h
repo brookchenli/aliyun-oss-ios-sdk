@@ -70,8 +70,8 @@
 @class InspurOSSTask;
 @class InspurOSSExecutor;
 @class InspurOSSNetworking;
-@class OSSClientConfiguration;
-@protocol OSSCredentialProvider;
+@class InspurOSSClientConfiguration;
+@protocol InspurOSSCredentialProvider;
 
 @class InspurOSSImageProcess;
 
@@ -96,12 +96,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The credential provider instance
  */
-@property (nonatomic, strong) id<OSSCredentialProvider> credentialProvider;
+@property (nonatomic, strong) id<InspurOSSCredentialProvider> credentialProvider;
 
 /**
  Client configuration instance
  */
-@property (nonatomic, strong) OSSClientConfiguration * clientConfiguration;
+@property (nonatomic, strong) InspurOSSClientConfiguration * clientConfiguration;
 
 /**
  oss operation task queue
@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
  @credentialProvider The credential provider
  */
 - (instancetype)initWithEndpoint:(NSString *)endpoint
-              credentialProvider:(id<OSSCredentialProvider>) credentialProvider;
+              credentialProvider:(id<InspurOSSCredentialProvider>) credentialProvider;
 
 /**
  Initializes an OSSClient with the custom client configuration.
@@ -127,8 +127,8 @@ NS_ASSUME_NONNULL_BEGIN
  @conf The custom client configuration such as retry time, timeout values, etc.
  */
 - (instancetype)initWithEndpoint:(NSString *)endpoint
-              credentialProvider:(id<OSSCredentialProvider>)credentialProvider
-             clientConfiguration:(OSSClientConfiguration *)conf;
+              credentialProvider:(id<InspurOSSCredentialProvider>)credentialProvider
+             clientConfiguration:(InspurOSSClientConfiguration *)conf;
 
 #pragma mark restful-api
 

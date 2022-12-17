@@ -11,14 +11,14 @@
 #import "InspurOSSResult.h"
 
 @class InspurOSSAllRequestNeededMessage;
-@class OSSFederationToken;
+@class InspurOSSFederationToken;
 @class InspurOSSTask;
-@class OSSClientConfiguration;
-@class OSSCORSRule;
+@class InspurOSSClientConfiguration;
+@class InspurOSSCORSRule;
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef OSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
+typedef InspurOSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
 
 /**
  Categories NSDictionary
@@ -30,7 +30,7 @@ typedef OSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
 /**
  A thread-safe dictionary
  */
-@interface OSSSyncMutableDictionary : NSObject
+@interface InspurOSSSyncMutableDictionary : NSObject
 @property (nonatomic, strong) NSMutableDictionary *dictionary;
 @property (nonatomic, strong) dispatch_queue_t dispatchQueue;
 
@@ -43,7 +43,7 @@ typedef OSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
 /**
  FederationToken class
  */
-@interface OSSFederationToken : NSObject
+@interface InspurOSSFederationToken : NSObject
 @property (nonatomic, copy) NSString * tAccessKey;
 @property (nonatomic, copy) NSString * tSecretKey;
 @property (nonatomic, copy) NSString * tToken;
@@ -62,7 +62,7 @@ typedef OSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
 /**
  CredentialProvider protocol, needs to implement sign API.
  */
-@protocol OSSCredentialProvider <NSObject>
+@protocol InspurOSSCredentialProvider <NSObject>
 @optional
 - (nullable NSString *)sign:(NSString *)content error:(NSError **)error;
 @end
@@ -72,7 +72,7 @@ typedef OSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void);
  */
 
 __attribute__((deprecated("PLEASE DO NOT USE THIS CLASS AGAIN")))
-@interface OSSPlainTextAKSKPairCredentialProvider : NSObject <OSSCredentialProvider>
+@interface InspurOSSPlainTextAKSKPairCredentialProvider : NSObject <InspurOSSCredentialProvider>
 @property (nonatomic, copy) NSString * accessKey;
 @property (nonatomic, copy) NSString * secretKey;
 
@@ -84,7 +84,7 @@ __attribute__((deprecated("PLEASE DO NOT USE THIS CLASS AGAIN")))
 TODOTODO
  The custom signed credential provider
  */
-@interface OSSCustomSignerCredentialProvider : NSObject <OSSCredentialProvider>
+@interface InspurOSSCustomSignerCredentialProvider : NSObject <InspurOSSCredentialProvider>
 @property (nonatomic, copy, readonly,) NSString * _Nonnull (^ _Nonnull signContent)( NSString * _Nonnull , NSError * _Nullable *_Nullable);
 
 + (instancetype _Nullable)new NS_UNAVAILABLE;
@@ -101,27 +101,27 @@ TODOTODO
 TODOTODO
  User's custom federation credential provider.
  */
-@interface OSSFederationCredentialProvider : NSObject <OSSCredentialProvider>
-@property (nonatomic, strong) OSSFederationToken * cachedToken;
-@property (nonatomic, copy) OSSFederationToken * (^federationTokenGetter)(void);
+@interface InspurOSSFederationCredentialProvider : NSObject <InspurOSSCredentialProvider>
+@property (nonatomic, strong) InspurOSSFederationToken * cachedToken;
+@property (nonatomic, copy) InspurOSSFederationToken * (^federationTokenGetter)(void);
 
 /**
  During the task execution, this method is called to get the new STS token.
  It runs in the background thread, not the UI thread.
  */
 - (instancetype)initWithFederationTokenGetter:(OSSGetFederationTokenBlock)federationTokenGetter;
-- (nullable OSSFederationToken *)getToken:(NSError **)error;
+- (nullable InspurOSSFederationToken *)getToken:(NSError **)error;
 @end
 
 /**
  The STS token's credential provider.
  */
-@interface OSSStsTokenCredentialProvider : NSObject <OSSCredentialProvider>
+@interface InspurOSSStsTokenCredentialProvider : NSObject <InspurOSSCredentialProvider>
 @property (nonatomic, copy) NSString * accessKeyId;
 @property (nonatomic, copy) NSString * secretKeyId;
 @property (nonatomic, copy) NSString * securityToken;
 
-- (OSSFederationToken *)getToken;
+- (InspurOSSFederationToken *)getToken;
 - (instancetype)initWithAccessKeyId:(NSString *)accessKeyId
                         secretKeyId:(NSString *)secretKeyId
                       securityToken:(NSString *)securityToken;
@@ -141,7 +141,7 @@ TODOTODO
  
  */
 
-@interface OSSAuthCredentialProvider : OSSFederationCredentialProvider
+@interface InspurOSSAuthCredentialProvider : InspurOSSFederationCredentialProvider
 @property (nonatomic, copy) NSString * authServerUrl;
 @property (nonatomic, copy) NSData * (^responseDecoder)(NSData *);
 - (instancetype)initWithAuthServerUrl:(NSString *)authServerUrl;
@@ -151,7 +151,7 @@ TODOTODO
 /**
  OSSClient side configuration.
  */
-@interface OSSClientConfiguration : NSObject
+@interface InspurOSSClientConfiguration : NSObject
 
 /**
  Max retry count
@@ -228,31 +228,31 @@ Sets the session Id for background file transmission
 
 @end
 
-@protocol OSSRequestInterceptor <NSObject>
+@protocol InspurOSSRequestInterceptor <NSObject>
 - (InspurOSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request;
 @end
 
 /**
  Signs the request when it's being created.
  */
-@interface OSSSignerInterceptor : NSObject <OSSRequestInterceptor>
-@property (nonatomic, strong) id<OSSCredentialProvider> credentialProvider;
+@interface InspurOSSSignerInterceptor : NSObject <InspurOSSRequestInterceptor>
+@property (nonatomic, strong) id<InspurOSSCredentialProvider> credentialProvider;
 
-- (instancetype)initWithCredentialProvider:(id<OSSCredentialProvider>)credentialProvider;
+- (instancetype)initWithCredentialProvider:(id<InspurOSSCredentialProvider>)credentialProvider;
 @end
 
 /**
  Updates the UA when creating the request.
  */
-@interface OSSUASettingInterceptor : NSObject <OSSRequestInterceptor>
-@property (nonatomic, weak) OSSClientConfiguration *clientConfiguration;
-- (instancetype)initWithClientConfiguration:(OSSClientConfiguration *) clientConfiguration;
+@interface InspurOSSUASettingInterceptor : NSObject <InspurOSSRequestInterceptor>
+@property (nonatomic, weak) InspurOSSClientConfiguration *clientConfiguration;
+- (instancetype)initWithClientConfiguration:(InspurOSSClientConfiguration *) clientConfiguration;
 @end
 
 /**
  Fixes the time skew issue when creating the request.
  */
-@interface OSSTimeSkewedFixingInterceptor : NSObject <OSSRequestInterceptor>
+@interface InspurOSSTimeSkewedFixingInterceptor : NSObject <InspurOSSRequestInterceptor>
 @end
 
 /**
@@ -320,7 +320,7 @@ Sets the session Id for background file transmission
 /**
  The result class of listing all buckets
  */
-@interface OSSGetServiceResult : InspurOSSResult
+@interface InspurOSSGetServiceResult : InspurOSSResult
 
 /**
  The owner Id
@@ -363,7 +363,7 @@ Sets the session Id for background file transmission
 @property (nonatomic, strong, nullable) NSArray * buckets;
 @end
 
-@interface OSSListServiceResult : InspurOSSResult
+@interface InspurOSSListServiceResult : InspurOSSResult
 
 /**
  The owner Id
@@ -392,7 +392,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSQueryBucketExistResult : InspurOSSResult
+@interface InspurOSSQueryBucketExistResult : InspurOSSResult
 
 @end
 
@@ -402,7 +402,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketLocationResult : InspurOSSResult
+@interface InspurOSSGetBucketLocationResult : InspurOSSResult
 
 @property (nonatomic, copy) NSString * region;
 
@@ -441,7 +441,7 @@ Sets the session Id for background file transmission
 /**
  Result class of bucket creation
  */
-@interface OSSCreateBucketResult : InspurOSSResult
+@interface InspurOSSCreateBucketResult : InspurOSSResult
 
 /**
  Bucket datacenter
@@ -507,7 +507,7 @@ Sets the session Id for background file transmission
 /**
  The result class of listing objects.
  */
-@interface OSSGetBucketResult : InspurOSSResult
+@interface InspurOSSGetBucketResult : InspurOSSResult
 
 /**
  Bucket name
@@ -570,7 +570,7 @@ Sets the session Id for background file transmission
 /**
  The result class to get the bucket ACL.
  */
-@interface OSSGetBucketACLResult : InspurOSSResult
+@interface InspurOSSGetBucketACLResult : InspurOSSResult
 
 /**
  The bucket ACL. It could be one of the three values: private/public-read/public-read-write.
@@ -585,7 +585,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketACLResult : InspurOSSResult
+@interface InspurOSSPutBucketACLResult : InspurOSSResult
 
 @end
 
@@ -596,7 +596,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketCORSResult : InspurOSSResult
+@interface InspurOSSGetBucketCORSResult : InspurOSSResult
 
 @property (nonatomic, copy, nullable) NSArray *bucketCORSRuleList;
 
@@ -605,11 +605,11 @@ Sets the session Id for background file transmission
 @interface InspurOSSPutBucketCORSRequest : InspurOSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
-@property (nonatomic, copy, nullable) NSArray <OSSCORSRule *>*bucketCORSRuleList;
+@property (nonatomic, copy, nullable) NSArray <InspurOSSCORSRule *>*bucketCORSRuleList;
 
 @end
 
-@interface OSSPutBucketCORSResult : InspurOSSResult
+@interface InspurOSSPutBucketCORSResult : InspurOSSResult
 
 @end
 
@@ -619,7 +619,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketCORSResult : InspurOSSResult
+@interface InspurOSSDeleteBucketCORSResult : InspurOSSResult
 
 @end
 
@@ -627,7 +627,7 @@ Sets the session Id for background file transmission
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @end
 
-@interface OSSGetVersioningResult : InspurOSSResult
+@interface InspurOSSGetVersioningResult : InspurOSSResult
 
 @property (nonatomic, copy) NSString *enabled;
 
@@ -638,7 +638,7 @@ Sets the session Id for background file transmission
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @end
 
-@interface OSSPutVersioningResult : InspurOSSResult
+@interface InspurOSSPutVersioningResult : InspurOSSResult
 
 @end
 
@@ -648,7 +648,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketEncryptionResult : InspurOSSResult
+@interface InspurOSSGetBucketEncryptionResult : InspurOSSResult
 
 @property (nonatomic, copy, nullable) NSString *sseAlgorithm;
 @property (nonatomic, copy, nullable) NSString *masterId;
@@ -663,7 +663,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketEncryptionResult : InspurOSSResult
+@interface InspurOSSPutBucketEncryptionResult : InspurOSSResult
 
 @end
 
@@ -673,7 +673,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketEncryptionResult : InspurOSSResult
+@interface InspurOSSDeleteBucketEncryptionResult : InspurOSSResult
 
 @end
 
@@ -683,7 +683,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketWebsiteResult : InspurOSSResult
+@interface InspurOSSGetBucketWebsiteResult : InspurOSSResult
 
 @property (nonatomic, copy, nullable) NSString *indexDocument;
 @property (nonatomic, copy, nullable) NSString *errroDocument;
@@ -698,7 +698,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketWebsiteResult : InspurOSSResult
+@interface InspurOSSPutBucketWebsiteResult : InspurOSSResult
 
 @end
 
@@ -708,7 +708,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketWebsiteResult : InspurOSSResult
+@interface InspurOSSDeleteBucketWebsiteResult : InspurOSSResult
 
 @end
 
@@ -718,7 +718,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketDomainResult : InspurOSSResult
+@interface InspurOSSGetBucketDomainResult : InspurOSSResult
 
 @property (nonatomic, copy, nullable) NSString *domainJsonString;
 
@@ -731,7 +731,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketDomainResult : InspurOSSResult
+@interface InspurOSSPutBucketDomainResult : InspurOSSResult
 
 @end
 
@@ -741,7 +741,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketDomainResult : InspurOSSResult
+@interface InspurOSSDeleteBucketDomainResult : InspurOSSResult
 
 @end
 
@@ -751,7 +751,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketLifeCycleResult : InspurOSSResult
+@interface InspurOSSGetBucketLifeCycleResult : InspurOSSResult
 
 @property (nonatomic, copy, nullable) NSString *lifeCycleConfigDictionary;
 
@@ -763,7 +763,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketLifeCycleResult : InspurOSSResult
+@interface InspurOSSPutBucketLifeCycleResult : InspurOSSResult
 
 @end
 
@@ -773,7 +773,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketLifeCycleResult : InspurOSSResult
+@interface InspurOSSDeleteBucketLifeCycleResult : InspurOSSResult
 
 @end
 
@@ -783,7 +783,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketPolicyResult : InspurOSSResult
+@interface InspurOSSGetBucketPolicyResult : InspurOSSResult
 
 @property (nonatomic, strong, nonnull) NSString* jsonString;
 
@@ -797,7 +797,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketPolicyResult : InspurOSSResult
+@interface InspurOSSPutBucketPolicyResult : InspurOSSResult
 
 @end
 
@@ -807,7 +807,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketPolicyResult : InspurOSSResult
+@interface InspurOSSDeleteBucketPolicyResult : InspurOSSResult
 
 @end
 
@@ -831,7 +831,7 @@ Sets the session Id for background file transmission
 /**
  The result class of getting object metadata.
  */
-@interface OSSHeadObjectResult : InspurOSSResult
+@interface InspurOSSHeadObjectResult : InspurOSSResult
 
 /**
  Object metadata
@@ -891,7 +891,7 @@ Sets the session Id for background file transmission
 /**
  Result class of downloading an object.
  */
-@interface OSSGetObjectResult : InspurOSSResult
+@interface InspurOSSGetObjectResult : InspurOSSResult
 
 /**
  The in-memory content of the downloaded object, if the local file path is not specified.
@@ -908,7 +908,7 @@ Sets the session Id for background file transmission
 /**
  The response class to update the object ACL.
  */
-@interface OSSPutObjectACLResult : InspurOSSResult
+@interface InspurOSSPutObjectACLResult : InspurOSSResult
 @end
 
 /**
@@ -1025,7 +1025,7 @@ Sets the session Id for background file transmission
 /**
  The result class to put an object
  */
-@interface OSSPutObjectResult : InspurOSSResult
+@interface InspurOSSPutObjectResult : InspurOSSResult
 
 /**
 ETag (entity tag) is the tag during the object creation in OSS server side.
@@ -1130,7 +1130,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  * append object result
  */
-@interface OSSAppendObjectResult : InspurOSSResult
+@interface InspurOSSAppendObjectResult : InspurOSSResult
 
 /**
  TODOTODO
@@ -1166,7 +1166,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  Result class of deleting an object
  */
-@interface OSSDeleteObjectResult : InspurOSSResult
+@interface InspurOSSDeleteObjectResult : InspurOSSResult
 @end
 
 /**
@@ -1223,7 +1223,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The result class of copying an object
  */
-@interface OSSCopyObjectResult : InspurOSSResult
+@interface InspurOSSCopyObjectResult : InspurOSSResult
 
 /**
  The last modified time
@@ -1293,7 +1293,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The resutl class of initiating a multipart upload.
  */
-@interface OSSInitMultipartUploadResult : InspurOSSResult
+@interface InspurOSSInitMultipartUploadResult : InspurOSSResult
 
 /**
  The upload Id of the multipart upload
@@ -1361,14 +1361,14 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The result class of uploading one part.
  */
-@interface OSSUploadPartResult : InspurOSSResult
+@interface InspurOSSUploadPartResult : InspurOSSResult
 @property (nonatomic, copy) NSString * eTag;
 @end
 
 /**
  The Part information. It's called by CompleteMultipartUpload().
  */
-@interface OSSPartInfo : NSObject<NSCopying>
+@interface InspurOSSPartInfo : NSObject<NSCopying>
 
 /**
  The part number in this part upload.
@@ -1505,7 +1505,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
 The result class of listing uploaded parts.
 */
-@interface OSSListPartsResult : InspurOSSResult
+@interface InspurOSSListPartsResult : InspurOSSResult
 
 /**
  The next part number marker. If the response does not include all data, this header specifies what's the start point for the next list call.
@@ -1573,7 +1573,7 @@ The result class of listing uploaded parts.
 /**
  The result class of listing multipart uploads.
  */
-@interface OSSListMultipartUploadsResult : InspurOSSResult
+@interface InspurOSSListMultipartUploadsResult : InspurOSSResult
 /**
  Bucket name
  */
@@ -1652,7 +1652,7 @@ The result class of listing uploaded parts.
 /**
  The result class of aborting a multipart upload
  */
-@interface OSSAbortMultipartUploadResult : InspurOSSResult
+@interface InspurOSSAbortMultipartUploadResult : InspurOSSResult
 @end
 
 /**
@@ -1755,7 +1755,7 @@ The result class of listing uploaded parts.
 /**
  The result class of resumable uploading
  */
-@interface OSSResumableUploadResult : InspurOSSResult
+@interface InspurOSSResumableUploadResult : InspurOSSResult
 
 /**
  The callback response, if the callback is specified.
@@ -1790,7 +1790,7 @@ The result class of listing uploaded parts.
 
 
 
-@interface OSSCallBackResult : InspurOSSResult
+@interface InspurOSSCallBackResult : InspurOSSResult
 
 @property (nonatomic, copy) NSDictionary *serverReturnXML;
 
@@ -1819,11 +1819,11 @@ The result class of listing uploaded parts.
 
 @end
 
-@interface OSSImagePersistResult : InspurOSSResult
+@interface InspurOSSImagePersistResult : InspurOSSResult
 
 @end
 
-@interface OSSCORSRule : NSObject
+@interface InspurOSSCORSRule : NSObject
 
 @property (nonatomic, strong, nonnull) NSString *ID;
 @property (nonatomic, strong, nonnull) NSArray<NSString*> *allowedMethodList;
@@ -1836,11 +1836,11 @@ The result class of listing uploaded parts.
 
 @end
 
-@interface OSSDomainConfig : NSObject
+@interface InspurOSSDomainConfig : NSObject
 
 @end
 
-@interface OSSPolicyStatement : NSObject
+@interface InspurOSSPolicyStatement : NSObject
 
 @end
 
@@ -1851,7 +1851,7 @@ The result class of listing uploaded parts.
 
 @end
 
-@interface OSSGetObjectVersionResult : InspurOSSResult
+@interface InspurOSSGetObjectVersionResult : InspurOSSResult
 
 @property (nonatomic, strong, nonnull) NSArray* versionList;
 
@@ -1866,7 +1866,7 @@ The result class of listing uploaded parts.
 
 @end
 
-@interface OSSDeleteObjectVersionResult : InspurOSSResult
+@interface InspurOSSDeleteObjectVersionResult : InspurOSSResult
 
 @end
 
