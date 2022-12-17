@@ -1,47 +1,24 @@
-# Aliyun OSS SDK for iOS
-
-## [README of English](https://github.com/aliyun/aliyun-oss-ios-sdk/blob/master/README.md)
+# Inspur OSS SDK for iOS
 
 ## 简介
 
-本文档主要介绍OSS iOS SDK的安装和使用。本文档假设您已经开通了阿里云OSS 服务，并创建了Access Key ID 和Access Key Secret。文中的ID 指的是Access Key ID，KEY 指的是Access Key Secret。如果您还没有开通或者还不了解OSS，请登录[OSS产品主页](http://www.aliyun.com/product/oss)获取更多的帮助。
+本文档主要介绍OSS iOS SDK的安装和使用。本文档假设您已经开通了浪潮 OSS 服务，并创建了Access Key ID 和Access Key Secret。文中的ID 指的是Access Key ID，KEY 指的是Access Key Secret。如果您还没有开通或者还不了解OSS，请登录[OSS产品主页](https://cloud.inspur.com/product/InFile/)获取更多的帮助。
 
 ## 环境要求：
 - iOS系统版本：iOS 8.0以上
-- 必须注册有Aliyun.com用户账户，并开通OSS服务。
+- 必须注册有inspur.com用户账户，并开通OSS服务。
 
 ## 安装
 
-### 直接引入Framework
+### 手动安装
 
-需要引入OSS iOS SDK framework。
+将文件夹 AliyunOSSSDK 拖入工程安装
 
-您可以在MacOS系统中直接使用本工程，选择对应的scheme为AliyunOSSSDK OSX，然后生成framwork：
-
-```bash
-# clone工程
-$ git clone git@github.com:aliyun/aliyun-oss-ios-sdk.git
-
-# 进入目录
-$ cd aliyun-oss-ios-sdk
-
-# 执行打包脚本
-$ sh ./buildiOSFramework.sh
-
-# 进入打包生成目录，AliyunOSSiOS.framework生成在该目录下
-$ cd Products && ls
-```
-
-在Xcode中，直接把framework拖入您对应的Target下即可，在弹出框勾选`Copy items if needed`。
-
-**注意：buildiOSFramework.sh脚本生成的framework是支持i386,x86_64,armv7,arm64架构的版本，所以当您需要archive product时，需要直接使用工程文件生成只支持真机的framework版本。**
-
-### Pod依赖
-
+### 手动安装
 如果工程是通过pod管理依赖，那么在Podfile中加入以下依赖即可，不需要再导入framework：
 
 ```
-pod 'AliyunOSSiOS'
+pod 'InspurOSS'
 ```
 
 CocoaPods是一个非常优秀的依赖管理工具，推荐参考官方文档: [CocoaPods安装和使用教程](http://code4app.com/article/cocoapods-install-usage)。
@@ -51,10 +28,10 @@ CocoaPods是一个非常优秀的依赖管理工具，推荐参考官方文档: 
 ### 工程中引入头文件
 
 ```objc
-#import <AliyunOSSiOS/AliyunOSSiOS.h>
+#import <InspurOSSiOS/InspurOSSiOS.h>
 ```
 
-注意，引入Framework后，需要在工程`Build Settings`的`Other Linker Flags`中加入`-ObjC`。如果工程此前已经设置过`-force_load`选项，那么，需要加入`-force_load <framework path>/AliyunOSSiOS`。
+注意，引入Framework后，需要在工程`Build Settings`的`Other Linker Flags`中加入`-ObjC`。如果工程此前已经设置过`-force_load`选项，那么，需要加入`-force_load <framework path>/InspurOSSiOS`。
 
 ### 兼容IPv6-Only网络
 
@@ -77,12 +54,12 @@ WWDC 2016开发者大会上，苹果宣布从2017年1月1日起，苹果App Stor
 * 设置`Endpoint`时，需要使用`https://`前缀的URL。
 * 在实现加签、获取STSToken等回调时，需要确保自己不会发出 非HTTPS 的请求。
 
-### 对于OSSTask的一些说明
+### 对于InspurOSSTask的一些说明
 
-所有调用api的操作，都会立即获得一个OSSTask，如：
+所有调用api的操作，都会立即获得一个InspurOSSTask，如：
 
 ```
-OSSTask * task = [client getObject:get];
+InspurOSSTask * task = [client getObject:get];
 ```
 
 可以为这个Task设置一个延续(continution)，以实现异步回调，如：
@@ -106,36 +83,19 @@ OSSTask * task = [client getObject:get];
 
 ## 快速入门
 
-以下演示了上传、下载文件的基本流程。更多细节用法可以参考本工程的：
+### STEP-1. 初始化InspurOSSClient
 
-test资源：[点击查看](https://github.com/aliyun/AliyunOSSiOS/tree/master/AliyunOSSiOSTests)
+在移动环境下，我们推荐STS鉴权模式来初始化InspurOSSClient。鉴权细节详见后面链接给出的官网完整文档的`访问控制`章节。
 
-或者：
-
-demo示例: [点击查看](https://github.com/alibaba/alicloud-ios-demo)。
-
-### STEP-1. 初始化OSSClient
-
-在移动环境下，我们推荐STS鉴权模式来初始化OSSClient。鉴权细节详见后面链接给出的官网完整文档的`访问控制`章节。
-
-**注意: 如果您的应用只用到一个[数据中心](https://help.aliyun.com/document_detail/31837.html)下的bucket,建议保持OSSClient实例与应用程序的生命周期一致(比如在Appdelegate.m的 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions])中进行初始化，如下所示:**
+**注意: 如果您的应用只用到一个[数据中心]下的bucket,建议保持OSSClient实例与应用程序的生命周期一致(比如在Appdelegate.m的 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions])中进行初始化，如下所示:**
 
 ```objc
 @interface AppDelegate ()
 
-@property (nonatomic, strong) OSSClient *client;
+@property (nonatomic, strong) InspurOSSClient *client;
 
 @end
 
-/**
- * 获取sts信息的url,配置在业务方自己的搭建的服务器上。详情可见https://help.aliyun.com/document_detail/31920.html
- */
-#define OSS_STS_URL                 @"oss_sts_url"
-
-
-/**
- * bucket所在的region的endpoint,详情可见https://help.aliyun.com/document_detail/31837.html
- */
 #define OSS_ENDPOINT                @"your bucket's endpoint"
 
 @implementation AppDelegate
@@ -153,22 +113,22 @@ demo示例: [点击查看](https://github.com/alibaba/alicloud-ios-demo)。
 - (void)setupOSSClient {
 
     // 初始化具有自动刷新的provider
-    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STS_URL];
+    InspurOSSAuthCredentialProvider *credentialProvider = [[InspurOSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STS_URL];
     
     // client端的配置,如超时时间，开启dns解析等等
-    OSSClientConfiguration *cfg = [[OSSClientConfiguration alloc] init];
+    InspurOSSClientConfiguration *cfg = [[InspurOSSClientConfiguration alloc] init];
     
-    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
+    _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
 }
 
 ```
 
 ### STEP-2. 上传文件
 
-这里假设您已经在控制台上拥有自己的Bucket。SDK的所有操作，都会返回一个`OSSTask`，您可以为这个task设置一个延续动作，等待其异步完成，也可以通过调用`waitUntilFinished`阻塞等待其完成。
+这里假设您已经在控制台上拥有自己的Bucket。SDK的所有操作，都会返回一个`InspurOSSTask`，您可以为这个task设置一个延续动作，等待其异步完成，也可以通过调用`waitUntilFinished`阻塞等待其完成。
 
 ```objc
-OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
 
 put.bucketName = @"<bucketName>";
 put.objectKey = @"<objectKey>";
@@ -179,7 +139,7 @@ put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBy
 	NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
 };
 
-OSSTask * putTask = [client putObject:put];
+InspurOSSTask * putTask = [client putObject:put];
 
 [putTask continueWithBlock:^id(OSSTask *task) {
 	if (!task.error) {
@@ -200,7 +160,7 @@ OSSTask * putTask = [client putObject:put];
 下载一个指定`object`为`NSData`:
 
 ```objc
-OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
 request.bucketName = @"<bucketName>";
 request.objectKey = @"<objectKey>";
 
@@ -208,7 +168,7 @@ request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, in
 	NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
 };
 
-OSSTask * getTask = [client getObject:request];
+InspurOSSTask * getTask = [client getObject:request];
 
 [getTask continueWithBlock:^id(OSSTask *task) {
 	if (!task.error) {
@@ -228,12 +188,11 @@ OSSTask * getTask = [client getObject:request];
 
 ## 完整文档
 
-SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bucket管理等功能。详见官方完整文档：[点击查看](https://help.aliyun.com/document_detail/32055.html)
+SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bucket管理等功能。详见官方完整文档：
 
 
 ## API文档
 
-[点击查看](https://help.aliyun.com/document_detail/31947.html)
 
 ## 常见问题
 
@@ -249,8 +208,4 @@ SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bu
 
 ## 联系我们
 
-* 阿里云OSS官方网站：http://oss.aliyun.com
-* 阿里云OSS官方论坛：http://bbs.aliyun.com
-* 阿里云OSS官方文档中心：http://www.aliyun.com/product/oss#Docs
-* 阿里云官方技术支持 登录OSS控制台 https://home.console.aliyun.com -> 点击"工单系统"
 
