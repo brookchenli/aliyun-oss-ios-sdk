@@ -278,11 +278,11 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
 
 @end
 
-@class OSSResult;
+@class InspurOSSResult;
 
 @interface OSSTask(OSS)
 
-typedef void(^OSSCompleteBlock)(BOOL isSuccess, NSError * _Nullable error, OSSResult * _Nullable result);
+typedef void(^OSSCompleteBlock)(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result);
 
 - (BOOL)isSuccessful;
 

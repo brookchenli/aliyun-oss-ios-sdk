@@ -6,12 +6,12 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSAllRequestNeededMessage.h"
+#import "InspurOSSAllRequestNeededMessage.h"
 
 #import "OSSDefine.h"
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 
-@implementation OSSAllRequestNeededMessage
+@implementation InspurOSSAllRequestNeededMessage
 
 - (instancetype)init
 {
@@ -41,7 +41,7 @@
         errorMessage = @"Bucket name should not be nil";
     }
     
-    if (self.bucketName && ![OSSUtil validateBucketName:self.bucketName]) {
+    if (self.bucketName && ![InspurOSSUtil validateBucketName:self.bucketName]) {
         errorMessage = @"Bucket name invalid";
     }
     
@@ -87,7 +87,7 @@
     
     
     
-    if (self.objectKey && ![OSSUtil validateObjectKey:self.objectKey]) {
+    if (self.objectKey && ![InspurOSSUtil validateObjectKey:self.objectKey]) {
         errorMessage = @"Object key invalid";
     }
     

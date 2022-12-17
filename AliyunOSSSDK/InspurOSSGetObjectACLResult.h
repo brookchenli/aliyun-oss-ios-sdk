@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSResult.h"
+#import "InspurOSSResult.h"
 
-@interface InspurOSSGetObjectACLResult : OSSResult
+@interface InspurOSSGetObjectACLResult : InspurOSSResult
 
 /**
  the ACL of object,valid values: @"private",@"public-read",@"public-read-write".

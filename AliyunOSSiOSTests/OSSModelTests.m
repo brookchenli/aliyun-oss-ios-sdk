@@ -55,7 +55,7 @@
     clientConfig.isAllowUACarrySystemInfo = NO;
     OSSUASettingInterceptor *interceptor = [[OSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
     
-    OSSAllRequestNeededMessage *allRequestMessage = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];
     NSString *expectValue = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, OSSSDKVersion, location];
     XCTAssertTrue([allRequestMessage.headerParams[ua] isEqualToString:expectValue]);
@@ -65,7 +65,7 @@
     clientConfig.userAgentMark = @"userAgent";
     interceptor = [[OSSUASettingInterceptor alloc] initWithClientConfiguration:clientConfig];
     
-    allRequestMessage = [OSSAllRequestNeededMessage new];
+    allRequestMessage = [InspurOSSAllRequestNeededMessage new];
     [interceptor interceptRequestMessage:allRequestMessage];
     expectValue = [NSString stringWithFormat:@"%@/%@(/%@)/%@", OSSUAPrefix, OSSSDKVersion, location, clientConfig.userAgentMark];
     XCTAssertTrue([allRequestMessage.headerParams[ua] isEqualToString:expectValue]);

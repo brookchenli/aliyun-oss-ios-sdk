@@ -10,8 +10,8 @@
 #import "OSSConstants.h"
 #import "OSSTask.h"
 
-@class OSSAllRequestNeededMessage;
-@class OSSURLRequestRetryHandler;
+@class InspurOSSAllRequestNeededMessage;
+@class InspurOSSURLRequestRetryHandler;
 @class InspurOSSHttpResponseParser;
 
 /**
@@ -27,8 +27,8 @@
 
 @property (nonatomic, assign) BOOL isRequestCancelled;
 
-@property (nonatomic, strong) OSSAllRequestNeededMessage *allNeededMessage;
-@property (nonatomic, strong) OSSURLRequestRetryHandler *retryHandler;
+@property (nonatomic, strong) InspurOSSAllRequestNeededMessage *allNeededMessage;
+@property (nonatomic, strong) InspurOSSURLRequestRetryHandler *retryHandler;
 @property (nonatomic, strong) InspurOSSHttpResponseParser *responseParser;
 
 @property (nonatomic, strong) NSData * uploadingData;

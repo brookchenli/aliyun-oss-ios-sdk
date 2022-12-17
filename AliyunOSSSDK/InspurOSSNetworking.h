@@ -18,7 +18,7 @@
 /**
  Network parameters
  */
-@interface OSSNetworkingConfiguration : NSObject
+@interface InspurOSSNetworkingConfiguration : NSObject
 @property (nonatomic, assign) uint32_t maxRetryCount;
 @property (nonatomic, assign) uint32_t maxConcurrentRequestCount;
 @property (nonatomic, assign) BOOL enableBackgroundTransmitService;
@@ -34,13 +34,13 @@
 /**
  The network interface which OSSClient uses for network read and write operations.
  */
-@interface OSSNetworking : NSObject <NSURLSessionDelegate, NSURLSessionDataDelegate>
+@interface InspurOSSNetworking : NSObject <NSURLSessionDelegate, NSURLSessionDataDelegate>
 @property (nonatomic, strong) NSURLSession * session;
 @property (nonatomic, assign) BOOL isUsingBackgroundSession;
 @property (nonatomic, strong) OSSSyncMutableDictionary * sessionDelagateManager;
-@property (nonatomic, strong) OSSNetworkingConfiguration * configuration;
+@property (nonatomic, strong) InspurOSSNetworkingConfiguration * configuration;
 @property (nonatomic, strong) OSSExecutor * taskExecutor;
 
-- (instancetype)initWithConfiguration:(OSSNetworkingConfiguration *)configuration;
+- (instancetype)initWithConfiguration:(InspurOSSNetworkingConfiguration *)configuration;
 - (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request;
 @end

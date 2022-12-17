@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InspurOSSPutObjectTaggingResult : OSSResult
+@interface InspurOSSPutObjectTaggingResult : InspurOSSResult
 
 @end
 

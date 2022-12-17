@@ -30,13 +30,13 @@
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     NSString *fileName = @"testMIME.mp4";
-    NSString *mime = [OSSUtil detemineMimeTypeForFilePath:fileName uploadName:nil];
+    NSString *mime = [InspurOSSUtil detemineMimeTypeForFilePath:fileName uploadName:nil];
     XCTAssertTrue([mime isEqualToString:@"video/mp4"]);
 }
 
 - (void)testMIMEWithUppercaseExt {
     NSString *fileName = @"testMIME.MP4";
-    NSString *mime = [OSSUtil detemineMimeTypeForFilePath:fileName uploadName:nil];
+    NSString *mime = [InspurOSSUtil detemineMimeTypeForFilePath:fileName uploadName:nil];
     XCTAssertTrue([mime isEqualToString:@"video/mp4"]);
 }
 
@@ -74,28 +74,28 @@
 - (void)testBucketName{
     ///^[a-z0-9][a-z0-9\\-]{1,61}[a-z0-9]$"
     
-    BOOL result1 = [OSSUtil validateBucketName:@"123-456abc"];
+    BOOL result1 = [InspurOSSUtil validateBucketName:@"123-456abc"];
     XCTAssertTrue(result1);
    
-    BOOL result2 = [OSSUtil validateBucketName:@"123-456abc*"];
+    BOOL result2 = [InspurOSSUtil validateBucketName:@"123-456abc*"];
     XCTAssertFalse(result2);
     
-    BOOL result3 = [OSSUtil validateBucketName:@"-123-456abc"];
+    BOOL result3 = [InspurOSSUtil validateBucketName:@"-123-456abc"];
     XCTAssertFalse(result3);
     
-    BOOL result4 = [OSSUtil validateBucketName:@"123\\456abc"];
+    BOOL result4 = [InspurOSSUtil validateBucketName:@"123\\456abc"];
     XCTAssertFalse(result4);
     
-    BOOL result5 = [OSSUtil validateBucketName:@"abc123"];
+    BOOL result5 = [InspurOSSUtil validateBucketName:@"abc123"];
     XCTAssertTrue(result5);
        
-    BOOL result6 = [OSSUtil validateBucketName:@"abc_123"];
+    BOOL result6 = [InspurOSSUtil validateBucketName:@"abc_123"];
     XCTAssertFalse(result6);
        
-    BOOL result7 = [OSSUtil validateBucketName:@"a"];
+    BOOL result7 = [InspurOSSUtil validateBucketName:@"a"];
     XCTAssertFalse(result7);
        
-    BOOL result8 = [OSSUtil validateBucketName:@"abcdefghig-abcdefghig-abcdefghig-abcdefghig-abcdefghig-abcdefghig"];
+    BOOL result8 = [InspurOSSUtil validateBucketName:@"abcdefghig-abcdefghig-abcdefghig-abcdefghig-abcdefghig-abcdefghig"];
     XCTAssertFalse(result8);
        
 }
@@ -128,12 +128,12 @@
        
     if ([name oss_isNotEmpty]) {
         OSSIPv6Adapter *ipAdapter = [OSSIPv6Adapter getInstance];
-        if ([OSSUtil isOssOriginBucketHost:temComs.host]) {
+        if ([InspurOSSUtil isOssOriginBucketHost:temComs.host]) {
             // eg. insert bucket to the begining of host.
             temComs.host = [NSString stringWithFormat:@"%@.%@",
                             name, temComs.host];
             if ([temComs.scheme.lowercaseString isEqualToString:@"http"] ) {
-            NSString *dnsResult = [OSSUtil getIpByHost: temComs.host];
+            NSString *dnsResult = [InspurOSSUtil getIpByHost: temComs.host];
             temComs.host = dnsResult;
             }
         } else if ([ipAdapter isIPv4Address:temComs.host] || [ipAdapter isIPv6Address:temComs.host]) {

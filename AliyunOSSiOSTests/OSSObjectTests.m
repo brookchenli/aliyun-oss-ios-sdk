@@ -114,7 +114,7 @@
         token.tAccessKey = OSS_ACCESSKEY_ID;
         token.tSecretKey = OSS_SECRETKEY_ID;
         sleep(0.15);
-        NSString *signedContent = [OSSUtil sign:contentToSign withToken:token];
+        NSString *signedContent = [InspurOSSUtil sign:contentToSign withToken:token];
         return signedContent;
     }];
     
@@ -1632,7 +1632,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = fileName;
     request.uploadingData = [readFile readDataToEndOfFile];
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -1692,7 +1692,7 @@
     NSFileHandle * readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
     
     request.uploadingData = [readFile readDataToEndOfFile];
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -1720,7 +1720,7 @@
     NSURL * fileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:_fileNames[3]]];
     
     request.uploadingFileURL = fileURL;
-    request.contentMd5 = [OSSUtil base64Md5ForFilePath:fileURL.path];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForFilePath:fileURL.path];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -1811,7 +1811,7 @@
     NSFileHandle * readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
     request.uploadingData = [readFile readDataToEndOfFile];
     
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
         NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
@@ -2366,7 +2366,7 @@
     NSString *objectKey = OBJECT_KEY;
     NSString *method = @"PUT";
     NSString *contentType = @"image/png";
-    NSString *contentMd5 = [OSSUtil base64Md5ForFilePath:filePath];
+    NSString *contentMd5 = [InspurOSSUtil base64Md5ForFilePath:filePath];
 
     OSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
                                                  withObjectKey:objectKey
@@ -2409,7 +2409,7 @@
     NSString *objectKey = OBJECT_KEY;
     NSString *method = @"PUT";
     NSString *contentType = @"image/png";
-    NSString *contentMd5 = [OSSUtil base64Md5ForFilePath:filePath];
+    NSString *contentMd5 = [InspurOSSUtil base64Md5ForFilePath:filePath];
     NSDictionary *headers = @{@"x-oss-meta-text-key": @"test-value",
                               OSSHttpHeaderContentType: contentType,
                               OSSHttpHeaderContentMD5: contentMd5};
@@ -2479,13 +2479,13 @@
         return nil;
     }] waitUntilFinished];
     
-    NSString *remoteMD5 = [OSSUtil fileMD5String:tempFile];
+    NSString *remoteMD5 = [InspurOSSUtil fileMD5String:tempFile];
     if ([[NSFileManager defaultManager] fileExistsAtPath:tempFile]) {
         [[NSFileManager defaultManager] removeItemAtPath:tempFile
                                                    error:nil];
     }
     
-    NSString *localMD5 = [OSSUtil fileMD5String:filePath];
+    NSString *localMD5 = [InspurOSSUtil fileMD5String:filePath];
     return [remoteMD5 isEqualToString:localMD5];
 }
 
@@ -2876,9 +2876,9 @@
 
 
 - (NSString *)getRecordFilePath:(InspurOSSResumableUploadRequest *)resumableUpload {
-    NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
+    NSString *recordPathMd5 = [InspurOSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
     NSData *data = [[NSString stringWithFormat:@"%@%@%@%lu",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *recordFileName = [OSSUtil dataMD5String:data];
+    NSString *recordFileName = [InspurOSSUtil dataMD5String:data];
     NSString *recordFilePath = [NSString stringWithFormat:@"%@/%@",resumableUpload.recordDirectoryPath,recordFileName];
     return recordFilePath;
 }

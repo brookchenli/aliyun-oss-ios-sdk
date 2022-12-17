@@ -42,7 +42,7 @@
 }
 
 - (void)testBuildUrlWithCname {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CNAME_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -57,7 +57,7 @@
 }
 
 - (void)testBuildUrlWithoutCname {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CNAME_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -72,7 +72,7 @@
 }
 
 - (void)testBuildUrlWithCnameAndPathStyleAccessEnable {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CNAME_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -88,7 +88,7 @@
 }
 
 - (void)testBuildUrlWithPathStyleAccessEnable {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -101,7 +101,7 @@
     NSString *canonicalUrl = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([url isEqualToString:canonicalUrl]);
     
-    message = [OSSAllRequestNeededMessage new];
+    message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CNAME_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -116,7 +116,7 @@
 }
 
 - (void)testBuildUrlWithCustomPathPrefixEnable {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CUSTOMPATH_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -131,7 +131,7 @@
 }
 
 - (void)testBuildUrlWithCustomPathPrefixEnableAndPathStyleAccessEnable {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:CUSTOMPATH_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -148,7 +148,7 @@
 }
 
 - (void)testBuildUrlWithIp {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:IP_ENDPOINT];
     message.bucketName = BUCKET_NAME;
     message.objectKey = OBJECT_KEY;
@@ -162,7 +162,7 @@
 }
 
 - (void)testBuildUrlWithNullObjectKey {
-    OSSAllRequestNeededMessage *message = [OSSAllRequestNeededMessage new];
+    InspurOSSAllRequestNeededMessage *message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:ENDPOINT];
     message.bucketName = BUCKET_NAME;
     
@@ -173,7 +173,7 @@
     NSString *canonicalUrl = [NSString stringWithFormat:@"%@%@.%@", SCHEME, BUCKET_NAME, ENDPOINT];
     XCTAssertTrue([url isEqualToString:canonicalUrl]);
     
-    message = [OSSAllRequestNeededMessage new];
+    message = [InspurOSSAllRequestNeededMessage new];
     message.endpoint = [SCHEME stringByAppendingString:ENDPOINT];
     
     delegate = [InspurOSSNetworkingRequestDelegate new];

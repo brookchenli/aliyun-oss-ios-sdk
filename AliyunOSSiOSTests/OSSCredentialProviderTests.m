@@ -114,7 +114,7 @@
         token.tAccessKey = OSS_ACCESSKEY_ID;
         token.tSecretKey = OSS_SECRETKEY_ID;
         
-        NSString *signedContent = [OSSUtil sign:contentToSign withToken:token];
+        NSString *signedContent = [InspurOSSUtil sign:contentToSign withToken:token];
         return signedContent;
     }];
     

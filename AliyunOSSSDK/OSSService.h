@@ -13,10 +13,10 @@
 #import "OSSDefine.h"
 #import "OSSConstants.h"
 
-#import "OSSNetworking.h"
+#import "InspurOSSNetworking.h"
 #import "InspurOSSNetworkingRequestDelegate.h"
-#import "OSSAllRequestNeededMessage.h"
-#import "OSSURLRequestRetryHandler.h"
+#import "InspurOSSAllRequestNeededMessage.h"
+#import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSHttpResponseParser.h"
 #import "InspurOSSRequest.h"
 #import "InspurOSSGetObjectACLRequest.h"
@@ -42,7 +42,7 @@
 
 #import "InspurOSSClient.h"
 #import "OSSModel.h"
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 #import "OSSLog.h"
 
 #import "OSSBolts.h"

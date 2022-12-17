@@ -6,8 +6,8 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSResult.h"
+#import "InspurOSSResult.h"
 
-@interface InspurOSSGetSymlinkResult : OSSResult
+@interface InspurOSSGetSymlinkResult : InspurOSSResult
 
 @end

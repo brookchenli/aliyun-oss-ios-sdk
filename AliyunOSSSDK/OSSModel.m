@@ -8,15 +8,15 @@
 #import "OSSDefine.h"
 #import "OSSModel.h"
 #import "OSSBolts.h"
-#import "OSSUtil.h"
-#import "OSSNetworking.h"
+#import "InspurOSSUtil.h"
+#import "InspurOSSNetworking.h"
 #import "OSSLog.h"
 #import "OSSXMLDictionary.h"
 #if TARGET_OS_IOS
 #import <UIKit/UIDevice.h>
 #endif
 
-#import "OSSAllRequestNeededMessage.h"
+#import "InspurOSSAllRequestNeededMessage.h"
 
 @implementation NSDictionary (OSS)
 
@@ -111,7 +111,7 @@
         
         return nil;
     }
-    NSString * sign = [OSSUtil calBase64Sha1WithData:content withSecret:self.secretKey];
+    NSString * sign = [InspurOSSUtil calBase64Sha1WithData:content withSecret:self.secretKey];
     return [NSString stringWithFormat:@"OSS %@:%@", self.accessKey, sign];
 }
 
@@ -220,7 +220,7 @@
 }
 
 - (NSString *)sign:(NSString *)content error:(NSError **)error {
-    NSString * sign = [OSSUtil calBase64Sha1WithData:content withSecret:self.secretKeyId];
+    NSString * sign = [InspurOSSUtil calBase64Sha1WithData:content withSecret:self.secretKeyId];
     return [NSString stringWithFormat:@"OSS %@:%@", self.accessKeyId, sign];
 }
 
@@ -331,7 +331,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     return self;
 }
 
-- (OSSTask *)interceptRequestMessage:(OSSAllRequestNeededMessage *)requestMessage {
+- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)requestMessage {
     OSSLogVerbose(@"signing intercepting - ");
     NSError * error = nil;
 
@@ -429,7 +429,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     if ([self.credentialProvider isKindOfClass:[OSSFederationCredentialProvider class]]
         || [self.credentialProvider isKindOfClass:[OSSStsTokenCredentialProvider class]])
     {
-        NSString * signature = [OSSUtil sign:stringToSign withToken:federationToken];
+        NSString * signature = [InspurOSSUtil sign:stringToSign withToken:federationToken];
         [requestMessage.headerParams oss_setObject:signature forKey:@"Authorization"];
     }else if ([self.credentialProvider isKindOfClass:[OSSCustomSignerCredentialProvider class]])
     {
@@ -464,7 +464,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     return self;
 }
 
-- (OSSTask *)interceptRequestMessage:(OSSAllRequestNeededMessage *)request {
+- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
     NSString * userAgent = [self getUserAgent:self.clientConfiguration.userAgentMark];
     [request.headerParams oss_setObject:userAgent forKey:@"User-Agent"];
     return [OSSTask taskWithResult:nil];
@@ -505,7 +505,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @implementation OSSTimeSkewedFixingInterceptor
 
-- (OSSTask *)interceptRequestMessage:(OSSAllRequestNeededMessage *)request {
+- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
     request.date = [[NSDate oss_clockSkewFixedDate] oss_asStringValue];
     return [OSSTask taskWithResult:nil];
 }

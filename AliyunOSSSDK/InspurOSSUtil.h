@@ -15,7 +15,7 @@
 
 @class OSSFederationToken;
 
-@interface OSSUtil : NSObject
+@interface InspurOSSUtil : NSObject
 
 + (BOOL)isIncludeCnameExcludeList:(NSArray *)cnameExcludeList host:(NSString *)host;
 + (NSString *)calBase64Sha1WithData:(NSString *)data withSecret:(NSString *)key;

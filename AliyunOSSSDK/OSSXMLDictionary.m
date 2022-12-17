@@ -44,7 +44,7 @@
 #endif
 
 
-@interface OSSXMLDictionaryParser () <NSXMLParserDelegate>
+@interface InspurOSSXMLDictionaryParser () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *root;
 @property (nonatomic, strong) NSMutableArray *stack;
@@ -53,7 +53,7 @@
 @end
 
 
-@implementation OSSXMLDictionaryParser
+@implementation InspurOSSXMLDictionaryParser
 
 - (id)init
 {
@@ -71,7 +71,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    OSSXMLDictionaryParser *copy = [[[self class] allocWithZone:zone] init];
+    InspurOSSXMLDictionaryParser *copy = [[[self class] allocWithZone:zone] init];
     copy.collapseTextNodes = _collapseTextNodes;
     copy.stripEmptyNodes = _stripEmptyNodes;
     copy.trimWhiteSpace = _trimWhiteSpace;
@@ -85,13 +85,13 @@
 
 #pragma mark - Public Methods
 
-+ (OSSXMLDictionaryParser *)sharedInstance
++ (InspurOSSXMLDictionaryParser *)sharedInstance
 {
     static dispatch_once_t once;
-    static OSSXMLDictionaryParser *sharedInstance;
+    static InspurOSSXMLDictionaryParser *sharedInstance;
     dispatch_once(&once, ^{
         
-        sharedInstance = [[OSSXMLDictionaryParser alloc] init];
+        sharedInstance = [[InspurOSSXMLDictionaryParser alloc] init];
     });
     return sharedInstance;
 }
@@ -398,22 +398,22 @@
 
 + (NSDictionary *)oss_dictionaryWithXMLParser:(NSXMLParser *)parser
 {
-	return [[[OSSXMLDictionaryParser sharedInstance] copy] dictionaryWithParser:parser];
+	return [[[InspurOSSXMLDictionaryParser sharedInstance] copy] dictionaryWithParser:parser];
 }
 
 + (NSDictionary *)oss_dictionaryWithXMLData:(NSData *)data
 {
-	return [[[OSSXMLDictionaryParser sharedInstance] copy] dictionaryWithData:data];
+	return [[[InspurOSSXMLDictionaryParser sharedInstance] copy] dictionaryWithData:data];
 }
 
 + (NSDictionary *)oss_dictionaryWithXMLString:(NSString *)string
 {
-	return [[[OSSXMLDictionaryParser sharedInstance] copy] dictionaryWithString:string];
+	return [[[InspurOSSXMLDictionaryParser sharedInstance] copy] dictionaryWithString:string];
 }
 
 + (NSDictionary *)oss_dictionaryWithXMLFile:(NSString *)path
 {
-	return [[[OSSXMLDictionaryParser sharedInstance] copy] dictionaryWithFile:path];
+	return [[[InspurOSSXMLDictionaryParser sharedInstance] copy] dictionaryWithFile:path];
 }
 
 - (NSDictionary *)oss_attributes
@@ -489,7 +489,7 @@
     NSDictionary *childNodes = [self oss_childNodes];
 	for (NSString *key in childNodes)
 	{
-		[nodes addObject:[OSSXMLDictionaryParser XMLStringForNode:childNodes[key] withNodeName:key]];
+		[nodes addObject:[InspurOSSXMLDictionaryParser XMLStringForNode:childNodes[key] withNodeName:key]];
 	}
 	
     NSString *text = [self oss_innerText];
@@ -510,7 +510,7 @@
     }
     else
     {
-        return [OSSXMLDictionaryParser XMLStringForNode:self withNodeName:[self oss_nodeName] ?: @"root"];
+        return [InspurOSSXMLDictionaryParser XMLStringForNode:self withNodeName:[self oss_nodeName] ?: @"root"];
     }
 }
 

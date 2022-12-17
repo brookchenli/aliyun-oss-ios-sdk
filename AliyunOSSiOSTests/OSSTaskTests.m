@@ -317,9 +317,9 @@
 }
 
 - (void)testCompleteWithSuccess {
-    OSSResult *putResult = [OSSPutObjectResult new];
+    InspurOSSResult *putResult = [OSSPutObjectResult new];
     OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, OSSResult * _Nullable result) {
+    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertTrue(isSuccess);
         XCTAssertNotNil(result);
         XCTAssertEqual(result, putResult);
@@ -333,7 +333,7 @@
 
 - (void)testCompleteWithError {
     OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, OSSResult * _Nullable result) {
+    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, @"Bolts");
@@ -348,7 +348,7 @@
 
 - (void)testCompleteWithException {
     OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, OSSResult * _Nullable result) {
+    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, OSSClientErrorDomain);
@@ -365,7 +365,7 @@
 
 - (void)testCompleteWithCancel {
     OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, OSSResult * _Nullable result) {
+    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, OSSClientErrorDomain);

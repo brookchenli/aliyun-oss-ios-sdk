@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSResult.h"
+#import "InspurOSSResult.h"
 
-@implementation OSSResult
+@implementation InspurOSSResult
 
 - (NSString *)description
 {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aliyun.com. All rights reserved.
 //
 
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 #import <mach/mach.h>
 #import "CommonCrypto/CommonDigest.h"
 #import "CommonCrypto/CommonHMAC.h"
@@ -23,7 +23,7 @@ NSString * const ALIYUN_HOST_SUFFIX = @".aliyuncs.com";
 NSString * const ALIYUN_OSS_TEST_ENDPOINT = @".aliyun-inc.com";
 int32_t const CHUNK_SIZE = 8 * 1024;
 
-@implementation OSSUtil
+@implementation InspurOSSUtil
 
 + (BOOL)isIncludeCnameExcludeList:(NSArray *)cnameExcludeList host:(NSString *)host {
     for (NSString *cnameExclude in cnameExcludeList) {
@@ -323,7 +323,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
     [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         NSString * keyStr = [key oss_trim];
         NSString * valueStr = [obj oss_trim];
-        if (![OSSUtil isSubresource:keyStr]) {
+        if (![InspurOSSUtil isSubresource:keyStr]) {
             return;
         }
         if ([valueStr length] == 0) {
@@ -339,8 +339,8 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 + (NSString *)populateQueryStringFromParameter:(NSDictionary *)parameters {
     NSMutableArray * subresource = [NSMutableArray new];
     [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString * keyStr = [OSSUtil encodeURL:[key oss_trim]];
-        NSString * valueStr = [OSSUtil encodeURL:[obj oss_trim]];
+        NSString * keyStr = [InspurOSSUtil encodeURL:[key oss_trim]];
+        NSString * valueStr = [InspurOSSUtil encodeURL:[obj oss_trim]];
         if ([valueStr length] == 0) {
             [subresource addObject:keyStr];
         } else {
@@ -351,7 +351,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 }
 
 + (NSString *)sign:(NSString *)content withToken:(OSSFederationToken *)token {
-    NSString * sign = [OSSUtil calBase64Sha1WithData:content withSecret:token.tSecretKey];
+    NSString * sign = [InspurOSSUtil calBase64Sha1WithData:content withSecret:token.tSecretKey];
     return [NSString stringWithFormat:@"OSS %@:%@", token.tAccessKey, sign];
 }
 

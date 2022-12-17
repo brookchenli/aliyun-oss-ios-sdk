@@ -8,11 +8,11 @@
 
 #import "InspurOSSNetworkingRequestDelegate.h"
 
-#import "OSSAllRequestNeededMessage.h"
-#import "OSSURLRequestRetryHandler.h"
+#import "InspurOSSAllRequestNeededMessage.h"
+#import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSHttpResponseParser.h"
 #import "OSSDefine.h"
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 #import "OSSLog.h"
 #import "OSSIPv6Adapter.h"
 
@@ -20,7 +20,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.retryHandler = [OSSURLRequestRetryHandler defaultRetryHandler];
+        self.retryHandler = [InspurOSSURLRequestRetryHandler defaultRetryHandler];
         self.interceptors = [[NSMutableArray alloc] init];
         self.isHttpdnsEnable = YES;
     }
@@ -71,7 +71,7 @@
         return validateParam;
     }
     
-#define URLENCODE(a) [OSSUtil encodeURL:(a)]
+#define URLENCODE(a) [InspurOSSUtil encodeURL:(a)]
     OSSLogDebug(@"start to build request")
     // build base url string
     NSString *bucketName = self.allNeededMessage.bucketName;
@@ -91,12 +91,12 @@
     
     if ([self.allNeededMessage.bucketName oss_isNotEmpty]) {
         OSSIPv6Adapter *ipAdapter = [OSSIPv6Adapter getInstance];
-        if ([OSSUtil isOssOriginBucketHost:temComs.host]) {
+        if ([InspurOSSUtil isOssOriginBucketHost:temComs.host]) {
             // eg. insert bucket to the begining of host.
             temComs.host = [NSString stringWithFormat:@"%@.%@", self.allNeededMessage.bucketName, temComs.host];
             headerHost = temComs.host;
             if ([temComs.scheme.lowercaseString isEqualToString:@"http"] && self.isHttpdnsEnable) {
-                NSString *dnsResult = [OSSUtil getIpByHost: temComs.host];
+                NSString *dnsResult = [InspurOSSUtil getIpByHost: temComs.host];
                 temComs.host = dnsResult;
             }
         } else if (self.allNeededMessage.isHostInCnameExcludeList) {

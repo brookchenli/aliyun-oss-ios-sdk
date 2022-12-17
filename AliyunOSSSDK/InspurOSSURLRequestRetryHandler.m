@@ -6,11 +6,11 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSURLRequestRetryHandler.h"
+#import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSNetworkingRequestDelegate.h"
 #import "OSSDefine.h"
 
-@implementation OSSURLRequestRetryHandler
+@implementation InspurOSSURLRequestRetryHandler
 
 - (OSSNetworkingRetryType)shouldRetry:(uint32_t)currentRetryCount
                       requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate
@@ -63,7 +63,7 @@
 }
 
 + (instancetype)defaultRetryHandler {
-    OSSURLRequestRetryHandler * retryHandler = [OSSURLRequestRetryHandler new];
+    InspurOSSURLRequestRetryHandler * retryHandler = [InspurOSSURLRequestRetryHandler new];
     retryHandler.maxRetryCount = OSSDefaultRetryCount;
     return retryHandler;
 }

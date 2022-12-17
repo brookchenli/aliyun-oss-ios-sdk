@@ -12,7 +12,7 @@
 #import "OSSXMLDictionary.h"
 #import "OSSDefine.h"
 #import "OSSModel.h"
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 #import "OSSLog.h"
 #import "InspurOSSGetObjectACLResult.h"
 #import "InspurOSSDeleteMultipleObjectsResult.h"
@@ -59,7 +59,7 @@
         NSMutableData *mutableData = [NSMutableData dataWithData:data];
         if (_crc64ecma != 0)
         {
-            _crc64ecma = [OSSUtil crc64ForCombineCRC1:_crc64ecma
+            _crc64ecma = [InspurOSSUtil crc64ForCombineCRC1:_crc64ecma
                                                  CRC2:[mutableData oss_crc64]
                                                length:mutableData.length];
         }else
@@ -130,7 +130,7 @@
     return [OSSTask taskWithResult:nil];
 }
 
-- (void)parseResponseHeader:(NSHTTPURLResponse *)response toResultObject:(OSSResult *)result
+- (void)parseResponseHeader:(NSHTTPURLResponse *)response toResultObject:(InspurOSSResult *)result
 {
     result.httpResponseCode = [_response statusCode];
     result.httpResponseHeaderFields = [NSDictionary dictionaryWithDictionary:[_response allHeaderFields]];

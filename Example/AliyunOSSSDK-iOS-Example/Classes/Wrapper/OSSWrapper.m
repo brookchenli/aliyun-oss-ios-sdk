@@ -167,7 +167,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
 }
 
 - (void)textWaterMark:(NSString *)object waterText:(NSString *)text objectSize:(int)size success:(void (^)(id _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
-    NSString * base64Text = [OSSUtil calBase64WithData:(UTF8Char*)[text cStringUsingEncoding:NSASCIIStringEncoding]];
+    NSString * base64Text = [InspurOSSUtil calBase64WithData:(UTF8Char*)[text cStringUsingEncoding:NSASCIIStringEncoding]];
     NSString * queryString = [NSString stringWithFormat:@"@watermark=2&type=%@&text=%@&size=%d",
                               font, base64Text, size];
     NSLog(@"TextWatermark: %@", object);

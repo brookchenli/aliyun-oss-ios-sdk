@@ -7,24 +7,24 @@
 //
 
 #import "OSSDefine.h"
-#import "OSSNetworking.h"
+#import "InspurOSSNetworking.h"
 #import "OSSBolts.h"
 #import "OSSModel.h"
-#import "OSSUtil.h"
+#import "InspurOSSUtil.h"
 #import "OSSLog.h"
 #import "OSSXMLDictionary.h"
 #import "InspurOSSInputStreamHelper.h"
 #import "InspurOSSNetworkingRequestDelegate.h"
-#import "OSSURLRequestRetryHandler.h"
+#import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSHttpResponseParser.h"
 
-@implementation OSSNetworkingConfiguration
+@implementation InspurOSSNetworkingConfiguration
 @end
 
 
-@implementation OSSNetworking
+@implementation InspurOSSNetworking
 
-- (instancetype)initWithConfiguration:(OSSNetworkingConfiguration *)configuration {
+- (instancetype)initWithConfiguration:(InspurOSSNetworkingConfiguration *)configuration {
     if (self = [super init]) {
         self.configuration = configuration;
         NSURLSessionConfiguration * conf = nil;
@@ -76,9 +76,9 @@
 
 - (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        OSSLogVerbose(@"NetWorkConnectedMsg : %@",[OSSUtil buildNetWorkConnectedMsg]);
-        NSString *operator = [OSSUtil buildOperatorMsg];
-        if(operator) OSSLogVerbose(@"Operator : %@",[OSSUtil buildOperatorMsg]);
+        OSSLogVerbose(@"NetWorkConnectedMsg : %@",[InspurOSSUtil buildNetWorkConnectedMsg]);
+        NSString *operator = [InspurOSSUtil buildOperatorMsg];
+        if(operator) OSSLogVerbose(@"Operator : %@",[InspurOSSUtil buildOperatorMsg]);
     });
     OSSLogVerbose(@"send request --------");
     if (self.configuration.proxyHost && self.configuration.proxyPort) {
@@ -111,7 +111,7 @@
 
 - (void)checkForCrc64WithResult:(nonnull id)response requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate taskCompletionSource:(OSSTaskCompletionSource *)source
 {
-    OSSResult *result = (OSSResult *)response;
+    InspurOSSResult *result = (InspurOSSResult *)response;
     BOOL hasRange = [delegate.internalRequest valueForHTTPHeaderField:@"Range"] != nil;
     NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:delegate.internalRequest.URL resolvingAgainstBaseURL:YES];
     BOOL hasXOSSProcess = [urlComponents.query containsString:@"x-oss-process"];
@@ -181,7 +181,7 @@
             NSString *next_append_position = [result.httpResponseHeaderFields objectForKey:@"x-oss-next-append-position"];
             uint64_t length = [next_append_position longLongValue] - position;
             
-            uint64_t crc_local = [OSSUtil crc64ForCombineCRC1:last_crc64 CRC2:local_crc64 length:(size_t)length];
+            uint64_t crc_local = [InspurOSSUtil crc64ForCombineCRC1:last_crc64 CRC2:local_crc64 length:(size_t)length];
             result.localCRC64ecma = [NSString stringWithFormat:@"%llu",crc_local];
             OSSLogVerbose(@"crc_local: %llu, crc_remote: %@,last_position: %llu,nextAppendPosition: %llu,length:  %llu",crc_local,result.remoteCRC64ecma,position,[next_append_position longLongValue],length);
         }

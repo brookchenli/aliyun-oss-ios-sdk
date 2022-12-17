@@ -309,7 +309,7 @@ id<OSSCredentialProvider> credential, authCredential;
     NSFileHandle * readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
     
     request.uploadingData = [readFile readDataToEndOfFile];
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -337,7 +337,7 @@ id<OSSCredentialProvider> credential, authCredential;
     request.objectKey = @"file1m";
     readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
     request.uploadingData = [readFile readDataToEndOfFile];
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -380,7 +380,7 @@ id<OSSCredentialProvider> credential, authCredential;
     NSFileHandle * readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
     
     request.uploadingData = [readFile readDataToEndOfFile];
-    request.contentMd5 = [OSSUtil base64Md5ForData:request.uploadingData];
+    request.contentMd5 = [InspurOSSUtil base64Md5ForData:request.uploadingData];
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     OSSProgressTestUtils *progressTest = [OSSProgressTestUtils new];
     request.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -673,9 +673,9 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (NSString *)getRecordFilePath:(InspurOSSResumableUploadRequest *)resumableUpload {
-    NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
+    NSString *recordPathMd5 = [InspurOSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
     NSData *data = [[NSString stringWithFormat:@"%@%@%@%lld",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *recordFileName = [OSSUtil dataMD5String:data];
+    NSString *recordFileName = [InspurOSSUtil dataMD5String:data];
     NSString *recordFilePath = [NSString stringWithFormat:@"%@/%@",resumableUpload.recordDirectoryPath,recordFileName];
     return recordFilePath;
 }
@@ -1307,49 +1307,49 @@ id<OSSCredentialProvider> credential, authCredential;
 - (void)testDetemineMimeTypeFunction {
     NSString * filePath1 = @"/a/b/c/d/aaa.txt";
     NSString * uploadName1 = @"aaa";
-    NSString * mimeType1 = [OSSUtil detemineMimeTypeForFilePath:filePath1 uploadName:uploadName1];
+    NSString * mimeType1 = [InspurOSSUtil detemineMimeTypeForFilePath:filePath1 uploadName:uploadName1];
     XCTAssertEqualObjects(@"text/plain", mimeType1);
     
     NSString * filePath2 = @"/a/b/c/d/aaa";
     NSString * uploadName2 = @"aaa.txt";
-    NSString * mimeType2 = [OSSUtil detemineMimeTypeForFilePath:filePath2 uploadName:uploadName2];
+    NSString * mimeType2 = [InspurOSSUtil detemineMimeTypeForFilePath:filePath2 uploadName:uploadName2];
     XCTAssertEqualObjects(@"text/plain", mimeType2);
     
     NSString * filePath3 = @"/a/b/c/d/aaa";
     NSString * uploadName3 = @"aaa";
-    NSString * mimeType3 = [OSSUtil detemineMimeTypeForFilePath:filePath3 uploadName:uploadName3];
+    NSString * mimeType3 = [InspurOSSUtil detemineMimeTypeForFilePath:filePath3 uploadName:uploadName3];
     XCTAssertEqualObjects(@"application/octet-stream", mimeType3);
     
     NSString * filePath4 = @"/a/b/c/d/aaa";
     NSString * uploadName4 = @"aaa.jpg";
-    NSString * mimeType4 = [OSSUtil detemineMimeTypeForFilePath:filePath4 uploadName:uploadName4];
+    NSString * mimeType4 = [InspurOSSUtil detemineMimeTypeForFilePath:filePath4 uploadName:uploadName4];
     XCTAssertEqualObjects(@"image/jpeg", mimeType4);
 }
 
 - (void)testValidateName {
-    XCTAssertFalse([OSSUtil validateBucketName:@"-abc"]);
-    XCTAssertFalse([OSSUtil validateBucketName:@"abc.cde"]);
-    XCTAssertFalse([OSSUtil validateBucketName:@"_adbdsf"]);
-    XCTAssertFalse([OSSUtil validateBucketName:@"abc\\"]);
-    XCTAssertFalse([OSSUtil validateBucketName:@"中文"]);
-    XCTAssertTrue([OSSUtil validateBucketName:@"abc"]);
-    XCTAssertTrue([OSSUtil validateBucketName:@"abc-abc"]);
-    XCTAssertFalse([OSSUtil validateBucketName:@"abc-abc-"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"-abc"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"abc.cde"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"_adbdsf"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"abc\\"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"中文"]);
+    XCTAssertTrue([InspurOSSUtil validateBucketName:@"abc"]);
+    XCTAssertTrue([InspurOSSUtil validateBucketName:@"abc-abc"]);
+    XCTAssertFalse([InspurOSSUtil validateBucketName:@"abc-abc-"]);
     
-    XCTAssertFalse([OSSUtil validateObjectKey:@"/abc"]);
-    XCTAssertFalse([OSSUtil validateObjectKey:@"\\abc"]);
-    XCTAssertFalse([OSSUtil validateObjectKey:@"\\中文"]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@"abc"]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@"abc中文"]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@"-中文"]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@"abc  "]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@"abc-sfds/sf-\\sfdssf"]);
-    XCTAssertTrue([OSSUtil validateObjectKey:@" ?-+xsfs*sfds "]);
+    XCTAssertFalse([InspurOSSUtil validateObjectKey:@"/abc"]);
+    XCTAssertFalse([InspurOSSUtil validateObjectKey:@"\\abc"]);
+    XCTAssertFalse([InspurOSSUtil validateObjectKey:@"\\中文"]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@"abc"]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@"abc中文"]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@"-中文"]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@"abc  "]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@"abc-sfds/sf-\\sfdssf"]);
+    XCTAssertTrue([InspurOSSUtil validateObjectKey:@" ?-+xsfs*sfds "]);
 }
 
 - (void) testUrlEncode{
     NSString * objectKey = @"test/a/汉字。，；：‘’“”？（）『』【】《》！@#￥%……&×/test+ =-_*&^%$#@!`~[]{}()<>|\\/?.,;";
-    NSString * encodekey = [OSSUtil encodeURL:objectKey];
+    NSString * encodekey = [InspurOSSUtil encodeURL:objectKey];
     
     NSString * encodedKey = @"test/a/%E6%B1%89%E5%AD%97%E3%80%82%EF%BC%8C%EF%BC%9B%EF%BC%9A%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%EF%BC%9F%EF%BC%88%EF%BC%89%E3%80%8E%E3%80%8F%E3%80%90%E3%80%91%E3%80%8A%E3%80%8B%EF%BC%81%40%23%EF%BF%A5%25%E2%80%A6%E2%80%A6%26%C3%97/test%2B%20%3D-_%2A%26%5E%25%24%23%40%21%60~%5B%5D%7B%7D%28%29%3C%3E%7C%5C/%3F.%2C%3B";
     XCTAssertTrue([encodekey isEqualToString:encodedKey]);
@@ -1372,8 +1372,8 @@ id<OSSCredentialProvider> credential, authCredential;
         return nil;
     }] waitUntilFinished];
     
-    NSString * remoteMD5 = [OSSUtil fileMD5String:tempFile];
-    NSString * localMD5 = [OSSUtil fileMD5String:filePath];
+    NSString * remoteMD5 = [InspurOSSUtil fileMD5String:tempFile];
+    NSString * localMD5 = [InspurOSSUtil fileMD5String:filePath];
     NSLog(@"%s - tempfile path: %@", __func__, tempFile);
     NSLog(@"%s - remote md5: %@ local md5: %@", __func__, remoteMD5, localMD5);
     return [remoteMD5 isEqualToString:localMD5];
@@ -1537,7 +1537,7 @@ id<OSSCredentialProvider> credential, authCredential;
             localCrc64 = partInfo.crc64;
         }else
         {
-            localCrc64 = [OSSUtil crc64ForCombineCRC1:localCrc64 CRC2:partInfo.crc64 length:partInfo.size];
+            localCrc64 = [InspurOSSUtil crc64ForCombineCRC1:localCrc64 CRC2:partInfo.crc64 length:partInfo.size];
         }
     }];
     

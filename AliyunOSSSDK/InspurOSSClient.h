@@ -69,7 +69,7 @@
 
 @class OSSTask;
 @class OSSExecutor;
-@class OSSNetworking;
+@class InspurOSSNetworking;
 @class OSSClientConfiguration;
 @protocol OSSCredentialProvider;
 
@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The networking instance for sending and receiving data
  */
-@property (nonatomic, strong) OSSNetworking * networking;
+@property (nonatomic, strong) InspurOSSNetworking * networking;
 
 /**
  The credential provider instance

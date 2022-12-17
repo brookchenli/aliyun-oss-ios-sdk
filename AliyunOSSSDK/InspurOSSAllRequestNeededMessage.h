@@ -13,7 +13,7 @@
 /**
  All necessary information in one OSS request.
  */
-@interface OSSAllRequestNeededMessage : NSObject
+@interface InspurOSSAllRequestNeededMessage : NSObject
 @property (nonatomic, strong) NSString *endpoint;
 @property (nonatomic, strong) NSString *httpMethod;
 @property (nonatomic, strong) NSString *bucketName;

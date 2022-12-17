@@ -11,7 +11,7 @@
 /**
  The base class of result from OSS.
  */
-@interface OSSResult : NSObject
+@interface InspurOSSResult : NSObject
 
 /**
  The http response code.

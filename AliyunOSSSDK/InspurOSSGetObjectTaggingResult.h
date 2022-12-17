@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InspurOSSGetObjectTaggingResult : OSSResult
+@interface InspurOSSGetObjectTaggingResult : InspurOSSResult
 
 @property (nonatomic, strong) NSDictionary *tags;
 

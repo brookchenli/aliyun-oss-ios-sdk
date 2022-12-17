@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The retry handler interface
  */
-@interface OSSURLRequestRetryHandler : NSObject
+@interface InspurOSSURLRequestRetryHandler : NSObject
 
 @property (nonatomic, assign) uint32_t maxRetryCount;
 

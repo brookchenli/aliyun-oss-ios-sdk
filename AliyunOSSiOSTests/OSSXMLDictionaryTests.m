@@ -47,7 +47,7 @@
     XCTAssertNotNil(dict);
     
     NSXMLParser *newParser = [[NSXMLParser alloc] initWithData:[NSData dataWithContentsOfFile:filePath]];
-    OSSXMLDictionaryParser *ossXMLParser = [[OSSXMLDictionaryParser sharedInstance] copy];
+    InspurOSSXMLDictionaryParser *ossXMLParser = [[InspurOSSXMLDictionaryParser sharedInstance] copy];
     ossXMLParser.preserveComments = YES;
     dict = [ossXMLParser dictionaryWithParser:newParser];
     XCTAssertNotNil(dict);

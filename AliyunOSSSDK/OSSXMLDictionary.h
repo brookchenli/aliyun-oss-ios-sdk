@@ -34,9 +34,9 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
-@interface OSSXMLDictionaryParser : NSObject <NSCopying>
+@interface InspurOSSXMLDictionaryParser : NSObject <NSCopying>
 
-+ (OSSXMLDictionaryParser *)sharedInstance;
++ (InspurOSSXMLDictionaryParser *)sharedInstance;
 
 @property (nonatomic, assign) BOOL collapseTextNodes; // defaults to YES
 @property (nonatomic, assign) BOOL stripEmptyNodes;   // defaults to YES

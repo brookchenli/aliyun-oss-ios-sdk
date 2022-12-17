@@ -185,7 +185,7 @@
         {
             NSMutableData *mutableData = [data mutableCopy];
             void *bytes = mutableData.mutableBytes;
-            localCrc64 = [OSSUtil crc64ecma:localCrc64 buffer:bytes length:data.length];
+            localCrc64 = [InspurOSSUtil crc64ecma:localCrc64 buffer:bytes length:data.length];
             [receivedData appendData:data];
         }
     };
@@ -301,9 +301,9 @@
 }
 
 - (NSString *)getRecordFilePath:(InspurOSSResumableUploadRequest *)resumableUpload {
-    NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
+    NSString *recordPathMd5 = [InspurOSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
     NSData *data = [[NSString stringWithFormat:@"%@%@%@%lu",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *recordFileName = [OSSUtil dataMD5String:data];
+    NSString *recordFileName = [InspurOSSUtil dataMD5String:data];
     NSString *recordFilePath = [NSString stringWithFormat:@"%@/%@",resumableUpload.recordDirectoryPath,recordFileName];
     return recordFilePath;
 }
