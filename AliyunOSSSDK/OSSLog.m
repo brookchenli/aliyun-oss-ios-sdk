@@ -6,10 +6,10 @@
 //  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSUtil.h"
 
-@implementation OSSLog
+@implementation InspurOSSLog
 + (void)enableLog {
     if([InspurOSSUtil hasPhoneFreeSpace]){
         isEnable = YES;

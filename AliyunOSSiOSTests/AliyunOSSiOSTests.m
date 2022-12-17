@@ -94,7 +94,7 @@ id<InspurOSSCredentialProvider> credential, authCredential;
 }
 
 - (void)initOSSClient {
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
     
     
     credential = [self newStsTokenCredentialProvider];
@@ -1413,14 +1413,14 @@ id<InspurOSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testDisableFileLog {
-    [OSSLog disableLog];
+    [InspurOSSLog disableLog];
     OSSDDFileLogger *fileLogger = [[OSSDDFileLogger alloc] init];
     [[fileLogger logFileManager] createNewLogFile];
     OSSLogDebug(@"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     [NSThread sleepForTimeInterval:(1.0)];
     unsigned long long filesize = [self getLogFileSize];
     XCTAssertTrue(filesize == 0);
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
 }
 
 - (unsigned long long)getLogFileSize {

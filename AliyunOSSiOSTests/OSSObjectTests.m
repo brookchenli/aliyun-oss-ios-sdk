@@ -122,7 +122,7 @@
                                credentialProvider:provider
                               clientConfiguration:config];
     
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
     /*
     OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
     createBucket1.bucketName = _testBucketName;
@@ -139,7 +139,7 @@
                                credentialProvider:authProv
                               clientConfiguration:config];
     
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
     /*
     OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
     createBucket1.bucketName = _testBucketName;

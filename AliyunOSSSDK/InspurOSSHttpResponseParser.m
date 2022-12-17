@@ -13,7 +13,7 @@
 #import "InspurOSSDefine.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSGetObjectACLResult.h"
 #import "InspurOSSDeleteMultipleObjectsResult.h"
 #import "InspurOSSGetBucketInfoResult.h"

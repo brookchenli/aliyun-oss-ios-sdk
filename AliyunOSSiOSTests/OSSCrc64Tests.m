@@ -58,7 +58,7 @@
     InspurOSSCreateBucketRequest *createBucket = [InspurOSSCreateBucketRequest new];
     createBucket.bucketName = _privateBucketName;
     [[_client createBucket:createBucket] waitUntilFinished];
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
 }
 
 - (void)setUpLocalFiles

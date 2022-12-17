@@ -13,7 +13,7 @@
 #import "InspurOSSHttpResponseParser.h"
 #import "InspurOSSDefine.h"
 #import "InspurOSSUtil.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "OSSIPv6Adapter.h"
 
 @implementation InspurOSSNetworkingRequestDelegate

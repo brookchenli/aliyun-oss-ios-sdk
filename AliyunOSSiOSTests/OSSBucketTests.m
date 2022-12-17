@@ -39,7 +39,7 @@
     _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
-    [OSSLog enableLog];
+    [InspurOSSLog enableLog];
 }
 
 - (void)testAPI_creatBucket_public

@@ -65,7 +65,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [OSSLog enableLog];     // 开启sdk的日志功能
+    [InspurOSSLog enableLog];     // 开启sdk的日志功能
     
     
     [_uploadBigFileButton addTarget:self action:@selector(uploadBigFileClicked:) forControlEvents:UIControlEventTouchUpInside];

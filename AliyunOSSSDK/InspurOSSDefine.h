@@ -12,9 +12,9 @@
 #define OSSDefine_h
 
 #if TARGET_OS_IOS
-#define OSSUAPrefix                             @"inspur-sdk-ios"
+#define InspurOSSUAPrefix                             @"inspur-sdk-ios"
 #elif TARGET_OS_OSX
-#define OSSUAPrefix                             @"inspur-sdk-mac"
+#define InspurOSSUAPrefix                             @"inspur-sdk-mac"
 #endif
 #define InspurOSSSDKVersion                           @"1.0.0"
 

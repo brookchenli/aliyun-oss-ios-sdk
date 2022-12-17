@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "OSSIPv6Adapter.h"
 #import "OSSIPv6PrefixResolver.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 
 #include <arpa/inet.h>
 #include <dns.h>

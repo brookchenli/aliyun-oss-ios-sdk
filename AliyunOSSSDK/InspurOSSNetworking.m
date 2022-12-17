@@ -11,7 +11,7 @@
 #import "OSSBolts.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSXMLDictionary.h"
 #import "InspurOSSInputStreamHelper.h"
 #import "InspurOSSNetworkingRequestDelegate.h"

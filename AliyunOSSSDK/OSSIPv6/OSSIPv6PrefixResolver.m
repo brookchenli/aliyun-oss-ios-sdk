@@ -6,7 +6,7 @@
 //  Copyright © 2016 Ali. All rights reserved.
 
 #import "OSSIPv6PrefixResolver.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 
 #import <Foundation/Foundation.h>
 #include <arpa/inet.h>

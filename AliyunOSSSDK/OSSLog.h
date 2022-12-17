@@ -46,7 +46,7 @@ OSSDDLogWarn(@"[Warning]: %@", [NSString stringWithFormat:(frmt), ##__VA_ARGS__]
 
 static BOOL isEnable;
 
-@interface OSSLog : NSObject
+@interface InspurOSSLog : NSObject
 
 + (void)enableLog;
 + (void)disableLog;

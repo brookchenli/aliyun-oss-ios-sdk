@@ -11,7 +11,7 @@
 #import "CommonCrypto/CommonDigest.h"
 #import "CommonCrypto/CommonHMAC.h"
 #import "OSSModel.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSHttpdns.h"
 #import "OSSIPv6Adapter.h"
 #import "InspurOSSReachability.h"

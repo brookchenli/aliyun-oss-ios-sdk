@@ -7,7 +7,7 @@
 //
 
 #import "InspurOSSInputStreamHelper.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "aos_crc64.h"
 
 @interface InspurOSSInputStreamHelper ()

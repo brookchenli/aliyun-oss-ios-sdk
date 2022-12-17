@@ -9,7 +9,7 @@
  */
 
 #import "InspurOSSTask.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSConstants.h"
 #import "InspurOSSDefine.h"
 

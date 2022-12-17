@@ -10,7 +10,7 @@
 #import "InspurOSSDefine.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "OSSBolts.h"
 #import "InspurOSSNetworking.h"
 #import "InspurOSSXMLDictionary.h"

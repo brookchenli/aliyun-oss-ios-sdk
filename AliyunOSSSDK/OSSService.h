@@ -43,6 +43,6 @@
 #import "InspurOSSClient.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 
 #import "OSSBolts.h"

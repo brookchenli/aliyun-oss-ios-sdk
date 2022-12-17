@@ -6,7 +6,7 @@
 //  Copyright © 2016 zhouzhuo. All rights reserved.
 //
 
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSHttpdns.h"
 #import "OSSIPv6Adapter.h"
 

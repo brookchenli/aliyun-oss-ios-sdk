@@ -10,7 +10,7 @@
 #import "OSSBolts.h"
 #import "InspurOSSUtil.h"
 #import "InspurOSSNetworking.h"
-#import "OSSLog.h"
+#import "InspurOSSLog.h"
 #import "InspurOSSXMLDictionary.h"
 #if TARGET_OS_IOS
 #import <UIKit/UIDevice.h>
@@ -481,12 +481,12 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsess
         if (self.clientConfiguration.isAllowUACarrySystemInfo) {
             NSString *systemName = [[[UIDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
             NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-            userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, InspurOSSSDKVersion, systemName, systemVersion, localeIdentifier];
+            userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", InspurOSSUAPrefix, InspurOSSSDKVersion, systemName, systemVersion, localeIdentifier];
         } else {
-            userAgent = [NSString stringWithFormat:@"%@/%@(/%@)", OSSUAPrefix, InspurOSSSDKVersion, localeIdentifier];
+            userAgent = [NSString stringWithFormat:@"%@/%@(/%@)", InspurOSSUAPrefix, InspurOSSSDKVersion, localeIdentifier];
         }
 #elif TARGET_OS_OSX
-        userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", OSSUAPrefix, InspurOSSSDKVersion, @"OSX", [NSProcessInfo processInfo].operatingSystemVersionString, localeIdentifier];
+        userAgent = [NSString stringWithFormat:@"%@/%@(/%@/%@/%@)", InspurOSSUAPrefix, InspurOSSSDKVersion, @"OSX", [NSProcessInfo processInfo].operatingSystemVersionString, localeIdentifier];
 #endif
     });
     if(customUserAgent){
