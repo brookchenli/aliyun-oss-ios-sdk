@@ -12,7 +12,7 @@
 
 ### 手动安装
 
-将文件夹 AliyunOSSSDK 拖入工程安装
+将文件夹 InspurOSSSDK 拖入工程安装
 
 ### 手动安装
 如果工程是通过pod管理依赖，那么在Podfile中加入以下依赖即可，不需要再导入framework：
