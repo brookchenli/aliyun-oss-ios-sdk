@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSDeleteMultipleObjectsRequest.h"
+#import "InspurOSSDeleteMultipleObjectsRequest.h"
 
-@implementation OSSDeleteMultipleObjectsRequest
+@implementation InspurOSSDeleteMultipleObjectsRequest
 
 - (instancetype)init
 {

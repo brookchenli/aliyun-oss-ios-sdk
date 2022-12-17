@@ -9,7 +9,7 @@
 #import "OSSRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@interface OSSGetObjectACLRequest : OSSRequest
+@interface InspurOSSGetObjectACLRequest : OSSRequest
 
 /**
  the bucket's name which object stored

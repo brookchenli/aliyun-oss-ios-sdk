@@ -14,7 +14,7 @@
 #import "OSSTestUtils.h"
 @interface OSSHttp2Tests : XCTestCase
 {
-    OSSClient *_client;
+    InspurOSSClient *_client;
     NSString *_bucketName;
     NSString *_http2endpoint;
 }
@@ -45,14 +45,14 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    _client = [[OSSClient alloc] initWithEndpoint:_http2endpoint
+    _client = [[InspurOSSClient alloc] initWithEndpoint:_http2endpoint
                                credentialProvider:authProv
                               clientConfiguration:config];
 }
 
 - (void)createBucket
 {
-    OSSCreateBucketRequest *createBucket = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *createBucket = [InspurOSSCreateBucketRequest new];
     createBucket.bucketName = _bucketName;
     
     [[_client createBucket:createBucket] waitUntilFinished];
@@ -76,7 +76,7 @@
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"wangwang" ofType:@"zip"];;
         NSURL * fileURL = [NSURL fileURLWithPath:filePath];
         
-        OSSPutObjectRequest * putRequest = [OSSPutObjectRequest new];
+        InspurOSSPutObjectRequest * putRequest = [InspurOSSPutObjectRequest new];
         putRequest.bucketName = _bucketName;
         putRequest.objectKey = objectKey;
         putRequest.uploadingFileURL = fileURL;
@@ -96,7 +96,7 @@
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"wangwang" ofType:@"zip"];;
         NSURL * fileURL = [NSURL fileURLWithPath:filePath];
         
-        OSSGetObjectRequest * getRequest = [OSSGetObjectRequest new];
+        InspurOSSGetObjectRequest * getRequest = [InspurOSSGetObjectRequest new];
         getRequest.bucketName = _bucketName;
         getRequest.objectKey = objectKey;
         NSString *diskFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"local_test%zd.zip", i]];

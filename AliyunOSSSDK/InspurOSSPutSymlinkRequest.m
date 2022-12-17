@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSPutSymlinkRequest.h"
+#import "InspurOSSPutSymlinkRequest.h"
 
-@implementation OSSPutSymlinkRequest
+@implementation InspurOSSPutSymlinkRequest
 
 - (NSDictionary *)requestParams {
     return @{@"symlink": @""};

@@ -70,17 +70,17 @@
     config.backgroundSesseionIdentifier = identifier;
     config.enableBackgroundTransmitService = YES;
     
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
-    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
+    InspurOSSCreateBucketRequest *createBucket1 = [InspurOSSCreateBucketRequest new];
     createBucket1.bucketName = _privateBucketName;
     [[client createBucket:createBucket1] waitUntilFinished];
-    OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
     put.bucketName = _privateBucketName;
     put.objectKey = OSS_IMAGE_KEY;
     put.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"hasky" withExtension:@"jpeg"];
     [[client putObject:put] waitUntilFinished];
     
-    OSSHeadObjectRequest *request = [OSSHeadObjectRequest new];
+    InspurOSSHeadObjectRequest *request = [InspurOSSHeadObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = OSS_IMAGE_KEY;
     OSSTask *task = [client headObject:request];

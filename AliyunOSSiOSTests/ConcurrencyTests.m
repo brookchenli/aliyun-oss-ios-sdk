@@ -32,7 +32,7 @@
         [queue addOperationWithBlock:^{
             @autoreleasepool{
             OSSAuthCredentialProvider *credential = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-            OSSClient *client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential];
+            InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential];
             }
         }];
         

@@ -24,12 +24,12 @@
     _privateBucketName = [@"oss-ios-" stringByAppendingString:testName];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     OSSPlainTextAKSKPairCredentialProvider *provider = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
-    self.client = [[OSSClient alloc] initWithEndpoint:@"http://oss-cn-shenzhen.aliyuncs.com" credentialProvider:provider];
-    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    self.client = [[InspurOSSClient alloc] initWithEndpoint:@"http://oss-cn-shenzhen.aliyuncs.com" credentialProvider:provider];
+    InspurOSSCreateBucketRequest *createBucket1 = [InspurOSSCreateBucketRequest new];
     createBucket1.bucketName = _privateBucketName;
     [[self.client createBucket:createBucket1] waitUntilFinished];
     
-    OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
     put.bucketName = _privateBucketName;
     put.objectKey = OSS_IMAGE_KEY;
     put.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"hasky" withExtension:@"jpeg"];
@@ -45,7 +45,7 @@
 }
 
 - (void)testExample {
-    OSSCallBackRequest *request = [OSSCallBackRequest new];
+    InspurOSSCallBackRequest *request = [InspurOSSCallBackRequest new];
     request.bucketName = _privateBucketName;
     request.objectName = OSS_IMAGE_KEY;
     request.callbackParam = @{@"callbackUrl": OSS_CALLBACK_URL,

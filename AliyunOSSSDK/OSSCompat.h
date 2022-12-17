@@ -15,7 +15,7 @@ typedef OSSCancellationTokenSource OSSTaskHandler;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSClient (Compat)
+@interface InspurOSSClient (Compat)
 
 /**
  The old version's upload API.

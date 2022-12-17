@@ -30,13 +30,13 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     NSString *endpoint = nil;
     
-    XCTAssertThrowsSpecificNamed([[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
+    XCTAssertThrowsSpecificNamed([[InspurOSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
 
     endpoint = @"https://1.1.1.1";
-    XCTAssertThrowsSpecificNamed([[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
+    XCTAssertThrowsSpecificNamed([[InspurOSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
     
     endpoint = @"1.1.1.1";
-    XCTAssertThrowsSpecificNamed([[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
+    XCTAssertThrowsSpecificNamed([[InspurOSSClient alloc] initWithEndpoint:endpoint credentialProvider:nil clientConfiguration:nil], NSException, NSInvalidArgumentException, @"should throw NSInternalInconsistencyException");
     
 }
 

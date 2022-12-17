@@ -35,7 +35,7 @@
     conf.maxConcurrentRequestCount = 5;
     
     // switches to another credential provider.
-    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:provider
                               clientConfiguration:conf];
 }
@@ -72,22 +72,22 @@
 }
 
 - (void)createBucket {
-    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *createBucket1 = [InspurOSSCreateBucketRequest new];
     createBucket1.bucketName = OSS_BUCKET_PUBLIC;
     [[_client createBucket:createBucket1] waitUntilFinished];
     
-    OSSCreateBucketRequest *createBucket2 = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *createBucket2 = [InspurOSSCreateBucketRequest new];
     createBucket2.bucketName = OSS_BUCKET_PRIVATE;
     createBucket2.xOssACL = @"public-read-write";
     [[_client createBucket:createBucket2] waitUntilFinished];
 }
 
 - (void)deleteBucket {
-    OSSDeleteBucketRequest *deleteBucket1 = [OSSDeleteBucketRequest new];
+    InspurOSSDeleteBucketRequest *deleteBucket1 = [InspurOSSDeleteBucketRequest new];
     deleteBucket1.bucketName = OSS_BUCKET_PUBLIC;
     [[_client deleteBucket:deleteBucket1] waitUntilFinished];
     
-    OSSDeleteBucketRequest *deleteBucket2 = [OSSDeleteBucketRequest new];
+    InspurOSSDeleteBucketRequest *deleteBucket2 = [InspurOSSDeleteBucketRequest new];
     deleteBucket2.bucketName = OSS_BUCKET_PRIVATE;
     [[_client deleteBucket:deleteBucket2] waitUntilFinished];
 }

@@ -14,9 +14,9 @@
 #import "OSSTestUtils.h"
 #import <objc/runtime.h>
 
-@interface OSSClient(Test)
+@interface InspurOSSClient(Test)
 
-- (OSSTask *)upload:(OSSMultipartUploadRequest *)request
+- (OSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
         uploadIndex:(NSMutableArray *)alreadyUploadIndex
          uploadPart:(NSMutableArray *)alreadyUploadPart
               count:(NSUInteger)partCout
@@ -33,7 +33,7 @@
 
 static NSArray * fileNameArray;
 static NSArray * fileSizeArray;
-static OSSClient * client;
+static InspurOSSClient * client;
 static dispatch_queue_t test_queue;
 
 id<OSSCredentialProvider> credential, authCredential;
@@ -54,12 +54,12 @@ id<OSSCredentialProvider> credential, authCredential;
         [self initLocalFiles];
         test_queue = dispatch_queue_create("com.aliyun.oss.test", DISPATCH_QUEUE_CONCURRENT);
     });
-    OSSCreateBucketRequest *createBucket1 = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *createBucket1 = [InspurOSSCreateBucketRequest new];
     createBucket1.bucketName = _privateBucketName;
     [[client createBucket:createBucket1] waitUntilFinished];
     
     //upload test image
-    OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
     put.bucketName = _privateBucketName;
     put.objectKey = OSS_IMAGE_KEY;
     put.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"hasky" withExtension:@"jpeg"];
@@ -107,7 +107,7 @@ id<OSSCredentialProvider> credential, authCredential;
     conf.maxConcurrentRequestCount = 5;
     
     // switches to another credential provider.
-    client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:authCredential clientConfiguration:conf];
+    client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:authCredential clientConfiguration:conf];
 }
 
 // Initializes an OSSClient object with STS token and AK pairs.
@@ -165,7 +165,7 @@ id<OSSCredentialProvider> credential, authCredential;
 - (void)testAbortMultipartUpload
 {
     __block NSString * uploadId = nil;
-    OSSInitMultipartUploadRequest * init = [OSSInitMultipartUploadRequest new];
+    InspurOSSInitMultipartUploadRequest * init = [InspurOSSInitMultipartUploadRequest new];
     init.bucketName = _privateBucketName;
     init.objectKey = OSS_MULTIPART_UPLOADKEY;
     init.contentType = @"application/octet-stream";
@@ -179,7 +179,7 @@ id<OSSCredentialProvider> credential, authCredential;
         return nil;
     }] waitUntilFinished];
     
-    OSSAbortMultipartUploadRequest * abort = [OSSAbortMultipartUploadRequest new];
+    InspurOSSAbortMultipartUploadRequest * abort = [InspurOSSAbortMultipartUploadRequest new];
     abort.bucketName = _privateBucketName;
     abort.objectKey = OSS_MULTIPART_UPLOADKEY;
     abort.uploadId = uploadId;
@@ -203,11 +203,11 @@ id<OSSCredentialProvider> credential, authCredential;
     }
     conf.proxyPort = @(8088);
     
-    OSSClient * testProxyClient = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    InspurOSSClient * testProxyClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                                    credentialProvider:client.credentialProvider
                                                   clientConfiguration:conf];
     
-    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     
@@ -232,11 +232,11 @@ id<OSSCredentialProvider> credential, authCredential;
     
     conf.userAgentMark = @"customUserAgent";
     
-    OSSClient * testProxyClient = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    InspurOSSClient * testProxyClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                                    credentialProvider:client.credentialProvider
                                                   clientConfiguration:conf];
     
-    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     
@@ -260,7 +260,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     [testProxyClient setClientConfiguration:conf1];
     
-    OSSGetObjectRequest * request1 = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * request1 = [InspurOSSGetObjectRequest new];
     request1.bucketName = _privateBucketName;
     request1.objectKey = @"file1m";
     
@@ -286,7 +286,7 @@ id<OSSCredentialProvider> credential, authCredential;
     conf.timeoutIntervalForRequest = 15;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
     
-    OSSClient * client1 = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    InspurOSSClient * client1 = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                            credentialProvider:credential
                                           clientConfiguration:conf];
     
@@ -296,11 +296,11 @@ id<OSSCredentialProvider> credential, authCredential;
     conf.backgroundSesseionIdentifier = @"test_other_backgroundservice-enbaled_client";
     conf.timeoutIntervalForRequest = 15;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
-    OSSClient * client2 = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    InspurOSSClient * client2 = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                            credentialProvider:credential
                                           clientConfiguration:conf];
     
-    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * request = [InspurOSSPutObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     
@@ -332,7 +332,7 @@ id<OSSCredentialProvider> credential, authCredential;
     }] waitUntilFinished];
     XCTAssertTrue([progressTest completeValidateProgress]);
 
-    request = [OSSPutObjectRequest new];
+    request = [InspurOSSPutObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     readFile = [NSFileHandle fileHandleForReadingFromURL:fileURL error:nil];
@@ -367,11 +367,11 @@ id<OSSCredentialProvider> credential, authCredential;
     conf.timeoutIntervalForRequest = 15;
     conf.timeoutIntervalForResource = 24 * 60 * 60;
     
-    OSSClient * client1 = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    InspurOSSClient * client1 = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                            credentialProvider:credential
                                           clientConfiguration:conf];
     
-    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * request = [InspurOSSPutObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     
@@ -405,7 +405,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testMultipartUploadNormal {
-    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest * multipartUploadRequest = [InspurOSSMultipartUploadRequest new];
     multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     multipartUploadRequest.bucketName = @"test-chenli4";
     multipartUploadRequest.objectKey = nil;
@@ -438,10 +438,10 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testMultipartUploadWithException {
     SEL select = @selector(upload:uploadIndex:uploadPart:count:uploadedLength:fileSize:);
-    Method originM = class_getInstanceMethod([OSSClient class], select);
+    Method originM = class_getInstanceMethod([InspurOSSClient class], select);
     Method newM = class_getInstanceMethod([self class], select);
     method_exchangeImplementations(originM, newM);
-    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest * multipartUploadRequest = [InspurOSSMultipartUploadRequest new];
     multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     multipartUploadRequest.bucketName = _privateBucketName;
     multipartUploadRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
@@ -465,7 +465,7 @@ id<OSSCredentialProvider> credential, authCredential;
     method_exchangeImplementations(originM, newM);
 }
 
-- (OSSTask *)upload:(OSSMultipartUploadRequest *)request
+- (OSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
         uploadIndex:(NSMutableArray *)alreadyUploadIndex
          uploadPart:(NSMutableArray *)alreadyUploadPart
               count:(NSUInteger)partCout
@@ -477,7 +477,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testMultipartUploadCancel {
-    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest * multipartUploadRequest = [InspurOSSMultipartUploadRequest new];
     multipartUploadRequest.bucketName = _privateBucketName;
     multipartUploadRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
     multipartUploadRequest.contentType = @"application/octet-stream";
@@ -504,7 +504,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testResumableUploadNormal {
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.contentType = @"application/octet-stream";
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
@@ -542,7 +542,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testResumableUploadSetACL {
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.contentType = @"application/octet-stream";
     resumableUpload.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
@@ -578,7 +578,7 @@ id<OSSCredentialProvider> credential, authCredential;
     BOOL isEqual = [self isFileOnOSSBucket:_privateBucketName objectKey:OSS_MULTIPART_UPLOADKEY equalsToLocalFile:[resumableUpload.uploadingFileURL path]];
     XCTAssertTrue(isEqual);
     
-    OSSGetObjectRequest * getRequest = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * getRequest = [InspurOSSGetObjectRequest new];
     getRequest.bucketName = _privateBucketName;
     getRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
     getRequest.isAuthenticationRequired = NO;
@@ -588,7 +588,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testResumableUploadServerCallback {
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -635,7 +635,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 
 - (void)testResumbleUploadCancel {
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     BOOL isDelete = NO;
@@ -672,7 +672,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
 }
 
-- (NSString *)getRecordFilePath:(OSSResumableUploadRequest *)resumableUpload {
+- (NSString *)getRecordFilePath:(InspurOSSResumableUploadRequest *)resumableUpload {
     NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
     NSData *data = [[NSString stringWithFormat:@"%@%@%@%lld",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
     NSString *recordFileName = [OSSUtil dataMD5String:data];
@@ -682,7 +682,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testResumbleUploadAbort {
     __block bool cancel = NO;
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.deleteUploadIdOnCancelling = NO;
@@ -720,7 +720,7 @@ id<OSSCredentialProvider> credential, authCredential;
     }] waitUntilFinished];
     
     
-    resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.recordDirectoryPath = cachesDir;
@@ -746,7 +746,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testResumbleUploadCancelResumble {
     __block bool cancel = NO;
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.deleteUploadIdOnCancelling = NO;
@@ -778,7 +778,7 @@ id<OSSCredentialProvider> credential, authCredential;
     [resumeTask waitUntilFinished];
     
     [NSThread sleepForTimeInterval:1];
-    resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.recordDirectoryPath = cachesDir;
@@ -804,7 +804,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testResumableUploadSmallFile {
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -835,7 +835,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testResumableUploadResumeUpload {
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.deleteUploadIdOnCancelling = NO;
@@ -843,7 +843,7 @@ id<OSSCredentialProvider> credential, authCredential;
     resumableUpload.contentType = @"application/octet-stream";
     resumableUpload.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     resumableUpload.partSize = 256 * 1024;
-    __weak OSSResumableUploadRequest * upload = resumableUpload;
+    __weak InspurOSSResumableUploadRequest * upload = resumableUpload;
     resumableUpload.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
         if (totalByteSent > totalBytesExpectedToSend / 3) {
@@ -860,7 +860,7 @@ id<OSSCredentialProvider> credential, authCredential;
     }] waitUntilFinished];
 
     
-    resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.recordDirectoryPath = cachesDir;
@@ -887,7 +887,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testResumableUploadwithinvalidpartSize {
     
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -913,7 +913,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testResumableUploadWithNotSetRecordPath{
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = OSS_MULTIPART_UPLOADKEY;
     resumableUpload.contentType = @"application/octet-stream";
@@ -935,7 +935,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testUploadPartSeekError {
-    OSSMultipartUploadRequest *request = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest *request = [InspurOSSMultipartUploadRequest new];
     request.bucketName = _privateBucketName;
     request.partSize = -1024 * 1024;
     request.objectKey = OSS_MULTIPART_UPLOADKEY;
@@ -961,7 +961,7 @@ id<OSSCredentialProvider> credential, authCredential;
     int max = 4;
     for (int i = 0; i < max; i++) {
         dispatch_async(test_queue, ^{
-            OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+            InspurOSSPutObjectRequest * request = [InspurOSSPutObjectRequest new];
             request.bucketName = _privateBucketName;
             request.objectKey = [fileNameArray objectAtIndex:i];
             NSString * docDir = [NSString oss_documentDirectory];
@@ -1001,7 +1001,7 @@ id<OSSCredentialProvider> credential, authCredential;
     __block int counter = 0;
     for (int i = 0; i < 5; i++) {
         dispatch_async(test_queue, ^{
-            OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+            InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
             request.bucketName = _privateBucketName;
             request.objectKey = @"file1m";
             
@@ -1036,12 +1036,12 @@ id<OSSCredentialProvider> credential, authCredential;
     configuration.timeoutIntervalForRequest = 30;
     configuration.timeoutIntervalForResource = 24 * 60 * 60;
     configuration.maxConcurrentRequestCount = 1;
-    OSSClient * client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential clientConfiguration:configuration];
+    InspurOSSClient * client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential clientConfiguration:configuration];
     OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
     __block int counter = 0;
     for (int i = 0; i < 5; i++) {
         dispatch_async(test_queue, ^{
-            OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+            InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
             request.bucketName = _privateBucketName;
             request.objectKey = @"file1m";
             
@@ -1244,7 +1244,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testCompatDeleteObject {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSCopyObjectRequest * copy = [OSSCopyObjectRequest new];
+    InspurOSSCopyObjectRequest * copy = [InspurOSSCopyObjectRequest new];
     copy.bucketName = _privateBucketName;
     copy.objectKey = @"file1m_copy";
     copy.sourceCopyFrom = [NSString stringWithFormat:@"/%@/%@", _privateBucketName, @"file1m"];
@@ -1253,7 +1253,7 @@ id<OSSCredentialProvider> credential, authCredential;
         return nil;
     }] waitUntilFinished];
     
-    OSSHeadObjectRequest * head = [OSSHeadObjectRequest new];
+    InspurOSSHeadObjectRequest * head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = @"file1m_copy";
     
@@ -1272,7 +1272,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     [tcs.task waitUntilFinished];
     
-    head = [OSSHeadObjectRequest new];
+    head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = @"file1m_copy";
     
@@ -1363,7 +1363,7 @@ id<OSSCredentialProvider> credential, authCredential;
     NSString * docDir = [NSString oss_documentDirectory];
     NSString * tempFile = [docDir stringByAppendingPathComponent:@"tempfile_for_check"];
     
-    OSSGetObjectRequest * get = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * get = [InspurOSSGetObjectRequest new];
     get.bucketName = bucketName;
     get.objectKey = objectKey;
     get.downloadToFileURL = [NSURL fileURLWithPath:tempFile];
@@ -1432,7 +1432,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testOSSAuthCredentialProvider {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"file1m";
     
@@ -1442,7 +1442,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     id<OSSCredentialProvider> provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     
-    OSSClient * client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
+    InspurOSSClient * client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
     
     OSSTask * task = [client getObject:request];
     
@@ -1465,7 +1465,7 @@ id<OSSCredentialProvider> credential, authCredential;
 {
     __block NSString * uploadId = nil;
     __block NSMutableArray * partInfos = [NSMutableArray array];
-    OSSInitMultipartUploadRequest * init = [OSSInitMultipartUploadRequest new];
+    InspurOSSInitMultipartUploadRequest * init = [InspurOSSInitMultipartUploadRequest new];
     init.bucketName = _privateBucketName;
     init.objectKey = OSS_MULTIPART_UPLOADKEY;
     init.contentType = @"application/octet-stream";
@@ -1482,7 +1482,7 @@ id<OSSCredentialProvider> credential, authCredential;
     int chuckCount = 7;
     for (int i = 0; i < chuckCount; i++)
     {
-        OSSUploadPartRequest * uploadPart = [OSSUploadPartRequest new];
+        InspurOSSUploadPartRequest * uploadPart = [InspurOSSUploadPartRequest new];
         uploadPart.bucketName = _privateBucketName;
         uploadPart.objectkey = OSS_MULTIPART_UPLOADKEY;
         uploadPart.uploadId = uploadId;
@@ -1541,7 +1541,7 @@ id<OSSCredentialProvider> credential, authCredential;
         }
     }];
     
-    OSSCompleteMultipartUploadRequest * complete = [OSSCompleteMultipartUploadRequest new];
+    InspurOSSCompleteMultipartUploadRequest * complete = [InspurOSSCompleteMultipartUploadRequest new];
     complete.bucketName = _privateBucketName;
     complete.objectKey = OSS_MULTIPART_UPLOADKEY;
     complete.uploadId = uploadId;
@@ -1564,7 +1564,7 @@ id<OSSCredentialProvider> credential, authCredential;
 - (void)testConcurrencyMultipartUpload
 {
     __block BOOL finished = NO,complete = NO;
-    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest * multipartUploadRequest = [InspurOSSMultipartUploadRequest new];
     multipartUploadRequest.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     multipartUploadRequest.bucketName = _privateBucketName;
     multipartUploadRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
@@ -1593,7 +1593,7 @@ id<OSSCredentialProvider> credential, authCredential;
         }] waitUntilFinished];
     });
     
-    OSSMultipartUploadRequest *request = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest *request = [InspurOSSMultipartUploadRequest new];
     request.completeMetaHeader = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     request.bucketName = _privateBucketName;
     request.objectKey = OSS_MULTIPART_UPLOADKEY;
@@ -1603,7 +1603,7 @@ id<OSSCredentialProvider> credential, authCredential;
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
     };
     request.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSClient *newClient = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:[[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL]];
+    InspurOSSClient *newClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:[[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL]];
     OSSTask * otherTask = [newClient multipartUpload:request];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[otherTask continueWithBlock:^id(OSSTask *task) {
@@ -1629,7 +1629,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testImagePersist {
-    OSSImagePersistRequest *request = [OSSImagePersistRequest new];
+    InspurOSSImagePersistRequest *request = [InspurOSSImagePersistRequest new];
     request.fromBucket = _privateBucketName;
     request.fromObject = OSS_IMAGE_KEY;
     request.toBucket = _privateBucketName;

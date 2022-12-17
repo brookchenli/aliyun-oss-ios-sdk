@@ -7,65 +7,65 @@
 //
 
 #import <Foundation/Foundation.h>
-@class OSSGetServiceRequest;
-@class OSSCreateBucketRequest;
-@class OSSDeleteBucketRequest;
-@class OSSHeadObjectRequest;
-@class OSSGetBucketRequest;
-@class OSSGetBucketACLRequest;
-@class OSSGetObjectRequest;
-@class OSSGetObjectACLRequest;
-@class OSSPutObjectRequest;
-@class OSSPutObjectACLRequest;
-@class OSSDeleteObjectRequest;
-@class OSSDeleteMultipleObjectsRequest;
-@class OSSCopyObjectRequest;
-@class OSSInitMultipartUploadRequest;
-@class OSSUploadPartRequest;
-@class OSSCompleteMultipartUploadRequest;
-@class OSSListPartsRequest;
-@class OSSListMultipartUploadsRequest;
-@class OSSAbortMultipartUploadRequest;
-@class OSSAppendObjectRequest;
-@class OSSResumableUploadRequest;
-@class OSSMultipartUploadRequest;
-@class OSSCallBackRequest;
-@class OSSImagePersistRequest;
-@class OSSGetBucketInfoRequest;
-@class OSSPutSymlinkRequest;
-@class OSSGetSymlinkRequest;
-@class OSSRestoreObjectRequest;
-@class OSSGetObjectTaggingRequest;
-@class OSSDeleteObjectTaggingRequest;
-@class OSSPutObjectTaggingRequest;
+@class InspurOSSGetServiceRequest;
+@class InspurOSSCreateBucketRequest;
+@class InspurOSSDeleteBucketRequest;
+@class InspurOSSHeadObjectRequest;
+@class InspurOSSGetBucketRequest;
+@class InspurOSSGetBucketACLRequest;
+@class InspurOSSGetObjectRequest;
+@class InspurOSSGetObjectACLRequest;
+@class InspurOSSPutObjectRequest;
+@class InspurOSSPutObjectACLRequest;
+@class InspurOSSDeleteObjectRequest;
+@class InspurOSSDeleteMultipleObjectsRequest;
+@class InspurOSSCopyObjectRequest;
+@class InspurOSSInitMultipartUploadRequest;
+@class InspurOSSUploadPartRequest;
+@class InspurOSSCompleteMultipartUploadRequest;
+@class InspurOSSListPartsRequest;
+@class InspurOSSListMultipartUploadsRequest;
+@class InspurOSSAbortMultipartUploadRequest;
+@class InspurOSSAppendObjectRequest;
+@class InspurOSSResumableUploadRequest;
+@class InspurOSSMultipartUploadRequest;
+@class InspurOSSCallBackRequest;
+@class InspurOSSImagePersistRequest;
+@class InspurOSSGetBucketInfoRequest;
+@class InspurOSSPutSymlinkRequest;
+@class InspurOSSGetSymlinkRequest;
+@class InspurOSSRestoreObjectRequest;
+@class InspurOSSGetObjectTaggingRequest;
+@class InspurOSSDeleteObjectTaggingRequest;
+@class InspurOSSPutObjectTaggingRequest;
 
-@class OSSListPageServiceRequest;
-@class OSSQueryBucketExistRequest;
-@class OSSGetBucketLocationRequest;
-@class OSSPutBucketACLRequest;
-@class OSSGetBucketCORSRequest;
-@class OSSPutBucketCORSRequest;
-@class OSSDeleteBucketCORSRequest;
-@class OSSGetVersioningRequest;
-@class OSSPutVersioningRequest;
-@class OSSGetBucketEncryptionRequest;
-@class OSSDeleteBucketEncryptionRequest;
-@class OSSPutBucketEncryptionRequest;
-@class OSSGetBucketWebsiteRequest;
-@class OSSPutBucketWebsiteRequest;
-@class OSSDeleteBucketWebsiteRequest;
-@class OSSGetBucketDomainRequest;
-@class OSSPutBucketDomainRequest;
-@class OSSDeleteBucketDomainRequest;
-@class OSSGetBucketLifeCycleRequest;
-@class OSSPutBucketLifeCycleRequest;
-@class OSSDeleteBucketLifeCycleRequest;
-@class OSSGetBucketPolicyRequest;
-@class OSSPutBucketPolicyRequest;
-@class OSSDeleteBucketPolicyRequest;
-@class OSSPutObjectMetaRequest;
-@class OSSGetObjectVersionRequest;
-@class OSSDeleteObjectVersionRequest;
+@class InspurOSSListPageServiceRequest;
+@class InspurOSSQueryBucketExistRequest;
+@class InspurOSSGetBucketLocationRequest;
+@class InspurOSSPutBucketACLRequest;
+@class InspurOSSGetBucketCORSRequest;
+@class InspurOSSPutBucketCORSRequest;
+@class InspurOSSDeleteBucketCORSRequest;
+@class InspurOSSGetVersioningRequest;
+@class InspurOSSPutVersioningRequest;
+@class InspurOSSGetBucketEncryptionRequest;
+@class InspurOSSDeleteBucketEncryptionRequest;
+@class InspurOSSPutBucketEncryptionRequest;
+@class InspurOSSGetBucketWebsiteRequest;
+@class InspurOSSPutBucketWebsiteRequest;
+@class InspurOSSDeleteBucketWebsiteRequest;
+@class InspurOSSGetBucketDomainRequest;
+@class InspurOSSPutBucketDomainRequest;
+@class InspurOSSDeleteBucketDomainRequest;
+@class InspurOSSGetBucketLifeCycleRequest;
+@class InspurOSSPutBucketLifeCycleRequest;
+@class InspurOSSDeleteBucketLifeCycleRequest;
+@class InspurOSSGetBucketPolicyRequest;
+@class InspurOSSPutBucketPolicyRequest;
+@class InspurOSSDeleteBucketPolicyRequest;
+@class InspurOSSPutObjectMetaRequest;
+@class InspurOSSGetObjectVersionRequest;
+@class InspurOSSDeleteObjectVersionRequest;
 
 @class OSSTask;
 @class OSSExecutor;
@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
  OSSClient is the entry class to access OSS in an iOS client. It provides all the methods to communicate with OSS.
  Generally speaking, only one instance of OSSClient is needed in the whole app.
  */
-@interface OSSClient : NSObject
+@interface InspurOSSClient : NSObject
 
 /**
  OSS endpoint. It varies in different regions. Please check out OSS official website for the exact endpoints for your data.
@@ -140,14 +140,14 @@ NS_ASSUME_NONNULL_BEGIN
  2. When all buckets are returned, the xml in response body does not have nodes of Prefix, Marker, MaxKeys, IsTruncated and NextMarker.
     If there're remaining buckets to return, the xml will have these nodes. The nextMarker is the value of marker in the next call.
  */
-- (OSSTask *)getService:(OSSGetServiceRequest *)request;
+- (OSSTask *)getService:(InspurOSSGetServiceRequest *)request;
 
-- (OSSTask *)listService:(OSSListPageServiceRequest *)request;
+- (OSSTask *)listService:(InspurOSSListPageServiceRequest *)request;
 
 @end
 
 
-@interface OSSClient (Bucket)
+@interface InspurOSSClient (Bucket)
 
 /**
  The corresponding RESTFul API: PutBucket
@@ -156,111 +156,111 @@ NS_ASSUME_NONNULL_BEGIN
  Notes:
  1. STS is not supported yet.
  */
-- (OSSTask *)createBucket:(OSSCreateBucketRequest *)request;
+- (OSSTask *)createBucket:(InspurOSSCreateBucketRequest *)request;
 
 /**
  The corresponding RESTFul API: DeleteBucket
  Deletes a bucket.
  */
-- (OSSTask *)deleteBucket:(OSSDeleteBucketRequest *)request;
+- (OSSTask *)deleteBucket:(InspurOSSDeleteBucketRequest *)request;
 
 /**
  The corresponding RESTFul API: GetBucket
  Lists all objects in a bucket. It could be specified with filters such as prefix, marker, delimeter and max-keys.
  */
-- (OSSTask *)getBucket:(OSSGetBucketRequest *)request;
+- (OSSTask *)getBucket:(InspurOSSGetBucketRequest *)request;
 
 /**
  The corresponding RESTFul API: GetBucketInfo
  Gets the {@link Bucket}'s basic information as well as its ACL.
  */
-- (OSSTask *)getBucketInfo:(OSSGetBucketInfoRequest *)request;
+- (OSSTask *)getBucketInfo:(InspurOSSGetBucketInfoRequest *)request;
 
 /**
  The corresponding RESTFul API: GetBucketACL
  Gets the bucket ACL.
  */
-- (OSSTask *)getBucketACL:(OSSGetBucketACLRequest *)request;
+- (OSSTask *)getBucketACL:(InspurOSSGetBucketACLRequest *)request;
 
-- (OSSTask *)queryBucketExist:(OSSQueryBucketExistRequest *)request;
+- (OSSTask *)queryBucketExist:(InspurOSSQueryBucketExistRequest *)request;
 
-- (OSSTask *)getBucketLocation:(OSSGetBucketLocationRequest *)request;
+- (OSSTask *)getBucketLocation:(InspurOSSGetBucketLocationRequest *)request;
 
-- (OSSTask *)putBucketACL:(OSSPutBucketACLRequest *)request;
+- (OSSTask *)putBucketACL:(InspurOSSPutBucketACLRequest *)request;
 
-- (OSSTask *)getBucketCORS:(OSSGetBucketCORSRequest *)request;
+- (OSSTask *)getBucketCORS:(InspurOSSGetBucketCORSRequest *)request;
 
-- (OSSTask *)putBucketCORS:(OSSPutBucketCORSRequest *)request ;
+- (OSSTask *)putBucketCORS:(InspurOSSPutBucketCORSRequest *)request ;
 
-- (OSSTask *)deleteBucketCORS:(OSSDeleteBucketCORSRequest *)request ;
+- (OSSTask *)deleteBucketCORS:(InspurOSSDeleteBucketCORSRequest *)request ;
 
-- (OSSTask *)getBucketVersioning:(OSSGetVersioningRequest *)request;
+- (OSSTask *)getBucketVersioning:(InspurOSSGetVersioningRequest *)request;
 
-- (OSSTask *)putBucketVersioning:(OSSPutVersioningRequest *)request;
+- (OSSTask *)putBucketVersioning:(InspurOSSPutVersioningRequest *)request;
 
 //桶加密
-- (OSSTask *)getBucketEncryption:(OSSGetBucketEncryptionRequest *)request;
-- (OSSTask *)putBucketEncryption:(OSSPutBucketEncryptionRequest *)request;
-- (OSSTask *)deleteBucketEncryption:(OSSDeleteBucketEncryptionRequest *)request;
+- (OSSTask *)getBucketEncryption:(InspurOSSGetBucketEncryptionRequest *)request;
+- (OSSTask *)putBucketEncryption:(InspurOSSPutBucketEncryptionRequest *)request;
+- (OSSTask *)deleteBucketEncryption:(InspurOSSDeleteBucketEncryptionRequest *)request;
 
 //静态网站
-- (OSSTask *)getBucketWebsite:(OSSGetBucketWebsiteRequest *)request;
-- (OSSTask *)putBucketWebsite:(OSSPutBucketWebsiteRequest *)request;
-- (OSSTask *)deleteBucketWebsite:(OSSDeleteBucketWebsiteRequest *)request;
+- (OSSTask *)getBucketWebsite:(InspurOSSGetBucketWebsiteRequest *)request;
+- (OSSTask *)putBucketWebsite:(InspurOSSPutBucketWebsiteRequest *)request;
+- (OSSTask *)deleteBucketWebsite:(InspurOSSDeleteBucketWebsiteRequest *)request;
 
 //自定义域名
-- (OSSTask *)getBucketDomain:(OSSGetBucketDomainRequest *)request;
-- (OSSTask *)putBucketDomain:(OSSPutBucketDomainRequest *)request;
-- (OSSTask *)deleteBucketDomain:(OSSDeleteBucketDomainRequest *)request;
+- (OSSTask *)getBucketDomain:(InspurOSSGetBucketDomainRequest *)request;
+- (OSSTask *)putBucketDomain:(InspurOSSPutBucketDomainRequest *)request;
+- (OSSTask *)deleteBucketDomain:(InspurOSSDeleteBucketDomainRequest *)request;
 
 //生命周期
-- (OSSTask *)getBucketLifeCycle:(OSSGetBucketLifeCycleRequest *)request;
-- (OSSTask *)putBucketLifeCycle:(OSSPutBucketLifeCycleRequest *)request;
-- (OSSTask *)deleteBucketLifeCycle:(OSSDeleteBucketLifeCycleRequest *)request;
+- (OSSTask *)getBucketLifeCycle:(InspurOSSGetBucketLifeCycleRequest *)request;
+- (OSSTask *)putBucketLifeCycle:(InspurOSSPutBucketLifeCycleRequest *)request;
+- (OSSTask *)deleteBucketLifeCycle:(InspurOSSDeleteBucketLifeCycleRequest *)request;
 
 //Policy
-- (OSSTask *)getBucketPolicy:(OSSGetBucketPolicyRequest *)request;
-- (OSSTask *)putBucketPolicy:(OSSPutBucketPolicyRequest *)request;
-- (OSSTask *)deleteBucketPolicy:(OSSDeleteBucketPolicyRequest *)request;
+- (OSSTask *)getBucketPolicy:(InspurOSSGetBucketPolicyRequest *)request;
+- (OSSTask *)putBucketPolicy:(InspurOSSPutBucketPolicyRequest *)request;
+- (OSSTask *)deleteBucketPolicy:(InspurOSSDeleteBucketPolicyRequest *)request;
 
 
 @end
 
 
-@interface OSSClient (Object)
+@interface InspurOSSClient (Object)
 
 /**
  The corresponding RESTFul API: HeadObject
  Gets the object's metadata information. The object's content is not returned.
  */
-- (OSSTask *)headObject:(OSSHeadObjectRequest *)request;
+- (OSSTask *)headObject:(InspurOSSHeadObjectRequest *)request;
 
 /**
  The corresponding RESTFul API: GetObject
  Gets the whole object (includes content). It requires caller have read permission on the object.
  */
-- (OSSTask *)getObject:(OSSGetObjectRequest *)request;
+- (OSSTask *)getObject:(InspurOSSGetObjectRequest *)request;
 
 /**
  The corresponding RESTFul API: GetObjectACL
  get the acl of an object.
  */
-- (OSSTask *)getObjectACL:(OSSGetObjectACLRequest *)request;
+- (OSSTask *)getObjectACL:(InspurOSSGetObjectACLRequest *)request;
 
 /**
  The corresponding RESTFul API: PutObject
  Uploads a file.
  */
-- (OSSTask *)putObject:(OSSPutObjectRequest *)request;
+- (OSSTask *)putObject:(InspurOSSPutObjectRequest *)request;
 
 /**
  Sets the object's ACL. Right now an object has three access permissions: private, public-ready, public-read-write.
  The operation specifies the x-oss-object-acl header in the put request. The caller must be the owner of the object.
  If succeeds, it returns HTTP status 200; otherwise it returns related error code and error messages.
  */
-- (OSSTask *)putObjectACL:(OSSPutObjectACLRequest *)request;
+- (OSSTask *)putObjectACL:(InspurOSSPutObjectACLRequest *)request;
 
-- (OSSTask *)putObjectMetaData:(OSSPutObjectMetaRequest *)request;
+- (OSSTask *)putObjectMetaData:(InspurOSSPutObjectMetaRequest *)request;
 
 
 /**
@@ -268,7 +268,7 @@ NS_ASSUME_NONNULL_BEGIN
  Appends data to an existing or non-existing object. The object created by this operation is appendable.
  As a comparison, the object created by Put Object is normal (non-appendable).
  */
-- (OSSTask *)appendObject:(OSSAppendObjectRequest *)request;
+- (OSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request;
 
 /**
  *  @brief      Appends data to an existing or non-existing object on the OSS server.
@@ -279,7 +279,7 @@ NS_ASSUME_NONNULL_BEGIN
  *             api get object's crc64ecma,then use this api to append data to the
  *             object.
  */
-- (OSSTask *)appendObject:(OSSAppendObjectRequest *)request withCrc64ecma:(nullable NSString *)crc64ecma;
+- (OSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request withCrc64ecma:(nullable NSString *)crc64ecma;
 
 /**
  The corresponding RESTFul API: copyObject
@@ -287,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
  OSS server side will detect and copy the object. If it succeeds, the new object's metadata information will be returned.
  The operation applies for files less than 1GB. For big files, use UploadPartCopy RESTFul API.
  */
-- (OSSTask *)copyObject:(OSSCopyObjectRequest *)request;
+- (OSSTask *)copyObject:(InspurOSSCopyObjectRequest *)request;
 
 /**
  * Batch deletes the specified files under a specific bucket. If the files
@@ -300,13 +300,13 @@ NS_ASSUME_NONNULL_BEGIN
  *         file's result in normal mode or only failed deletions in quite
  *         mode. By default it's quite mode.
  */
-- (OSSTask *)deleteMultipleObjects:(OSSDeleteMultipleObjectsRequest *)request;
+- (OSSTask *)deleteMultipleObjects:(InspurOSSDeleteMultipleObjectsRequest *)request;
 
 /**
  The corresponding RESTFul API: DeleteObject
  Deletes an object
  */
-- (OSSTask *)deleteObject:(OSSDeleteObjectRequest *)request;
+- (OSSTask *)deleteObject:(InspurOSSDeleteObjectRequest *)request;
 
 /**
  * Creates a symbol link to a target file under the bucket---this is not
@@ -321,7 +321,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/45126.html
  */
-- (OSSTask *)putSymlink:(OSSPutSymlinkRequest *)request;
+- (OSSTask *)putSymlink:(InspurOSSPutSymlinkRequest *)request;
 
 /**
  * Gets the symlink information for the given symlink name.
@@ -335,7 +335,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/45146.html
  */
-- (OSSTask *)getSymlink:(OSSGetSymlinkRequest *)request;
+- (OSSTask *)getSymlink:(InspurOSSGetSymlinkRequest *)request;
 
 /**
  * Restores the object of archive storage. The function is not applicable to
@@ -352,7 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/52930.html
  */
-- (OSSTask *)restoreObject:(OSSRestoreObjectRequest *)request;
+- (OSSTask *)restoreObject:(InspurOSSRestoreObjectRequest *)request;
 
 /**
  * You can call this operation to query the tags of an object.
@@ -367,7 +367,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/114878.html
  */
-- (OSSTask *)getObjectTagging:(OSSGetObjectTaggingRequest *)request;
+- (OSSTask *)getObjectTagging:(InspurOSSGetObjectTaggingRequest *)request;
 
 /**
  * You can call this operation to add tags to an object or update the tags added to
@@ -383,7 +383,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/114855.html
  */
-- (OSSTask *)putObjectTagging:(OSSPutObjectTaggingRequest *)request;
+- (OSSTask *)putObjectTagging:(InspurOSSPutObjectTaggingRequest *)request;
 
 /**
  * You can call this operation to delete the tags of a specified object.
@@ -398,22 +398,22 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * for more information,please refer to https://help.aliyun.com/document_detail/114879.html
  */
-- (OSSTask *)deleteObjectTagging:(OSSDeleteObjectTaggingRequest *)request;
+- (OSSTask *)deleteObjectTagging:(InspurOSSDeleteObjectTaggingRequest *)request;
 
-- (OSSTask *)getObjectVersions:(OSSGetObjectVersionRequest *)request;
-- (OSSTask *)deleteObjectVersion:(OSSDeleteObjectVersionRequest *)request;
+- (OSSTask *)getObjectVersions:(InspurOSSGetObjectVersionRequest *)request;
+- (OSSTask *)deleteObjectVersion:(InspurOSSDeleteObjectVersionRequest *)request;
 
 
 @end
 
-@interface OSSClient (MultipartUpload)
+@interface InspurOSSClient (MultipartUpload)
 
 /**
  The corresponding RESTFul API: InitiateMultipartUpload
  Initiates a multipart upload to get a upload Id. It's needed before starting uploading parts data.
  The upload Id is used for subsequential operations such as aborting the upload, querying the uploaded parts, etc.
  */
-- (OSSTask *)multipartUploadInit:(OSSInitMultipartUploadRequest *)request;
+- (OSSTask *)multipartUploadInit:(InspurOSSInitMultipartUploadRequest *)request;
 
 /**
  The corresponding RESTFul API: UploadPart
@@ -424,7 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
  Except the last part, all other part's minimal size is 100KB.
  But no minimal size requirement on the last part.
  */
-- (OSSTask *)uploadPart:(OSSUploadPartRequest *)request;
+- (OSSTask *)uploadPart:(InspurOSSUploadPartRequest *)request;
 
 /**
  The corresponding RESTFul API: CompleteMultipartUpload
@@ -433,33 +433,33 @@ NS_ASSUME_NONNULL_BEGIN
  OSS will validate every part and then complete the multipart upload.
  If any part is invalid (e.g. the part is updated by another part upload), this API will fail.
  */
-- (OSSTask *)completeMultipartUpload:(OSSCompleteMultipartUploadRequest *)request;
+- (OSSTask *)completeMultipartUpload:(InspurOSSCompleteMultipartUploadRequest *)request;
 
 /**
  The corresponding RESTFul API: ListParts
  Lists all uploaded parts of the specified upload id.
  */
-- (OSSTask *)listParts:(OSSListPartsRequest *)request;
+- (OSSTask *)listParts:(InspurOSSListPartsRequest *)request;
 
 /**
  The corresponding RESTFul API: ListMultipartUploads
  Lists all multipart uploads with the specified bucket.
  */
-- (OSSTask *)listMultipartUploads:(OSSListMultipartUploadsRequest *)request;
+- (OSSTask *)listMultipartUploads:(InspurOSSListMultipartUploadsRequest *)request;
 
 /**
  The corresponding RESTFul API: AbortMultipartUpload
  Aborts the multipart upload by the specified upload Id.
  Once the multipart upload is aborted by this API, all parts data will be deleted and the upload Id is invalid anymore.
  */
-- (OSSTask *)abortMultipartUpload:(OSSAbortMultipartUploadRequest *)request;
+- (OSSTask *)abortMultipartUpload:(InspurOSSAbortMultipartUploadRequest *)request;
 
-- (OSSTask *)abortResumableMultipartUpload:(OSSResumableUploadRequest *)request;
+- (OSSTask *)abortResumableMultipartUpload:(InspurOSSResumableUploadRequest *)request;
 
 /**
  Multipart upload API
  */
-- (OSSTask *)multipartUpload:(OSSMultipartUploadRequest *)request;
+- (OSSTask *)multipartUpload:(InspurOSSMultipartUploadRequest *)request;
 /**
  TODOTODO
  Resumable upload API
@@ -470,17 +470,17 @@ NS_ASSUME_NONNULL_BEGIN
  Otherwise then you may need to recreates a new upload Id and call this method again.
  Check out demo for the detail.
  */
-- (OSSTask *)resumableUpload:(OSSResumableUploadRequest *)request;
+- (OSSTask *)resumableUpload:(InspurOSSResumableUploadRequest *)request;
 
 /**
  * multipart upload sequentially in order,support resume upload
  */
-- (OSSTask *)sequentialMultipartUpload:(OSSResumableUploadRequest *)request;
+- (OSSTask *)sequentialMultipartUpload:(InspurOSSResumableUploadRequest *)request;
 
 @end
 
 
-@interface OSSClient (PresignURL)
+@interface InspurOSSClient (PresignURL)
 
 /**
  Generates a signed URL for the object and anyone has this URL will get the GET permission on the object.
@@ -570,18 +570,18 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface OSSClient (ImageService)
+@interface InspurOSSClient (ImageService)
 
 /*
  * image persist action
  * https://help.aliyun.com/document_detail/55811.html
  */
-- (OSSTask *)imageActionPersist:(OSSImagePersistRequest *)request;
+- (OSSTask *)imageActionPersist:(InspurOSSImagePersistRequest *)request;
 
 @end
 
 
-@interface OSSClient (Utilities)
+@interface InspurOSSClient (Utilities)
 
 /**
  Checks if the object exists
@@ -599,9 +599,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface OSSClient (Callback)
+@interface InspurOSSClient (Callback)
 
-- (OSSTask *)triggerCallBack:(OSSCallBackRequest *)request;
+- (OSSTask *)triggerCallBack:(InspurOSSCallBackRequest *)request;
 
 @end
 

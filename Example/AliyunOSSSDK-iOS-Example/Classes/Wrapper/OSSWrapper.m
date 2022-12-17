@@ -13,9 +13,9 @@
 
 @interface OSSWrapper ()
 
-@property (nonatomic, strong) OSSPutObjectRequest *normalUploadRequest;
+@property (nonatomic, strong) InspurOSSPutObjectRequest *normalUploadRequest;
 
-@property (nonatomic, strong) OSSGetObjectRequest *normalDloadRequest;
+@property (nonatomic, strong) InspurOSSGetObjectRequest *normalDloadRequest;
 
 @end
 
@@ -33,7 +33,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
     
     NSString *downloadFilePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:objectKey];
     
-    _normalDloadRequest = [OSSGetObjectRequest new];
+    _normalDloadRequest = [InspurOSSGetObjectRequest new];
     _normalDloadRequest.bucketName = OSS_BUCKET_PRIVATE;
     _normalDloadRequest.objectKey = objectKey;
     _normalDloadRequest.downloadToFileURL = [NSURL URLWithString:downloadFilePath];
@@ -64,7 +64,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
         return;
     }
     
-    _normalUploadRequest = [OSSPutObjectRequest new];
+    _normalUploadRequest = [InspurOSSPutObjectRequest new];
     _normalUploadRequest.bucketName = OSS_BUCKET_PRIVATE;
     _normalUploadRequest.objectKey = objectKey;
     _normalUploadRequest.uploadingFileURL = [NSURL fileURLWithPath:filePath];
@@ -107,7 +107,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
 
 - (void)triggerCallbackWithObjectKey:(NSString *)objectKey success:(void (^)(id _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        OSSCallBackRequest *request = [OSSCallBackRequest new];
+        InspurOSSCallBackRequest *request = [InspurOSSCallBackRequest new];
         request.bucketName = OSS_BUCKET_PRIVATE;
         request.objectName = objectKey;
         request.callbackParam = @{@"callbackUrl": OSS_CALLBACK_URL,
@@ -136,7 +136,7 @@ NSString * const font = @"d3F5LXplbmhlaQ==";
         // 获取本地大文件url
         NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
         
-        OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+        InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
         resumableUpload.bucketName = OSS_BUCKET_PRIVATE;            // 设置bucket名称
         resumableUpload.objectKey = @"oss-ios-demo-big-file";       // 设置object key
         resumableUpload.uploadingFileURL = fileURL;                 // 设置要上传的文件url

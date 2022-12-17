@@ -50,7 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *uploadBigFileButton;
 
 @property (nonatomic, strong) DownloadRequest *downloadRequest;
-@property (nonatomic, strong) OSSClient *mClient;
+@property (nonatomic, strong) InspurOSSClient *mClient;
 @property (nonatomic, copy) Checkpoint *checkpoint;
 @property (nonatomic, copy) NSString *downloadURLString;
 @property (nonatomic, copy) NSString *headURLString;
@@ -321,7 +321,7 @@
 
 - (void)initDownloadURLs {
     OSSPlainTextAKSKPairCredentialProvider *pCredential = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
-    _mClient = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:pCredential];
+    _mClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:pCredential];
     OSSTask *downloadURLTask = [_mClient presignConstrainURLWithBucketName:@"aliyun-dhc-shanghai" withObjectKey:OSS_DOWNLOAD_FILE_NAME withExpirationInterval:1800];
     _downloadURLString = downloadURLTask.result;
     

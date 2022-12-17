@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSDeleteMultipleObjectsRequest : OSSRequest
+@interface InspurOSSDeleteMultipleObjectsRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 

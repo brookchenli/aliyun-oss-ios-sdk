@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OSSManager : NSObject
 
-@property (nonatomic, strong) OSSClient *defaultClient;
+@property (nonatomic, strong) InspurOSSClient *defaultClient;
 
-@property (nonatomic, strong) OSSClient *imageClient;
+@property (nonatomic, strong) InspurOSSClient *imageClient;
 
 + (instancetype)sharedManager;
 

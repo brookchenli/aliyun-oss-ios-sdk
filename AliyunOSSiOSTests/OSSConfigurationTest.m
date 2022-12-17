@@ -40,8 +40,8 @@
 - (void)testDefault {
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetObjectRequest *get = [OSSGetObjectRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:endpoint credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -57,8 +57,8 @@
     config.isPathStyleAccessEnable = YES;
     config.cnameExcludeList = @[cname];
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetObjectRequest *get = [OSSGetObjectRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -75,8 +75,8 @@
     config.maxRetryCount = 0;
     config.cnameExcludeList = cnameExcludeList;
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetObjectRequest *get = [OSSGetObjectRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -88,8 +88,8 @@
     
     config = [OSSClientConfiguration new];
     config.maxRetryCount = 0;
-    client = [[OSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
-    get = [OSSGetObjectRequest new];
+    client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
+    get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -106,8 +106,8 @@
     config.maxRetryCount = 0;
     config.isCustomPathPrefixEnable = YES;
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:endpointPath credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetObjectRequest *get = [OSSGetObjectRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:endpointPath credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -123,8 +123,8 @@
     config.maxRetryCount = 0;
     config.isCustomPathPrefixEnable = YES;
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetObjectRequest *get = [OSSGetObjectRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
     [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
@@ -139,8 +139,8 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     config.maxRetryCount = 0;
     OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
-    OSSClient *client = [[OSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
-    OSSGetBucketRequest *get = [OSSGetBucketRequest new];
+    InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
+    InspurOSSGetBucketRequest *get = [InspurOSSGetBucketRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     [[[client getBucket:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);

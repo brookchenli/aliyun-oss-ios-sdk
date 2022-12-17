@@ -276,7 +276,7 @@ Sets the session Id for background file transmission
 /**
  The request to list all buckets of current user.
  */
-@interface OSSGetServiceRequest : OSSRequest
+@interface InspurOSSGetServiceRequest : OSSRequest
 
 /**
  The prefix filter for listing buckets---optional.
@@ -297,7 +297,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSListPageServiceRequest : OSSRequest
+@interface InspurOSSListPageServiceRequest : OSSRequest
 
 /**
  
@@ -386,7 +386,7 @@ Sets the session Id for background file transmission
 @property (nonatomic, strong, nullable) NSArray * buckets;
 @end
 
-@interface OSSQueryBucketExistRequest : OSSRequest
+@interface InspurOSSQueryBucketExistRequest : OSSRequest
 
 @property (nonatomic, copy) NSString * bucketName;
 
@@ -396,7 +396,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketLocationRequest : OSSRequest
+@interface InspurOSSGetBucketLocationRequest : OSSRequest
 
 @property (nonatomic, copy) NSString * bucketName;
 
@@ -413,7 +413,7 @@ Sets the session Id for background file transmission
 /**
  The request to create bucket
  */
-@interface OSSCreateBucketRequest : OSSRequest
+@interface InspurOSSCreateBucketRequest : OSSRequest
 
 /**
  *  存储空间,命名规范如下:(1)只能包括小写字母、数字和短横线(-);(2)必须以小写字母或者数字开头和结尾;(3)长度必须在3-63字节之间.
@@ -452,7 +452,7 @@ Sets the session Id for background file transmission
 /**
  The request class of deleting bucket
  */
-@interface OSSDeleteBucketRequest : OSSRequest
+@interface InspurOSSDeleteBucketRequest : OSSRequest
 
 /**
  Bucket name
@@ -469,7 +469,7 @@ Sets the session Id for background file transmission
 /**
  The request class of listing objects under a bucket
  */
-@interface OSSGetBucketRequest : OSSRequest
+@interface InspurOSSGetBucketRequest : OSSRequest
 
 /**
  Bucket name
@@ -559,7 +559,7 @@ Sets the session Id for background file transmission
 /**
  The request class to get the bucket ACL.
  */
-@interface OSSGetBucketACLRequest : OSSRequest
+@interface InspurOSSGetBucketACLRequest : OSSRequest
 
 /**
  Bucket name
@@ -578,7 +578,7 @@ Sets the session Id for background file transmission
 @property (nonatomic, copy) NSString * aclGranted;
 @end
 
-@interface OSSPutBucketACLRequest : OSSRequest
+@interface InspurOSSPutBucketACLRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *acl;
 @property (nonatomic, copy, nullable) NSString *bucketName;
@@ -590,7 +590,7 @@ Sets the session Id for background file transmission
 @end
 
 
-@interface OSSGetBucketCORSRequest : OSSRequest
+@interface InspurOSSGetBucketCORSRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -602,7 +602,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketCORSRequest : OSSRequest
+@interface InspurOSSPutBucketCORSRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @property (nonatomic, copy, nullable) NSArray <OSSCORSRule *>*bucketCORSRuleList;
@@ -613,7 +613,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketCORSRequest : OSSRequest
+@interface InspurOSSDeleteBucketCORSRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -623,7 +623,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetVersioningRequest : OSSRequest
+@interface InspurOSSGetVersioningRequest : OSSRequest
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @end
 
@@ -633,7 +633,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutVersioningRequest : OSSRequest
+@interface InspurOSSPutVersioningRequest : OSSRequest
 @property (nonatomic, copy) NSString *enable;
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @end
@@ -642,7 +642,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketEncryptionRequest : OSSRequest
+@interface InspurOSSGetBucketEncryptionRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -655,7 +655,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketEncryptionRequest : OSSRequest
+@interface InspurOSSPutBucketEncryptionRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @property (nonatomic, copy, nullable) NSString *sseAlgorithm;
@@ -667,7 +667,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketEncryptionRequest : OSSRequest
+@interface InspurOSSDeleteBucketEncryptionRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -677,7 +677,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketWebsiteRequest : OSSRequest
+@interface InspurOSSGetBucketWebsiteRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -690,7 +690,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketWebsiteRequest : OSSRequest
+@interface InspurOSSPutBucketWebsiteRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @property (nonatomic, copy, nullable) NSString *indexDocument;
@@ -702,7 +702,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketWebsiteRequest : OSSRequest
+@interface InspurOSSDeleteBucketWebsiteRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -712,7 +712,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketDomainRequest : OSSRequest
+@interface InspurOSSGetBucketDomainRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -724,7 +724,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketDomainRequest : OSSRequest
+@interface InspurOSSPutBucketDomainRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @property (nonatomic, copy, nullable) NSArray <NSDictionary <NSString *, NSString *>*> *domainList;
@@ -735,7 +735,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketDomainRequest : OSSRequest
+@interface InspurOSSDeleteBucketDomainRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -745,7 +745,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketLifeCycleRequest : OSSRequest
+@interface InspurOSSGetBucketLifeCycleRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -757,7 +757,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketLifeCycleRequest : OSSRequest
+@interface InspurOSSPutBucketLifeCycleRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -767,7 +767,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketLifeCycleRequest : OSSRequest
+@interface InspurOSSDeleteBucketLifeCycleRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -777,7 +777,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSGetBucketPolicyRequest : OSSRequest
+@interface InspurOSSGetBucketPolicyRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -789,7 +789,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutBucketPolicyRequest : OSSRequest
+@interface InspurOSSPutBucketPolicyRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 @property (nonatomic, strong, nonnull) NSString* policyVersion;
@@ -801,7 +801,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSDeleteBucketPolicyRequest : OSSRequest
+@interface InspurOSSDeleteBucketPolicyRequest : OSSRequest
 
 @property (nonatomic, copy, nullable) NSString *bucketName;
 
@@ -815,7 +815,7 @@ Sets the session Id for background file transmission
 /**
  The request class to get object metadata
  */
-@interface OSSHeadObjectRequest : OSSRequest
+@interface InspurOSSHeadObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -842,7 +842,7 @@ Sets the session Id for background file transmission
 /**
  The request class to get object
  */
-@interface OSSGetObjectRequest : OSSRequest
+@interface InspurOSSGetObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -914,7 +914,7 @@ Sets the session Id for background file transmission
 /**
  The request class to upload an object.
  */
-@interface OSSPutObjectRequest : OSSRequest
+@interface InspurOSSPutObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -1009,7 +1009,7 @@ Sets the session Id for background file transmission
 /**
  The request class to update the object ACL.
  */
-@interface OSSPutObjectACLRequest : OSSPutObjectRequest
+@interface InspurOSSPutObjectACLRequest : InspurOSSPutObjectRequest
 
 /**
  *@brief:指定oss创建object时的访问权限,合法值:public-read、private、public-read-write
@@ -1018,7 +1018,7 @@ Sets the session Id for background file transmission
 
 @end
 
-@interface OSSPutObjectMetaRequest : OSSPutObjectRequest
+@interface InspurOSSPutObjectMetaRequest : InspurOSSPutObjectRequest
 
 @end
 
@@ -1046,7 +1046,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  * append object request
  */
-@interface OSSAppendObjectRequest : OSSRequest
+@interface InspurOSSAppendObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -1150,7 +1150,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The request of deleting an object.
  */
-@interface OSSDeleteObjectRequest : OSSRequest
+@interface InspurOSSDeleteObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -1172,7 +1172,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  Request class of copying an object in OSS.
  */
-@interface OSSCopyObjectRequest : OSSRequest
+@interface InspurOSSCopyObjectRequest : OSSRequest
 
 /**
  Bucket name
@@ -1239,7 +1239,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  Request class of initiating a multipart upload.
  */
-@interface OSSInitMultipartUploadRequest : OSSRequest
+@interface InspurOSSInitMultipartUploadRequest : OSSRequest
 
 /**
  Bucket name
@@ -1304,7 +1304,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The request class of uploading one part.
  */
-@interface OSSUploadPartRequest : OSSRequest
+@interface InspurOSSUploadPartRequest : OSSRequest
 
 /**
  Bucket name
@@ -1397,7 +1397,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The request class of completing a multipart upload.
  */
-@interface OSSCompleteMultipartUploadRequest : OSSRequest
+@interface InspurOSSCompleteMultipartUploadRequest : OSSRequest
 
 /**
  Bucket name
@@ -1474,7 +1474,7 @@ It's the MD5 value for put object request. If the object is created by other API
 /**
  The request class of listing all parts that have been uploaded.
  */
-@interface OSSListPartsRequest : OSSRequest
+@interface InspurOSSListPartsRequest : OSSRequest
 
 /**
  Bucket name
@@ -1532,7 +1532,7 @@ The result class of listing uploaded parts.
 /**
  The request class of listing all multipart uploads.
  */
-@interface OSSListMultipartUploadsRequest : OSSRequest
+@interface InspurOSSListMultipartUploadsRequest : OSSRequest
 /**
  Bucket name.
  */
@@ -1631,7 +1631,7 @@ The result class of listing uploaded parts.
 /**
  Request to abort a multipart upload
  */
-@interface OSSAbortMultipartUploadRequest : OSSRequest
+@interface InspurOSSAbortMultipartUploadRequest : OSSRequest
 
 /**
  Bucket name
@@ -1658,7 +1658,7 @@ The result class of listing uploaded parts.
 /**
  The request class of multipart upload.
  */
-@interface OSSMultipartUploadRequest : OSSRequest
+@interface InspurOSSMultipartUploadRequest : OSSRequest
 
 /**
  The upload Id
@@ -1730,7 +1730,7 @@ The result class of listing uploaded parts.
 /**
  The request class of resumable upload.
  */
-@interface OSSResumableUploadRequest : OSSMultipartUploadRequest
+@interface InspurOSSResumableUploadRequest : InspurOSSMultipartUploadRequest
 
 
 /**
@@ -1768,7 +1768,7 @@ The result class of listing uploaded parts.
 /**
  for more information,Please refer to the link https://help.aliyun.com/document_detail/31989.html
  */
-@interface OSSCallBackRequest : OSSRequest
+@interface InspurOSSCallBackRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 
@@ -1805,7 +1805,7 @@ The result class of listing uploaded parts.
 /**
  for more information,Please refer to the link https://help.aliyun.com/document_detail/55811.html
  */
-@interface OSSImagePersistRequest : OSSRequest
+@interface InspurOSSImagePersistRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *fromBucket;
 
@@ -1845,7 +1845,7 @@ The result class of listing uploaded parts.
 @end
 
 
-@interface OSSGetObjectVersionRequest : OSSRequest
+@interface InspurOSSGetObjectVersionRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 
@@ -1858,7 +1858,7 @@ The result class of listing uploaded parts.
 @end
 
 
-@interface OSSDeleteObjectVersionRequest : OSSRequest
+@interface InspurOSSDeleteObjectVersionRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 @property (nonatomic, copy) NSString *objectName;

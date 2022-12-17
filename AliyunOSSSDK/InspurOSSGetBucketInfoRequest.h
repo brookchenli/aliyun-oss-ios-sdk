@@ -8,7 +8,7 @@
 
 #import "OSSRequest.h"
 
-@interface OSSGetBucketInfoRequest : OSSRequest
+@interface InspurOSSGetBucketInfoRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 

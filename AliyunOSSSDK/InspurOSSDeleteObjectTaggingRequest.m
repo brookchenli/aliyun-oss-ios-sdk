@@ -6,9 +6,9 @@
 //  Copyright © 2021 aliyun. All rights reserved.
 //
 
-#import "OSSDeleteObjectTaggingRequest.h"
+#import "InspurOSSDeleteObjectTaggingRequest.h"
 
-@implementation OSSDeleteObjectTaggingRequest
+@implementation InspurOSSDeleteObjectTaggingRequest
 
 - (NSDictionary *)requestParams {
     return @{@"tagging": @""};

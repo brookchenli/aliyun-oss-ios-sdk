@@ -11,7 +11,7 @@
 #import "OSSBolts.h"
 #import "OSSModel.h"
 
-@implementation OSSClient (Compat)
+@implementation InspurOSSClient (Compat)
 
 - (OSSTaskHandler *)uploadData:(NSData *)data
                withContentType:(NSString *)contentType
@@ -24,7 +24,7 @@
     OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
 
     [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(OSSTask *task) {
-        OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+        InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
         put.bucketName = bucketName;
         put.objectKey = objectKey;
         put.objectMeta = meta;
@@ -64,7 +64,7 @@
     OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
 
     [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
-        OSSGetObjectRequest * get = [OSSGetObjectRequest new];
+        InspurOSSGetObjectRequest * get = [InspurOSSGetObjectRequest new];
         get.bucketName = bucketName;
         get.objectKey = objectKey;
 
@@ -104,7 +104,7 @@
     OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
 
     [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
-        OSSGetObjectRequest * get = [OSSGetObjectRequest new];
+        InspurOSSGetObjectRequest * get = [InspurOSSGetObjectRequest new];
         get.bucketName = bucketName;
         get.objectKey = objectKey;
         get.downloadToFileURL = [NSURL fileURLWithPath:filePath];
@@ -140,7 +140,7 @@
                  onCompleted:(void (^)(BOOL, NSError *))onCompleted {
 
     [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
-        OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
+        InspurOSSDeleteObjectRequest * delete = [InspurOSSDeleteObjectRequest new];
         delete.bucketName = bucketName;
         delete.objectKey = objectKey;
 
@@ -168,7 +168,7 @@
     OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
 
     [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(OSSTask *task) {
-        OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+        InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
         put.bucketName = bucketName;
         put.objectKey = objectKey;
         put.objectMeta = meta;
@@ -218,7 +218,7 @@
         if (error) {
             return [OSSTask taskWithError:error];
         }
-        OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+        InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
         resumableUpload.bucketName = bucketName;
         resumableUpload.deleteUploadIdOnCancelling = NO;//cancel not delete record file
         resumableUpload.contentType = contentType;
@@ -229,7 +229,7 @@
         resumableUpload.objectKey = objectKey;
         resumableUpload.uploadId = task.result;
         resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:filePath];
-        __weak OSSResumableUploadRequest * weakRef = resumableUpload;
+        __weak InspurOSSResumableUploadRequest * weakRef = resumableUpload;
         resumableUpload.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
             onProgress((float)totalBytesSent/totalBytesExpectedToSend);
             if (bcts.token.isCancellationRequested || bcts.isCancellationRequested) {

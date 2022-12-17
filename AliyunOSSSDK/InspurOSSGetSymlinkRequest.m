@@ -1,17 +1,17 @@
 //
-//  OSSRestoreObjectRequest.m
+//  OSSGetSymlinkRequest.m
 //  AliyunOSSSDK
 //
 //  Created by huaixu on 2018/8/1.
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSRestoreObjectRequest.h"
+#import "InspurOSSGetSymlinkRequest.h"
 
-@implementation OSSRestoreObjectRequest
+@implementation InspurOSSGetSymlinkRequest
 
 - (NSDictionary *)requestParams {
-    return @{@"restore": @""};
+    return @{@"symlink": @""};
 }
 
 @end

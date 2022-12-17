@@ -13,7 +13,7 @@
 
 @interface OSSBucketTests : XCTestCase
 {
-    OSSClient *_client;
+    InspurOSSClient *_client;
 }
 
 @end
@@ -36,7 +36,7 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     //OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     OSSPlainTextAKSKPairCredentialProvider *authProv = [[OSSPlainTextAKSKPairCredentialProvider alloc] initWithPlainTextAccessKey:OSS_ACCESSKEY_ID secretKey:OSS_SECRETKEY_ID];
-    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
     [OSSLog enableLog];
@@ -45,7 +45,7 @@
 - (void)testAPI_creatBucket_public
 {
     NSString *bucket = @"test-cl-public";
-    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *req = [InspurOSSCreateBucketRequest new];
     req.bucketName = bucket;
     req.xOssACL = @"public-read-write";
     OSSTask *task = [_client createBucket:req];
@@ -60,7 +60,7 @@
 - (void)testAPI_creatBucket_private
 {
     NSString *bucket = @"test-cl-private";
-    OSSCreateBucketRequest *req = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *req = [InspurOSSCreateBucketRequest new];
     req.bucketName = bucket;
     req.xOssACL = @"private";
     OSSTask *task = [_client createBucket:req];
@@ -85,7 +85,7 @@
 }
 
 - (void)testAPI_listBuckets{
-    OSSGetServiceRequest *request = [OSSGetServiceRequest new];
+    InspurOSSGetServiceRequest *request = [InspurOSSGetServiceRequest new];
     OSSTask * task = [_client getService:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
@@ -95,7 +95,7 @@
 
 //分页列举桶
 - (void)testAPI_listPageService {
-    OSSListPageServiceRequest *request = [OSSListPageServiceRequest new];
+    InspurOSSListPageServiceRequest *request = [InspurOSSListPageServiceRequest new];
     request.pageNo = 2;
     request.pageSize = 8;
     OSSTask *task = [_client listService:request];
@@ -109,7 +109,7 @@
 
 //查询桶是否存在, 存在
 - (void)testAPI_queryBucketExistWhenExist {
-    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
+    InspurOSSQueryBucketExistRequest *request = [InspurOSSQueryBucketExistRequest new];
     request.bucketName = @"test-cl-public";
     OSSTask *task = [_client queryBucketExist:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -122,7 +122,7 @@
 
 //查询桶是否存在, 不存在
 - (void)testAPI_queryBucketExistWhenNotExist {
-    OSSQueryBucketExistRequest *request = [OSSQueryBucketExistRequest new];
+    InspurOSSQueryBucketExistRequest *request = [InspurOSSQueryBucketExistRequest new];
     request.bucketName = @"test-cl-public-not-exist";
     OSSTask *task = [_client queryBucketExist:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -135,7 +135,7 @@
 
 //查询桶的位置
 - (void)testAPI_bucketLocation {
-    OSSGetBucketLocationRequest *request = [OSSGetBucketLocationRequest new];
+    InspurOSSGetBucketLocationRequest *request = [InspurOSSGetBucketLocationRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketLocation:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -167,7 +167,7 @@
 */
 
 - (void)testAPI_getBucketACL{
-    OSSGetBucketACLRequest * request = [OSSGetBucketACLRequest new];
+    InspurOSSGetBucketACLRequest * request = [InspurOSSGetBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask * task = [_client getBucketACL:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -180,7 +180,7 @@
 
 //设置桶权限, 共有
 - (void)testAPI_putBucketACL_public {
-    OSSPutBucketACLRequest *request = [OSSPutBucketACLRequest new];
+    InspurOSSPutBucketACLRequest *request = [InspurOSSPutBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     request.acl = @"public-read";
     OSSTask *task = [_client putBucketACL:request];
@@ -194,7 +194,7 @@
 
 //设置桶权限, 私有
 - (void)testAPI_putBucketACL_privite {
-    OSSPutBucketACLRequest *request = [OSSPutBucketACLRequest new];
+    InspurOSSPutBucketACLRequest *request = [InspurOSSPutBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     request.acl = @"private";
     OSSTask *task = [_client putBucketACL:request];
@@ -207,7 +207,7 @@
 }
 
 - (void)testAPI_getCORSList {
-    OSSGetBucketCORSRequest *request = [OSSGetBucketCORSRequest new];
+    InspurOSSGetBucketCORSRequest *request = [InspurOSSGetBucketCORSRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketCORS:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -219,7 +219,7 @@
 }
 
 - (void)testAPI_putCORSList {
-    OSSPutBucketCORSRequest *request = [OSSPutBucketCORSRequest new];
+    InspurOSSPutBucketCORSRequest *request = [InspurOSSPutBucketCORSRequest new];
     request.bucketName = @"test-chenli3";
     
     NSMutableArray <OSSCORSRule *>* tmpArray = [NSMutableArray array];
@@ -255,7 +255,7 @@
 
 - (void)testAPI_deleteBucketCORS {
     NSString * bucket = @"test-chenli3";
-    OSSDeleteBucketCORSRequest *req = [OSSDeleteBucketCORSRequest new];
+    InspurOSSDeleteBucketCORSRequest *req = [InspurOSSDeleteBucketCORSRequest new];
     req.bucketName = bucket;
     OSSTask *task = [_client deleteBucketCORS:req];
     
@@ -267,7 +267,7 @@
 }
 
 - (void)testAPI_putBucketVersioning_enabled {
-    OSSPutVersioningRequest *request = [OSSPutVersioningRequest new];
+    InspurOSSPutVersioningRequest *request = [InspurOSSPutVersioningRequest new];
     request.bucketName = @"test-chenli3";
     //request.enable = @"Suspended";
     request.enable = @"Enabled";
@@ -282,7 +282,7 @@
 }
 
 - (void)testAPI_putBucketVersioning_suspend {
-    OSSPutVersioningRequest *request = [OSSPutVersioningRequest new];
+    InspurOSSPutVersioningRequest *request = [InspurOSSPutVersioningRequest new];
     request.bucketName = @"test-chenli3";
     request.enable = @"Suspended";
     
@@ -296,7 +296,7 @@
 }
 
 - (void)testAPI_getVersioning {
-    OSSGetVersioningRequest *request = [OSSGetVersioningRequest new];
+    InspurOSSGetVersioningRequest *request = [InspurOSSGetVersioningRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketVersioning:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -309,7 +309,7 @@
 
 - (void)testAPI_getService
 {
-    OSSGetServiceRequest *request = [OSSGetServiceRequest new];
+    InspurOSSGetServiceRequest *request = [InspurOSSGetServiceRequest new];
     OSSTask * task = [_client getService:request];
     [[task continueWithBlock:^id(OSSTask *task) {
         XCTAssertNil(task.error);
@@ -318,7 +318,7 @@
     
     OSSGetServiceResult *result = nil;
     do {
-        request = [OSSGetServiceRequest new];
+        request = [InspurOSSGetServiceRequest new];
         request.maxKeys = 2;
         request.marker = result.nextMarker;
         task = [_client getService:request];
@@ -329,7 +329,7 @@
 
 //查询桶加密
 - (void)testAPI_getBucketEncryption {
-    OSSGetBucketEncryptionRequest *request = [OSSGetBucketEncryptionRequest new];
+    InspurOSSGetBucketEncryptionRequest *request = [InspurOSSGetBucketEncryptionRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketEncryption:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -341,7 +341,7 @@
 }
 
 - (void)testAPI_putBucketEncrytion {
-    OSSPutBucketEncryptionRequest *request = [OSSPutBucketEncryptionRequest new];
+    InspurOSSPutBucketEncryptionRequest *request = [InspurOSSPutBucketEncryptionRequest new];
     request.bucketName = @"test-chenli3";
     request.sseAlgorithm = @"AES256";
     OSSTask *task = [_client putBucketEncryption:request];
@@ -355,7 +355,7 @@
 
 - (void)testAPI_deleteBucketEncryption {
     NSString * bucket = @"test-chenli3";
-    OSSDeleteBucketEncryptionRequest *req = [OSSDeleteBucketEncryptionRequest new];
+    InspurOSSDeleteBucketEncryptionRequest *req = [InspurOSSDeleteBucketEncryptionRequest new];
     req.bucketName = bucket;
     OSSTask *task = [_client deleteBucketEncryption:req];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -367,7 +367,7 @@
 
 //查询静态网站托管
 - (void)testAPI_getBucketWebsite {
-    OSSGetBucketWebsiteRequest *request = [OSSGetBucketWebsiteRequest new];
+    InspurOSSGetBucketWebsiteRequest *request = [InspurOSSGetBucketWebsiteRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketWebsite:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -380,7 +380,7 @@
 
 //设置静态网站托管
 - (void)testAPI_putBucketWebsite {
-    OSSPutBucketWebsiteRequest *request = [OSSPutBucketWebsiteRequest new];
+    InspurOSSPutBucketWebsiteRequest *request = [InspurOSSPutBucketWebsiteRequest new];
     request.bucketName = @"test-chenli3";
     request.indexDocument = @"index.html";
     request.errroDocument = @"error.html";
@@ -395,7 +395,7 @@
 
 - (void)testAPI_deleteBucketWebsite {
     NSString * bucket = @"test-chenli3";
-    OSSDeleteBucketWebsiteRequest *req = [OSSDeleteBucketWebsiteRequest new];
+    InspurOSSDeleteBucketWebsiteRequest *req = [InspurOSSDeleteBucketWebsiteRequest new];
     req.bucketName = bucket;
     OSSTask *task = [_client deleteBucketWebsite:req];
     
@@ -408,7 +408,7 @@
 
 //自定义域名
 - (void)testAPI_getBucketDomain{
-    OSSGetBucketDomainRequest *request = [OSSGetBucketDomainRequest new];
+    InspurOSSGetBucketDomainRequest *request = [InspurOSSGetBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketDomain:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -420,7 +420,7 @@
 }
 
 - (void)testAPI_putBucketDomain {
-    OSSPutBucketDomainRequest *request = [OSSPutBucketDomainRequest new];
+    InspurOSSPutBucketDomainRequest *request = [InspurOSSPutBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
     request.domainList = @[
         @{
@@ -465,7 +465,7 @@
 //
 
 - (void)testAPI_deleteDomain {
-    OSSDeleteBucketDomainRequest *request = [OSSDeleteBucketDomainRequest new];
+    InspurOSSDeleteBucketDomainRequest *request = [InspurOSSDeleteBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client deleteBucketDomain:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -479,7 +479,7 @@
 
 //自定义域名
 - (void)testAPI_getBucketLifeCycle{
-    OSSGetBucketLifeCycleRequest *request = [OSSGetBucketLifeCycleRequest new];
+    InspurOSSGetBucketLifeCycleRequest *request = [InspurOSSGetBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketLifeCycle:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -491,7 +491,7 @@
 }
 
 - (void)testAPI_putBucketLifeCycle {
-    OSSPutBucketLifeCycleRequest *request = [OSSPutBucketLifeCycleRequest new];
+    InspurOSSPutBucketLifeCycleRequest *request = [InspurOSSPutBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client putBucketLifeCycle:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -503,7 +503,7 @@
 }
 
 - (void)testAPI_deleteLifeCycle {
-    OSSDeleteBucketLifeCycleRequest *request = [OSSDeleteBucketLifeCycleRequest new];
+    InspurOSSDeleteBucketLifeCycleRequest *request = [InspurOSSDeleteBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client deleteBucketLifeCycle:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -516,7 +516,7 @@
 
 //自定义域名
 - (void)testAPI_putBucketPolicy {
-    OSSPutBucketPolicyRequest *request = [OSSPutBucketPolicyRequest new];
+    InspurOSSPutBucketPolicyRequest *request = [InspurOSSPutBucketPolicyRequest new];
     request.bucketName = @"test-chenli3";
     request.policyVersion = @"2012-10-17";
     request.statementList = @[
@@ -539,7 +539,7 @@
 }
 
 - (void)testAPI_getBucketPolicy{
-    OSSGetBucketPolicyRequest *request = [OSSGetBucketPolicyRequest new];
+    InspurOSSGetBucketPolicyRequest *request = [InspurOSSGetBucketPolicyRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client getBucketPolicy:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -551,7 +551,7 @@
 }
 
 - (void)testAPI_deletePolicy {
-    OSSDeleteBucketPolicyRequest *request = [OSSDeleteBucketPolicyRequest new];
+    InspurOSSDeleteBucketPolicyRequest *request = [InspurOSSDeleteBucketPolicyRequest new];
     request.bucketName = @"test-chenli3";
     OSSTask *task = [_client deleteBucketPolicy:request];
     [[task continueWithBlock:^id(OSSTask *task) {
@@ -564,7 +564,7 @@
 
 
 - (void)testListMultipartUploads{
-    OSSListMultipartUploadsRequest *listreq = [OSSListMultipartUploadsRequest new];
+    InspurOSSListMultipartUploadsRequest *listreq = [InspurOSSListMultipartUploadsRequest new];
     listreq.bucketName = @"test-chenli3";
     listreq.maxUploads = 1000;
     OSSTask *task = [_client listMultipartUploads:listreq];

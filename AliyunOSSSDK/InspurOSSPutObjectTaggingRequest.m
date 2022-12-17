@@ -6,9 +6,9 @@
 //  Copyright © 2021 aliyun. All rights reserved.
 //
 
-#import "OSSPutObjectTaggingRequest.h"
+#import "InspurOSSPutObjectTaggingRequest.h"
 
-@implementation OSSPutObjectTaggingRequest
+@implementation InspurOSSPutObjectTaggingRequest
 
 - (NSDictionary *)requestParams {
     return @{@"tagging": @""};

@@ -6,9 +6,9 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSGetBucketInfoRequest.h"
+#import "InspurOSSGetBucketInfoRequest.h"
 
-@implementation OSSGetBucketInfoRequest
+@implementation InspurOSSGetBucketInfoRequest
 
 - (NSDictionary *)requestParams {
     return @{@"bucketInfo": @""};

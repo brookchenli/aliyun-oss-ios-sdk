@@ -27,10 +27,10 @@
     cfg.isHttpdnsEnable = NO;
     cfg.crc64Verifiable = YES;
     
-    OSSClient *defaultClient = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
+    InspurOSSClient *defaultClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
     [OSSManager sharedManager].defaultClient = defaultClient;
     
-    OSSClient *defaultImgClient = [[OSSClient alloc] initWithEndpoint:OSS_IMG_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
+    InspurOSSClient *defaultImgClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_IMG_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
     [OSSManager sharedManager].imageClient = defaultImgClient;
     
     return YES;

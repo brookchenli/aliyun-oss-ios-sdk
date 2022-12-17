@@ -8,26 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		4CEF14F81F5522A1007010B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 216256EF1CF1B1580086458F /* SystemConfiguration.framework */; };
-		54A2FDC2289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC0289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDC3289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC0289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDC4289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC1289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m */; };
-		54A2FDC5289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC1289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m */; };
+		54A2FDC2289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC0289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDC3289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC0289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDC4289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC1289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m */; };
+		54A2FDC5289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC1289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m */; };
 		54A2FDC8289B6803005410F8 /* OSSDeleteObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC6289B6803005410F8 /* OSSDeleteObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDC9289B6803005410F8 /* OSSDeleteObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDC6289B6803005410F8 /* OSSDeleteObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDCA289B6803005410F8 /* OSSDeleteObjectTaggingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC7289B6803005410F8 /* OSSDeleteObjectTaggingResult.m */; };
 		54A2FDCB289B6803005410F8 /* OSSDeleteObjectTaggingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDC7289B6803005410F8 /* OSSDeleteObjectTaggingResult.m */; };
-		54A2FDCE289B682E005410F8 /* OSSGetObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDCC289B682E005410F8 /* OSSGetObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDCF289B682E005410F8 /* OSSGetObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDCC289B682E005410F8 /* OSSGetObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDD0289B682E005410F8 /* OSSGetObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDCD289B682E005410F8 /* OSSGetObjectTaggingRequest.m */; };
-		54A2FDD1289B682E005410F8 /* OSSGetObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDCD289B682E005410F8 /* OSSGetObjectTaggingRequest.m */; };
+		54A2FDCE289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDCC289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDCF289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDCC289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDD0289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDCD289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m */; };
+		54A2FDD1289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDCD289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m */; };
 		54A2FDD4289B6847005410F8 /* OSSGetObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD2289B6847005410F8 /* OSSGetObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDD5289B6847005410F8 /* OSSGetObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD2289B6847005410F8 /* OSSGetObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDD6289B6847005410F8 /* OSSGetObjectTaggingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD3289B6847005410F8 /* OSSGetObjectTaggingResult.m */; };
 		54A2FDD7289B6847005410F8 /* OSSGetObjectTaggingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD3289B6847005410F8 /* OSSGetObjectTaggingResult.m */; };
-		54A2FDDA289B6863005410F8 /* OSSPutObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD8289B6863005410F8 /* OSSPutObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDDB289B6863005410F8 /* OSSPutObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD8289B6863005410F8 /* OSSPutObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54A2FDDC289B6863005410F8 /* OSSPutObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD9289B6863005410F8 /* OSSPutObjectTaggingRequest.m */; };
-		54A2FDDD289B6863005410F8 /* OSSPutObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD9289B6863005410F8 /* OSSPutObjectTaggingRequest.m */; };
+		54A2FDDA289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD8289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDDB289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDD8289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54A2FDDC289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD9289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m */; };
+		54A2FDDD289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDD9289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m */; };
 		54A2FDE0289B6879005410F8 /* OSSPutObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDDE289B6879005410F8 /* OSSPutObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDE1289B6879005410F8 /* OSSPutObjectTaggingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 54A2FDDE289B6879005410F8 /* OSSPutObjectTaggingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54A2FDE2289B6879005410F8 /* OSSPutObjectTaggingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A2FDDF289B6879005410F8 /* OSSPutObjectTaggingResult.m */; };
@@ -51,7 +51,7 @@
 		D80C81FC1FC82546008E3900 /* OSSCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830C1FC56358000DD9EC /* OSSCompat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C81FD1FC82549008E3900 /* OSSUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830E1FC56358000DD9EC /* OSSUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C81FE1FC8254D008E3900 /* OSSXMLDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830F1FC56358000DD9EC /* OSSXMLDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C81FF1FC82554008E3900 /* OSSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183101FC56358000DD9EC /* OSSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D80C81FF1FC82554008E3900 /* InspurOSSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183101FC56358000DD9EC /* InspurOSSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C82011FC82559008E3900 /* OSSHttpdns.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183121FC56358000DD9EC /* OSSHttpdns.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C82021FC8255B008E3900 /* OSSNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183131FC56358000DD9EC /* OSSNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C82031FC8255F008E3900 /* OSSDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = D871831B1FC56358000DD9EC /* OSSDefine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,10 +71,10 @@
 		D80C82121FC8258F008E3900 /* OSSCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D871832C1FC56358000DD9EC /* OSSCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C82131FC82596008E3900 /* OSSIPv6Adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183151FC56358000DD9EC /* OSSIPv6Adapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C82151FC8259C008E3900 /* OSSIPv6PrefixResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = D871831A1FC56358000DD9EC /* OSSIPv6PrefixResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C88C9201AC1B400F379D8 /* OSSGetObjectACLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88C7201AC1B400F379D8 /* OSSGetObjectACLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C88CA201AC1B400F379D8 /* OSSGetObjectACLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88C7201AC1B400F379D8 /* OSSGetObjectACLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C88CB201AC1B400F379D8 /* OSSGetObjectACLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88C8201AC1B400F379D8 /* OSSGetObjectACLRequest.m */; };
-		D80C88CC201AC1B400F379D8 /* OSSGetObjectACLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88C8201AC1B400F379D8 /* OSSGetObjectACLRequest.m */; };
+		D80C88C9201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88C7201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D80C88CA201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88C7201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D80C88CB201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88C8201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m */; };
+		D80C88CC201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88C8201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m */; };
 		D80C88CF201AC21200F379D8 /* OSSResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88CD201AC21200F379D8 /* OSSResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C88D0201AC21200F379D8 /* OSSResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88CD201AC21200F379D8 /* OSSResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C88D1201AC21200F379D8 /* OSSResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88CE201AC21200F379D8 /* OSSResult.m */; };
@@ -83,10 +83,10 @@
 		D80C88D6201AC33000F379D8 /* OSSGetObjectACLResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88D3201AC33000F379D8 /* OSSGetObjectACLResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C88D7201AC33000F379D8 /* OSSGetObjectACLResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88D4201AC33000F379D8 /* OSSGetObjectACLResult.m */; };
 		D80C88D8201AC33000F379D8 /* OSSGetObjectACLResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88D4201AC33000F379D8 /* OSSGetObjectACLResult.m */; };
-		D80C88E7201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88E5201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C88E8201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88E5201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80C88E9201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88E6201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m */; };
-		D80C88EA201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88E6201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m */; };
+		D80C88E7201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88E5201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D80C88E8201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88E5201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D80C88E9201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88E6201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m */; };
+		D80C88EA201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88E6201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m */; };
 		D80C88ED201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88EB201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C88EE201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D80C88EB201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D80C88EF201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D80C88EC201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m */; };
@@ -99,18 +99,18 @@
 		D827B41221114E4B003A24F6 /* NSMutableDictionary+OSS.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B40F21114E4B003A24F6 /* NSMutableDictionary+OSS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D827B41321114E4B003A24F6 /* NSMutableDictionary+OSS.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41021114E4B003A24F6 /* NSMutableDictionary+OSS.m */; };
 		D827B41421114E4B003A24F6 /* NSMutableDictionary+OSS.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41021114E4B003A24F6 /* NSMutableDictionary+OSS.m */; };
-		D827B4172111A6E4003A24F6 /* OSSPutSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4152111A6E4003A24F6 /* OSSPutSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B4182111A6E4003A24F6 /* OSSPutSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4152111A6E4003A24F6 /* OSSPutSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B4192111A6E4003A24F6 /* OSSPutSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4162111A6E4003A24F6 /* OSSPutSymlinkRequest.m */; };
-		D827B41A2111A6E4003A24F6 /* OSSPutSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4162111A6E4003A24F6 /* OSSPutSymlinkRequest.m */; };
-		D827B41D2111A6FA003A24F6 /* OSSGetSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B41B2111A6FA003A24F6 /* OSSGetSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B41E2111A6FA003A24F6 /* OSSGetSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B41B2111A6FA003A24F6 /* OSSGetSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B41F2111A6FA003A24F6 /* OSSGetSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41C2111A6FA003A24F6 /* OSSGetSymlinkRequest.m */; };
-		D827B4202111A6FA003A24F6 /* OSSGetSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41C2111A6FA003A24F6 /* OSSGetSymlinkRequest.m */; };
-		D827B4232111A71B003A24F6 /* OSSRestoreObjectRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4212111A71B003A24F6 /* OSSRestoreObjectRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B4242111A71B003A24F6 /* OSSRestoreObjectRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4212111A71B003A24F6 /* OSSRestoreObjectRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D827B4252111A71B003A24F6 /* OSSRestoreObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4222111A71B003A24F6 /* OSSRestoreObjectRequest.m */; };
-		D827B4262111A71B003A24F6 /* OSSRestoreObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4222111A71B003A24F6 /* OSSRestoreObjectRequest.m */; };
+		D827B4172111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4152111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B4182111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4152111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B4192111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4162111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m */; };
+		D827B41A2111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4162111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m */; };
+		D827B41D2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B41B2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B41E2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B41B2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B41F2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41C2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m */; };
+		D827B4202111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B41C2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m */; };
+		D827B4232111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4212111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B4242111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4212111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D827B4252111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4222111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m */; };
+		D827B4262111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4222111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m */; };
 		D827B4292111A853003A24F6 /* OSSRestoreObjectResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4272111A853003A24F6 /* OSSRestoreObjectResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D827B42A2111A853003A24F6 /* OSSRestoreObjectResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D827B4272111A853003A24F6 /* OSSRestoreObjectResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D827B42B2111A853003A24F6 /* OSSRestoreObjectResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D827B4282111A853003A24F6 /* OSSRestoreObjectResult.m */; };
@@ -157,17 +157,17 @@
 		D85278122015DF4900D7B1DE /* OSSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D852780F2015DF4900D7B1DE /* OSSConstants.m */; };
 		D85278132015DF4900D7B1DE /* OSSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D852780F2015DF4900D7B1DE /* OSSConstants.m */; };
 		D88698CB205FA46400659EC8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D80C81F81FC82508008E3900 /* libresolv.tbd */; };
-		D8C2951220F46A79008A08AA /* OSSGetBucketInfoRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951020F46A79008A08AA /* OSSGetBucketInfoRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D8C2951320F46A79008A08AA /* OSSGetBucketInfoRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951020F46A79008A08AA /* OSSGetBucketInfoRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D8C2951420F46A79008A08AA /* OSSGetBucketInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951120F46A79008A08AA /* OSSGetBucketInfoRequest.m */; };
-		D8C2951520F46A79008A08AA /* OSSGetBucketInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951120F46A79008A08AA /* OSSGetBucketInfoRequest.m */; };
+		D8C2951220F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951020F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D8C2951320F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951020F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D8C2951420F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951120F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m */; };
+		D8C2951520F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951120F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m */; };
 		D8C2951820F46A95008A08AA /* OSSGetBucketInfoResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951620F46A95008A08AA /* OSSGetBucketInfoResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C2951920F46A95008A08AA /* OSSGetBucketInfoResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C2951620F46A95008A08AA /* OSSGetBucketInfoResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C2951A20F46A95008A08AA /* OSSGetBucketInfoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951720F46A95008A08AA /* OSSGetBucketInfoResult.m */; };
 		D8C2951B20F46A95008A08AA /* OSSGetBucketInfoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C2951720F46A95008A08AA /* OSSGetBucketInfoResult.m */; };
 		D8C41AA71FCC284F0091699B /* OSSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183071FC56358000DD9EC /* OSSNetworking.m */; };
 		D8C41AA81FCC284F0091699B /* OSSHttpdns.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183081FC56358000DD9EC /* OSSHttpdns.m */; };
-		D8C41AAA1FCC284F0091699B /* OSSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830A1FC56358000DD9EC /* OSSClient.m */; };
+		D8C41AAA1FCC284F0091699B /* InspurOSSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830A1FC56358000DD9EC /* InspurOSSClient.m */; };
 		D8C41AAD1FCC284F0091699B /* OSSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830D1FC56358000DD9EC /* OSSLog.m */; };
 		D8C41AB11FCC284F0091699B /* OSSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183111FC56358000DD9EC /* OSSModel.m */; };
 		D8C41AB61FCC284F0091699B /* OSSIPv6PrefixResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183171FC56358000DD9EC /* OSSIPv6PrefixResolver.m */; };
@@ -189,7 +189,7 @@
 		D8C41AE21FCC2AAE0091699B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7D8BB81F8CC741005D3040 /* CoreTelephony.framework */; };
 		D8C41AE61FCC2F920091699B /* OSSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183071FC56358000DD9EC /* OSSNetworking.m */; };
 		D8C41AE71FCC2F920091699B /* OSSHttpdns.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183081FC56358000DD9EC /* OSSHttpdns.m */; };
-		D8C41AE91FCC2F920091699B /* OSSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830A1FC56358000DD9EC /* OSSClient.m */; };
+		D8C41AE91FCC2F920091699B /* InspurOSSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830A1FC56358000DD9EC /* InspurOSSClient.m */; };
 		D8C41AEC1FCC2F920091699B /* OSSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = D871830D1FC56358000DD9EC /* OSSLog.m */; };
 		D8C41AF01FCC2F920091699B /* OSSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183111FC56358000DD9EC /* OSSModel.m */; };
 		D8C41AF51FCC2F920091699B /* OSSIPv6PrefixResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = D87183171FC56358000DD9EC /* OSSIPv6PrefixResolver.m */; };
@@ -212,7 +212,7 @@
 		D8C41B1D1FCC2FD20091699B /* OSSCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830C1FC56358000DD9EC /* OSSCompat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C41B1F1FCC2FD20091699B /* OSSUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830E1FC56358000DD9EC /* OSSUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C41B201FCC2FD20091699B /* OSSXMLDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D871830F1FC56358000DD9EC /* OSSXMLDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D8C41B211FCC2FD20091699B /* OSSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183101FC56358000DD9EC /* OSSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D8C41B211FCC2FD20091699B /* InspurOSSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183101FC56358000DD9EC /* InspurOSSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C41B231FCC2FD20091699B /* OSSHttpdns.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183121FC56358000DD9EC /* OSSHttpdns.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C41B241FCC2FD20091699B /* OSSNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183131FC56358000DD9EC /* OSSNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8C41B251FCC2FD20091699B /* OSSIPv6Adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = D87183151FC56358000DD9EC /* OSSIPv6Adapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -259,16 +259,16 @@
 		216256EF1CF1B1580086458F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4C7D8BB61F8CC70F005D3040 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4C7D8BB81F8CC741005D3040 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		54A2FDC0289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSDeleteObjectTaggingRequest.h; sourceTree = "<group>"; };
-		54A2FDC1289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSDeleteObjectTaggingRequest.m; sourceTree = "<group>"; };
+		54A2FDC0289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSDeleteObjectTaggingRequest.h; sourceTree = "<group>"; };
+		54A2FDC1289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSDeleteObjectTaggingRequest.m; sourceTree = "<group>"; };
 		54A2FDC6289B6803005410F8 /* OSSDeleteObjectTaggingResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSDeleteObjectTaggingResult.h; sourceTree = "<group>"; };
 		54A2FDC7289B6803005410F8 /* OSSDeleteObjectTaggingResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSDeleteObjectTaggingResult.m; sourceTree = "<group>"; };
-		54A2FDCC289B682E005410F8 /* OSSGetObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectTaggingRequest.h; sourceTree = "<group>"; };
-		54A2FDCD289B682E005410F8 /* OSSGetObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectTaggingRequest.m; sourceTree = "<group>"; };
+		54A2FDCC289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSGetObjectTaggingRequest.h; sourceTree = "<group>"; };
+		54A2FDCD289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSGetObjectTaggingRequest.m; sourceTree = "<group>"; };
 		54A2FDD2289B6847005410F8 /* OSSGetObjectTaggingResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectTaggingResult.h; sourceTree = "<group>"; };
 		54A2FDD3289B6847005410F8 /* OSSGetObjectTaggingResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectTaggingResult.m; sourceTree = "<group>"; };
-		54A2FDD8289B6863005410F8 /* OSSPutObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSPutObjectTaggingRequest.h; sourceTree = "<group>"; };
-		54A2FDD9289B6863005410F8 /* OSSPutObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSPutObjectTaggingRequest.m; sourceTree = "<group>"; };
+		54A2FDD8289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSPutObjectTaggingRequest.h; sourceTree = "<group>"; };
+		54A2FDD9289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSPutObjectTaggingRequest.m; sourceTree = "<group>"; };
 		54A2FDDE289B6879005410F8 /* OSSPutObjectTaggingResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSPutObjectTaggingResult.h; sourceTree = "<group>"; };
 		54A2FDDF289B6879005410F8 /* OSSPutObjectTaggingResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSPutObjectTaggingResult.m; sourceTree = "<group>"; };
 		D420433D294B877300E0FAAD /* OSSGetObjectMetaDataRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectMetaDataRequest.h; sourceTree = "<group>"; };
@@ -281,26 +281,26 @@
 		D80C81F41FC824D5008E3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		D80C81F61FC824FF008E3900 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		D80C81F81FC82508008E3900 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/lib/libresolv.tbd; sourceTree = DEVELOPER_DIR; };
-		D80C88C7201AC1B400F379D8 /* OSSGetObjectACLRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectACLRequest.h; sourceTree = "<group>"; };
-		D80C88C8201AC1B400F379D8 /* OSSGetObjectACLRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectACLRequest.m; sourceTree = "<group>"; };
+		D80C88C7201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSGetObjectACLRequest.h; sourceTree = "<group>"; };
+		D80C88C8201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSGetObjectACLRequest.m; sourceTree = "<group>"; };
 		D80C88CD201AC21200F379D8 /* OSSResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSResult.h; sourceTree = "<group>"; };
 		D80C88CE201AC21200F379D8 /* OSSResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSResult.m; sourceTree = "<group>"; };
 		D80C88D3201AC33000F379D8 /* OSSGetObjectACLResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetObjectACLResult.h; sourceTree = "<group>"; };
 		D80C88D4201AC33000F379D8 /* OSSGetObjectACLResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetObjectACLResult.m; sourceTree = "<group>"; };
-		D80C88E5201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSDeleteMultipleObjectsRequest.h; sourceTree = "<group>"; };
-		D80C88E6201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSDeleteMultipleObjectsRequest.m; sourceTree = "<group>"; };
+		D80C88E5201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSDeleteMultipleObjectsRequest.h; sourceTree = "<group>"; };
+		D80C88E6201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSDeleteMultipleObjectsRequest.m; sourceTree = "<group>"; };
 		D80C88EB201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSDeleteMultipleObjectsResult.h; sourceTree = "<group>"; };
 		D80C88EC201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSDeleteMultipleObjectsResult.m; sourceTree = "<group>"; };
 		D827B40921107169003A24F6 /* NSDate+OSS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+OSS.h"; sourceTree = "<group>"; };
 		D827B40A21107169003A24F6 /* NSDate+OSS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+OSS.m"; sourceTree = "<group>"; };
 		D827B40F21114E4B003A24F6 /* NSMutableDictionary+OSS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+OSS.h"; sourceTree = "<group>"; };
 		D827B41021114E4B003A24F6 /* NSMutableDictionary+OSS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+OSS.m"; sourceTree = "<group>"; };
-		D827B4152111A6E4003A24F6 /* OSSPutSymlinkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSPutSymlinkRequest.h; sourceTree = "<group>"; };
-		D827B4162111A6E4003A24F6 /* OSSPutSymlinkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSPutSymlinkRequest.m; sourceTree = "<group>"; };
-		D827B41B2111A6FA003A24F6 /* OSSGetSymlinkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetSymlinkRequest.h; sourceTree = "<group>"; };
-		D827B41C2111A6FA003A24F6 /* OSSGetSymlinkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetSymlinkRequest.m; sourceTree = "<group>"; };
-		D827B4212111A71B003A24F6 /* OSSRestoreObjectRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSRestoreObjectRequest.h; sourceTree = "<group>"; };
-		D827B4222111A71B003A24F6 /* OSSRestoreObjectRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSRestoreObjectRequest.m; sourceTree = "<group>"; };
+		D827B4152111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSPutSymlinkRequest.h; sourceTree = "<group>"; };
+		D827B4162111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSPutSymlinkRequest.m; sourceTree = "<group>"; };
+		D827B41B2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSGetSymlinkRequest.h; sourceTree = "<group>"; };
+		D827B41C2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSGetSymlinkRequest.m; sourceTree = "<group>"; };
+		D827B4212111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSRestoreObjectRequest.h; sourceTree = "<group>"; };
+		D827B4222111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSRestoreObjectRequest.m; sourceTree = "<group>"; };
 		D827B4272111A853003A24F6 /* OSSRestoreObjectResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSRestoreObjectResult.h; sourceTree = "<group>"; };
 		D827B4282111A853003A24F6 /* OSSRestoreObjectResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSRestoreObjectResult.m; sourceTree = "<group>"; };
 		D827B42D2111ADE9003A24F6 /* OSSPutSymlinkResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSPutSymlinkResult.h; sourceTree = "<group>"; };
@@ -331,12 +331,12 @@
 		D87183071FC56358000DD9EC /* OSSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSNetworking.m; sourceTree = "<group>"; };
 		D87183081FC56358000DD9EC /* OSSHttpdns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSHttpdns.m; sourceTree = "<group>"; };
 		D87183091FC56358000DD9EC /* OSSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSModel.h; sourceTree = "<group>"; };
-		D871830A1FC56358000DD9EC /* OSSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSClient.m; sourceTree = "<group>"; };
+		D871830A1FC56358000DD9EC /* InspurOSSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspurOSSClient.m; sourceTree = "<group>"; };
 		D871830C1FC56358000DD9EC /* OSSCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSCompat.h; sourceTree = "<group>"; };
 		D871830D1FC56358000DD9EC /* OSSLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSLog.m; sourceTree = "<group>"; };
 		D871830E1FC56358000DD9EC /* OSSUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSUtil.h; sourceTree = "<group>"; };
 		D871830F1FC56358000DD9EC /* OSSXMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSXMLDictionary.h; sourceTree = "<group>"; };
-		D87183101FC56358000DD9EC /* OSSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSClient.h; sourceTree = "<group>"; };
+		D87183101FC56358000DD9EC /* InspurOSSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspurOSSClient.h; sourceTree = "<group>"; };
 		D87183111FC56358000DD9EC /* OSSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSModel.m; sourceTree = "<group>"; };
 		D87183121FC56358000DD9EC /* OSSHttpdns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSHttpdns.h; sourceTree = "<group>"; };
 		D87183131FC56358000DD9EC /* OSSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSNetworking.h; sourceTree = "<group>"; };
@@ -374,8 +374,8 @@
 		D87183381FC56358000DD9EC /* OSSFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSFileLogger.m; sourceTree = "<group>"; };
 		D871833A1FC56358000DD9EC /* OSSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSUtil.m; sourceTree = "<group>"; };
 		D871833B1FC56358000DD9EC /* OSSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSService.h; sourceTree = "<group>"; };
-		D8C2951020F46A79008A08AA /* OSSGetBucketInfoRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetBucketInfoRequest.h; sourceTree = "<group>"; };
-		D8C2951120F46A79008A08AA /* OSSGetBucketInfoRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetBucketInfoRequest.m; sourceTree = "<group>"; };
+		D8C2951020F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InspurOSSGetBucketInfoRequest.h; sourceTree = "<group>"; };
+		D8C2951120F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspurOSSGetBucketInfoRequest.m; sourceTree = "<group>"; };
 		D8C2951620F46A95008A08AA /* OSSGetBucketInfoResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSGetBucketInfoResult.h; sourceTree = "<group>"; };
 		D8C2951720F46A95008A08AA /* OSSGetBucketInfoResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSGetBucketInfoResult.m; sourceTree = "<group>"; };
 		D8C5E53F1FCE914F00613BA5 /* aos_crc64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aos_crc64.h; sourceTree = "<group>"; };
@@ -474,41 +474,41 @@
 				D827B41021114E4B003A24F6 /* NSMutableDictionary+OSS.m */,
 				D85277F62015CB3500D7B1DE /* OSSAllRequestNeededMessage.h */,
 				D85277F72015CB3500D7B1DE /* OSSAllRequestNeededMessage.m */,
-				D87183101FC56358000DD9EC /* OSSClient.h */,
-				D871830A1FC56358000DD9EC /* OSSClient.m */,
+				D87183101FC56358000DD9EC /* InspurOSSClient.h */,
+				D871830A1FC56358000DD9EC /* InspurOSSClient.m */,
 				D871830C1FC56358000DD9EC /* OSSCompat.h */,
 				D871831C1FC56358000DD9EC /* OSSCompat.m */,
 				D852780E2015DF4900D7B1DE /* OSSConstants.h */,
 				D852780F2015DF4900D7B1DE /* OSSConstants.m */,
 				D871831B1FC56358000DD9EC /* OSSDefine.h */,
-				D80C88E5201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h */,
-				D80C88E6201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m */,
+				D80C88E5201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h */,
+				D80C88E6201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m */,
 				D80C88EB201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h */,
 				D80C88EC201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m */,
 				D871832E1FC56358000DD9EC /* OSSFileLog */,
-				D8C2951020F46A79008A08AA /* OSSGetBucketInfoRequest.h */,
-				D8C2951120F46A79008A08AA /* OSSGetBucketInfoRequest.m */,
+				D8C2951020F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h */,
+				D8C2951120F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m */,
 				D8C2951620F46A95008A08AA /* OSSGetBucketInfoResult.h */,
 				D8C2951720F46A95008A08AA /* OSSGetBucketInfoResult.m */,
-				D80C88C7201AC1B400F379D8 /* OSSGetObjectACLRequest.h */,
-				D80C88C8201AC1B400F379D8 /* OSSGetObjectACLRequest.m */,
+				D80C88C7201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h */,
+				D80C88C8201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m */,
 				D80C88D3201AC33000F379D8 /* OSSGetObjectACLResult.h */,
 				D80C88D4201AC33000F379D8 /* OSSGetObjectACLResult.m */,
-				D827B41B2111A6FA003A24F6 /* OSSGetSymlinkRequest.h */,
-				D827B41C2111A6FA003A24F6 /* OSSGetSymlinkRequest.m */,
+				D827B41B2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h */,
+				D827B41C2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m */,
 				D827B4332111ADF7003A24F6 /* OSSGetSymlinkResult.h */,
 				D827B4342111ADF7003A24F6 /* OSSGetSymlinkResult.m */,
 				D87183121FC56358000DD9EC /* OSSHttpdns.h */,
-				54A2FDC0289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h */,
-				54A2FDC1289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m */,
+				54A2FDC0289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h */,
+				54A2FDC1289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m */,
 				54A2FDC6289B6803005410F8 /* OSSDeleteObjectTaggingResult.h */,
 				54A2FDC7289B6803005410F8 /* OSSDeleteObjectTaggingResult.m */,
-				54A2FDCC289B682E005410F8 /* OSSGetObjectTaggingRequest.h */,
-				54A2FDCD289B682E005410F8 /* OSSGetObjectTaggingRequest.m */,
+				54A2FDCC289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h */,
+				54A2FDCD289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m */,
 				54A2FDD2289B6847005410F8 /* OSSGetObjectTaggingResult.h */,
 				54A2FDD3289B6847005410F8 /* OSSGetObjectTaggingResult.m */,
-				54A2FDD8289B6863005410F8 /* OSSPutObjectTaggingRequest.h */,
-				54A2FDD9289B6863005410F8 /* OSSPutObjectTaggingRequest.m */,
+				54A2FDD8289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h */,
+				54A2FDD9289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m */,
 				54A2FDDE289B6879005410F8 /* OSSPutObjectTaggingResult.h */,
 				54A2FDDF289B6879005410F8 /* OSSPutObjectTaggingResult.m */,
 				D87183081FC56358000DD9EC /* OSSHttpdns.m */,
@@ -526,14 +526,14 @@
 				D87183071FC56358000DD9EC /* OSSNetworking.m */,
 				D85277EF2015BD5A00D7B1DE /* OSSNetworkingRequestDelegate.h */,
 				D85277F02015BD5A00D7B1DE /* OSSNetworkingRequestDelegate.m */,
-				D827B4152111A6E4003A24F6 /* OSSPutSymlinkRequest.h */,
-				D827B4162111A6E4003A24F6 /* OSSPutSymlinkRequest.m */,
+				D827B4152111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h */,
+				D827B4162111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m */,
 				D827B42D2111ADE9003A24F6 /* OSSPutSymlinkResult.h */,
 				D827B42E2111ADE9003A24F6 /* OSSPutSymlinkResult.m */,
 				D85277E92015BBAD00D7B1DE /* OSSRequest.h */,
 				D85277EA2015BBAD00D7B1DE /* OSSRequest.m */,
-				D827B4212111A71B003A24F6 /* OSSRestoreObjectRequest.h */,
-				D827B4222111A71B003A24F6 /* OSSRestoreObjectRequest.m */,
+				D827B4212111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h */,
+				D827B4222111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m */,
 				D827B4272111A853003A24F6 /* OSSRestoreObjectResult.h */,
 				D827B4282111A853003A24F6 /* OSSRestoreObjectResult.m */,
 				D80C88CD201AC21200F379D8 /* OSSResult.h */,
@@ -618,7 +618,7 @@
 				D8C41B1D1FCC2FD20091699B /* OSSCompat.h in Headers */,
 				D8C41B1F1FCC2FD20091699B /* OSSUtil.h in Headers */,
 				D8C41B201FCC2FD20091699B /* OSSXMLDictionary.h in Headers */,
-				D8C41B211FCC2FD20091699B /* OSSClient.h in Headers */,
+				D8C41B211FCC2FD20091699B /* InspurOSSClient.h in Headers */,
 				D8C41B231FCC2FD20091699B /* OSSHttpdns.h in Headers */,
 				D8C41B241FCC2FD20091699B /* OSSNetworking.h in Headers */,
 				D8C41B251FCC2FD20091699B /* OSSIPv6Adapter.h in Headers */,
@@ -628,13 +628,13 @@
 				D8C41B301FCC2FD20091699B /* OSSCancellationTokenSource.h in Headers */,
 				D8C41B341FCC2FD20091699B /* OSSExecutor.h in Headers */,
 				D8C41B351FCC2FD20091699B /* OSSCancellationTokenRegistration.h in Headers */,
-				54A2FDDA289B6863005410F8 /* OSSPutObjectTaggingRequest.h in Headers */,
+				54A2FDDA289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h in Headers */,
 				D8C41B361FCC2FD20091699B /* OSSBolts.h in Headers */,
-				54A2FDC2289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h in Headers */,
+				54A2FDC2289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h in Headers */,
 				D829F3A91FD8CFBE00A8C2DC /* OSSInputStreamHelper.h in Headers */,
 				D8C41B371FCC2FD20091699B /* OSSTask.h in Headers */,
 				D8C41B381FCC2FD20091699B /* OSSTaskCompletionSource.h in Headers */,
-				54A2FDCE289B682E005410F8 /* OSSGetObjectTaggingRequest.h in Headers */,
+				54A2FDCE289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h in Headers */,
 				D8C41B3B1FCC2FD20091699B /* OSSCancellationToken.h in Headers */,
 				54A2FDD4289B6847005410F8 /* OSSGetObjectTaggingResult.h in Headers */,
 				D85277EB2015BBAD00D7B1DE /* OSSRequest.h in Headers */,
@@ -650,17 +650,17 @@
 				D420433F294B877300E0FAAD /* OSSGetObjectMetaDataRequest.h in Headers */,
 				D8C41B3F1FCC2FD20091699B /* OSSReachability.h in Headers */,
 				D80C88CF201AC21200F379D8 /* OSSResult.h in Headers */,
-				D80C88C9201AC1B400F379D8 /* OSSGetObjectACLRequest.h in Headers */,
+				D80C88C9201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h in Headers */,
 				D80C88ED201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h in Headers */,
-				D80C88E7201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h in Headers */,
+				D80C88E7201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h in Headers */,
 				D80C88D5201AC33000F379D8 /* OSSGetObjectACLResult.h in Headers */,
 				D827B4292111A853003A24F6 /* OSSRestoreObjectResult.h in Headers */,
-				D827B4172111A6E4003A24F6 /* OSSPutSymlinkRequest.h in Headers */,
+				D827B4172111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h in Headers */,
 				D827B42F2111ADE9003A24F6 /* OSSPutSymlinkResult.h in Headers */,
-				D827B4232111A71B003A24F6 /* OSSRestoreObjectRequest.h in Headers */,
-				D827B41D2111A6FA003A24F6 /* OSSGetSymlinkRequest.h in Headers */,
+				D827B4232111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h in Headers */,
+				D827B41D2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h in Headers */,
 				D827B4352111ADF7003A24F6 /* OSSGetSymlinkResult.h in Headers */,
-				D8C2951220F46A79008A08AA /* OSSGetBucketInfoRequest.h in Headers */,
+				D8C2951220F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h in Headers */,
 				D8C2951820F46A95008A08AA /* OSSGetBucketInfoResult.h in Headers */,
 				D827B40B21107169003A24F6 /* NSDate+OSS.h in Headers */,
 				D8C41B411FCC2FD20091699B /* OSSFileLogger.h in Headers */,
@@ -681,7 +681,7 @@
 				D4204346294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.h in Headers */,
 				D80C81FB1FC82541008E3900 /* OSSModel.h in Headers */,
 				D80C81FE1FC8254D008E3900 /* OSSXMLDictionary.h in Headers */,
-				D80C81FF1FC82554008E3900 /* OSSClient.h in Headers */,
+				D80C81FF1FC82554008E3900 /* InspurOSSClient.h in Headers */,
 				D80C82021FC8255B008E3900 /* OSSNetworking.h in Headers */,
 				D80C82131FC82596008E3900 /* OSSIPv6Adapter.h in Headers */,
 				D80C82041FC82562008E3900 /* OSSLog.h in Headers */,
@@ -692,13 +692,13 @@
 				D80C82121FC8258F008E3900 /* OSSCancellationToken.h in Headers */,
 				D80C820C1FC8257F008E3900 /* OSSCancellationTokenSource.h in Headers */,
 				D80C820E1FC82584008E3900 /* OSSCancellationTokenRegistration.h in Headers */,
-				54A2FDDB289B6863005410F8 /* OSSPutObjectTaggingRequest.h in Headers */,
+				54A2FDDB289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.h in Headers */,
 				D80C82111FC8258B008E3900 /* OSSTaskCompletionSource.h in Headers */,
-				54A2FDC3289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.h in Headers */,
+				54A2FDC3289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.h in Headers */,
 				D829F3AA1FD8CFBE00A8C2DC /* OSSInputStreamHelper.h in Headers */,
 				D80C820F1FC82586008E3900 /* OSSBolts.h in Headers */,
 				D80C820D1FC82581008E3900 /* OSSExecutor.h in Headers */,
-				54A2FDCF289B682E005410F8 /* OSSGetObjectTaggingRequest.h in Headers */,
+				54A2FDCF289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.h in Headers */,
 				D80C820B1FC82579008E3900 /* OSSCocoaLumberjack.h in Headers */,
 				54A2FDD5289B6847005410F8 /* OSSGetObjectTaggingResult.h in Headers */,
 				D85277EC2015BBAD00D7B1DE /* OSSRequest.h in Headers */,
@@ -714,18 +714,18 @@
 				D4204340294B877300E0FAAD /* OSSGetObjectMetaDataRequest.h in Headers */,
 				D80C82031FC8255F008E3900 /* OSSDefine.h in Headers */,
 				D80C88D0201AC21200F379D8 /* OSSResult.h in Headers */,
-				D80C88CA201AC1B400F379D8 /* OSSGetObjectACLRequest.h in Headers */,
+				D80C88CA201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.h in Headers */,
 				D80C88D6201AC33000F379D8 /* OSSGetObjectACLResult.h in Headers */,
 				D80C88EE201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.h in Headers */,
 				D827B42A2111A853003A24F6 /* OSSRestoreObjectResult.h in Headers */,
-				D827B4182111A6E4003A24F6 /* OSSPutSymlinkRequest.h in Headers */,
+				D827B4182111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.h in Headers */,
 				D827B4302111ADE9003A24F6 /* OSSPutSymlinkResult.h in Headers */,
-				D827B4242111A71B003A24F6 /* OSSRestoreObjectRequest.h in Headers */,
-				D827B41E2111A6FA003A24F6 /* OSSGetSymlinkRequest.h in Headers */,
+				D827B4242111A71B003A24F6 /* InspurOSSRestoreObjectRequest.h in Headers */,
+				D827B41E2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.h in Headers */,
 				D827B4362111ADF7003A24F6 /* OSSGetSymlinkResult.h in Headers */,
-				D8C2951320F46A79008A08AA /* OSSGetBucketInfoRequest.h in Headers */,
+				D8C2951320F46A79008A08AA /* InspurOSSGetBucketInfoRequest.h in Headers */,
 				D8C2951920F46A95008A08AA /* OSSGetBucketInfoResult.h in Headers */,
-				D80C88E8201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.h in Headers */,
+				D80C88E8201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.h in Headers */,
 				D80C82011FC82559008E3900 /* OSSHttpdns.h in Headers */,
 				D827B40C21107169003A24F6 /* NSDate+OSS.h in Headers */,
 				D842D5A91FFCBA2800220913 /* AliyunOSSiOS.h in Headers */,
@@ -887,48 +887,48 @@
 				D8C41AE61FCC2F920091699B /* OSSNetworking.m in Sources */,
 				D827B4372111ADF7003A24F6 /* OSSGetSymlinkResult.m in Sources */,
 				D4204347294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m in Sources */,
-				D80C88E9201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m in Sources */,
+				D80C88E9201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m in Sources */,
 				D8C41AE71FCC2F920091699B /* OSSHttpdns.m in Sources */,
-				D8C41AE91FCC2F920091699B /* OSSClient.m in Sources */,
+				D8C41AE91FCC2F920091699B /* InspurOSSClient.m in Sources */,
 				54A2FDCA289B6803005410F8 /* OSSDeleteObjectTaggingResult.m in Sources */,
 				D80C88D7201AC33000F379D8 /* OSSGetObjectACLResult.m in Sources */,
 				D827B40D21107169003A24F6 /* NSDate+OSS.m in Sources */,
 				D8C41AEC1FCC2F920091699B /* OSSLog.m in Sources */,
-				D827B4252111A71B003A24F6 /* OSSRestoreObjectRequest.m in Sources */,
+				D827B4252111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m in Sources */,
 				D8C41AF01FCC2F920091699B /* OSSModel.m in Sources */,
 				D8C41AF51FCC2F920091699B /* OSSIPv6PrefixResolver.m in Sources */,
 				D85278062015D58400D7B1DE /* OSSHttpResponseParser.m in Sources */,
 				D80C88EF201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m in Sources */,
 				D8C41AF71FCC2F920091699B /* OSSIPv6Adapter.m in Sources */,
-				D827B4192111A6E4003A24F6 /* OSSPutSymlinkRequest.m in Sources */,
+				D827B4192111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m in Sources */,
 				D8C41AFA1FCC2F920091699B /* OSSCompat.m in Sources */,
 				D8C41AFC1FCC2F920091699B /* OSSCancellationTokenRegistration.m in Sources */,
 				D8C41AFD1FCC2F920091699B /* OSSBolts.m in Sources */,
 				D8C41AFF1FCC2F920091699B /* OSSTaskCompletionSource.m in Sources */,
 				54A2FDD6289B6847005410F8 /* OSSGetObjectTaggingResult.m in Sources */,
-				D8C2951420F46A79008A08AA /* OSSGetBucketInfoRequest.m in Sources */,
+				D8C2951420F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m in Sources */,
 				D827B42B2111A853003A24F6 /* OSSRestoreObjectResult.m in Sources */,
 				D8C41B001FCC2F920091699B /* OSSTask.m in Sources */,
 				D8C41B011FCC2F920091699B /* OSSCancellationToken.m in Sources */,
 				D8C41B071FCC2F920091699B /* OSSCancellationTokenSource.m in Sources */,
 				D8C41B081FCC2F920091699B /* OSSExecutor.m in Sources */,
 				D8C5E54F1FCEB57600613BA5 /* NSMutableData+OSS_CRC.m in Sources */,
-				54A2FDD0289B682E005410F8 /* OSSGetObjectTaggingRequest.m in Sources */,
+				54A2FDD0289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m in Sources */,
 				D80C88D1201AC21200F379D8 /* OSSResult.m in Sources */,
 				D8C41B0A1FCC2F920091699B /* OSSXMLDictionary.m in Sources */,
-				D827B41F2111A6FA003A24F6 /* OSSGetSymlinkRequest.m in Sources */,
-				54A2FDC4289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m in Sources */,
+				D827B41F2111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m in Sources */,
+				54A2FDC4289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m in Sources */,
 				D852780C2015D59000D7B1DE /* OSSURLRequestRetryHandler.m in Sources */,
 				D85277ED2015BBAD00D7B1DE /* OSSRequest.m in Sources */,
 				D827B4312111ADE9003A24F6 /* OSSPutSymlinkResult.m in Sources */,
 				D827B41321114E4B003A24F6 /* NSMutableDictionary+OSS.m in Sources */,
 				D85278122015DF4900D7B1DE /* OSSConstants.m in Sources */,
-				D80C88CB201AC1B400F379D8 /* OSSGetObjectACLRequest.m in Sources */,
+				D80C88CB201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m in Sources */,
 				D8C41B0E1FCC2F920091699B /* OSSDDLog.m in Sources */,
 				D4204341294B877300E0FAAD /* OSSGetObjectMetaDataRequest.m in Sources */,
 				D8C2951A20F46A95008A08AA /* OSSGetBucketInfoResult.m in Sources */,
 				D8C41B101FCC2F920091699B /* OSSReachability.m in Sources */,
-				54A2FDDC289B6863005410F8 /* OSSPutObjectTaggingRequest.m in Sources */,
+				54A2FDDC289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m in Sources */,
 				D8C41B111FCC2F920091699B /* OSSNSLogger.m in Sources */,
 				D85277FA2015CB3500D7B1DE /* OSSAllRequestNeededMessage.m in Sources */,
 				D829F3AB1FD8CFBE00A8C2DC /* OSSInputStreamHelper.m in Sources */,
@@ -948,48 +948,48 @@
 				D8C41AA71FCC284F0091699B /* OSSNetworking.m in Sources */,
 				D827B4382111ADF7003A24F6 /* OSSGetSymlinkResult.m in Sources */,
 				D4204348294B87AD00E0FAAD /* OSSGetObjectMetaDataResult.m in Sources */,
-				D80C88EA201B06CF00F379D8 /* OSSDeleteMultipleObjectsRequest.m in Sources */,
+				D80C88EA201B06CF00F379D8 /* InspurOSSDeleteMultipleObjectsRequest.m in Sources */,
 				D8C41AA81FCC284F0091699B /* OSSHttpdns.m in Sources */,
-				D8C41AAA1FCC284F0091699B /* OSSClient.m in Sources */,
+				D8C41AAA1FCC284F0091699B /* InspurOSSClient.m in Sources */,
 				54A2FDCB289B6803005410F8 /* OSSDeleteObjectTaggingResult.m in Sources */,
 				D80C88D8201AC33000F379D8 /* OSSGetObjectACLResult.m in Sources */,
 				D827B40E21107169003A24F6 /* NSDate+OSS.m in Sources */,
 				D8C41AAD1FCC284F0091699B /* OSSLog.m in Sources */,
-				D827B4262111A71B003A24F6 /* OSSRestoreObjectRequest.m in Sources */,
+				D827B4262111A71B003A24F6 /* InspurOSSRestoreObjectRequest.m in Sources */,
 				D8C41AB11FCC284F0091699B /* OSSModel.m in Sources */,
 				D8C41AB61FCC284F0091699B /* OSSIPv6PrefixResolver.m in Sources */,
 				D85278072015D58400D7B1DE /* OSSHttpResponseParser.m in Sources */,
 				D80C88F0201B06E200F379D8 /* OSSDeleteMultipleObjectsResult.m in Sources */,
 				D8C41AB81FCC284F0091699B /* OSSIPv6Adapter.m in Sources */,
-				D827B41A2111A6E4003A24F6 /* OSSPutSymlinkRequest.m in Sources */,
+				D827B41A2111A6E4003A24F6 /* InspurOSSPutSymlinkRequest.m in Sources */,
 				D8C41ABB1FCC284F0091699B /* OSSCompat.m in Sources */,
 				D8C41ABD1FCC284F0091699B /* OSSCancellationTokenRegistration.m in Sources */,
 				D8C41ABE1FCC284F0091699B /* OSSBolts.m in Sources */,
 				D8C41AC01FCC284F0091699B /* OSSTaskCompletionSource.m in Sources */,
 				54A2FDD7289B6847005410F8 /* OSSGetObjectTaggingResult.m in Sources */,
-				D8C2951520F46A79008A08AA /* OSSGetBucketInfoRequest.m in Sources */,
+				D8C2951520F46A79008A08AA /* InspurOSSGetBucketInfoRequest.m in Sources */,
 				D827B42C2111A853003A24F6 /* OSSRestoreObjectResult.m in Sources */,
 				D8C41AC11FCC284F0091699B /* OSSTask.m in Sources */,
 				D8C41AC21FCC284F0091699B /* OSSCancellationToken.m in Sources */,
 				D8C41AC81FCC28500091699B /* OSSCancellationTokenSource.m in Sources */,
 				D8C41AC91FCC28500091699B /* OSSExecutor.m in Sources */,
 				D8C5E5501FCEB57600613BA5 /* NSMutableData+OSS_CRC.m in Sources */,
-				54A2FDD1289B682E005410F8 /* OSSGetObjectTaggingRequest.m in Sources */,
+				54A2FDD1289B682E005410F8 /* InspurOSSGetObjectTaggingRequest.m in Sources */,
 				D80C88D2201AC21200F379D8 /* OSSResult.m in Sources */,
 				D8C41ACB1FCC28500091699B /* OSSXMLDictionary.m in Sources */,
-				D827B4202111A6FA003A24F6 /* OSSGetSymlinkRequest.m in Sources */,
-				54A2FDC5289B67D4005410F8 /* OSSDeleteObjectTaggingRequest.m in Sources */,
+				D827B4202111A6FA003A24F6 /* InspurOSSGetSymlinkRequest.m in Sources */,
+				54A2FDC5289B67D4005410F8 /* InspurOSSDeleteObjectTaggingRequest.m in Sources */,
 				D852780D2015D59000D7B1DE /* OSSURLRequestRetryHandler.m in Sources */,
 				D85277EE2015BBAD00D7B1DE /* OSSRequest.m in Sources */,
 				D827B4322111ADE9003A24F6 /* OSSPutSymlinkResult.m in Sources */,
 				D827B41421114E4B003A24F6 /* NSMutableDictionary+OSS.m in Sources */,
 				D85278132015DF4900D7B1DE /* OSSConstants.m in Sources */,
-				D80C88CC201AC1B400F379D8 /* OSSGetObjectACLRequest.m in Sources */,
+				D80C88CC201AC1B400F379D8 /* InspurOSSGetObjectACLRequest.m in Sources */,
 				D8C41ACF1FCC28500091699B /* OSSDDLog.m in Sources */,
 				D4204342294B877300E0FAAD /* OSSGetObjectMetaDataRequest.m in Sources */,
 				D8C2951B20F46A95008A08AA /* OSSGetBucketInfoResult.m in Sources */,
 				D8C41AD11FCC28500091699B /* OSSReachability.m in Sources */,
-				54A2FDDD289B6863005410F8 /* OSSPutObjectTaggingRequest.m in Sources */,
+				54A2FDDD289B6863005410F8 /* InspurOSSPutObjectTaggingRequest.m in Sources */,
 				D8C41AD21FCC28500091699B /* OSSNSLogger.m in Sources */,
 				D85277FB2015CB3500D7B1DE /* OSSAllRequestNeededMessage.m in Sources */,
 				D829F3AC1FD8CFBE00A8C2DC /* OSSInputStreamHelper.m in Sources */,

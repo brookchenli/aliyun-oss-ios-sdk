@@ -543,7 +543,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 #pragma mark request and result objects
 
-@implementation OSSGetServiceRequest
+@implementation InspurOSSGetServiceRequest
 
 - (NSDictionary *)requestParams {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
@@ -560,7 +560,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetServiceResult
 @end
 
-@implementation OSSListPageServiceRequest
+@implementation InspurOSSListPageServiceRequest
 
 - (NSDictionary *)requestParams {
     
@@ -583,7 +583,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSQueryBucketExistRequest
+@implementation InspurOSSQueryBucketExistRequest
 
 @end
 
@@ -591,7 +591,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSGetBucketLocationRequest
+@implementation InspurOSSGetBucketLocationRequest
 
 - (NSDictionary *)requestParams {
     
@@ -606,7 +606,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSCreateBucketRequest
+@implementation InspurOSSCreateBucketRequest
 
 - (instancetype)init
 {
@@ -641,13 +641,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSCreateBucketResult
 @end
 
-@implementation OSSDeleteBucketRequest
+@implementation InspurOSSDeleteBucketRequest
 @end
 
 @implementation OSSDeleteBucketResult
 @end
 
-@implementation OSSGetBucketRequest
+@implementation InspurOSSGetBucketRequest
 
 - (NSDictionary *)requestParams {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
@@ -662,7 +662,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSListMultipartUploadsRequest
+@implementation InspurOSSListMultipartUploadsRequest
 - (NSDictionary *)requestParams {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:self.delimiter forKey:@"delimiter"];
@@ -685,7 +685,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketResult
 @end
 
-@implementation OSSGetBucketACLRequest
+@implementation InspurOSSGetBucketACLRequest
 
 - (NSDictionary *)requestParams {
     return @{@"acl": @""};
@@ -696,7 +696,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketACLResult
 @end
 
-@implementation OSSPutBucketACLRequest
+@implementation InspurOSSPutBucketACLRequest
 
 - (instancetype)init
 {
@@ -714,7 +714,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @end
 
 
-@implementation OSSGetBucketCORSRequest
+@implementation InspurOSSGetBucketCORSRequest
 
 - (NSDictionary *)requestParams {
     return @{@"cors": @""};
@@ -726,7 +726,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSPutBucketCORSRequest
+@implementation InspurOSSPutBucketCORSRequest
 - (NSDictionary *)requestParams {
     return @{@"cors": @""};
 }
@@ -736,7 +736,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSDeleteBucketCORSRequest
+@implementation InspurOSSDeleteBucketCORSRequest
 - (NSDictionary *)requestParams {
     return @{@"cors": @""};
 }
@@ -746,7 +746,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSGetVersioningRequest
+@implementation InspurOSSGetVersioningRequest
 - (NSDictionary *)requestParams {
     return @{@"versioning": @""};
 }
@@ -756,13 +756,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSPutVersioningRequest
+@implementation InspurOSSPutVersioningRequest
 @end
 
 @implementation OSSPutVersioningResult
 @end
 
-@implementation OSSGetBucketEncryptionRequest
+@implementation InspurOSSGetBucketEncryptionRequest
 - (NSDictionary *)requestParams {
     return @{@"encryption": @""};
 }
@@ -771,20 +771,20 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketEncryptionResult
 @end
 
-@implementation OSSPutBucketEncryptionRequest
+@implementation InspurOSSPutBucketEncryptionRequest
 @end
 
 @implementation OSSPutBucketEncryptionResult
 @end
 
-@implementation OSSDeleteBucketEncryptionRequest
+@implementation InspurOSSDeleteBucketEncryptionRequest
 @end
 
 @implementation OSSDeleteBucketEncryptionResult
 @end
 
 
-@implementation OSSGetBucketWebsiteRequest
+@implementation InspurOSSGetBucketWebsiteRequest
 - (NSDictionary *)requestParams {
     return @{@"website": @""};
 }
@@ -793,19 +793,19 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketWebsiteResult
 @end
 
-@implementation OSSPutBucketWebsiteRequest
+@implementation InspurOSSPutBucketWebsiteRequest
 @end
 
 @implementation OSSPutBucketWebsiteResult
 @end
 
-@implementation OSSDeleteBucketWebsiteRequest
+@implementation InspurOSSDeleteBucketWebsiteRequest
 @end
 
 @implementation OSSDeleteBucketWebsiteResult
 @end
 
-@implementation OSSGetBucketDomainRequest
+@implementation InspurOSSGetBucketDomainRequest
 - (NSDictionary *)requestParams {
     return @{@"domain": @""};
 }
@@ -814,19 +814,19 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketDomainResult
 @end
 
-@implementation OSSPutBucketDomainRequest
+@implementation InspurOSSPutBucketDomainRequest
 @end
 
 @implementation OSSPutBucketDomainResult
 @end
 
-@implementation OSSDeleteBucketDomainRequest
+@implementation InspurOSSDeleteBucketDomainRequest
 @end
 
 @implementation OSSDeleteBucketDomainResult
 @end
 
-@implementation OSSGetBucketLifeCycleRequest
+@implementation InspurOSSGetBucketLifeCycleRequest
 - (NSDictionary *)requestParams {
     return @{@"lifecycle": @""};
 }
@@ -835,19 +835,19 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketLifeCycleResult
 @end
 
-@implementation OSSPutBucketLifeCycleRequest
+@implementation InspurOSSPutBucketLifeCycleRequest
 @end
 
 @implementation OSSPutBucketLifeCycleResult
 @end
 
-@implementation OSSDeleteBucketLifeCycleRequest
+@implementation InspurOSSDeleteBucketLifeCycleRequest
 @end
 
 @implementation OSSDeleteBucketLifeCycleResult
 @end
 
-@implementation OSSGetBucketPolicyRequest
+@implementation InspurOSSGetBucketPolicyRequest
 - (NSDictionary *)requestParams {
     return @{@"policy": @""};
 }
@@ -856,13 +856,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSGetBucketPolicyResult
 @end
 
-@implementation OSSPutBucketPolicyRequest
+@implementation InspurOSSPutBucketPolicyRequest
 @end
 
 @implementation OSSPutBucketPolicyResult
 @end
 
-@implementation OSSDeleteBucketPolicyRequest
+@implementation InspurOSSDeleteBucketPolicyRequest
 - (NSDictionary *)requestParams {
     return @{@"policy": @""};
 }
@@ -872,19 +872,19 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @end
 
 
-@implementation OSSHeadObjectRequest
+@implementation InspurOSSHeadObjectRequest
 @end
 
 @implementation OSSHeadObjectResult
 @end
 
-@implementation OSSGetObjectRequest
+@implementation InspurOSSGetObjectRequest
 @end
 
 @implementation OSSGetObjectResult
 @end
 
-@implementation OSSPutObjectACLRequest
+@implementation InspurOSSPutObjectACLRequest
 
 - (instancetype)init
 {
@@ -897,7 +897,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSPutObjectMetaRequest
+@implementation InspurOSSPutObjectMetaRequest
 - (NSDictionary *)requestParams {
     return @{@"metadata": @""};
 }
@@ -906,7 +906,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSPutObjectACLResult
 @end
 
-@implementation OSSPutObjectRequest
+@implementation InspurOSSPutObjectRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -920,7 +920,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSPutObjectResult
 @end
 
-@implementation OSSAppendObjectRequest
+@implementation InspurOSSAppendObjectRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -934,13 +934,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSAppendObjectResult
 @end
 
-@implementation OSSDeleteObjectRequest
+@implementation InspurOSSDeleteObjectRequest
 @end
 
 @implementation OSSDeleteObjectResult
 @end
 
-@implementation OSSCopyObjectRequest
+@implementation InspurOSSCopyObjectRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -954,7 +954,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSCopyObjectResult
 @end
 
-@implementation OSSInitMultipartUploadRequest
+@implementation InspurOSSInitMultipartUploadRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -968,7 +968,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSInitMultipartUploadResult
 @end
 
-@implementation OSSUploadPartRequest
+@implementation InspurOSSUploadPartRequest
 @end
 
 @implementation OSSUploadPartResult
@@ -1026,25 +1026,25 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSCompleteMultipartUploadRequest
+@implementation InspurOSSCompleteMultipartUploadRequest
 @end
 
 @implementation OSSCompleteMultipartUploadResult
 @end
 
-@implementation OSSAbortMultipartUploadRequest
+@implementation InspurOSSAbortMultipartUploadRequest
 @end
 
 @implementation OSSAbortMultipartUploadResult
 @end
 
-@implementation OSSListPartsRequest
+@implementation InspurOSSListPartsRequest
 @end
 
 @implementation OSSListPartsResult
 @end
 
-@implementation OSSMultipartUploadRequest
+@implementation InspurOSSMultipartUploadRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -1059,7 +1059,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSResumableUploadRequest
+@implementation InspurOSSResumableUploadRequest
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -1081,13 +1081,13 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation OSSResumableUploadResult
 @end
 
-@implementation OSSCallBackRequest
+@implementation InspurOSSCallBackRequest
 @end
 
 @implementation OSSCallBackResult
 @end
 
-@implementation OSSImagePersistRequest
+@implementation InspurOSSImagePersistRequest
 @end
 
 @implementation OSSImagePersistResult
@@ -1132,7 +1132,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSGetObjectVersionRequest
+@implementation InspurOSSGetObjectVersionRequest
 - (NSDictionary *)requestParams {
     return @{@"versions": @""};
 }
@@ -1143,7 +1143,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @end
 
-@implementation OSSDeleteObjectVersionRequest
+@implementation InspurOSSDeleteObjectVersionRequest
 
 @end
 

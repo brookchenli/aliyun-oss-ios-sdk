@@ -1,5 +1,5 @@
 //
-//  OSSGetSymlinkRequest.h
+//  OSSRestoreObjectRequest.h
 //  AliyunOSSSDK
 //
 //  Created by huaixu on 2018/8/1.
@@ -8,7 +8,7 @@
 
 #import "OSSRequest.h"
 
-@interface OSSGetSymlinkRequest : OSSRequest
+@interface InspurOSSRestoreObjectRequest : OSSRequest
 
 @property (nonatomic, copy) NSString *bucketName;
 

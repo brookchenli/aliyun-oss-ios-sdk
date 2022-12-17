@@ -10,9 +10,9 @@
 #import <XCTest/XCTest.h>
 
 @implementation OSSTestUtils
-+ (void)cleanBucket: (NSString *)bucket with: (OSSClient *)client {
++ (void)cleanBucket: (NSString *)bucket with: (InspurOSSClient *)client {
     //delete object
-    OSSGetBucketRequest *listObject = [OSSGetBucketRequest new];
+    InspurOSSGetBucketRequest *listObject = [InspurOSSGetBucketRequest new];
     listObject.bucketName = bucket;
     listObject.maxKeys = 1000;
     OSSTask *listObjectTask = [client getBucket:listObject];
@@ -21,7 +21,7 @@
         for (NSDictionary *dict in listObjectResult.contents) {
             NSString * objectKey = [dict objectForKey:@"Key"];
             NSLog(@"delete object %@", objectKey);
-            OSSDeleteObjectRequest * deleteObj = [OSSDeleteObjectRequest new];
+            InspurOSSDeleteObjectRequest * deleteObj = [InspurOSSDeleteObjectRequest new];
             deleteObj.bucketName = bucket;
             deleteObj.objectKey = objectKey;
             [[client deleteObject:deleteObj] waitUntilFinished];
@@ -30,7 +30,7 @@
     }] waitUntilFinished];
     
     //delete multipart uploads
-    OSSListMultipartUploadsRequest *listMultipartUploads = [OSSListMultipartUploadsRequest new];
+    InspurOSSListMultipartUploadsRequest *listMultipartUploads = [InspurOSSListMultipartUploadsRequest new];
     listMultipartUploads.bucketName = bucket;
     listMultipartUploads.maxUploads = 1000;
     OSSTask *listMultipartUploadsTask = [client listMultipartUploads:listMultipartUploads];
@@ -41,7 +41,7 @@
             NSString * uploadId = [dict objectForKey:@"UploadId"];
             NSString * objectKey = [dict objectForKey:@"Key"];
             NSLog(@"delete multipart uploadId %@", uploadId);
-            OSSAbortMultipartUploadRequest *abort = [OSSAbortMultipartUploadRequest new];
+            InspurOSSAbortMultipartUploadRequest *abort = [InspurOSSAbortMultipartUploadRequest new];
             abort.bucketName = bucket;
             abort.objectKey = objectKey;
             abort.uploadId = uploadId;
@@ -50,18 +50,18 @@
         return nil;
     }] waitUntilFinished];
     //delete bucket
-    OSSDeleteBucketRequest *deleteBucket = [OSSDeleteBucketRequest new];
+    InspurOSSDeleteBucketRequest *deleteBucket = [InspurOSSDeleteBucketRequest new];
     deleteBucket.bucketName = bucket;
     [[client deleteBucket:deleteBucket] waitUntilFinished];
 }
 
-+ (void) putTestDataWithKey: (NSString *)key withClient: (OSSClient *)client withBucket: (NSString *)bucket
++ (void) putTestDataWithKey: (NSString *)key withClient: (InspurOSSClient *)client withBucket: (NSString *)bucket
 {
     NSString *objectKey = key;
     NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:objectKey];
     NSURL * fileURL = [NSURL fileURLWithPath:filePath];
     
-    OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+    InspurOSSPutObjectRequest * request = [InspurOSSPutObjectRequest new];
     request.bucketName = bucket;
     request.objectKey = objectKey;
     request.uploadingFileURL = fileURL;

@@ -8,7 +8,7 @@
 
 #import "OSSRequest.h"
 
-@interface OSSPutSymlinkRequest : OSSRequest
+@interface InspurOSSPutSymlinkRequest : OSSRequest
 
 /* bucket name */
 @property (nonatomic, copy) NSString *bucketName;

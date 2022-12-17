@@ -1,5 +1,5 @@
 //
-//  GetObjectTaggingRequest.h
+//  OSSDeleteObjectTaggingRequest.h
 //  AliyunOSSSDK
 //
 //  Created by ws on 2021/5/25.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSGetObjectTaggingRequest : OSSRequest
+@interface InspurOSSDeleteObjectTaggingRequest : OSSRequest
 
 /* bucket name */
 @property (nonatomic, copy) NSString *bucketName;

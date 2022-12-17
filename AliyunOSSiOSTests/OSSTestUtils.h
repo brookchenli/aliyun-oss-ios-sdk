@@ -10,8 +10,8 @@
 #import <AliyunOSSiOS/AliyunOSSiOS.h>
 
 @interface OSSTestUtils : NSObject
-+ (void)cleanBucket: (NSString *)bucket with: (OSSClient *)client;
-+ (void) putTestDataWithKey: (NSString *)key withClient: (OSSClient *)client withBucket: (NSString *)bucket;
++ (void)cleanBucket: (NSString *)bucket with: (InspurOSSClient *)client;
++ (void) putTestDataWithKey: (NSString *)key withClient: (InspurOSSClient *)client withBucket: (NSString *)bucket;
 @end
 
 @interface OSSProgressTestUtils : NSObject

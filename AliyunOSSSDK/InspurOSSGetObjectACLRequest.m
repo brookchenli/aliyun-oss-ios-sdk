@@ -6,8 +6,8 @@
 //  Copyright © 2018年 aliyun. All rights reserved.
 //
 
-#import "OSSGetObjectACLRequest.h"
+#import "InspurOSSGetObjectACLRequest.h"
 
-@implementation OSSGetObjectACLRequest
+@implementation InspurOSSGetObjectACLRequest
 
 @end

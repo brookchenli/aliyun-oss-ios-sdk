@@ -1,5 +1,5 @@
 //
-//  OSSPutObjectTaggingRequest.h
+//  GetObjectTaggingRequest.h
 //  AliyunOSSSDK
 //
 //  Created by ws on 2021/5/25.
@@ -10,17 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSPutObjectTaggingRequest : OSSRequest
+@interface InspurOSSGetObjectTaggingRequest : OSSRequest
 
 /* bucket name */
 @property (nonatomic, copy) NSString *bucketName;
 
 /* object name */
 @property (nonatomic, copy) NSString *objectKey;
-
-@property (nonatomic, copy) NSDictionary *tags;
-
-- (NSDictionary *)entityToDictionary;
 
 @end
 

@@ -16,7 +16,7 @@
 
 @interface OSSCrc64Tests : XCTestCase
 {
-    OSSClient *_client;
+    InspurOSSClient *_client;
     NSArray<NSNumber *> *_fileSizes;
     NSArray<NSString *> *_fileNames;
     NSString *_privateBucketName;
@@ -52,10 +52,10 @@
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     
     
-    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT
+    _client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT
                                credentialProvider:authProv
                               clientConfiguration:config];
-    OSSCreateBucketRequest *createBucket = [OSSCreateBucketRequest new];
+    InspurOSSCreateBucketRequest *createBucket = [InspurOSSCreateBucketRequest new];
     createBucket.bucketName = _privateBucketName;
     [[_client createBucket:createBucket] waitUntilFinished];
     [OSSLog enableLog];
@@ -104,7 +104,7 @@
         NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:objectKey];
         NSURL * fileURL = [NSURL fileURLWithPath:filePath];
         
-        OSSPutObjectRequest * request = [OSSPutObjectRequest new];
+        InspurOSSPutObjectRequest * request = [InspurOSSPutObjectRequest new];
         request.bucketName = _privateBucketName;
         request.objectKey = objectKey;
         request.uploadingFileURL = fileURL;
@@ -127,7 +127,7 @@
 - (void)testA_appendObject{
     
     NSString *filePath = [[NSString oss_documentDirectory] stringByAppendingPathComponent:_fileNames[0]];
-    OSSAppendObjectRequest * request = [OSSAppendObjectRequest new];
+    InspurOSSAppendObjectRequest * request = [InspurOSSAppendObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = @"appendObject";
     request.appendPosition = 0;
@@ -171,7 +171,7 @@
 - (void)test_getObject
 {
     [OSSTestUtils putTestDataWithKey:_fileNames[0] withClient:_client withBucket:_privateBucketName];
-    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    InspurOSSGetObjectRequest * request = [InspurOSSGetObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = _fileNames[0];
     request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
@@ -214,7 +214,7 @@
 
 - (void)test_MultipartUploadNormal {
     NSString * objectkey = @"mul-wangwang.zip";
-    OSSMultipartUploadRequest * multipartUploadRequest = [OSSMultipartUploadRequest new];
+    InspurOSSMultipartUploadRequest * multipartUploadRequest = [InspurOSSMultipartUploadRequest new];
     
     multipartUploadRequest.bucketName = _privateBucketName;
     multipartUploadRequest.objectKey = objectkey;
@@ -246,7 +246,7 @@
 - (void)test_resumbleUploadCancelResumble {
     NSString * objectkey = @"bigfile.zip";
     __block bool cancel = NO;
-    OSSResumableUploadRequest * resumableUpload = [OSSResumableUploadRequest new];
+    InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = objectkey;
     resumableUpload.deleteUploadIdOnCancelling = NO;
@@ -275,7 +275,7 @@
     [resumeTask waitUntilFinished];
     
     [NSThread sleepForTimeInterval:1];
-    resumableUpload = [OSSResumableUploadRequest new];
+    resumableUpload = [InspurOSSResumableUploadRequest new];
     resumableUpload.bucketName = _privateBucketName;
     resumableUpload.objectKey = objectkey;
     resumableUpload.recordDirectoryPath = cachesDir;
@@ -300,7 +300,7 @@
     XCTAssertTrue([progressTest completeValidateProgress]);
 }
 
-- (NSString *)getRecordFilePath:(OSSResumableUploadRequest *)resumableUpload {
+- (NSString *)getRecordFilePath:(InspurOSSResumableUploadRequest *)resumableUpload {
     NSString *recordPathMd5 = [OSSUtil fileMD5String:[resumableUpload.uploadingFileURL path]];
     NSData *data = [[NSString stringWithFormat:@"%@%@%@%lu",recordPathMd5, resumableUpload.bucketName, resumableUpload.objectKey, resumableUpload.partSize] dataUsingEncoding:NSUTF8StringEncoding];
     NSString *recordFileName = [OSSUtil dataMD5String:data];

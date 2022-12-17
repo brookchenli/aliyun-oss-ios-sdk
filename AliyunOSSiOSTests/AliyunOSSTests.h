@@ -12,7 +12,7 @@
 
 @interface AliyunOSSTests : XCTestCase
 
-@property (nonatomic, strong) OSSClient *client;
+@property (nonatomic, strong) InspurOSSClient *client;
 @property (nonatomic, copy) NSArray<NSString *> *fileNames;
 @property (nonatomic, copy) NSArray<NSNumber *> *fileSizes;
 
