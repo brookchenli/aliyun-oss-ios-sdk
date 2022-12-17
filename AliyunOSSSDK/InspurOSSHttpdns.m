@@ -1,8 +1,8 @@
 //
 //  OSSHttpdns.m
-//  AliyunOSSiOS
+//  InspurOSSiOS
 //
-//  Created by zhouzhuo on 5/1/16.
+//  Created by xx on 5/1/16.
 //  Copyright © 2016 zhouzhuo. All rights reserved.
 //
 
@@ -53,7 +53,7 @@ NSTimeInterval const PRERESOLVE_IN_ADVANCE_IN_SECOND = 10; // Once the remaining
 /**
  *  OSS SDK specific
  *
- *  @param host it needs strictly follow the domain's format, such as oss-cn-hangzhou.aliyuncs.com
+ *  @param host it needs strictly follow the domain's format, such as 
  *
  *  @return an ip in the ip list of the resolved host.
  */

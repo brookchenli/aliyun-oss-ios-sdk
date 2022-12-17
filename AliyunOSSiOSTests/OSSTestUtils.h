@@ -1,9 +1,9 @@
 //
 //  OSSTestUtils.h
-//  AliyunOSSiOSTests
+//  InspurOSSiOSTests
 //
-//  Created by jingdan on 2018/2/24.
-//  Copyright © 2018年 aliyun. All rights reserved.
+//  Created by xx on 2018/2/24.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

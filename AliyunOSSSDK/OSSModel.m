@@ -2,8 +2,8 @@
 //  OSSModel.m
 //  oss_ios_sdk
 //
-//  Created by zhouzhuo on 8/16/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 8/16/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 #import "OSSDefine.h"
 #import "OSSModel.h"
@@ -18,7 +18,7 @@
 
 #import "InspurOSSAllRequestNeededMessage.h"
 
-@implementation NSDictionary (OSS)
+@implementation NSDictionary (InspurOSS)
 
 - (NSString *)base64JsonString {
     NSError * error;
@@ -42,7 +42,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _dictionary = [NSMutableDictionary dictionary];
-        _dispatchQueue = dispatch_queue_create("com.aliyun.aliyunsycmutabledictionary", DISPATCH_QUEUE_SERIAL);
+        _dispatchQueue = dispatch_queue_create("com.inspur.inpsursycmutabledictionary", DISPATCH_QUEUE_SERIAL);
     }
 
     return self;
@@ -284,7 +284,7 @@
 
 @end
 
-NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsession";
+NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.inspur.oss.backgroundsession";
 
 @implementation InspurOSSClientConfiguration
 

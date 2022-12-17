@@ -1,8 +1,8 @@
 //
 //  OSSManager.h
-//  AliyunOSSSDK-iOS-Example
+//  InspurOSSSDK-iOS-Example
 //
-//  Created by huaixu on 2018/10/23.
+//  Created by xx on 2018/10/23.
 //  Copyright © 2018 aliyun. All rights reserved.
 //
 

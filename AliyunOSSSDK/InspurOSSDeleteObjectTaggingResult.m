@@ -1,9 +1,9 @@
 //
 //  OSSDeleteObjectTaggingResult.m
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
-//  Created by ws on 2022/8/4.
-//  Copyright © 2022 aliyun. All rights reserved.
+//  Created by xx on 2022/8/4.
+//  Copyright © 2022 Inspur. All rights reserved.
 //
 
 #import "InspurOSSDeleteObjectTaggingResult.h"

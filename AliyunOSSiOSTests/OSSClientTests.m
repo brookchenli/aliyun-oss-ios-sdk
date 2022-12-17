@@ -1,9 +1,9 @@
 //
 //  OSSClientTests.m
-//  AliyunOSSiOSTests
+//  InspurOSSiOSTests
 //
-//  Created by huaixu on 2018/8/10.
-//  Copyright © 2018年 aliyun. All rights reserved.
+//  Created by xx on 2018/8/10.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

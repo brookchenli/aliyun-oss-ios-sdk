@@ -280,7 +280,7 @@ typedef __nullable id(^OSSContinuationBlock)(InspurOSSTask<ResultType> *task);
 
 @class InspurOSSResult;
 
-@interface InspurOSSTask(OSS)
+@interface InspurOSSTask(InspurOSS)
 
 typedef void(^OSSCompleteBlock)(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result);
 

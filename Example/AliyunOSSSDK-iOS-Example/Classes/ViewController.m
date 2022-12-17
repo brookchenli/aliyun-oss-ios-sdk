@@ -2,7 +2,7 @@
 //  ViewController.m
 //  OssIOSDemo
 //
-//  Created by jingdan on 17/11/23.
+//  Created by xx on 17/11/23.
 //  Copyright © 2015年 Ali. All rights reserved.
 //
 

@@ -1,6 +1,6 @@
 //
 //  OSSNetworkingRequestDelegateTest.m
-//  AliyunOSSiOSTests
+//  InspurOSSiOSTests
 //
 //  Created by ws on 2021/3/26.
 //  Copyright © 2021 aliyun. All rights reserved.

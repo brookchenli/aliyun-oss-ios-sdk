@@ -1,9 +1,9 @@
 //
 //  main.m
-//  AliyunOSSSDK-iOS-Example
+//  InspurOSSSDK-iOS-Example
 //
-//  Created by 怀叙 on 2017/11/23.
-//  Copyright © 2017年 阿里云. All rights reserved.
+//  Created by xx on 2017/11/23.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

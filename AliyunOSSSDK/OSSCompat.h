@@ -2,8 +2,8 @@
 //  OSSCompat.h
 //  oss_ios_sdk_new
 //
-//  Created by zhouzhuo on 9/10/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 9/10/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

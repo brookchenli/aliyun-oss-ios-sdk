@@ -2,8 +2,8 @@
 //  OSSClient.h
 //  oss_ios_sdk
 //
-//  Created by zhouzhuo on 8/16/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 8/16/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Initializes an OSSClient instance with the default client configuration.
  @endpoint it specifies domain of the bucket's region. Starting 2017, the domain must be prefixed with "https://" to follow Apple's ATS policy.
-             For example: "https://oss-cn-hangzhou.aliyuncs.com"
+             For example: ""
  @credentialProvider The credential provider
  */
 - (instancetype)initWithEndpoint:(NSString *)endpoint
@@ -122,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Initializes an OSSClient with the custom client configuration.
  @endpoint it specifies domain of the bucket's region. Starting 2017, the domain must be prefixed with "https://" to follow Apple's ATS policy.
-             For example: "https://oss-cn-hangzhou.aliyuncs.com"
+             For example: ""
  @credentialProvider The credential provider
  @conf The custom client configuration such as retry time, timeout values, etc.
  */
@@ -319,7 +319,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSPutSymlinkResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/45126.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)putSymlink:(InspurOSSPutSymlinkRequest *)request;
 
@@ -333,7 +333,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSGetSymlinkResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/45146.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)getSymlink:(InspurOSSGetSymlinkRequest *)request;
 
@@ -350,7 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSRestoreObjectResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/52930.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)restoreObject:(InspurOSSRestoreObjectRequest *)request;
 
@@ -365,7 +365,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSGetObjectTaggingResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/114878.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)getObjectTagging:(InspurOSSGetObjectTaggingRequest *)request;
 
@@ -381,7 +381,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSPutObjectTaggingResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/114855.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)putObjectTagging:(InspurOSSPutObjectTaggingRequest *)request;
 
@@ -396,7 +396,7 @@ NS_ASSUME_NONNULL_BEGIN
  *         contain an instance of `OSSDeleteObjectTaggingResult`,otherwise will contain
  *         an instance of NSError.
  *
- * for more information,please refer to https://help.aliyun.com/document_detail/114879.html
+ * for more information,please refer to
  */
 - (InspurOSSTask *)deleteObjectTagging:(InspurOSSDeleteObjectTaggingRequest *)request;
 
@@ -574,7 +574,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*
  * image persist action
- * https://help.aliyun.com/document_detail/55811.html
+ * 
  */
 - (InspurOSSTask *)imageActionPersist:(InspurOSSImagePersistRequest *)request;
 

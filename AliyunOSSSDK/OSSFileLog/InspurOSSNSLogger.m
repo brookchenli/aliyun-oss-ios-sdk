@@ -1,9 +1,9 @@
 //
 //  OSSNSLogger.m
-//  AliyunOSSiOS
+//  InspurOSSiOS
 //
-//  Created by jingdan on 2017/10/24.
-//  Copyright © 2017年 zhouzhuo. All rights reserved.
+//  Created by xx on 2017/10/24.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import "InspurOSSNSLogger.h"

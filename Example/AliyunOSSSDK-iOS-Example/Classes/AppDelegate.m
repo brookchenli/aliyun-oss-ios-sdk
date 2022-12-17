@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  AliyunOSSSDK-Example
+//  InspurOSSSDK-Example
 //
-//  Created by 怀叙 on 2017/11/22.
-//  Copyright © 2017年 阿里云. All rights reserved.
+//  Created by xx on 2017/11/22.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import "AppDelegate.h"

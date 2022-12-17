@@ -1,12 +1,12 @@
 //
 //  NSMutableData+OSS_CRC.m
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
-//  Created by 怀叙 on 2017/11/29.
-//  Copyright © 2017年 阿里云. All rights reserved.
+//  Created by xx on 2017/11/29.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
-#import "NSMutableData+OSS_CRC.h"
+#import "NSMutableData+Inspur_OSS_CRC.h"
 #include "aos_crc64.h"
 
 @implementation NSMutableData (InspurOSS_CRC)

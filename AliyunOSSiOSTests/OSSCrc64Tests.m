@@ -5,8 +5,8 @@
 
 // 需要注意的是:当使用OSSClient的- (OSSTask *)getObject:(OSSGetObjectRequest *)request API时,如果用户设置了request的onRecieveData时,需要用户自行在请求回调中计算crc64的值进行crc64的校验
 
-//  Created by 怀叙 on 2017/12/14.
-//  Copyright © 2017年 阿里云. All rights reserved.
+//  Created by xx on 2017/12/14.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

@@ -1,9 +1,9 @@
 //
 //  OSSTaskTests.m
-//  AliyunOSSiOSTests
+//  InspurOSSiOSTests
 //
-//  Created by 怀叙 on 2017/11/15.
-//  Copyright © 2017年 zhouzhuo. All rights reserved.
+//  Created by xx on 2017/11/15.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

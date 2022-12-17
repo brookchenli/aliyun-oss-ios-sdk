@@ -1,9 +1,9 @@
 //
 //  OSSHttp2Test.m
-//  AliyunOSSiOSTests
+//  InspurOSSiOSTests
 //
 //  Created by 王铮 on 2018/8/3.
-//  Copyright © 2018年 aliyun. All rights reserved.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

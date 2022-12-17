@@ -1,9 +1,9 @@
 //
 //  OSSLog.swift
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
-//  Created by 怀叙 on 2018/1/3.
-//  Copyright © 2018年 阿里云. All rights reserved.
+//  Created by xx on 2018/1/3.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 import AliyunOSSiOS

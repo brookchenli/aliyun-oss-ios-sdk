@@ -2,16 +2,16 @@
 //  OSSUtil.h
 //  oss_ios_sdk
 //
-//  Created by zhouzhuo on 8/16/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 8/16/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "OSSFileLogger.h"
 
-#import "NSMutableDictionary+OSS.h"
-#import "NSMutableData+OSS_CRC.h"
-#import "NSDate+OSS.h"
+#import "NSMutableDictionary+InspurOSS.h"
+#import "NSMutableData+Inspur_OSS_CRC.h"
+#import "NSDate+InspurOSS.h"
 
 @class InspurOSSFederationToken;
 
@@ -67,7 +67,7 @@
 
 @end
 
-@interface NSString (OSS)
+@interface NSString (InspurOSS)
 
 - (NSString *)oss_trim;
 - (BOOL)oss_isNotEmpty;

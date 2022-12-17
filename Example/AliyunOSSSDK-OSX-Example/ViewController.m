@@ -1,8 +1,8 @@
 //
 //  ViewController.m
-//  AliyunOSSSDK-OSX-Example
+//  InspurOSSSDK-OSX-Example
 //
-//  Created by huaixu on 2017/11/28.
+//  Created by xx on 2017/11/28.
 //  Copyright © 2017年 aliyun. All rights reserved.
 //
 

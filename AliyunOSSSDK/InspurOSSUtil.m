@@ -2,8 +2,8 @@
 //  OSSUtil.m
 //  oss_ios_sdk
 //
-//  Created by zhouzhuo on 8/16/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 8/16/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
 #import "InspurOSSUtil.h"
@@ -19,9 +19,9 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "aos_crc64.h"
 
-NSString * const ALIYUN_HOST_SUFFIX = @".aliyuncs.com";
-NSString * const ALIYUN_OSS_TEST_ENDPOINT = @".aliyun-inc.com";
-int32_t const CHUNK_SIZE = 8 * 1024;
+NSString * const INSPUR_HOST_SUFFIX = @".inspur.com";
+NSString * const INSPUR_OSS_TEST_ENDPOINT = @".inspur.com";
+static int32_t const CHUNK_SIZE = 8 * 1024;
 
 @implementation InspurOSSUtil
 
@@ -204,7 +204,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 }
 
 + (BOOL)isOssOriginBucketHost:(NSString *)host {
-    return [[host lowercaseString] hasSuffix:ALIYUN_HOST_SUFFIX] || [[host lowercaseString] hasSuffix:ALIYUN_OSS_TEST_ENDPOINT];
+    return [[host lowercaseString] hasSuffix:INSPUR_HOST_SUFFIX] || [[host lowercaseString] hasSuffix:INSPUR_OSS_TEST_ENDPOINT];
 }
 
 + (NSString *)base64Md5ForData:(NSData *)data {
@@ -1259,7 +1259,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 
 @end
 
-@implementation NSString (OSS)
+@implementation NSString (InspurOSS)
 
 - (NSString *)oss_trim {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

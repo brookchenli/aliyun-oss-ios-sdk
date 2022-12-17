@@ -544,7 +544,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 @end
 
-@implementation InspurOSSTask(OSS)
+@implementation InspurOSSTask(InspurOSS)
 
 - (BOOL)isSuccessful {
     if (self.cancelled || self.faulted) {

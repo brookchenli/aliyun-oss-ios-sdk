@@ -1,8 +1,8 @@
 //
 //  OSSHttpdns.h
-//  AliyunOSSiOS
+//  InspurOSSiOS
 //
-//  Created by zhouzhuo on 5/1/16.
+//  Created by xx on 5/1/16.
 //  Copyright © 2016 zhouzhuo. All rights reserved.
 //
 

@@ -1,8 +1,8 @@
 //
 //  OSSDefine.h
-//  AliyunOSSiOS
+//  InspurOSSiOS
 //
-//  Created by zhouzhuo on 5/1/16.
+//  Created by xx on 5/1/16.
 //  Copyright © 2016 zhouzhuo. All rights reserved.
 //
 
@@ -12,11 +12,11 @@
 #define OSSDefine_h
 
 #if TARGET_OS_IOS
-#define OSSUAPrefix                             @"aliyun-sdk-ios"
+#define OSSUAPrefix                             @"inspur-sdk-ios"
 #elif TARGET_OS_OSX
-#define OSSUAPrefix                             @"aliyun-sdk-mac"
+#define OSSUAPrefix                             @"inspur-sdk-mac"
 #endif
-#define OSSSDKVersion                           @"2.10.16"
+#define OSSSDKVersion                           @"1.0.0"
 
 #define OSSListBucketResultXMLTOKEN             @"ListBucketResult"
 #define OSSNameXMLTOKEN                         @"Name"
@@ -58,8 +58,8 @@
 #define OSSPartXMLTOKEN                         @"Part"
 #define OSSPartNumberXMLTOKEN                   @"PartNumber"
 
-#define OSSClientErrorDomain                    @"com.aliyun.oss.clientError"
-#define OSSServerErrorDomain                    @"com.aliyun.oss.serverError"
+#define OSSClientErrorDomain                    @"com.inspur.oss.clientError"
+#define OSSServerErrorDomain                    @"com.inspur.oss.serverError"
 
 #define OSSErrorMessageTOKEN                    @"ErrorMessage"
 #define OSSTextTOKEN                    @"__text"

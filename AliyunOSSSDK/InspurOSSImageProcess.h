@@ -1,9 +1,9 @@
 //
 //  OSSImageProcess.h
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
 //  Created by 陈历 on 2022/12/17.
-//  Copyright © 2022 aliyun. All rights reserved.
+//  Copyright © 2022 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

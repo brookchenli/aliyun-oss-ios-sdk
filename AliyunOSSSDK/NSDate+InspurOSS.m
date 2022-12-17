@@ -1,14 +1,14 @@
 //
 //  NSDate+OSS.m
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
-//  Created by huaixu on 2018/7/31.
-//  Copyright © 2018年 aliyun. All rights reserved.
+//  Created by xx on 2018/7/31.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
-#import "NSDate+OSS.h"
+#import "NSDate+InspurOSS.h"
 
-@implementation NSDate (OSS)
+@implementation NSDate (InspurOSS)
 
 NSString * const serverReturnDateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
 

@@ -1,9 +1,9 @@
 //
 //  OSSInputStreamHelper.m
-//  AliyunOSSSDK
+//  InspurOSSSDK
 //
-//  Created by 怀叙 on 2017/12/7.
-//  Copyright © 2017年 阿里云. All rights reserved.
+//  Created by xx on 2017/12/7.
+//  Copyright © 2022年 Inspur. All rights reserved.
 //
 
 #import "InspurOSSInputStreamHelper.h"

@@ -2,8 +2,8 @@
 //  OSSModel.h
 //  oss_ios_sdk
 //
-//  Created by zhouzhuo on 8/16/15.
-//  Copyright (c) 2015 aliyun.com. All rights reserved.
+//  Created by xx on 8/16/15.
+//  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -23,7 +23,7 @@ typedef InspurOSSFederationToken * _Nullable (^OSSGetFederationTokenBlock) (void
 /**
  Categories NSDictionary
  */
-@interface NSDictionary (OSS)
+@interface NSDictionary (InspurOSS)
 - (NSString *)base64JsonString;
 @end
 
@@ -422,7 +422,7 @@ Sets the session Id for background file transmission
 
 /**
  The bucket location
- For more information about OSS datacenter and endpoint, please check out <a>https://docs.aliyun.com/#/pub/oss/product-documentation/domain-region</a>
+ For more information about OSS datacenter and endpoint, please check out <a></a>
  */
 @property (nonatomic, copy) NSString * location __attribute__ ((deprecated));
 
@@ -1766,7 +1766,7 @@ The result class of listing uploaded parts.
 
 
 /**
- for more information,Please refer to the link https://help.aliyun.com/document_detail/31989.html
+ for more information,Please refer to the link
  */
 @interface InspurOSSCallBackRequest : InspurOSSRequest
 
@@ -1803,7 +1803,7 @@ The result class of listing uploaded parts.
 
 
 /**
- for more information,Please refer to the link https://help.aliyun.com/document_detail/55811.html
+ for more information,Please refer to the link
  */
 @interface InspurOSSImagePersistRequest : InspurOSSRequest
 
