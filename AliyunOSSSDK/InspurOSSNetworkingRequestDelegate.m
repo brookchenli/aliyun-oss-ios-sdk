@@ -43,7 +43,7 @@
     }
 }
 
-- (OSSTask *)validateRequestParams {
+- (InspurOSSTask *)validateRequestParams {
     NSString * errorMessage = nil;
     
     if ((self.operType == OSSOperationTypeAppendObject || self.operType == OSSOperationTypePutObject || self.operType == OSSOperationTypeUploadPart)
@@ -56,7 +56,7 @@
     }
     
     if (errorMessage) {
-        return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+        return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                           code:OSSClientErrorCodeInvalidArgument
                                                       userInfo:@{OSSErrorMessageTOKEN: errorMessage}]];
     } else {
@@ -64,9 +64,9 @@
     }
 }
 
-- (OSSTask *)buildInternalHttpRequest {
+- (InspurOSSTask *)buildInternalHttpRequest {
     
-    OSSTask * validateParam = [self validateRequestParams];
+    InspurOSSTask * validateParam = [self validateRequestParams];
     if (validateParam.error) {
         return validateParam;
     }
@@ -180,7 +180,7 @@
                   self.internalRequest.URL, self.internalRequest.allHTTPHeaderFields)
     
 #undef URLENCODE//(a)
-    return [OSSTask taskWithResult:nil];
+    return [InspurOSSTask taskWithResult:nil];
 }
 
 @end

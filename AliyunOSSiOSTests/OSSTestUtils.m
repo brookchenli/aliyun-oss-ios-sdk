@@ -15,8 +15,8 @@
     InspurOSSGetBucketRequest *listObject = [InspurOSSGetBucketRequest new];
     listObject.bucketName = bucket;
     listObject.maxKeys = 1000;
-    OSSTask *listObjectTask = [client getBucket:listObject];
-    [[listObjectTask continueWithBlock:^id(OSSTask * task) {
+    InspurOSSTask *listObjectTask = [client getBucket:listObject];
+    [[listObjectTask continueWithBlock:^id(InspurOSSTask * task) {
         OSSGetBucketResult * listObjectResult = task.result;
         for (NSDictionary *dict in listObjectResult.contents) {
             NSString * objectKey = [dict objectForKey:@"Key"];
@@ -33,9 +33,9 @@
     InspurOSSListMultipartUploadsRequest *listMultipartUploads = [InspurOSSListMultipartUploadsRequest new];
     listMultipartUploads.bucketName = bucket;
     listMultipartUploads.maxUploads = 1000;
-    OSSTask *listMultipartUploadsTask = [client listMultipartUploads:listMultipartUploads];
+    InspurOSSTask *listMultipartUploadsTask = [client listMultipartUploads:listMultipartUploads];
     
-    [[listMultipartUploadsTask continueWithBlock:^id(OSSTask *task) {
+    [[listMultipartUploadsTask continueWithBlock:^id(InspurOSSTask *task) {
         OSSListMultipartUploadsResult * result = task.result;
         for (NSDictionary *dict in result.uploads) {
             NSString * uploadId = [dict objectForKey:@"UploadId"];
@@ -67,7 +67,7 @@
     request.uploadingFileURL = fileURL;
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     
-    OSSTask * task = [client putObject:request];
+    InspurOSSTask * task = [client putObject:request];
     [task waitUntilFinished];
 }
 

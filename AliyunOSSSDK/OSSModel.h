@@ -12,7 +12,7 @@
 
 @class InspurOSSAllRequestNeededMessage;
 @class OSSFederationToken;
-@class OSSTask;
+@class InspurOSSTask;
 @class OSSClientConfiguration;
 @class OSSCORSRule;
 
@@ -229,7 +229,7 @@ Sets the session Id for background file transmission
 @end
 
 @protocol OSSRequestInterceptor <NSObject>
-- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request;
+- (InspurOSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request;
 @end
 
 /**
@@ -463,7 +463,7 @@ Sets the session Id for background file transmission
 /**
  Result class of deleting bucket
  */
-@interface OSSDeleteBucketResult : InspurOSSResult
+@interface InspurOSSDeleteBucketResult : InspurOSSResult
 @end
 
 /**

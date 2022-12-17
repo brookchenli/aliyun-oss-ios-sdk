@@ -69,12 +69,12 @@
         if (configuration.maxConcurrentRequestCount > 0) {
             operationQueue.maxConcurrentOperationCount = configuration.maxConcurrentRequestCount;
         }
-        self.taskExecutor = [OSSExecutor executorWithOperationQueue: operationQueue];
+        self.taskExecutor = [InspurOSSExecutor executorWithOperationQueue: operationQueue];
     }
     return self;
 }
 
-- (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request {
+- (InspurOSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         OSSLogVerbose(@"NetWorkConnectedMsg : %@",[InspurOSSUtil buildNetWorkConnectedMsg]);
         NSString *operator = [InspurOSSUtil buildOperatorMsg];
@@ -88,7 +88,7 @@
     /* set maximum retry */
     request.retryHandler.maxRetryCount = self.configuration.maxRetryCount;
 
-    OSSTaskCompletionSource * taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
 
     __weak InspurOSSNetworkingRequestDelegate *weakRequest= request;
     request.completionHandler = ^(id responseObject, NSError * error) {
@@ -109,7 +109,7 @@
     return taskCompletionSource.task;
 }
 
-- (void)checkForCrc64WithResult:(nonnull id)response requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate taskCompletionSource:(OSSTaskCompletionSource *)source
+- (void)checkForCrc64WithResult:(nonnull id)response requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate taskCompletionSource:(InspurOSSTaskCompletionSource *)source
 {
     InspurOSSResult *result = (InspurOSSResult *)response;
     BOOL hasRange = [delegate.internalRequest valueForHTTPHeaderField:@"Range"] != nil;
@@ -210,7 +210,7 @@
 
 - (void)dataTaskWithDelegate:(InspurOSSNetworkingRequestDelegate *)requestDelegate {
 
-    [[[[[OSSTask taskWithResult:nil] continueWithExecutor:self.taskExecutor withSuccessBlock:^id(OSSTask *task) {
+    [[[[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.taskExecutor withSuccessBlock:^id(InspurOSSTask *task) {
         OSSLogVerbose(@"start to intercept request");
         for (id<OSSRequestInterceptor> interceptor in requestDelegate.interceptors) {
             task = [interceptor interceptRequestMessage:requestDelegate.allNeededMessage];
@@ -219,9 +219,9 @@
             }
         }
         return task;
-    }] continueWithSuccessBlock:^id(OSSTask *task) {
+    }] continueWithSuccessBlock:^id(InspurOSSTask *task) {
         return [requestDelegate buildInternalHttpRequest];
-    }] continueWithSuccessBlock:^id(OSSTask *task) {
+    }] continueWithSuccessBlock:^id(InspurOSSTask *task) {
         NSURLSessionDataTask * sessionTask = nil;
         if (self.configuration.timeoutIntervalForRequest > 0) {
             requestDelegate.internalRequest.timeoutInterval = self.configuration.timeoutIntervalForRequest;
@@ -242,14 +242,14 @@
         requestDelegate.httpRequestNotSuccessResponseBody = [NSMutableData new];
         [self.sessionDelagateManager setObject:requestDelegate forKey:@(sessionTask.taskIdentifier)];
         if (requestDelegate.isRequestCancelled) {
-            return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                               code:OSSClientErrorCodeTaskCancelled
                                                           userInfo:nil]];
         }
         [sessionTask resume];
       
         return task;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
 
         // if error occurs before created sessionTask
         if (task.error) {
@@ -292,29 +292,29 @@
         }
     }
 
-    [[[[OSSTask taskWithResult:nil] continueWithSuccessBlock:^id(OSSTask * task) {
+    [[[[InspurOSSTask taskWithResult:nil] continueWithSuccessBlock:^id(InspurOSSTask * task) {
         if (!delegate.error) {
             delegate.error = error;
         }
         if (delegate.error) {
             OSSLogDebug(@"networking request completed with error: %@", error);
             if ([delegate.error.domain isEqualToString:NSURLErrorDomain] && delegate.error.code == NSURLErrorCancelled) {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                  code:OSSClientErrorCodeTaskCancelled
                                                              userInfo:[error userInfo]]];
             } else {
                 NSMutableDictionary * userInfo = [NSMutableDictionary dictionaryWithDictionary:[error userInfo]];
                 [userInfo setObject:[NSString stringWithFormat:@"%ld", (long)error.code] forKey:@"OriginErrorCode"];
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                  code:OSSClientErrorCodeNetworkError
                                                              userInfo:userInfo]];
             }
         }
         return task;
-    }] continueWithSuccessBlock:^id(OSSTask *task) {
+    }] continueWithSuccessBlock:^id(InspurOSSTask *task) {
         if (delegate.isHttpRequestNotSuccessResponse) {
             if (httpResponse.statusCode == 0) {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                  code:OSSClientErrorCodeNetworkingFailWithResponseCode0
                                                              userInfo:@{OSSErrorMessageTOKEN: @"Request failed, response code 0"}]];
             }
@@ -322,12 +322,12 @@
             OSSLogError(@"http error response: %@", notSuccessResponseBody);
             NSDictionary * dict = [NSDictionary oss_dictionaryWithXMLString:notSuccessResponseBody];
 
-            return [OSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
                                                              code:(-1 * httpResponse.statusCode)
                                                          userInfo:dict]];
         }
         return task;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             
             
@@ -486,7 +486,7 @@
         if (delegate.onRecieveData) {
             delegate.onRecieveData(data);
         } else {
-            OSSTask * consumeTask = [delegate.responseParser consumeHttpResponseBody:data];
+            InspurOSSTask * consumeTask = [delegate.responseParser consumeHttpResponseBody:data];
             if (consumeTask.error) {
                 OSSLogError(@"consume data error: %@", consumeTask.error);
                 delegate.error = consumeTask.error;

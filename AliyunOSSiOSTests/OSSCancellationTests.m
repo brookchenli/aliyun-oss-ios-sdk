@@ -7,9 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <AliyunOSSiOS/OSSCancellationTokenSource.h>
-#import <AliyunOSSiOS/OSSCancellationTokenRegistration.h>
-#import <AliyunOSSiOS/OSSCancellationToken.h>
+#import <AliyunOSSiOS/InspurOSSCancellationTokenSource.h>
+#import <AliyunOSSiOS/InspurOSSCancellationTokenRegistration.h>
+#import <AliyunOSSiOS/InspurOSSCancellationToken.h>
 
 @interface OSSCancellationTests : XCTestCase
 
@@ -18,7 +18,7 @@
 @implementation OSSCancellationTests
 
 - (void)testCancel {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
     XCTAssertFalse(cts.cancellationRequested, @"Source should not be cancelled");
     XCTAssertFalse(cts.token.cancellationRequested, @"Token should not be cancelled");
@@ -30,7 +30,7 @@
 }
 
 - (void)testCancelMultipleTimes {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     XCTAssertFalse(cts.cancellationRequested);
     XCTAssertFalse(cts.token.cancellationRequested);
     
@@ -46,7 +46,7 @@
 - (void)testCancellationBlock {
     __block BOOL cancelled = NO;
     
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts.token registerCancellationObserverWithBlock:^{
         cancelled = YES;
     }];
@@ -60,7 +60,7 @@
 }
 
 - (void)testCancellationAfterDelay {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
     XCTAssertFalse(cts.cancellationRequested, @"Source should not be cancelled");
     XCTAssertFalse(cts.token.cancellationRequested, @"Token should not be cancelled");
@@ -77,7 +77,7 @@
 }
 
 - (void)testCancellationAfterDelayValidation {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
     XCTAssertFalse(cts.cancellationRequested);
     XCTAssertFalse(cts.token.cancellationRequested);
@@ -86,7 +86,7 @@
 }
 
 - (void)testCancellationAfterZeroDelay {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
     XCTAssertFalse(cts.cancellationRequested);
     XCTAssertFalse(cts.token.cancellationRequested);
@@ -98,7 +98,7 @@
 }
 
 - (void)testCancellationAfterDelayOnCancelled {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts cancel];
     XCTAssertTrue(cts.cancellationRequested);
     XCTAssertTrue(cts.token.cancellationRequested);
@@ -110,13 +110,13 @@
 }
 
 - (void)testDispose {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts dispose];
     XCTAssertThrowsSpecificNamed([cts cancel], NSException, NSInternalInconsistencyException);
     XCTAssertThrowsSpecificNamed(cts.cancellationRequested, NSException, NSInternalInconsistencyException);
     XCTAssertThrowsSpecificNamed(cts.token.cancellationRequested, NSException, NSInternalInconsistencyException);
     
-    cts = [OSSCancellationTokenSource cancellationTokenSource];
+    cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts cancel];
     XCTAssertTrue(cts.cancellationRequested, @"Source should be cancelled");
     XCTAssertTrue(cts.token.cancellationRequested, @"Token should be cancelled");
@@ -127,14 +127,14 @@
 }
 
 - (void)testDisposeMultipleTimes {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts dispose];
     XCTAssertNoThrow([cts dispose]);
 }
 
 - (void)testDisposeRegistration {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{
         XCTFail();
     }];
     XCTAssertNoThrow([registration dispose]);
@@ -143,8 +143,8 @@
 }
 
 - (void)testDisposeRegistrationMultipleTimes {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{
         XCTFail();
     }];
     XCTAssertNoThrow([registration dispose]);
@@ -154,16 +154,16 @@
 }
 
 - (void)testDisposeRegistrationAfterCancellationToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{ }];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{ }];
     
     [registration dispose];
     [cts dispose];
 }
 
 - (void)testDisposeRegistrationBeforeCancellationToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{ }];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenRegistration *registration = [cts.token registerCancellationObserverWithBlock:^{ }];
     
     [cts dispose];
     XCTAssertNoThrow([registration dispose]);

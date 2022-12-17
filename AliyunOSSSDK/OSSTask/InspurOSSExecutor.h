@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  An object that can run a given block.
  */
-@interface OSSExecutor : NSObject
+@interface InspurOSSExecutor : NSObject
 
 /*!
  Returns a default executor, which runs continuations immediately until the call stack gets too

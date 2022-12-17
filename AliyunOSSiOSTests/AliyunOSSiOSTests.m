@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <AliyunOSSiOS/AliyunOSSiOS.h>
-#import <AliyunOSSiOS/OSSHttpdns.h>
+#import <AliyunOSSiOS/InspurOSSHttpdns.h>
 #import "OSSTestMacros.h"
 #import "OSSTestUtils.h"
 #import <objc/runtime.h>
 
 @interface InspurOSSClient(Test)
 
-- (OSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
         uploadIndex:(NSMutableArray *)alreadyUploadIndex
          uploadPart:(NSMutableArray *)alreadyUploadPart
               count:(NSUInteger)partCout
@@ -125,7 +125,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     NSURL * url = [NSURL URLWithString:OSS_STSTOKEN_URL];
     NSURLRequest * request = [NSURLRequest requestWithURL:url];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     NSURLSession * session = [NSURLSession sharedSession];
     NSURLSessionTask * sessionTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -170,8 +170,8 @@ id<OSSCredentialProvider> credential, authCredential;
     init.objectKey = OSS_MULTIPART_UPLOADKEY;
     init.contentType = @"application/octet-stream";
     init.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
-    OSSTask * task = [client multipartUploadInit:init];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [client multipartUploadInit:init];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSInitMultipartUploadResult * result = task.result;
         XCTAssertNotNil(result.uploadId);
@@ -184,7 +184,7 @@ id<OSSCredentialProvider> credential, authCredential;
     abort.objectKey = OSS_MULTIPART_UPLOADKEY;
     abort.uploadId = uploadId;
     
-    OSSTask * abortTask = [client abortMultipartUpload:abort];
+    InspurOSSTask * abortTask = [client abortMultipartUpload:abort];
     
     [abortTask waitUntilFinished];
     
@@ -217,9 +217,9 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
     };
     
-    OSSTask * task = [testProxyClient getObject:request];
+    InspurOSSTask * task = [testProxyClient getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -246,9 +246,9 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
     };
     
-    OSSTask * task = [testProxyClient getObject:request];
+    InspurOSSTask * task = [testProxyClient getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -270,9 +270,9 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
     };
     
-    OSSTask * task1 = [testProxyClient getObject:request1];
+    InspurOSSTask * task1 = [testProxyClient getObject:request1];
     
-    [[task1 continueWithBlock:^id(OSSTask *task) {
+    [[task1 continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -317,8 +317,8 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [client1 putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [client1 putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             OSSLogError(@"%@", task.error);
@@ -346,7 +346,7 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     
     task = [client2 putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             OSSLogError(@"%@", task.error);
@@ -388,8 +388,8 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [client1 putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [client1 putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             OSSLogError(@"%@", task.error);
@@ -418,9 +418,9 @@ id<OSSCredentialProvider> credential, authCredential;
     };
 
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
@@ -454,9 +454,9 @@ id<OSSCredentialProvider> credential, authCredential;
     };
 
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(task.error.code, OSSClientErrorCodeExcpetionCatched);
         return nil;
@@ -465,7 +465,7 @@ id<OSSCredentialProvider> credential, authCredential;
     method_exchangeImplementations(originM, newM);
 }
 
-- (OSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
         uploadIndex:(NSMutableArray *)alreadyUploadIndex
          uploadPart:(NSMutableArray *)alreadyUploadPart
               count:(NSUInteger)partCout
@@ -489,8 +489,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     multipartUploadRequest.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file10m"]];
-    OSSTask * resumeTask = [client multipartUpload:multipartUploadRequest];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client multipartUpload:multipartUploadRequest];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -519,9 +519,9 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
     
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
@@ -558,8 +558,8 @@ id<OSSCredentialProvider> credential, authCredential;
     resumableUpload.completeMetaHeader = @{@"x-oss-object-acl": @"public-read-write"};
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file1m"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
@@ -582,7 +582,7 @@ id<OSSCredentialProvider> credential, authCredential;
     getRequest.bucketName = _privateBucketName;
     getRequest.objectKey = OSS_MULTIPART_UPLOADKEY;
     getRequest.isAuthenticationRequired = NO;
-    OSSTask * getTask = [client getObject:getRequest];
+    InspurOSSTask * getTask = [client getObject:getRequest];
     [getTask waitUntilFinished];
     XCTAssertNil(getTask.error);
 }
@@ -611,8 +611,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file1m"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSResumableUploadResult * resumableUploadResult = task.result;
         if (task.error) {
@@ -651,8 +651,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file10m"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -699,8 +699,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file5m"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -714,7 +714,7 @@ id<OSSCredentialProvider> credential, authCredential;
     [resumeTask waitUntilFinished];
     
     
-    [[[client abortResumableMultipartUpload:resumableUpload] continueWithBlock:^id(OSSTask *task) {
+    [[[client abortResumableMultipartUpload:resumableUpload] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -734,7 +734,7 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
@@ -763,8 +763,8 @@ id<OSSCredentialProvider> credential, authCredential;
         XCTAssertTrue(totalByteSent <= totalBytesExpectedToSend);
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -793,7 +793,7 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
@@ -819,8 +819,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file1k"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
@@ -851,8 +851,8 @@ id<OSSCredentialProvider> credential, authCredential;
         }
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNotNil(task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -873,7 +873,7 @@ id<OSSCredentialProvider> credential, authCredential;
         XCTAssertGreaterThan(totalByteSent, totalBytesExpectedToSend / 3);
     };
     resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"error: %@", task.error);
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
@@ -902,8 +902,8 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     NSString * docDir = [NSString oss_documentDirectory];
     resumableUpload.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file10m"]];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
         NSLog(@"task.error: %@", task.error);
@@ -924,8 +924,8 @@ id<OSSCredentialProvider> credential, authCredential;
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * resumeTask = [client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [client resumableUpload:resumableUpload];
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];
         XCTAssertTrue(![[NSFileManager defaultManager] fileExistsAtPath:recordFilePath]);
@@ -943,7 +943,7 @@ id<OSSCredentialProvider> credential, authCredential;
     NSMutableArray *uploadIndex = @[].mutableCopy;
     NSMutableArray *uploadPart = @[].mutableCopy;
     NSUInteger uploadedLength = 0;
-    OSSTask *task = [client upload:request
+    InspurOSSTask *task = [client upload:request
                        uploadIndex:uploadIndex
                         uploadPart:uploadPart
                              count:10
@@ -956,7 +956,7 @@ id<OSSCredentialProvider> credential, authCredential;
 #pragma mark concurrent
 
 - (void)testConcurrentPutObject {
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     __block int counter = 0;
     int max = 4;
     for (int i = 0; i < max; i++) {
@@ -971,8 +971,8 @@ id<OSSCredentialProvider> credential, authCredential;
                 NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
             };
             
-            OSSTask * task = [client putObject:request];
-            [[task continueWithBlock:^id(OSSTask *task) {
+            InspurOSSTask * task = [client putObject:request];
+            [[task continueWithBlock:^id(InspurOSSTask *task) {
                 XCTAssertNil(task.error);
                 if (task.error) {
                     OSSLogError(@"%@", task.error);
@@ -997,7 +997,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testConcurrentGetObject {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     __block int counter = 0;
     for (int i = 0; i < 5; i++) {
         dispatch_async(test_queue, ^{
@@ -1005,8 +1005,8 @@ id<OSSCredentialProvider> credential, authCredential;
             request.bucketName = _privateBucketName;
             request.objectKey = @"file1m";
             
-            OSSTask * task = [client getObject:request];
-            [[task continueWithBlock:^id(OSSTask *task) {
+            InspurOSSTask * task = [client getObject:request];
+            [[task continueWithBlock:^id(InspurOSSTask *task) {
                 XCTAssertNil(task.error);
                 OSSGetObjectResult * result = task.result;
                 XCTAssertEqual(200, result.httpResponseCode);
@@ -1037,7 +1037,7 @@ id<OSSCredentialProvider> credential, authCredential;
     configuration.timeoutIntervalForResource = 24 * 60 * 60;
     configuration.maxConcurrentRequestCount = 1;
     InspurOSSClient * client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credential clientConfiguration:configuration];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     __block int counter = 0;
     for (int i = 0; i < 5; i++) {
         dispatch_async(test_queue, ^{
@@ -1045,8 +1045,8 @@ id<OSSCredentialProvider> credential, authCredential;
             request.bucketName = _privateBucketName;
             request.objectKey = @"file1m";
             
-            OSSTask * task = [client getObject:request];
-            [[task continueWithBlock:^id(OSSTask *task) {
+            InspurOSSTask * task = [client getObject:request];
+            [[task continueWithBlock:^id(InspurOSSTask *task) {
                 XCTAssertNil(task.error);
                 OSSGetObjectResult * result = task.result;
                 XCTAssertEqual(200, result.httpResponseCode);
@@ -1070,7 +1070,7 @@ id<OSSCredentialProvider> credential, authCredential;
 }
 
 - (void)testConcurrentCompatResumableUpload {
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     static int counter = 0;
     for (int i = 0; i < 5; i++) {
         dispatch_async(test_queue, ^{
@@ -1127,7 +1127,7 @@ id<OSSCredentialProvider> credential, authCredential;
     [taskHandler cancel];
     
     OSSLogDebug(@"XCTest-------------cancelled!");
-    OSSTaskCompletionSource * bcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * bcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     [client resumableUploadFile:fileToUpload
                 withContentType:@"application/octet-stream"
                  withObjectMeta:nil
@@ -1153,7 +1153,7 @@ id<OSSCredentialProvider> credential, authCredential;
     NSString * fileToUpload = [NSString stringWithFormat:@"%@/%@", docDir, @"file1m"];
     __block float progValue = 0;
     
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [client uploadFile:fileToUpload
        withContentType:@"application/octet-stream"
@@ -1181,7 +1181,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     __block float progValue = 0;
     
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [client uploadData:dataToUpload
        withContentType:@"application/octet-stream"
@@ -1201,7 +1201,7 @@ id<OSSCredentialProvider> credential, authCredential;
 
 - (void)testCompatDownload {
     [OSSTestUtils putTestDataWithKey:@"file1m" withClient:client withBucket:_privateBucketName];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [client downloadToDataFromBucket:_privateBucketName
                            objectKey:@"file1m"
@@ -1222,7 +1222,7 @@ id<OSSCredentialProvider> credential, authCredential;
     
     NSString * saveToFile = [NSString stringWithFormat:@"%@/%@", docDir, @"compatDownloadFile"];
     
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [client downloadToFileFromBucket:_privateBucketName
                            objectKey:@"file1m"
@@ -1248,7 +1248,7 @@ id<OSSCredentialProvider> credential, authCredential;
     copy.bucketName = _privateBucketName;
     copy.objectKey = @"file1m_copy";
     copy.sourceCopyFrom = [NSString stringWithFormat:@"/%@/%@", _privateBucketName, @"file1m"];
-    [[[client copyObject:copy] continueWithBlock:^id(OSSTask *task) {
+    [[[client copyObject:copy] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1257,12 +1257,12 @@ id<OSSCredentialProvider> credential, authCredential;
     head.bucketName = _privateBucketName;
     head.objectKey = @"file1m_copy";
     
-    [[[client headObject:head] continueWithBlock:^id(OSSTask *task) {
+    [[[client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
     
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     [client deleteObjectInBucket:_privateBucketName
                        objectKey:@"file1m_copy"
                      onCompleted:^(BOOL isSuccess, NSError *error) {
@@ -1276,7 +1276,7 @@ id<OSSCredentialProvider> credential, authCredential;
     head.bucketName = _privateBucketName;
     head.objectKey = @"file1m_copy";
     
-    [[[client headObject:head] continueWithBlock:^id(OSSTask *task) {
+    [[[client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(-404, task.error.code);
         return nil;
@@ -1367,7 +1367,7 @@ id<OSSCredentialProvider> credential, authCredential;
     get.bucketName = bucketName;
     get.objectKey = objectKey;
     get.downloadToFileURL = [NSURL fileURLWithPath:tempFile];
-    [[[client getObject:get] continueWithBlock:^id(OSSTask *task) {
+    [[[client getObject:get] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1444,9 +1444,9 @@ id<OSSCredentialProvider> credential, authCredential;
     
     InspurOSSClient * client = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:provider];
     
-    OSSTask * task = [client getObject:request];
+    InspurOSSTask * task = [client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
@@ -1470,8 +1470,8 @@ id<OSSCredentialProvider> credential, authCredential;
     init.objectKey = OSS_MULTIPART_UPLOADKEY;
     init.contentType = @"application/octet-stream";
     init.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
-    OSSTask * task = [client multipartUploadInit:init];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [client multipartUploadInit:init];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSInitMultipartUploadResult * result = task.result;
         XCTAssertNotNil(result.uploadId);
@@ -1510,7 +1510,7 @@ id<OSSCredentialProvider> credential, authCredential;
         NSUInteger partSize = data.length;
         NSTimeInterval startUpload = [[NSDate date] timeIntervalSince1970];
         task = [client uploadPart:uploadPart];
-        [[task continueWithBlock:^id(OSSTask *task) {
+        [[task continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
             OSSUploadPartResult * result = task.result;
             XCTAssertNotNil(result.eTag);
@@ -1549,7 +1549,7 @@ id<OSSCredentialProvider> credential, authCredential;
     complete.crcFlag = OSSRequestCRCOpen;
     
     task = [client completeMultipartUpload:complete];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSCompleteMultipartUploadResult * result = task.result;
         XCTAssertNotNil(result.location);
@@ -1574,11 +1574,11 @@ id<OSSCredentialProvider> credential, authCredential;
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
     };
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [client multipartUpload:multipartUploadRequest];
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[multipartTask continueWithBlock:^id(OSSTask *task) {
+        [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
             if (task.error) {
                 NSLog(@"error: %@", task.error);
@@ -1604,9 +1604,9 @@ id<OSSCredentialProvider> credential, authCredential;
     };
     request.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
     InspurOSSClient *newClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:[[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL]];
-    OSSTask * otherTask = [newClient multipartUpload:request];
+    InspurOSSTask * otherTask = [newClient multipartUpload:request];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[otherTask continueWithBlock:^id(OSSTask *task) {
+        [[otherTask continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
             if (task.error) {
                 NSLog(@"error: %@", task.error);
@@ -1637,7 +1637,7 @@ id<OSSCredentialProvider> credential, authCredential;
     request.action = @"image/resize,w_100";
     //request.action = @"resize,w_100";也可以
     
-    [[[client imageActionPersist:request] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client imageActionPersist:request] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];

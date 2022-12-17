@@ -69,7 +69,7 @@
 //批量操作测试
 - (void)testAPI_putObjectMultiTimes
 {
-    NSMutableArray<OSSTask *> *allTasks = [NSMutableArray array];
+    NSMutableArray<InspurOSSTask *> *allTasks = [NSMutableArray array];
     int max = 30;
     for (int i = 0; i < max; i++){
         NSString *objectKey = @"http2-wangwang.zip";
@@ -81,11 +81,11 @@
         putRequest.objectKey = objectKey;
         putRequest.uploadingFileURL = fileURL;
         
-        OSSTask *putTask = [_client putObject:putRequest];
+        InspurOSSTask *putTask = [_client putObject:putRequest];
         [allTasks addObject:putTask];
     }
     
-    OSSTask *complexTask = [OSSTask taskForCompletionOfAllTasks:allTasks];
+    InspurOSSTask *complexTask = [InspurOSSTask taskForCompletionOfAllTasks:allTasks];
     [complexTask waitUntilFinished];
     XCTAssertTrue(complexTask.error == nil);
     
@@ -103,11 +103,11 @@
         
         getRequest.downloadToFileURL = [NSURL fileURLWithPath:diskFilePath];
         
-        OSSTask *getTask = [_client getObject:getRequest];
+        InspurOSSTask *getTask = [_client getObject:getRequest];
         [allTasks addObject:getTask];
     }
     
-    complexTask = [OSSTask taskForCompletionOfAllTasks:allTasks];
+    complexTask = [InspurOSSTask taskForCompletionOfAllTasks:allTasks];
     [complexTask waitUntilFinished];
     XCTAssertTrue(complexTask.error == nil);
 }

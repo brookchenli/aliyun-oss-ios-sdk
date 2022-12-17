@@ -8,31 +8,31 @@
  *
  */
 
-#import "OSSCancellationTokenRegistration.h"
+#import "InspurOSSCancellationTokenRegistration.h"
 
-#import "OSSCancellationToken.h"
+#import "InspurOSSCancellationToken.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSCancellationTokenRegistration ()
+@interface InspurOSSCancellationTokenRegistration ()
 
-@property (nonatomic, weak) OSSCancellationToken *token;
+@property (nonatomic, weak) InspurOSSCancellationToken *token;
 @property (nullable, nonatomic, strong) OSSCancellationBlock cancellationObserverBlock;
 @property (nonatomic, strong) NSObject *lock;
 @property (nonatomic) BOOL disposed;
 
 @end
 
-@interface OSSCancellationToken (OSSCancellationTokenRegistration)
+@interface InspurOSSCancellationToken (OSSCancellationTokenRegistration)
 
-- (void)unregisterRegistration:(OSSCancellationTokenRegistration *)registration;
+- (void)unregisterRegistration:(InspurOSSCancellationTokenRegistration *)registration;
 
 @end
 
-@implementation OSSCancellationTokenRegistration
+@implementation InspurOSSCancellationTokenRegistration
 
-+ (instancetype)registrationWithToken:(OSSCancellationToken *)token delegate:(OSSCancellationBlock)delegate {
-    OSSCancellationTokenRegistration *registration = [OSSCancellationTokenRegistration new];
++ (instancetype)registrationWithToken:(InspurOSSCancellationToken *)token delegate:(OSSCancellationBlock)delegate {
+    InspurOSSCancellationTokenRegistration *registration = [InspurOSSCancellationTokenRegistration new];
     registration.token = token;
     registration.cancellationObserverBlock = delegate;
     return registration;
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
         self.disposed = YES;
     }
 
-    OSSCancellationToken *token = self.token;
+    InspurOSSCancellationToken *token = self.token;
     if (token != nil) {
         [token unregisterRegistration:self];
         self.token = nil;

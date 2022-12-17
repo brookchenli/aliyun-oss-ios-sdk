@@ -48,9 +48,9 @@
     InspurOSSCreateBucketRequest *req = [InspurOSSCreateBucketRequest new];
     req.bucketName = bucket;
     req.xOssACL = @"public-read-write";
-    OSSTask *task = [_client createBucket:req];
+    InspurOSSTask *task = [_client createBucket:req];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -63,9 +63,9 @@
     InspurOSSCreateBucketRequest *req = [InspurOSSCreateBucketRequest new];
     req.bucketName = bucket;
     req.xOssACL = @"private";
-    OSSTask *task = [_client createBucket:req];
+    InspurOSSTask *task = [_client createBucket:req];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -75,10 +75,10 @@
 - (void)testAPI_deleteBucket
 {
     NSString * bucket = @"test-cl-private";
-    OSSDeleteBucketRequest *request = [OSSDeleteBucketRequest new];
+    InspurOSSDeleteBucketRequest *request = [InspurOSSDeleteBucketRequest new];
     request.bucketName = bucket;
-    OSSTask *task = [_client deleteBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteBucket:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -86,8 +86,8 @@
 
 - (void)testAPI_listBuckets{
     InspurOSSGetServiceRequest *request = [InspurOSSGetServiceRequest new];
-    OSSTask * task = [_client getService:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getService:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -98,8 +98,8 @@
     InspurOSSListPageServiceRequest *request = [InspurOSSListPageServiceRequest new];
     request.pageNo = 2;
     request.pageSize = 8;
-    OSSTask *task = [_client listService:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client listService:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -111,8 +111,8 @@
 - (void)testAPI_queryBucketExistWhenExist {
     InspurOSSQueryBucketExistRequest *request = [InspurOSSQueryBucketExistRequest new];
     request.bucketName = @"test-cl-public";
-    OSSTask *task = [_client queryBucketExist:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client queryBucketExist:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -124,8 +124,8 @@
 - (void)testAPI_queryBucketExistWhenNotExist {
     InspurOSSQueryBucketExistRequest *request = [InspurOSSQueryBucketExistRequest new];
     request.bucketName = @"test-cl-public-not-exist";
-    OSSTask *task = [_client queryBucketExist:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client queryBucketExist:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -137,8 +137,8 @@
 - (void)testAPI_bucketLocation {
     InspurOSSGetBucketLocationRequest *request = [InspurOSSGetBucketLocationRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketLocation:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketLocation:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -169,8 +169,8 @@
 - (void)testAPI_getBucketACL{
     InspurOSSGetBucketACLRequest * request = [InspurOSSGetBucketACLRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask * task = [_client getBucketACL:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getBucketACL:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetBucketACLResult * result = task.result;
         XCTAssertEqualObjects(@"private", result.aclGranted);
@@ -183,8 +183,8 @@
     InspurOSSPutBucketACLRequest *request = [InspurOSSPutBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     request.acl = @"public-read";
-    OSSTask *task = [_client putBucketACL:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketACL:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -197,8 +197,8 @@
     InspurOSSPutBucketACLRequest *request = [InspurOSSPutBucketACLRequest new];
     request.bucketName = @"test-chenli3";
     request.acl = @"private";
-    OSSTask *task = [_client putBucketACL:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketACL:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -209,8 +209,8 @@
 - (void)testAPI_getCORSList {
     InspurOSSGetBucketCORSRequest *request = [InspurOSSGetBucketCORSRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketCORS:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketCORS:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -244,8 +244,8 @@
         [tmpArray addObject:rule1];
     }
     request.bucketCORSRuleList = tmpArray;
-    OSSTask *task = [_client putBucketCORS:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketCORS:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -257,9 +257,9 @@
     NSString * bucket = @"test-chenli3";
     InspurOSSDeleteBucketCORSRequest *req = [InspurOSSDeleteBucketCORSRequest new];
     req.bucketName = bucket;
-    OSSTask *task = [_client deleteBucketCORS:req];
+    InspurOSSTask *task = [_client deleteBucketCORS:req];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -272,8 +272,8 @@
     //request.enable = @"Suspended";
     request.enable = @"Enabled";
     
-    OSSTask *task = [_client putBucketVersioning:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketVersioning:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -286,8 +286,8 @@
     request.bucketName = @"test-chenli3";
     request.enable = @"Suspended";
     
-    OSSTask *task = [_client putBucketVersioning:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketVersioning:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -298,8 +298,8 @@
 - (void)testAPI_getVersioning {
     InspurOSSGetVersioningRequest *request = [InspurOSSGetVersioningRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketVersioning:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketVersioning:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -310,8 +310,8 @@
 - (void)testAPI_getService
 {
     InspurOSSGetServiceRequest *request = [InspurOSSGetServiceRequest new];
-    OSSTask * task = [_client getService:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getService:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -331,8 +331,8 @@
 - (void)testAPI_getBucketEncryption {
     InspurOSSGetBucketEncryptionRequest *request = [InspurOSSGetBucketEncryptionRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketEncryption:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketEncryption:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -344,8 +344,8 @@
     InspurOSSPutBucketEncryptionRequest *request = [InspurOSSPutBucketEncryptionRequest new];
     request.bucketName = @"test-chenli3";
     request.sseAlgorithm = @"AES256";
-    OSSTask *task = [_client putBucketEncryption:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketEncryption:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -357,8 +357,8 @@
     NSString * bucket = @"test-chenli3";
     InspurOSSDeleteBucketEncryptionRequest *req = [InspurOSSDeleteBucketEncryptionRequest new];
     req.bucketName = bucket;
-    OSSTask *task = [_client deleteBucketEncryption:req];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteBucketEncryption:req];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -369,8 +369,8 @@
 - (void)testAPI_getBucketWebsite {
     InspurOSSGetBucketWebsiteRequest *request = [InspurOSSGetBucketWebsiteRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketWebsite:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketWebsite:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -384,8 +384,8 @@
     request.bucketName = @"test-chenli3";
     request.indexDocument = @"index.html";
     request.errroDocument = @"error.html";
-    OSSTask *task = [_client putBucketWebsite:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketWebsite:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -397,9 +397,9 @@
     NSString * bucket = @"test-chenli3";
     InspurOSSDeleteBucketWebsiteRequest *req = [InspurOSSDeleteBucketWebsiteRequest new];
     req.bucketName = bucket;
-    OSSTask *task = [_client deleteBucketWebsite:req];
+    InspurOSSTask *task = [_client deleteBucketWebsite:req];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -410,8 +410,8 @@
 - (void)testAPI_getBucketDomain{
     InspurOSSGetBucketDomainRequest *request = [InspurOSSGetBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketDomain:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketDomain:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -428,8 +428,8 @@
             @"isWebsite" : @"false"
         }
     ];
-    OSSTask *task = [_client putBucketDomain:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketDomain:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -467,8 +467,8 @@
 - (void)testAPI_deleteDomain {
     InspurOSSDeleteBucketDomainRequest *request = [InspurOSSDeleteBucketDomainRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client deleteBucketDomain:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteBucketDomain:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -481,8 +481,8 @@
 - (void)testAPI_getBucketLifeCycle{
     InspurOSSGetBucketLifeCycleRequest *request = [InspurOSSGetBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketLifeCycle:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketLifeCycle:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -493,8 +493,8 @@
 - (void)testAPI_putBucketLifeCycle {
     InspurOSSPutBucketLifeCycleRequest *request = [InspurOSSPutBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client putBucketLifeCycle:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketLifeCycle:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -505,8 +505,8 @@
 - (void)testAPI_deleteLifeCycle {
     InspurOSSDeleteBucketLifeCycleRequest *request = [InspurOSSDeleteBucketLifeCycleRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client deleteBucketLifeCycle:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteBucketLifeCycle:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -529,8 +529,8 @@
             }
         }
     ];
-    OSSTask *task = [_client putBucketPolicy:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client putBucketPolicy:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -541,8 +541,8 @@
 - (void)testAPI_getBucketPolicy{
     InspurOSSGetBucketPolicyRequest *request = [InspurOSSGetBucketPolicyRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client getBucketPolicy:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client getBucketPolicy:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -553,8 +553,8 @@
 - (void)testAPI_deletePolicy {
     InspurOSSDeleteBucketPolicyRequest *request = [InspurOSSDeleteBucketPolicyRequest new];
     request.bucketName = @"test-chenli3";
-    OSSTask *task = [_client deleteBucketPolicy:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteBucketPolicy:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDDLogVerbose(@"%@",task.result);
         return nil;
@@ -567,9 +567,9 @@
     InspurOSSListMultipartUploadsRequest *listreq = [InspurOSSListMultipartUploadsRequest new];
     listreq.bucketName = @"test-chenli3";
     listreq.maxUploads = 1000;
-    OSSTask *task = [_client listMultipartUploads:listreq];
+    InspurOSSTask *task = [_client listMultipartUploads:listreq];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSListMultipartUploadsResult * result = task.result;
         XCTAssertTrue(result.maxUploads == 1000);

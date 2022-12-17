@@ -8,7 +8,7 @@
  *
  */
 
-#import "OSSExecutor.h"
+#import "InspurOSSExecutor.h"
 
 #import <pthread.h>
 
@@ -37,18 +37,18 @@ __attribute__((noinline)) static size_t remaining_stack_size(size_t *restrict to
     return (*totalSize) - (endStack - frameAddr);
 }
 
-@interface OSSExecutor ()
+@interface InspurOSSExecutor ()
 
 @property (nonatomic, copy) void(^block)(void(^block)(void));
 
 @end
 
-@implementation OSSExecutor
+@implementation InspurOSSExecutor
 
 #pragma mark - Executor methods
 
 + (instancetype)defaultExecutor {
-    static OSSExecutor *defaultExecutor = NULL;
+    static InspurOSSExecutor *defaultExecutor = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultExecutor = [self executorWithBlock:^void(void(^block)(void)) {
@@ -71,7 +71,7 @@ __attribute__((noinline)) static size_t remaining_stack_size(size_t *restrict to
 }
 
 + (instancetype)immediateExecutor {
-    static OSSExecutor *immediateExecutor = NULL;
+    static InspurOSSExecutor *immediateExecutor = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         immediateExecutor = [self executorWithBlock:^void(void(^block)(void)) {
@@ -82,7 +82,7 @@ __attribute__((noinline)) static size_t remaining_stack_size(size_t *restrict to
 }
 
 + (instancetype)mainThreadExecutor {
-    static OSSExecutor *mainThreadExecutor = NULL;
+    static InspurOSSExecutor *mainThreadExecutor = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         mainThreadExecutor = [self executorWithBlock:^void(void(^block)(void)) {

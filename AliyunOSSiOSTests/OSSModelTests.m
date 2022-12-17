@@ -8,9 +8,9 @@
 
 #import <XCTest/XCTest.h>
 #import <AliyunOSSiOS/OSSModel.h>
-#import <AliyunOSSiOS/OSSUtil.h>
+#import <AliyunOSSiOS/InspurOSSUtil.h>
 
-@import AliyunOSSiOS.OSSAllRequestNeededMessage;
+@import AliyunOSSiOS.InspurOSSAllRequestNeededMessage;
 @import AliyunOSSiOS.OSSDefine;
 
 @interface OSSModelTests : XCTestCase

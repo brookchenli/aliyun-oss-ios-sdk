@@ -11,7 +11,7 @@
 
 @class OSSSyncMutableDictionary;
 @class InspurOSSNetworkingRequestDelegate;
-@class OSSExecutor;
+@class InspurOSSExecutor;
 
 
 
@@ -39,8 +39,8 @@
 @property (nonatomic, assign) BOOL isUsingBackgroundSession;
 @property (nonatomic, strong) OSSSyncMutableDictionary * sessionDelagateManager;
 @property (nonatomic, strong) InspurOSSNetworkingConfiguration * configuration;
-@property (nonatomic, strong) OSSExecutor * taskExecutor;
+@property (nonatomic, strong) InspurOSSExecutor * taskExecutor;
 
 - (instancetype)initWithConfiguration:(InspurOSSNetworkingConfiguration *)configuration;
-- (OSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request;
+- (InspurOSSTask *)sendRequest:(InspurOSSNetworkingRequestDelegate *)request;
 @end

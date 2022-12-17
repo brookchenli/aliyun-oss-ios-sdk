@@ -8,13 +8,13 @@
  *
  */
 
-#import "OSSCancellationTokenSource.h"
+#import "InspurOSSCancellationTokenSource.h"
 
-#import "OSSCancellationToken.h"
+#import "InspurOSSCancellationToken.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSCancellationToken (OSSCancellationTokenSource)
+@interface InspurOSSCancellationToken (OSSCancellationTokenSource)
 
 - (void)cancel;
 - (void)cancelAfterDelay:(int)millis;
@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation OSSCancellationTokenSource
+@implementation InspurOSSCancellationTokenSource
 
 #pragma mark - Initializer
 
@@ -32,13 +32,13 @@ NS_ASSUME_NONNULL_BEGIN
     self = [super init];
     if (!self) return self;
 
-    _token = [OSSCancellationToken new];
+    _token = [InspurOSSCancellationToken new];
 
     return self;
 }
 
 + (instancetype)cancellationTokenSource {
-    return [OSSCancellationTokenSource new];
+    return [InspurOSSCancellationTokenSource new];
 }
 
 #pragma mark - Custom Setters/Getters

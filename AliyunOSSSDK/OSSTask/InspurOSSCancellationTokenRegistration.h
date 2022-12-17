@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  Represents the registration of a cancellation observer with a cancellation token.
  Can be used to unregister the observer at a later time.
  */
-@interface OSSCancellationTokenRegistration : NSObject
+@interface InspurOSSCancellationTokenRegistration : NSObject
 
 /*!
  Removes the cancellation observer registered with the token

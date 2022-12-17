@@ -115,8 +115,8 @@
             [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
         };
         
-        OSSTask * task = [_client putObject:request];
-        [[task continueWithBlock:^id(OSSTask *task) {
+        InspurOSSTask * task = [_client putObject:request];
+        [[task continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
             return nil;
         }] waitUntilFinished];
@@ -140,8 +140,8 @@
     
     __block int64_t nextAppendPosition = 0;
     __block NSString *lastCrc64ecma;
-    OSSTask * task = [_client appendObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client appendObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSAppendObjectResult * result = task.result;
         nextAppendPosition = result.xOssNextAppendPosition;
@@ -161,7 +161,7 @@
     };
     
     task = [_client appendObject:request withCrc64ecma:lastCrc64ecma];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -191,8 +191,8 @@
     };
     
     __block uint64_t remoteCrc64 = 0;
-    OSSTask * task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult *result = task.result;
         if (result.remoteCRC64ecma) {
@@ -225,9 +225,9 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wangwang" withExtension:@"zip"];
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
@@ -260,8 +260,8 @@
         }
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"bigfile" withExtension:@"zip"];
-    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"resumbleUpload 001 error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -290,7 +290,7 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     resumeTask = [_client resumableUpload:resumableUpload];
-    [[resumeTask continueWithBlock:^id(OSSTask *task) {
+    [[resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         NSLog(@"resumbleUpload 002 error: %@", task.error);
         XCTAssertNil(task.error);
         NSString * recordFilePath = [self getRecordFilePath:resumableUpload];

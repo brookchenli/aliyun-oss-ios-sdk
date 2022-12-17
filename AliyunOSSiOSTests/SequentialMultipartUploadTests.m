@@ -35,8 +35,8 @@
     request.crcFlag = OSSRequestCRCClosed;
 //    request.contentSHA1 = [OSSUtil sha1WithFilePath:request.uploadingFileURL.path];
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNil(t.error);
         
         return nil;
@@ -54,8 +54,8 @@
     request.crcFlag = OSSRequestCRCOpen;
 //    request.contentSHA1 = [OSSUtil sha1WithFilePath:request.uploadingFileURL.path];
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNil(t.error);
         
         return nil;
@@ -77,8 +77,8 @@
         }
     };
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
         
@@ -101,8 +101,8 @@
         }
     };
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
         
@@ -125,8 +125,8 @@
         }
     };
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
         
@@ -143,7 +143,7 @@
 //    resumedRequest.contentSHA1 = [OSSUtil sha1WithFilePath:request.uploadingFileURL.path];
     
     task = [self.client sequentialMultipartUpload:resumedRequest];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNil(t.error);
         return nil;
     }] waitUntilFinished];
@@ -165,8 +165,8 @@
         }
     };
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
         
@@ -183,7 +183,7 @@
 //    resumedRequest.contentSHA1 = [OSSUtil sha1WithFilePath:request.uploadingFileURL.path];
     
     task = [self.client sequentialMultipartUpload:resumedRequest];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNil(t.error);
         
         return nil;
@@ -206,8 +206,8 @@
         }
     };
     
-    OSSTask *task = [self.client sequentialMultipartUpload:request];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    InspurOSSTask *task = [self.client sequentialMultipartUpload:request];
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(t.error.code, OSSClientErrorCodeTaskCancelled);
         
@@ -224,7 +224,7 @@
 //    resumedRequest.contentSHA1 = [OSSUtil sha1WithFilePath:request.uploadingFileURL.path];
     
     task = [self.client sequentialMultipartUpload:resumedRequest];
-    [[task continueWithBlock:^OSSTask* (OSSTask* t) {
+    [[task continueWithBlock:^InspurOSSTask* (InspurOSSTask* t) {
         XCTAssertNil(t.error);
         
         return nil;

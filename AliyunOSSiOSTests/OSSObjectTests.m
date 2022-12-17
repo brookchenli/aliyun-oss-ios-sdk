@@ -188,8 +188,8 @@
     InspurOSSGetBucketRequest * request = [InspurOSSGetBucketRequest new];
     request.bucketName = _testBucketName;
    
-    OSSTask * task = [_client getBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getBucket:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -211,8 +211,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         /*
         BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
@@ -244,8 +244,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         /*
         BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
@@ -276,8 +276,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -288,8 +288,8 @@
     InspurOSSDeleteObjectRequest * delete = [InspurOSSDeleteObjectRequest new];
     delete.bucketName = _testBucketName;
     delete.objectKey = @"file1k";
-    OSSTask *task = [_client deleteObject:delete];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client deleteObject:delete];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
@@ -303,8 +303,8 @@
     copy.objectKey = @"file1k-copy";
     copy.sourceBucketName = _testBucketName;
     copy.sourceObjectKey = @"file1k";
-    OSSTask *task = [_client copyObject:copy];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *task = [_client copyObject:copy];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -318,8 +318,8 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -328,7 +328,7 @@
 // 追加上传
 
 - (void)testAPI_preSign{
-    OSSTask *task = [_client presignConstrainURLWithBucketName:_testBucketName withObjectKey:@"file1k" withExpirationInterval:30];
+    InspurOSSTask *task = [_client presignConstrainURLWithBucketName:_testBucketName withObjectKey:@"file1k" withExpirationInterval:30];
     [task waitUntilFinished];
     XCTAssertNil(task.error);
 }
@@ -354,8 +354,8 @@
     request.keys = @[@"file1k",@"file1k-copy"];
     request.encodingType = @"url";
     
-    OSSTask *task = [_client deleteMultipleObjects:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [_client deleteMultipleObjects:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(t.error);
         return nil;
     }] waitUntilFinished];
@@ -367,8 +367,8 @@
     InspurOSSGetObjectACLRequest *request = [InspurOSSGetObjectACLRequest new];
     request.bucketName = _testBucketName;
     request.objectName = @"file1k";
-    OSSTask *task = [_client getObjectACL:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [_client getObjectACL:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(t.error);
         return nil;
     }] waitUntilFinished];
@@ -383,7 +383,7 @@
     putAclRequest.objectKey = @"file1k";
     //putAclRequest.acl = @"public-read-write";
     putAclRequest.acl = @"private";
-    OSSTask *task = [_client putObjectACL:putAclRequest];
+    InspurOSSTask *task = [_client putObjectACL:putAclRequest];
     [task waitUntilFinished];
     
     XCTAssertNil(task.error);
@@ -395,7 +395,7 @@
     putAclRequest.bucketName = _testBucketName;
     putAclRequest.objectKey = @"file1k";
     putAclRequest.acl = @"public-read-write";
-    OSSTask *task = [_client putObjectACL:putAclRequest];
+    InspurOSSTask *task = [_client putObjectACL:putAclRequest];
     [task waitUntilFinished];
     
     XCTAssertNil(task.error);
@@ -412,8 +412,8 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -425,8 +425,8 @@
     putObjectRequest.objectKey = @"file1k";
     putObjectRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"meta2", @"x-oss-meta-test1", nil];
     
-    OSSTask * task = [_client putObjectMetaData:putObjectRequest];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObjectMetaData:putObjectRequest];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -436,8 +436,8 @@
     InspurOSSGetObjectVersionRequest * request = [[InspurOSSGetObjectVersionRequest alloc] init];
     
     request.bucketName = _testBucketName;
-    OSSTask * task = [_client getObjectVersions:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObjectVersions:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -446,7 +446,7 @@
 - (void)testAPI_deleteVersion{
     InspurOSSGetObjectVersionRequest * request = [[InspurOSSGetObjectVersionRequest alloc] init];
     request.bucketName = _testBucketName;
-    OSSTask * task = [_client getObjectVersions:request];
+    InspurOSSTask * task = [_client getObjectVersions:request];
     [task waitUntilFinished];
     XCTAssertNil(task.error);
     
@@ -468,8 +468,8 @@
     deleteRequest.bucketName = _testBucketName;
     deleteRequest.versionId = lastVersionId;
     deleteRequest.objectName = @"file1k";
-    OSSTask *deleteTask = [_client deleteObjectVersion:deleteRequest];
-    [[deleteTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *deleteTask = [_client deleteObjectVersion:deleteRequest];
+    [[deleteTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -489,9 +489,9 @@
     };
 
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"txt"];
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             NSLog(@"error: %@", task.error);
@@ -526,8 +526,8 @@
         }
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
-    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -560,8 +560,8 @@
         }
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
-    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -594,8 +594,8 @@
         }
     };
     resumableUpload.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
-    OSSTask * resumeTask = [_client resumableUpload:resumableUpload];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [_client resumableUpload:resumableUpload];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -614,8 +614,8 @@
     listParts.bucketName = _testBucketName;
     listParts.objectKey = objectName;
     listParts.uploadId = uploadId;
-    OSSTask * listPartsTask = [_client listParts:listParts];
-    [[listPartsTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * listPartsTask = [_client listParts:listParts];
+    [[listPartsTask continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNotNil(task.error);
             NSLog(@"error: %@", task.error);
             return nil;
@@ -635,8 +635,8 @@
         XCTAssertTrue(totalByteSent <= totalBytesExpectedToSend);
     };
     multipartUploadRequest.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"wf" withExtension:@"pdf"];
-    OSSTask * resumeTask = [_client multipartUpload:multipartUploadRequest];
-    [resumeTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * resumeTask = [_client multipartUpload:multipartUploadRequest];
+    [resumeTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"error: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -671,8 +671,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -700,8 +700,8 @@
             [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
         };
         
-        OSSTask * task = [_client putObject:request];
-        [[task continueWithBlock:^id(OSSTask *task) {
+        InspurOSSTask * task = [_client putObject:request];
+        [[task continueWithBlock:^id(InspurOSSTask *task) {
             XCTAssertNil(task.error);
             BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
                                               objectKey:objectKey
@@ -726,8 +726,8 @@
 //  在统一config 中修改
 //    request.crcFlag = OSSRequestCRCOpen;
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         BOOL isEqual = [self checkMd5WithBucketName:_privateBucketName
                                           objectKey:objectKey
@@ -758,8 +758,8 @@
     
     request.contentType = @"";
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -768,7 +768,7 @@
     InspurOSSHeadObjectRequest * head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = objectKeyWithoutContentType;
-    [[[_client headObject:head] continueWithBlock:^id(OSSTask *task) {
+    [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSHeadObjectResult * headResult = task.result;
         XCTAssertNotNil([headResult.objectMeta objectForKey:@"Content-Type"]);
@@ -802,8 +802,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         if (task.error) {
             OSSLogError(@"%@", task.error);
@@ -818,7 +818,7 @@
     head.bucketName = _privateBucketName;
     head.objectKey = fileName;
     
-    [[[_client headObject:head] continueWithBlock:^id(OSSTask *task) {
+    [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSHeadObjectResult * headResult = task.result;
         XCTAssertEqualObjects([headResult.objectMeta objectForKey:@"Content-Type"], @"application/special");
@@ -854,8 +854,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -870,7 +870,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = _fileNames[0];
     request.isAuthenticationRequired = NO;
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     [task waitUntilFinished];
     
     XCTAssertNotNil(task.error);
@@ -899,8 +899,8 @@
     InspurOSSDeleteObjectRequest * delete = [InspurOSSDeleteObjectRequest new];
     delete.bucketName = _testBucketName;
     delete.objectKey = @"appendObject";
-    OSSTask * task = [_client deleteObject:delete];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client deleteObject:delete];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
@@ -922,7 +922,7 @@
     __block int64_t nextAppendPosition = 0;
     __block NSString *lastCrc64ecma;
     task = [_client appendObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSAppendObjectResult * result = task.result;
         nextAppendPosition = result.xOssNextAppendPosition;
@@ -942,7 +942,7 @@
     };
     
     task = [_client appendObject:request withCrc64ecma:lastCrc64ecma];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -961,8 +961,8 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -974,8 +974,8 @@
     request.bucketName = _privateBucketName;
     request.objectName = OSS_IMAGE_KEY;
     
-    OSSTask * task = [_client getObjectACL:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask * task = [_client getObjectACL:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(task.error);
         if (t.result != nil) {
             InspurOSSGetObjectACLResult *result = (InspurOSSGetObjectACLResult *)t.result;
@@ -1005,9 +1005,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
 
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
 
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1028,9 +1028,9 @@
         NSLog(@"onRecieveData: %lu", [data length]);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         
         OSSGetObjectResult * result = task.result;
@@ -1053,9 +1053,9 @@
         NSLog(@"onRecieveData: %lu", [data length]);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1074,9 +1074,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertEqual(206, result.httpResponseCode);
@@ -1101,9 +1101,9 @@
         NSLog(@"recieveData %ld", [recieveData length]);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
@@ -1128,9 +1128,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
@@ -1157,8 +1157,8 @@
     request.objectKey = _fileNames[3];
     request.downloadToFileURL = [NSURL fileURLWithPath:tmpFilePath];
     
-    OSSTask * task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertNil(result.downloadedData);
@@ -1174,7 +1174,7 @@
     request.downloadToFileURL = [NSURL fileURLWithPath:tmpFilePath];
     
     task = [_client getObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertNil(result.downloadedData);
@@ -1196,7 +1196,7 @@
     putObjectRequest.uploadingFileURL = fileURL;
     putObjectRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"test-symlink-target", @"x-oss-meta-name", nil];
     
-    OSSTask * task = [_client putObject:putObjectRequest];
+    InspurOSSTask * task = [_client putObject:putObjectRequest];
     [task waitUntilFinished];
     
     InspurOSSPutSymlinkRequest * putSymlinkRequest = [InspurOSSPutSymlinkRequest new];
@@ -1205,9 +1205,9 @@
     putSymlinkRequest.targetObjectName = @"test-symlink-targetObjectName";
     putSymlinkRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"HONGKONG", @"x-oss-meta-location", nil];
     
-    OSSTask * putSymlinktask = [_client putSymlink:putSymlinkRequest];
+    InspurOSSTask * putSymlinktask = [_client putSymlink:putSymlinkRequest];
     
-    [[putSymlinktask continueWithBlock:^id(OSSTask *task) {
+    [[putSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         
         return nil;
@@ -1217,9 +1217,9 @@
     getSymlinkRequest.bucketName = _publicBucketName;
     getSymlinkRequest.objectKey = @"test-symlink-objectName";
     
-    OSSTask * getSymlinktask = [_client getSymlink:getSymlinkRequest];
+    InspurOSSTask * getSymlinktask = [_client getSymlink:getSymlinkRequest];
     
-    [[getSymlinktask continueWithBlock:^id(OSSTask *task) {
+    [[getSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
         NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
@@ -1242,7 +1242,7 @@
     putObjectRequest.uploadingFileURL = fileURL;
     putObjectRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"test-symlink-target", @"x-oss-meta-name", nil];
     
-    OSSTask * task = [_client putObject:putObjectRequest];
+    InspurOSSTask * task = [_client putObject:putObjectRequest];
     [task waitUntilFinished];
     
     InspurOSSPutSymlinkRequest * putSymlinkRequest = [InspurOSSPutSymlinkRequest new];
@@ -1251,9 +1251,9 @@
     putSymlinkRequest.targetObjectName = @"test-symlink-targetObjectName";
     putSymlinkRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"HONGKONG", @"x-oss-meta-location", nil];
     
-    OSSTask * putSymlinktask = [_client putSymlink:putSymlinkRequest];
+    InspurOSSTask * putSymlinktask = [_client putSymlink:putSymlinkRequest];
     
-    [[putSymlinktask continueWithBlock:^id(OSSTask *task) {
+    [[putSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         
         return nil;
@@ -1263,9 +1263,9 @@
     getSymlinkRequest.bucketName = _publicBucketName;
     getSymlinkRequest.objectKey = @"test-symlink-objectName";
     
-    OSSTask * getSymlinktask = [_client getSymlink:getSymlinkRequest];
+    InspurOSSTask * getSymlinktask = [_client getSymlink:getSymlinkRequest];
     
-    [[getSymlinktask continueWithBlock:^id(OSSTask *task) {
+    [[getSymlinktask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         InspurOSSGetSymlinkResult *result = (InspurOSSGetSymlinkResult *)task.result;
         NSString *targetObjectName = (NSString *)[result.httpResponseHeaderFields valueForKey:OSSHttpHeaderSymlinkTarget];
@@ -1296,15 +1296,15 @@
     putObjectRequest.uploadingFileURL = fileURL;
     putObjectRequest.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:objectName, @"x-oss-meta-name", nil];
     
-    OSSTask * task = [_client putObject:putObjectRequest];
+    InspurOSSTask * task = [_client putObject:putObjectRequest];
     [task waitUntilFinished];
     
     InspurOSSRestoreObjectRequest * restoreObjectRequest = [InspurOSSRestoreObjectRequest new];
     restoreObjectRequest.bucketName = bucketName;
     restoreObjectRequest.objectKey = objectName;
     
-    OSSTask * restoreObjecTtask = [_client restoreObject:restoreObjectRequest];
-    [[restoreObjecTtask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * restoreObjecTtask = [_client restoreObject:restoreObjectRequest];
+    [[restoreObjecTtask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         InspurOSSRestoreObjectResult *result = (InspurOSSRestoreObjectResult *)task.result;
         XCTAssertEqual(result.httpResponseCode, 202);
@@ -1312,8 +1312,8 @@
         return nil;
     }] waitUntilFinished];
     
-    OSSTask * restoreObjectTask1 = [_client restoreObject:restoreObjectRequest];
-    [[restoreObjectTask1 continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * restoreObjectTask1 = [_client restoreObject:restoreObjectRequest];
+    [[restoreObjectTask1 continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         
         return nil;
@@ -1330,7 +1330,7 @@
     putTaggingRequest.bucketName = _privateBucketName;
     putTaggingRequest.objectKey = OSS_IMAGE_KEY;
     putTaggingRequest.tags = tags;
-    [[[_client putObjectTagging:putTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client putObjectTagging:putTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1338,7 +1338,7 @@
     InspurOSSGetObjectTaggingRequest *getTaggingRequest = [InspurOSSGetObjectTaggingRequest new];
     getTaggingRequest.bucketName = _privateBucketName;
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         InspurOSSGetObjectTaggingResult *result = task.result;
         for (NSString *key in [tags allKeys]) {
@@ -1350,7 +1350,7 @@
     InspurOSSDeleteObjectTaggingRequest *deleteTaggingRequest = [InspurOSSDeleteObjectTaggingRequest new];
     deleteTaggingRequest.bucketName = _privateBucketName;
     deleteTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1358,7 +1358,7 @@
     getTaggingRequest = [InspurOSSGetObjectTaggingRequest new];
     getTaggingRequest.bucketName = _privateBucketName;
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         InspurOSSGetObjectTaggingResult *result = task.result;
         XCTAssertTrue([[result.tags allKeys] count] == 0);
@@ -1370,7 +1370,7 @@
     InspurOSSPutObjectTaggingRequest *putTaggingRequest = [InspurOSSPutObjectTaggingRequest new];
     putTaggingRequest.bucketName = _privateBucketName;
     putTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client putObjectTagging:putTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client putObjectTagging:putTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1378,7 +1378,7 @@
     InspurOSSGetObjectTaggingRequest *getTaggingRequest = [InspurOSSGetObjectTaggingRequest new];
     getTaggingRequest.bucketName = _privateBucketName;
     getTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client getObjectTagging:getTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         InspurOSSGetObjectTaggingResult *result = task.result;
         XCTAssertTrue([[result.tags allKeys] count] == 0);
@@ -1388,7 +1388,7 @@
     InspurOSSDeleteObjectTaggingRequest *deleteTaggingRequest = [InspurOSSDeleteObjectTaggingRequest new];
     deleteTaggingRequest.bucketName = _privateBucketName;
     deleteTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1399,7 +1399,7 @@
     InspurOSSDeleteObjectTaggingRequest *deleteTaggingRequest = [InspurOSSDeleteObjectTaggingRequest new];
     deleteTaggingRequest.bucketName = _privateBucketName;
     deleteTaggingRequest.objectKey = OSS_IMAGE_KEY;
-    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1407,7 +1407,7 @@
     deleteTaggingRequest = [InspurOSSDeleteObjectTaggingRequest new];
     deleteTaggingRequest.bucketName = _privateBucketName;
     deleteTaggingRequest.objectKey = @"existObject";
-    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[_client deleteObjectTagging:deleteTaggingRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(task.error.code, -404);
         return nil;
@@ -1441,8 +1441,8 @@
     request.maxKeys = 1000;
     request.prefix = @"";
     
-    OSSTask * task = [_client getBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client getBucket:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1455,7 +1455,7 @@
     request.prefix = @"";
     
     task = [_client getBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1466,7 +1466,7 @@
     request.delimiter = @"/";
     
     task = [_client getBucket:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1482,8 +1482,8 @@
     request.bucketName = _publicBucketName;
     request.objectKey = _fileNames[3];
     
-    OSSTask * task = [_client headObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client headObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1524,8 +1524,8 @@
     InspurOSSHeadObjectRequest * head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = @"file1m_copyTo";
-    OSSTask * task = [_client headObject:head];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client headObject:head];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(-404, task.error.code);
         return nil;
@@ -1536,7 +1536,7 @@
     copy.objectKey = @"file1m_copyTo";
     copy.sourceCopyFrom = [NSString stringWithFormat:@"/%@/%@", _privateBucketName, _fileNames[3]];
     task = [_client copyObject:copy];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1545,7 +1545,7 @@
     delete.bucketName = _privateBucketName;
     delete.objectKey = @"file1m_copyTo";
     task = [_client deleteObject:delete];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
@@ -1565,14 +1565,14 @@
     request.uploadingFileURL = fileURL;
     request.objectMeta = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value1", @"x-oss-meta-name1", nil];
     
-    OSSTask * putTask = [_client putObject:request];
+    InspurOSSTask * putTask = [_client putObject:request];
     [putTask waitUntilFinished];
     
     InspurOSSHeadObjectRequest * head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = @"中文_copyTo";
-    OSSTask * headTask = [_client headObject:head];
-    [[headTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * headTask = [_client headObject:head];
+    [[headTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(-404, task.error.code);
         return nil;
@@ -1583,8 +1583,8 @@
     copy.objectKey = @"中文_copyTo";
     copy.sourceBucketName = _privateBucketName;
     copy.sourceObjectKey = objectKey;
-    OSSTask *cpTask = [_client copyObject:copy];
-    [[cpTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *cpTask = [_client copyObject:copy];
+    [[cpTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1592,8 +1592,8 @@
     InspurOSSDeleteObjectRequest * delete = [InspurOSSDeleteObjectRequest new];
     delete.bucketName = _privateBucketName;
     delete.objectKey = @"中文_copyTo";
-    OSSTask *dTask = [_client deleteObject:delete];
-    [[dTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask *dTask = [_client deleteObject:delete];
+    [[dTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSDeleteObjectResult * result = task.result;
         XCTAssertEqual(204, result.httpResponseCode);
@@ -1607,8 +1607,8 @@
     request.keys = @[@"file1k",@"file10k",@"file100k",@"file1m"];
     request.encodingType = @"url";
     
-    OSSTask *task = [_client deleteMultipleObjects:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [_client deleteMultipleObjects:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(t.error);
 
         return nil;
@@ -1643,8 +1643,8 @@
         NSLog(@"put object call retry");
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1670,9 +1670,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1700,8 +1700,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1728,8 +1728,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -1756,8 +1756,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(-1 * 400, task.error.code);
         return nil;
@@ -1785,9 +1785,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
 
-    OSSTask * task = [tClient getObject:request];
+    InspurOSSTask * task = [tClient getObject:request];
 
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSGetObjectResult * result = task.result;
         XCTAssertEqual(200, result.httpResponseCode);
@@ -1818,8 +1818,8 @@
     };
     
     __block BOOL cancelled = NO;
-    OSSTask * task = [_client putObject:request];
-    [task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         OSSLogError(@"error should be raised:%@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -1845,9 +1845,9 @@
     };
     
     __block BOOL completed = NO;
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [task continueWithBlock:^id(OSSTask *task) {
+    [task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         OSSLogError(@"error should be raise: %@", task.error);
         XCTAssertEqual(OSSClientErrorCodeTaskCancelled, task.error.code);
@@ -1864,12 +1864,12 @@
 - (void)testAPI_cancelGetObjectWithNoSessionTask
 {
     [OSSTestUtils putTestDataWithKey:@"file5m" withClient:_client withBucket:_privateBucketName];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     InspurOSSGetObjectRequest * getRequest = [InspurOSSGetObjectRequest new];
     getRequest.bucketName = _privateBucketName;
     getRequest.objectKey = @"file5m";
-    OSSTask * getTask = [_client getObject:getRequest];
-    [getTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * getTask = [_client getObject:getRequest];
+    [getTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(task.error.code, OSSClientErrorCodeTaskCancelled);
         [tcs setResult:nil];
@@ -1883,12 +1883,12 @@
 {
     [OSSTestUtils putTestDataWithKey:@"file5m" withClient:_client withBucket:_privateBucketName];
     
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     InspurOSSGetObjectRequest * getRequest = [InspurOSSGetObjectRequest new];
     getRequest.bucketName = _privateBucketName;
     getRequest.objectKey = @"file5m";
-    OSSTask * getTask = [_client getObject:getRequest];
-    [getTask continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * getTask = [_client getObject:getRequest];
+    [getTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(task.error.code, OSSClientErrorCodeTaskCancelled);
         [tcs setResult:nil];
@@ -1896,7 +1896,7 @@
     }];
     [getRequest cancel];
     [tcs.task waitUntilFinished];
-    OSSTask * getTaskAgain = [_client getObject:getRequest];
+    InspurOSSTask * getTaskAgain = [_client getObject:getRequest];
     [getTaskAgain waitUntilFinished];
     XCTAssertNil(getTaskAgain.error);
 }
@@ -1908,8 +1908,8 @@
     request.keys = @[@"file1k",@"file10k",@"file100k",@"file1m"];
     request.encodingType = @"url";
     
-    OSSTask *task = [_client deleteMultipleObjects:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [_client deleteMultipleObjects:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         
         return nil;
@@ -1922,8 +1922,8 @@
     request.bucketName = OSS_BUCKET_PRIVATE;
     request.encodingType = @"url";
     
-    OSSTask *task = [_client deleteMultipleObjects:request];
-    [[task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [_client deleteMultipleObjects:request];
+    [[task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         
         return nil;
@@ -1940,9 +1940,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 404, task.error.code);
@@ -1959,9 +1959,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 404, task.error.code);
@@ -1985,8 +1985,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
@@ -2010,8 +2010,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
         return nil;
@@ -2029,9 +2029,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([OSSServerErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(-1 * 403, task.error.code);
@@ -2048,9 +2048,9 @@
         NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
     
-    OSSTask * task = [_client getObject:request];
+    InspurOSSTask * task = [_client getObject:request];
     
-    [[task continueWithBlock:^id(OSSTask *task) {
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([OSSClientErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
@@ -2070,8 +2070,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [_client putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [_client putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([OSSClientErrorDomain isEqualToString:task.error.domain]);
         XCTAssertEqual(OSSClientErrorCodeInvalidArgument, task.error.code);
@@ -2100,8 +2100,8 @@
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
     
-    OSSTask * task = [tempClient putObject:request];
-    [[task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTask * task = [tempClient putObject:request];
+    [[task continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         return nil;
         XCTAssertEqualObjects(OSSClientErrorDomain, task.error.domain);
@@ -2119,7 +2119,7 @@
     id<OSSCredentialProvider> provider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient * tClient = [[InspurOSSClient alloc] initWithEndpoint:OSS_CNAME_URL
                                            credentialProvider:provider];
-    OSSTask * tk = [tClient presignConstrainURLWithBucketName:_privateBucketName
+    InspurOSSTask * tk = [tClient presignConstrainURLWithBucketName:_privateBucketName
                                  withObjectKey:@"file1k"
                         withExpirationInterval:30 * 60];
     [tk waitUntilFinished];
@@ -2131,7 +2131,7 @@
 
 - (void)testAPI_presignConstrainURL
 {
-    OSSTask * tk = [_client presignConstrainURLWithBucketName:_privateBucketName
+    InspurOSSTask * tk = [_client presignConstrainURLWithBucketName:_privateBucketName
                                                withObjectKey:@"file1k"
                                       withExpirationInterval:30 * 60];
     XCTAssertNil(tk.error);
@@ -2139,13 +2139,13 @@
 
 - (void)testAPI_presignPublicURL
 {
-    OSSTask * task = [_client presignPublicURLWithBucketName:_publicBucketName withObjectKey:@"file1m"];
+    InspurOSSTask * task = [_client presignPublicURLWithBucketName:_publicBucketName withObjectKey:@"file1m"];
     XCTAssertNil(task.error);
 }
 
 - (void)testAPI_PresignImageConstrainURL
 {
-    OSSTask * tk = [_client presignConstrainURLWithBucketName:_privateBucketName
+    InspurOSSTask * tk = [_client presignConstrainURLWithBucketName:_privateBucketName
                                                 withObjectKey:@"hasky.jpeg"
                                        withExpirationInterval:30 * 60
                                                withParameters:@{@"x-oss-process": @"image/resize,w_50"}];
@@ -2154,7 +2154,7 @@
 
 - (void)testAPI_PublicImageURL
 {
-    OSSTask * task = [_client presignPublicURLWithBucketName:_publicBucketName
+    InspurOSSTask * task = [_client presignPublicURLWithBucketName:_publicBucketName
                                               withObjectKey:@"hasky.jpeg"
                                              withParameters:@{@"x-oss-process": @"image/resize,w_50"}];
     XCTAssertNil(task.error);
@@ -2165,7 +2165,7 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
                                       withExpirationInterval:30 * 60];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
@@ -2178,7 +2178,7 @@
     config.isPathStyleAccessEnable = YES;
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
                                       withExpirationInterval:30 * 60];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
@@ -2223,7 +2223,7 @@
     config.cnameExcludeList = @[CNAME_ENDPOINT];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
                                       withExpirationInterval:30 * 60];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CNAME_ENDPOINT, OBJECT_KEY];
@@ -2246,7 +2246,7 @@
     config.isCustomPathPrefixEnable = YES;
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CUSTOMPATH(ENDPOINT) credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
                                       withExpirationInterval:30 * 60];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CUSTOMPATH(ENDPOINT), OBJECT_KEY];
@@ -2257,7 +2257,7 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:[@"http://" stringByAppendingString:IP_ENDPOINT] credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignConstrainURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY
                                       withExpirationInterval:30 * 60];
     NSString *urlString = [NSString stringWithFormat:@"http://%@/%@/%@", IP_ENDPOINT, BUCKET_NAME, OBJECT_KEY];
@@ -2270,7 +2270,7 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
@@ -2282,7 +2282,7 @@
     config.isPathStyleAccessEnable = YES;
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
@@ -2323,7 +2323,7 @@
     config.cnameExcludeList = @[CNAME_ENDPOINT];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CNAME_ENDPOINT credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CNAME_ENDPOINT, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
@@ -2344,7 +2344,7 @@
     config.isCustomPathPrefixEnable = YES;
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:CUSTOMPATH(ENDPOINT) credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"%@%@.%@/%@", SCHEME, BUCKET_NAME, CUSTOMPATH(ENDPOINT), OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
@@ -2354,7 +2354,7 @@
     OSSClientConfiguration *config = [OSSClientConfiguration new];
     OSSAuthCredentialProvider *authProv = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STSTOKEN_URL];
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:[@"http://" stringByAppendingString:IP_ENDPOINT] credentialProvider:authProv clientConfiguration:config];
-    OSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
+    InspurOSSTask * tk = [client presignPublicURLWithBucketName:BUCKET_NAME
                                                withObjectKey:OBJECT_KEY];
     NSString *urlString = [NSString stringWithFormat:@"http://%@/%@/%@", IP_ENDPOINT, BUCKET_NAME, OBJECT_KEY];
     XCTAssertTrue([tk.result hasPrefix:urlString]);
@@ -2368,7 +2368,7 @@
     NSString *contentType = @"image/png";
     NSString *contentMd5 = [InspurOSSUtil base64Md5ForFilePath:filePath];
 
-    OSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
+    InspurOSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
                                                  withObjectKey:objectKey
                                                     httpMethod:method
                                         withExpirationInterval:30 * 60
@@ -2383,7 +2383,7 @@
     [request setValue:contentType forHTTPHeaderField:OSSHttpHeaderContentType];
     [request setValue:contentMd5 forHTTPHeaderField:OSSHttpHeaderContentMD5];
     NSURLSession *session = [NSURLSession sharedSession];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     NSURLSessionTask *sesstionTask = [session uploadTaskWithRequest:request fromFile:[NSURL fileURLWithPath:filePath] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSHTTPURLResponse *httpResoponse = (NSHTTPURLResponse *)response;
         if (!error && httpResoponse.statusCode == 200) {
@@ -2414,7 +2414,7 @@
                               OSSHttpHeaderContentType: contentType,
                               OSSHttpHeaderContentMD5: contentMd5};
 
-    OSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
+    InspurOSSTask *task = [_client presignConstrainURLWithBucketName:bucketName
                                                  withObjectKey:objectKey
                                                     httpMethod:method
                                         withExpirationInterval:30 * 60
@@ -2429,7 +2429,7 @@
     [request setValue:contentMd5 forHTTPHeaderField:OSSHttpHeaderContentMD5];
     [request setValue:@"test-value" forHTTPHeaderField:@"x-oss-meta-text-key"];
     NSURLSession *session = [NSURLSession sharedSession];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     NSURLSessionTask *sesstionTask = [session uploadTaskWithRequest:request fromFile:[NSURL fileURLWithPath:filePath] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSHTTPURLResponse *httpResoponse = (NSHTTPURLResponse *)response;
         if (!error && httpResoponse.statusCode == 200) {
@@ -2446,7 +2446,7 @@
     InspurOSSHeadObjectRequest * head = [InspurOSSHeadObjectRequest new];
     head.bucketName = _privateBucketName;
     head.objectKey = OBJECT_KEY;
-    [[[_client headObject:head] continueWithBlock:^id(OSSTask *task) {
+    [[[_client headObject:head] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         OSSHeadObjectResult * headResult = task.result;
         [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -2474,7 +2474,7 @@
     get.bucketName = bucketName;
     get.objectKey = objectKey;
     get.downloadToFileURL = [NSURL fileURLWithPath:tempFile];
-    [[[_client getObject:get] continueWithBlock:^id(OSSTask *task) {
+    [[[_client getObject:get] continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -2501,9 +2501,9 @@
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -2529,7 +2529,7 @@
        };
         
         [queue addOperationWithBlock:^{
-            OSSTask * task = [_client multipartUpload:multipartUploadRequest];
+            InspurOSSTask * task = [_client multipartUpload:multipartUploadRequest];
             [task waitUntilFinished];
             XCTAssertNotNil(task.result);
             XCTAssertTrue([progressTest completeValidateProgress]);
@@ -2553,9 +2553,9 @@
     };
     multipartUploadRequest.uploadingFileURL = [NSURL URLWithString:@"http://www.alibaba-inc.com"];
     
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         NSLog(@"Error: %@", task.error);
         
@@ -2579,9 +2579,9 @@
     NSString * docDir = [NSString oss_documentDirectory];
     multipartUploadRequest.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"unexistfile"]];
     
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -2600,9 +2600,9 @@
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -2622,9 +2622,9 @@
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         
         return nil;
@@ -2644,9 +2644,9 @@
         NSLog(@"progress: %lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
         [progressTest updateTotalBytes:totalByteSent totalBytesExpected:totalBytesExpectedToSend];
     };
-    OSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
+    InspurOSSTask * multipartTask = [_client multipartUpload:multipartUploadRequest];
     
-    [[multipartTask continueWithBlock:^id(OSSTask *task) {
+    [[multipartTask continueWithBlock:^id(InspurOSSTask *task) {
         XCTAssertNotNil(task.error);
         
         return nil;
@@ -2670,13 +2670,13 @@
     dispatch_group_enter(group);
     dispatch_group_enter(group);
     
-    [[_specialClient putObject:putObjectRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[_specialClient putObject:putObjectRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         dispatch_group_leave(group);
         return nil;
     }];
 
-    [[_specialClient headObject:headObjectRequest] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[_specialClient headObject:headObjectRequest] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         dispatch_group_leave(group);
         return nil;
@@ -2694,7 +2694,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = @"file10k";
     
-    OSSTask *task = [_client multipartUpload:request];
+    InspurOSSTask *task = [_client multipartUpload:request];
     [task waitUntilFinished];
     
     XCTAssertNil(task.error);
@@ -2708,7 +2708,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = @"test-part-size-less-than-100k";
     
-    OSSTask *task = [_client multipartUpload:request];
+    InspurOSSTask *task = [_client multipartUpload:request];
     [task waitUntilFinished];
     
     XCTAssertNotNil(task.error);
@@ -2722,7 +2722,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = @"test-part-size-less-than-100k";
     
-    OSSTask *task = [_client multipartUpload:request];
+    InspurOSSTask *task = [_client multipartUpload:request];
     [task waitUntilFinished];
     
     XCTAssertNil(task.error);
@@ -2736,7 +2736,7 @@
     request.bucketName = _privateBucketName;
     request.objectKey = @"test-part-size-less-than-100k";
     
-    OSSTask *task = [_client multipartUpload:request];
+    InspurOSSTask *task = [_client multipartUpload:request];
     [task waitUntilFinished];
     
     XCTAssertNotNil(task.error);
@@ -2748,7 +2748,7 @@
     req.objectKey = @"test-empty-file";
     req.uploadingFileURL = [[NSBundle mainBundle] URLForResource:@"empty-file" withExtension:nil];
     
-    OSSTask *task = [_client putObject:req];
+    InspurOSSTask *task = [_client putObject:req];
     [task waitUntilFinished];
     
     XCTAssertNotNil(task.error);

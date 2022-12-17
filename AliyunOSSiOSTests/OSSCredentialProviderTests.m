@@ -41,7 +41,7 @@
 {
     NSURL * url = [NSURL URLWithString:OSS_STSTOKEN_URL];
     NSURLRequest * request = [NSURLRequest requestWithURL:url];
-    OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     NSURLSession * session = [NSURLSession sharedSession];
     NSURLSessionDataTask * dataTask = [session dataTaskWithRequest:request
                                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -83,7 +83,7 @@
     InspurOSSHeadObjectRequest *request = [InspurOSSHeadObjectRequest new];
     request.bucketName = _privateBucketName;
     request.objectKey = OSS_IMAGE_KEY;
-    OSSTask *task = [client headObject:request];
+    InspurOSSTask *task = [client headObject:request];
     [task waitUntilFinished];
     
     XCTAssertNil(task.error);

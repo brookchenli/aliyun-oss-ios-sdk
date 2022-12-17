@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableData (OSS_CRC)
+@interface NSMutableData (InspurOSS_CRC)
 
 - (uint64_t)oss_crc64;
 

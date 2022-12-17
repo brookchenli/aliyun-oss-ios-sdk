@@ -21,9 +21,9 @@
                    onCompleted:(void(^)(BOOL, NSError *))onCompleted
                     onProgress:(void(^)(float progress))onProgress {
 
-    OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
+    OSSTaskHandler * bcts = [InspurOSSCancellationTokenSource cancellationTokenSource];
 
-    [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(InspurOSSTask *task) {
         InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
         put.bucketName = bucketName;
         put.objectKey = objectKey;
@@ -41,11 +41,11 @@
             [put cancel];
         }];
 
-        OSSTask * putTask = [self putObject:put];
+        InspurOSSTask * putTask = [self putObject:put];
         [putTask waitUntilFinished];
         onProgress(1.0f);
         return putTask;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             onCompleted(NO, task.error);
         } else {
@@ -61,9 +61,9 @@
                                onCompleted:(void (^)(NSData *, NSError *))onCompleted
                                 onProgress:(void (^)(float))onProgress {
 
-    OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
+    OSSTaskHandler * bcts = [InspurOSSCancellationTokenSource cancellationTokenSource];
 
-    [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(InspurOSSTask *task) {
         InspurOSSGetObjectRequest * get = [InspurOSSGetObjectRequest new];
         get.bucketName = bucketName;
         get.objectKey = objectKey;
@@ -78,11 +78,11 @@
             [get cancel];
         }];
 
-        OSSTask * getTask = [self getObject:get];
+        InspurOSSTask * getTask = [self getObject:get];
         [getTask waitUntilFinished];
         onProgress(1.0f);
         return getTask;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             onCompleted(nil, task.error);
         } else {
@@ -101,9 +101,9 @@
                                onCompleted:(void (^)(BOOL, NSError *))onCompleted
                                 onProgress:(void (^)(float))onProgress {
 
-    OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
+    OSSTaskHandler * bcts = [InspurOSSCancellationTokenSource cancellationTokenSource];
 
-    [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(InspurOSSTask *task) {
         InspurOSSGetObjectRequest * get = [InspurOSSGetObjectRequest new];
         get.bucketName = bucketName;
         get.objectKey = objectKey;
@@ -119,11 +119,11 @@
             [get cancel];
         }];
 
-        OSSTask * getTask = [self getObject:get];
+        InspurOSSTask * getTask = [self getObject:get];
         [getTask waitUntilFinished];
         onProgress(1.0f);
         return getTask;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             onCompleted(NO, task.error);
         } else {
@@ -139,15 +139,15 @@
                    objectKey:(NSString *)objectKey
                  onCompleted:(void (^)(BOOL, NSError *))onCompleted {
 
-    [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(InspurOSSTask *task) {
         InspurOSSDeleteObjectRequest * delete = [InspurOSSDeleteObjectRequest new];
         delete.bucketName = bucketName;
         delete.objectKey = objectKey;
 
-        OSSTask * deleteTask = [self deleteObject:delete];
+        InspurOSSTask * deleteTask = [self deleteObject:delete];
         [deleteTask waitUntilFinished];
         return deleteTask;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             onCompleted(NO, task.error);
         } else {
@@ -165,9 +165,9 @@
                    onCompleted:(void (^)(BOOL, NSError *))onCompleted
                     onProgress:(void (^)(float))onProgress {
 
-    OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
+    OSSTaskHandler * bcts = [InspurOSSCancellationTokenSource cancellationTokenSource];
 
-    [[[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withSuccessBlock:^id(InspurOSSTask *task) {
         InspurOSSPutObjectRequest * put = [InspurOSSPutObjectRequest new];
         put.bucketName = bucketName;
         put.objectKey = objectKey;
@@ -185,11 +185,11 @@
             [put cancel];
         }];
 
-        OSSTask * putTask = [self putObject:put];
+        InspurOSSTask * putTask = [self putObject:put];
         [putTask waitUntilFinished];
         onProgress(1.0f);
         return putTask;
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.error) {
             onCompleted(NO, task.error);
         } else {
@@ -208,15 +208,15 @@
                             onCompleted:(void(^)(BOOL, NSError *))onComplete
                              onProgress:(void(^)(float progress))onProgress {
 
-    OSSTaskHandler * bcts = [OSSCancellationTokenSource cancellationTokenSource];
+    OSSTaskHandler * bcts = [InspurOSSCancellationTokenSource cancellationTokenSource];
 
-    [[[OSSTask taskWithResult:nil] continueWithBlock:^id(OSSTask *task) {
+    [[[InspurOSSTask taskWithResult:nil] continueWithBlock:^id(InspurOSSTask *task) {
         NSURL * fileURL = [NSURL fileURLWithPath:filePath];
         NSDate * lastModified;
         NSError * error;
         [fileURL getResourceValue:&lastModified forKey:NSURLContentModificationDateKey error:&error];
         if (error) {
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         InspurOSSResumableUploadRequest * resumableUpload = [InspurOSSResumableUploadRequest new];
         resumableUpload.bucketName = bucketName;
@@ -238,7 +238,7 @@
             OSSLogDebugNoFile(@"%lld %lld %lld", bytesSent, totalBytesSent, totalBytesExpectedToSend);
         };
         return [self resumableUpload:resumableUpload];
-    }] continueWithBlock:^id(OSSTask *task) {
+    }] continueWithBlock:^id(InspurOSSTask *task) {
         if (task.cancelled) {
             onComplete(NO, [NSError errorWithDomain:OSSClientErrorDomain
                                                code:OSSClientErrorCodeTaskCancelled

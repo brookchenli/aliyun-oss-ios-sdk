@@ -8,13 +8,13 @@
  *
  */
 
-#import "OSSTaskCompletionSource.h"
+#import "InspurOSSTaskCompletionSource.h"
 
-#import "OSSTask.h"
+#import "InspurOSSTask.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSTask (OSSTaskCompletionSource)
+@interface InspurOSSTask (OSSTaskCompletionSource)
 
 - (BOOL)trySetResult:(nullable id)result;
 - (BOOL)trySetError:(NSError *)error;
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation OSSTaskCompletionSource
+@implementation InspurOSSTaskCompletionSource
 
 #pragma mark - Initializer
 
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
     self = [super init];
     if (!self) return self;
 
-    _task = [[OSSTask alloc] init];
+    _task = [[InspurOSSTask alloc] init];
 
     return self;
 }

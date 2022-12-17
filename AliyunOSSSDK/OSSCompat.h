@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "OSSService.h"
 
-@class OSSCancellationTokenSource;
+@class InspurOSSCancellationTokenSource;
 
-typedef OSSCancellationTokenSource OSSTaskHandler;
+typedef InspurOSSCancellationTokenSource OSSTaskHandler;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -238,7 +238,7 @@
     self = [super initWithFederationTokenGetter:^OSSFederationToken * {
         NSURL * url = [NSURL URLWithString:self.authServerUrl];
         NSURLRequest * request = [NSURLRequest requestWithURL:url];
-        OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
+        InspurOSSTaskCompletionSource * tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
         NSURLSession * session = [NSURLSession sharedSession];
         NSURLSessionTask * sessionTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -331,7 +331,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     return self;
 }
 
-- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)requestMessage {
+- (InspurOSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)requestMessage {
     OSSLogVerbose(@"signing intercepting - ");
     NSError * error = nil;
 
@@ -366,7 +366,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     if ([self.credentialProvider isKindOfClass:[OSSFederationCredentialProvider class]]) {
         federationToken = [(OSSFederationCredentialProvider *)self.credentialProvider getToken:&error];
         if (error) {
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         [requestMessage.headerParams oss_setObject:federationToken.tToken forKey:@"x-oss-security-token"];
     } else if ([self.credentialProvider isKindOfClass:[OSSStsTokenCredentialProvider class]]) {
@@ -439,18 +439,18 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
         NSString * signature = [provider sign:stringToSign error:&customSignError];
         if (customSignError) {
             OSSLogError(@"OSSCustomSignerError: %@", customSignError)
-            return [OSSTask taskWithError: customSignError];
+            return [InspurOSSTask taskWithError: customSignError];
         }
         [requestMessage.headerParams oss_setObject:signature forKey:@"Authorization"];
     }else
     {
         NSString * signature = [self.credentialProvider sign:stringToSign error:&error];
         if (error) {
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         [requestMessage.headerParams oss_setObject:signature forKey:@"Authorization"];
     }
-    return [OSSTask taskWithResult:nil];
+    return [InspurOSSTask taskWithResult:nil];
 }
 
 @end
@@ -464,10 +464,10 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
     return self;
 }
 
-- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
+- (InspurOSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
     NSString * userAgent = [self getUserAgent:self.clientConfiguration.userAgentMark];
     [request.headerParams oss_setObject:userAgent forKey:@"User-Agent"];
-    return [OSSTask taskWithResult:nil];
+    return [InspurOSSTask taskWithResult:nil];
 }
 
 
@@ -505,9 +505,9 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 
 @implementation OSSTimeSkewedFixingInterceptor
 
-- (OSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
+- (InspurOSSTask *)interceptRequestMessage:(InspurOSSAllRequestNeededMessage *)request {
     request.date = [[NSDate oss_clockSkewFixedDate] oss_asStringValue];
-    return [OSSTask taskWithResult:nil];
+    return [InspurOSSTask taskWithResult:nil];
 }
 
 @end
@@ -644,7 +644,7 @@ NSString * const BACKGROUND_SESSION_IDENTIFIER = @"com.aliyun.oss.backgroundsess
 @implementation InspurOSSDeleteBucketRequest
 @end
 
-@implementation OSSDeleteBucketResult
+@implementation InspurOSSDeleteBucketResult
 @end
 
 @implementation InspurOSSGetBucketRequest

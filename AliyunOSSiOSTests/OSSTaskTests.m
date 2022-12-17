@@ -17,7 +17,7 @@
 @implementation OSSTaskTests
 
 - (void)testBasicOnSuccess {
-    [[[OSSTask taskWithResult:@"foo"] continueWithSuccessBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskWithResult:@"foo"] continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"foo", t.result);
         return nil;
     }] waitUntilFinished];
@@ -25,8 +25,8 @@
 
 - (void)testBasicOnSuccessWithExecutor {
     __block BOOL completed = NO;
-    OSSTask *task = [[OSSTask taskWithDelay:100] continueWithExecutor:[OSSExecutor immediateExecutor]
-                                                   withSuccessBlock:^id _Nullable(OSSTask * _Nonnull _) {
+    InspurOSSTask *task = [[InspurOSSTask taskWithDelay:100] continueWithExecutor:[InspurOSSExecutor immediateExecutor]
+                                                   withSuccessBlock:^id _Nullable(InspurOSSTask * _Nonnull _) {
                                                        completed = YES;
                                                        return nil;
                                                    }];
@@ -39,10 +39,10 @@
 }
 
 - (void)testBasicOnSuccessWithToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSTask *task = [OSSTask taskWithDelay:100];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSTask *task = [InspurOSSTask taskWithDelay:100];
     
-    task = [task continueWithSuccessBlock:^id(OSSTask *t) {
+    task = [task continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTFail(@"Success block should not be triggered");
         return nil;
     } cancellationToken:cts.token];
@@ -54,11 +54,11 @@
 }
 
 - (void)testBasicOnSuccessWithExecutorToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSTask *task = [OSSTask taskWithDelay:100];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSTask *task = [InspurOSSTask taskWithDelay:100];
     
-    task = [task continueWithExecutor:[OSSExecutor immediateExecutor]
-                         successBlock:^id(OSSTask *t) {
+    task = [task continueWithExecutor:[InspurOSSExecutor immediateExecutor]
+                         successBlock:^id(InspurOSSTask *t) {
                              XCTFail(@"Success block should not be triggered");
                              return nil;
                          }
@@ -71,13 +71,13 @@
 }
 
 - (void)testBasicOnSuccessWithCancelledToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSTask *task = [OSSTask taskWithResult:nil];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
     
     [cts cancel];
     
-    task = [task continueWithExecutor:[OSSExecutor immediateExecutor]
-                         successBlock:^id(OSSTask *t) {
+    task = [task continueWithExecutor:[InspurOSSExecutor immediateExecutor]
+                         successBlock:^id(InspurOSSTask *t) {
                              XCTFail(@"Success block should not be triggered");
                              return nil;
                          }
@@ -88,7 +88,7 @@
 
 - (void)testBasicContinueWithError {
     NSError *originalError = [NSError errorWithDomain:@"Bolts" code:22 userInfo:nil];
-    [[[OSSTask taskWithError:originalError] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskWithError:originalError] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error, @"Task should have failed.");
         XCTAssertEqual((NSInteger)22, t.error.code);
         return nil;
@@ -96,11 +96,11 @@
 }
 
 - (void)testBasicContinueWithToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSTask *task = [OSSTask taskWithDelay:100];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSTask *task = [InspurOSSTask taskWithDelay:100];
     
-    task = [task continueWithExecutor:[OSSExecutor immediateExecutor]
-                                block:^id(OSSTask *t) {
+    task = [task continueWithExecutor:[InspurOSSExecutor immediateExecutor]
+                                block:^id(InspurOSSTask *t) {
                                     XCTFail(@"Continuation block should not be triggered");
                                     return nil;
                                 }
@@ -113,13 +113,13 @@
 }
 
 - (void)testBasicContinueWithCancelledToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
-    OSSTask *task = [OSSTask taskWithResult:nil];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
     
     [cts cancel];
     
-    task = [task continueWithExecutor:[OSSExecutor immediateExecutor]
-                                block:^id(OSSTask *t) {
+    task = [task continueWithExecutor:[InspurOSSExecutor immediateExecutor]
+                                block:^id(InspurOSSTask *t) {
                                     XCTFail(@"Continuation block should not be triggered");
                                     return nil;
                                 }
@@ -129,12 +129,12 @@
 }
 
 - (void)testFinishLaterWithSuccess {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"bar", t.result);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = @"bar";
         return nil;
     }];
@@ -142,13 +142,13 @@
 }
 
 - (void)testFinishLaterWithError {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)23, t.error.code);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.error = [NSError errorWithDomain:@"Bolts" code:23 userInfo:nil];
         return nil;
     }];
@@ -156,15 +156,15 @@
 }
 
 - (void)testTransformConstantToConstant {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"foo", t.result);
         return @"bar";
-    }] continueWithBlock:^id(OSSTask *t) {
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"bar", t.result);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = @"foo";
         return nil;
     }];
@@ -172,16 +172,16 @@
 }
 
 - (void)testTransformErrorToConstant {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)23, t.error.code);
         return @"bar";
-    }] continueWithBlock:^id(OSSTask *t) {
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"bar", t.result);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.error = [NSError errorWithDomain:@"Bolts" code:23 userInfo:nil];
         return nil;
     }];
@@ -189,15 +189,15 @@
 }
 
 - (void)testReturnSuccessfulTaskFromContinuation {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"foo", t.result);
-        return [OSSTask taskWithResult:@"bar"];
-    }] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithResult:@"bar"];
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"bar", t.result);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = @"foo";
         return nil;
     }];
@@ -205,16 +205,16 @@
 }
 
 - (void)testReturnSuccessfulTaskFromContinuationAfterError {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)23, t.error.code);
-        return [OSSTask taskWithResult:@"bar"];
-    }] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithResult:@"bar"];
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"bar", t.result);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.error = [NSError errorWithDomain:@"Bolts" code:23 userInfo:nil];
         return nil;
     }];
@@ -222,17 +222,17 @@
 }
 
 - (void)testReturnErrorTaskFromContinuation {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"foo", t.result);
         NSError *originalError = [NSError errorWithDomain:@"Bolts" code:24 userInfo:nil];
-        return [OSSTask taskWithError:originalError];
-    }] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithError:originalError];
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)24, t.error.code);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = @"foo";
         return nil;
     }];
@@ -240,18 +240,18 @@
 }
 
 - (void)testReturnErrorTaskFromContinuationAfterError {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)23, t.error.code);
         NSError *originalError = [NSError errorWithDomain:@"Bolts" code:24 userInfo:nil];
-        return [OSSTask taskWithError:originalError];
-    }] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithError:originalError];
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)24, t.error.code);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.error = [NSError errorWithDomain:@"Bolts" code:23 userInfo:nil];
         return nil;
     }];
@@ -259,19 +259,19 @@
 }
 
 - (void)testReturnErrorTaskFromContinuationWithException {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[tcs.task continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[tcs.task continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"foo", t.result);
         NSArray *arr = @[];
         [arr objectAtIndex:1];
         NSError *originalError = [NSError errorWithDomain:@"Bolts" code:24 userInfo:nil];
-        return [OSSTask taskWithError:originalError];
-    }] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithError:originalError];
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual(OSSClientErrorCodeExcpetionCatched, t.error.code);
         return nil;
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = @"foo";
         return nil;
     }];
@@ -280,33 +280,33 @@
 
 - (void)testPassOnError {
     NSError *originalError = [NSError errorWithDomain:@"Bolts" code:30 userInfo:nil];
-    [[[[[[[[OSSTask taskWithError:originalError] continueWithSuccessBlock:^id(OSSTask *t) {
+    [[[[[[[[InspurOSSTask taskWithError:originalError] continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTFail(@"This callback should be skipped.");
         return nil;
-    }] continueWithSuccessBlock:^id(OSSTask *t) {
+    }] continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTFail(@"This callback should be skipped.");
         return nil;
-    }] continueWithBlock:^id(OSSTask *t) {
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)30, t.error.code);
         NSError *newError = [NSError errorWithDomain:@"Bolts" code:31 userInfo:nil];
-        return [OSSTask taskWithError:newError];
-    }] continueWithSuccessBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithError:newError];
+    }] continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTFail(@"This callback should be skipped.");
         return nil;
-    }] continueWithBlock:^id(OSSTask *t) {
+    }] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertEqual((NSInteger)31, t.error.code);
-        return [OSSTask taskWithResult:@"okay"];
-    }] continueWithSuccessBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithResult:@"okay"];
+    }] continueWithSuccessBlock:^id(InspurOSSTask *t) {
         XCTAssertEqualObjects(@"okay", t.result);
         return nil;
     }] waitUntilFinished];
 }
 
 - (void)testCancellation {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [[OSSTask taskWithDelay:100] continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [[InspurOSSTask taskWithDelay:100] continueWithBlock:^id(InspurOSSTask *t) {
         return tcs.task;
     }];
     
@@ -318,13 +318,13 @@
 
 - (void)testCompleteWithSuccess {
     InspurOSSResult *putResult = [OSSPutObjectResult new];
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertTrue(isSuccess);
         XCTAssertNotNil(result);
         XCTAssertEqual(result, putResult);
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.result = putResult;
         return nil;
     }];
@@ -332,14 +332,14 @@
 }
 
 - (void)testCompleteWithError {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, @"Bolts");
         XCTAssertEqual(error.code, 33);
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.error = [NSError errorWithDomain:@"Bolts" code:33 userInfo:nil];
         return nil;
     }];
@@ -347,14 +347,14 @@
 }
 
 - (void)testCompleteWithException {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, OSSClientErrorDomain);
         XCTAssertEqual(error.code, OSSClientErrorCodeExcpetionCatched);
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         tcs.exception = [NSException exceptionWithName:NSInvalidArgumentException
                                                 reason:@"test"
                                               userInfo:nil];
@@ -364,14 +364,14 @@
 }
 
 - (void)testCompleteWithCancel {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    OSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTask *task = [tcs.task completed:^(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result) {
         XCTAssertFalse(isSuccess);
         XCTAssertNotNil(error);
         XCTAssertEqual(error.domain, OSSClientErrorDomain);
         XCTAssertEqual(error.code, OSSClientErrorCodeTaskCancelled);
     }];
-    [[OSSTask taskWithDelay:0] continueWithBlock:^id(OSSTask *t) {
+    [[InspurOSSTask taskWithDelay:0] continueWithBlock:^id(InspurOSSTask *t) {
         [tcs cancel];
         return nil;
     }];
@@ -384,17 +384,17 @@
     const int kTaskCount = 20;
     for (int i = 0; i < kTaskCount; ++i) {
         double sleepTimeInMs = rand() % 100;
-        [tasks addObject:[[OSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(OSSTask *t) {
+        [tasks addObject:[[InspurOSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(InspurOSSTask *t) {
             return @(i);
         }]];
     }
     
-    [[[OSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(t.error);
         XCTAssertFalse(t.isCancelled);
         
         for (int i = 0; i < kTaskCount; ++i) {
-            XCTAssertEqual(i, [((OSSTask *)[tasks objectAtIndex:i]).result intValue]);
+            XCTAssertEqual(i, [((InspurOSSTask *)[tasks objectAtIndex:i]).result intValue]);
         }
         return nil;
     }] waitUntilFinished];
@@ -406,9 +406,9 @@
     const int kTaskCount = 20;
     for (int i = 0; i < kTaskCount; ++i) {
         double sleepTimeInMs = rand() % 100;
-        [tasks addObject:[[OSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(OSSTask *t) {
+        [tasks addObject:[[InspurOSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(InspurOSSTask *t) {
             if (i == 10) {
-                return [OSSTask taskWithError:[NSError errorWithDomain:@"BoltsTests"
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:@"BoltsTests"
                                                                  code:35
                                                              userInfo:nil]];
             }
@@ -416,7 +416,7 @@
         }]];
     }
     
-    [[[OSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertFalse(t.isCancelled);
         
@@ -425,9 +425,9 @@
         
         for (int i = 0; i < kTaskCount; ++i) {
             if (i == 10) {
-                XCTAssertNotNil(((OSSTask *)[tasks objectAtIndex:i]).error);
+                XCTAssertNotNil(((InspurOSSTask *)[tasks objectAtIndex:i]).error);
             } else {
-                XCTAssertEqual(i, [((OSSTask *)[tasks objectAtIndex:i]).result intValue]);
+                XCTAssertEqual(i, [((InspurOSSTask *)[tasks objectAtIndex:i]).result intValue]);
             }
         }
         return nil;
@@ -440,9 +440,9 @@
     const int kTaskCount = 20;
     for (int i = 0; i < kTaskCount; ++i) {
         double sleepTimeInMs = rand() % 100;
-        [tasks addObject:[[OSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(OSSTask *t) {
+        [tasks addObject:[[InspurOSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(InspurOSSTask *t) {
             if (i == 10 || i == 11) {
-                return [OSSTask taskWithError:[NSError errorWithDomain:@"BoltsTests"
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:@"BoltsTests"
                                                                  code:35
                                                              userInfo:nil]];
             }
@@ -450,7 +450,7 @@
         }]];
     }
     
-    [[[OSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNotNil(t.error);
         XCTAssertFalse(t.isCancelled);
         
@@ -465,9 +465,9 @@
         
         for (int i = 0; i < kTaskCount; ++i) {
             if (i == 10 || i == 11) {
-                XCTAssertNotNil(((OSSTask *)[tasks objectAtIndex:i]).error);
+                XCTAssertNotNil(((InspurOSSTask *)[tasks objectAtIndex:i]).error);
             } else {
-                XCTAssertEqual(i, [((OSSTask *)[tasks objectAtIndex:i]).result intValue]);
+                XCTAssertEqual(i, [((InspurOSSTask *)[tasks objectAtIndex:i]).result intValue]);
             }
         }
         return nil;
@@ -480,23 +480,23 @@
     const int kTaskCount = 20;
     for (int i = 0; i < kTaskCount; ++i) {
         double sleepTimeInMs = rand() % 100;
-        [tasks addObject:[[OSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(OSSTask *t) {
+        [tasks addObject:[[InspurOSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(InspurOSSTask *t) {
             if (i == 10) {
-                return [OSSTask cancelledTask];
+                return [InspurOSSTask cancelledTask];
             }
             return @(i);
         }]];
     }
     
-    [[[OSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertNil(t.error);
         XCTAssertTrue(t.isCancelled);
         
         for (int i = 0; i < kTaskCount; ++i) {
             if (i == 10) {
-                XCTAssertTrue(((OSSTask *)[tasks objectAtIndex:i]).isCancelled);
+                XCTAssertTrue(((InspurOSSTask *)[tasks objectAtIndex:i]).isCancelled);
             } else {
-                XCTAssertEqual(i, [((OSSTask *)[tasks objectAtIndex:i]).result intValue]);
+                XCTAssertEqual(i, [((InspurOSSTask *)[tasks objectAtIndex:i]).result intValue]);
             }
         }
         return nil;
@@ -506,7 +506,7 @@
 - (void)testTaskForCompletionOfAllTasksNoTasksImmediateCompletion {
     NSMutableArray *tasks = [NSMutableArray array];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAllTasks:tasks];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAllTasks:tasks];
     XCTAssertTrue(task.completed);
     XCTAssertFalse(task.cancelled);
     XCTAssertFalse(task.faulted);
@@ -519,68 +519,68 @@
     for (int i = 0; i < kTaskCount; ++i) {
         double sleepTimeInMs = i * 10;
         int result = i + 1;
-        [tasks addObject:[[OSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(OSSTask *__unused t) {
+        [tasks addObject:[[InspurOSSTask taskWithDelay:(int)sleepTimeInMs] continueWithBlock:^id(InspurOSSTask *__unused t) {
             return @(result);
         }]];
     }
     
-    [[[OSSTask taskForCompletionOfAllTasksWithResults:tasks] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskForCompletionOfAllTasksWithResults:tasks] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertFalse(t.cancelled);
         XCTAssertFalse(t.faulted);
         
         NSArray *results = t.result;
         for (int i = 0; i < kTaskCount; ++i) {
             NSNumber *individualResult = [results objectAtIndex:i];
-            XCTAssertEqual([individualResult intValue], [((OSSTask *)[tasks objectAtIndex:i]).result intValue]);
+            XCTAssertEqual([individualResult intValue], [((InspurOSSTask *)[tasks objectAtIndex:i]).result intValue]);
         }
         return nil;
     }] waitUntilFinished];
 }
 
 - (void)testTaskForCompletionOfAllTasksErrorCancelledSuccess {
-    OSSTask *errorTask = [OSSTask taskWithError:[NSError new]];
-    OSSTask *cancelledTask = [OSSTask cancelledTask];
-    OSSTask *successfulTask = [OSSTask taskWithResult:[NSNumber numberWithInt:2]];
+    InspurOSSTask *errorTask = [InspurOSSTask taskWithError:[NSError new]];
+    InspurOSSTask *cancelledTask = [InspurOSSTask cancelledTask];
+    InspurOSSTask *successfulTask = [InspurOSSTask taskWithResult:[NSNumber numberWithInt:2]];
     
-    OSSTask *allTasks = [OSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask, errorTask ]];
+    InspurOSSTask *allTasks = [InspurOSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask, errorTask ]];
     
     XCTAssertTrue(allTasks.faulted, @"Task should be faulted");
 }
 
 - (void)testTaskForCompletionOfAllTasksExceptionErrorCancelledSuccess {
-    OSSTask *errorTask = [OSSTask taskWithError:[NSError new]];
-    OSSTask *cancelledTask = [OSSTask cancelledTask];
-    OSSTask *successfulTask = [OSSTask taskWithResult:[NSNumber numberWithInt:2]];
+    InspurOSSTask *errorTask = [InspurOSSTask taskWithError:[NSError new]];
+    InspurOSSTask *cancelledTask = [InspurOSSTask cancelledTask];
+    InspurOSSTask *successfulTask = [InspurOSSTask taskWithResult:[NSNumber numberWithInt:2]];
     
-    OSSTask *allTasks = [OSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask, errorTask ]];
+    InspurOSSTask *allTasks = [InspurOSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask, errorTask ]];
     
     XCTAssertTrue(allTasks.faulted, @"Task should be faulted");
     XCTAssertNotNil(allTasks.error, @"Task should have error");
 }
 
 - (void)testTaskForCompletionOfAllTasksErrorCancelled {
-    OSSTask *errorTask = [OSSTask taskWithError:[NSError new]];
-    OSSTask *cancelledTask = [OSSTask cancelledTask];
+    InspurOSSTask *errorTask = [InspurOSSTask taskWithError:[NSError new]];
+    InspurOSSTask *cancelledTask = [InspurOSSTask cancelledTask];
     
-    OSSTask *allTasks = [OSSTask taskForCompletionOfAllTasks:@[ cancelledTask, errorTask ]];
+    InspurOSSTask *allTasks = [InspurOSSTask taskForCompletionOfAllTasks:@[ cancelledTask, errorTask ]];
     
     XCTAssertTrue(allTasks.faulted, @"Task should be faulted");
 }
 
 - (void)testTaskForCompletionOfAllTasksSuccessCancelled {
-    OSSTask *cancelledTask = [OSSTask cancelledTask];
-    OSSTask *successfulTask = [OSSTask taskWithResult:[NSNumber numberWithInt:2]];
+    InspurOSSTask *cancelledTask = [InspurOSSTask cancelledTask];
+    InspurOSSTask *successfulTask = [InspurOSSTask taskWithResult:[NSNumber numberWithInt:2]];
     
-    OSSTask *allTasks = [OSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask ]];
+    InspurOSSTask *allTasks = [InspurOSSTask taskForCompletionOfAllTasks:@[ successfulTask, cancelledTask ]];
     
     XCTAssertTrue(allTasks.cancelled, @"Task should be cancelled");
 }
 
 - (void)testTaskForCompletionOfAllTasksSuccessError {
-    OSSTask *errorTask = [OSSTask taskWithError:[NSError new]];
-    OSSTask *successfulTask = [OSSTask taskWithResult:[NSNumber numberWithInt:2]];
+    InspurOSSTask *errorTask = [InspurOSSTask taskWithError:[NSError new]];
+    InspurOSSTask *successfulTask = [InspurOSSTask taskWithResult:[NSNumber numberWithInt:2]];
     
-    OSSTask *allTasks = [OSSTask taskForCompletionOfAllTasks:@[ successfulTask, errorTask ]];
+    InspurOSSTask *allTasks = [InspurOSSTask taskForCompletionOfAllTasks:@[ successfulTask, errorTask ]];
     
     XCTAssertTrue(allTasks.faulted, @"Task should be faulted");
 }
@@ -589,7 +589,7 @@
 - (void)testTaskForCompletionOfAllTasksWithResultsNoTasksImmediateCompletion {
     NSMutableArray *tasks = [NSMutableArray array];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAllTasksWithResults:tasks];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAllTasksWithResults:tasks];
     XCTAssertTrue(task.completed);
     XCTAssertFalse(task.cancelled);
     XCTAssertFalse(task.faulted);
@@ -597,7 +597,7 @@
 }
 
 - (void)testTasksForTaskForCompletionOfAnyTasksWithSuccess {
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:@[[OSSTask taskWithDelay:20], [OSSTask taskWithResult:@"success"]]];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:@[[InspurOSSTask taskWithDelay:20], [InspurOSSTask taskWithResult:@"success"]]];
     [task waitUntilFinished];
     
     XCTAssertEqualObjects(@"success", task.result);
@@ -606,17 +606,17 @@
 - (void)testTasksForTaskForCompletionOfAnyTasksWithRacing {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    OSSExecutor *executor = [OSSExecutor executorWithDispatchQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    InspurOSSExecutor *executor = [InspurOSSExecutor executorWithDispatchQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     
-    OSSTask *first = [OSSTask taskFromExecutor:executor withBlock:^id _Nullable {
+    InspurOSSTask *first = [InspurOSSTask taskFromExecutor:executor withBlock:^id _Nullable {
         return @"first";
     }];
-    OSSTask *second = [OSSTask taskFromExecutor:executor withBlock:^id _Nullable {
+    InspurOSSTask *second = [InspurOSSTask taskFromExecutor:executor withBlock:^id _Nullable {
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         return @"second";
     }];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:@[first, second]];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:@[first, second]];
     [task waitUntilFinished];
     
     dispatch_semaphore_signal(semaphore);
@@ -629,7 +629,7 @@
                                          code:35
                                      userInfo:nil];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:@[[OSSTask taskWithError:error], [OSSTask taskWithResult:@"success"]]];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:@[[InspurOSSTask taskWithError:error], [InspurOSSTask taskWithResult:@"success"]]];
     [task waitUntilFinished];
     
     XCTAssertEqualObjects(@"success", task.result);
@@ -641,7 +641,7 @@
                                          code:35
                                      userInfo:nil];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:@[[OSSTask taskWithError:error]]];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:@[[InspurOSSTask taskWithError:error]]];
     [task waitUntilFinished];
     
     XCTAssertEqualObjects(error, task.error);
@@ -649,7 +649,7 @@
 }
 
 - (void)testTasksForTaskForCompletionOfAnyTasksWithNilArray {
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:nil];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:nil];
     [task waitUntilFinished];
     
     XCTAssertNil(task.result);
@@ -661,7 +661,7 @@
                                          code:35
                                      userInfo:nil];
     
-    OSSTask *task = [OSSTask taskForCompletionOfAnyTask:@[[OSSTask taskWithError:error], [OSSTask taskWithError:error]]];
+    InspurOSSTask *task = [InspurOSSTask taskForCompletionOfAnyTask:@[[InspurOSSTask taskWithError:error], [InspurOSSTask taskWithError:error]]];
     [task waitUntilFinished];
     
     XCTAssertNil(task.result);
@@ -673,7 +673,7 @@
 }
 
 - (void)testWaitUntilFinished {
-    OSSTask *task = [[OSSTask taskWithDelay:50] continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [[InspurOSSTask taskWithDelay:50] continueWithBlock:^id(InspurOSSTask *t) {
         return @"foo";
     }];
     
@@ -683,9 +683,9 @@
 }
 
 - (void)testDelayWithToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
-    OSSTask *task = [OSSTask taskWithDelay:100 cancellationToken:cts.token];
+    InspurOSSTask *task = [InspurOSSTask taskWithDelay:100 cancellationToken:cts.token];
     
     [cts cancel];
     [task waitUntilFinished];
@@ -694,19 +694,19 @@
 }
 
 - (void)testDelayWithCancelledToken {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     [cts cancel];
     
-    OSSTask *task = [OSSTask taskWithDelay:100 cancellationToken:cts.token];
+    InspurOSSTask *task = [InspurOSSTask taskWithDelay:100 cancellationToken:cts.token];
     
     XCTAssertTrue(task.cancelled, @"Task should be cancelled immediately");
 }
 
 - (void)testTaskFromExecutor {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0L);
-    OSSExecutor *queueExecutor = [OSSExecutor executorWithDispatchQueue:queue];
+    InspurOSSExecutor *queueExecutor = [InspurOSSExecutor executorWithDispatchQueue:queue];
     
-    OSSTask *task = [OSSTask taskFromExecutor:queueExecutor withBlock:^id() {
+    InspurOSSTask *task = [InspurOSSTask taskFromExecutor:queueExecutor withBlock:^id() {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         XCTAssertEqual(queue, dispatch_get_current_queue());
@@ -718,7 +718,7 @@
 }
 
 - (void)testDescription {
-    OSSTask *task = [OSSTask taskWithResult:nil];
+    InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
     NSString *expected = [NSString stringWithFormat:@"<OSSTask: %p; completed = YES; cancelled = NO; faulted = NO; result = (null)>", task];
     
     NSString *description = task.description;
@@ -727,13 +727,13 @@
 }
 
 - (void)testReturnTaskFromContinuationWithCancellation {
-    OSSCancellationTokenSource *cts = [OSSCancellationTokenSource cancellationTokenSource];
+    InspurOSSCancellationTokenSource *cts = [InspurOSSCancellationTokenSource cancellationTokenSource];
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"task"];
-    [[[OSSTask taskWithDelay:1] continueWithBlock:^id(OSSTask *t) {
+    [[[InspurOSSTask taskWithDelay:1] continueWithBlock:^id(InspurOSSTask *t) {
         [cts cancel];
-        return [OSSTask taskWithDelay:10];
-    } cancellationToken:cts.token] continueWithBlock:^id(OSSTask *t) {
+        return [InspurOSSTask taskWithDelay:10];
+    } cancellationToken:cts.token] continueWithBlock:^id(InspurOSSTask *t) {
         XCTAssertTrue(t.cancelled);
         [expectation fulfill];
         return nil;
@@ -742,7 +742,7 @@
 }
 
 - (void)testSetResult {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     taskCompletionSource.result = @"a";
     XCTAssertThrowsSpecificNamed([taskCompletionSource setResult:@"b"], NSException, NSInternalInconsistencyException);
     
@@ -751,7 +751,7 @@
 }
 
 - (void)testTrySetResult {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     [taskCompletionSource trySetResult:@"a"];
     [taskCompletionSource trySetResult:@"b"];
     XCTAssertTrue(taskCompletionSource.task.completed);
@@ -759,7 +759,7 @@
 }
 
 - (void)testSetError {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     NSError *error = [NSError errorWithDomain:@"TestDomain" code:100500 userInfo:nil];
     taskCompletionSource.error = error;
@@ -771,7 +771,7 @@
 }
 
 - (void)testTrySetError {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     NSError *error = [NSError errorWithDomain:@"TestDomain" code:100500 userInfo:nil];
     [taskCompletionSource trySetError:error];
@@ -783,7 +783,7 @@
 }
 
 - (void)testSetException {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     NSException *exception = [NSException exceptionWithName:@"testExceptionName" reason:@"testExceptionReason" userInfo:nil];
     taskCompletionSource.exception = exception;
@@ -795,7 +795,7 @@
 }
 
 - (void)testTrySetException {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     NSException *exception = [NSException exceptionWithName:@"testExceptionName" reason:@"testExceptionReason" userInfo:nil];
     [taskCompletionSource trySetException:exception];
@@ -807,7 +807,7 @@
 }
 
 - (void)testSetCancelled {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [taskCompletionSource cancel];
     XCTAssertThrowsSpecificNamed([taskCompletionSource cancel], NSException, NSInternalInconsistencyException);
@@ -817,7 +817,7 @@
 }
 
 - (void)testTrySetCancelled {
-    OSSTaskCompletionSource *taskCompletionSource = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *taskCompletionSource = [InspurOSSTaskCompletionSource taskCompletionSource];
     
     [taskCompletionSource trySetCancelled];
     [taskCompletionSource trySetCancelled];
@@ -827,7 +827,7 @@
 }
 
 - (void)testMultipleWaitUntilFinished {
-    OSSTask *task = [[OSSTask taskWithDelay:50] continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [[InspurOSSTask taskWithDelay:50] continueWithBlock:^id(InspurOSSTask *t) {
         return @"foo";
     }];
     
@@ -842,7 +842,7 @@
 }
 
 - (void)testMultipleThreadsWaitUntilFinished {
-    OSSTask *task = [[OSSTask taskWithDelay:500] continueWithBlock:^id(OSSTask *t) {
+    InspurOSSTask *task = [[InspurOSSTask taskWithDelay:500] continueWithBlock:^id(InspurOSSTask *t) {
         return @"foo";
     }];
     

@@ -16,11 +16,11 @@
 @implementation OSSExecutorTests
 
 - (void)testExecuteImmediately {
-    __block OSSTask *task = [OSSTask taskWithResult:nil];
+    __block InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"test immediate executor"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        task = [task continueWithExecutor:[OSSExecutor immediateExecutor] withBlock:^id(OSSTask *_) {
+        task = [task continueWithExecutor:[InspurOSSExecutor immediateExecutor] withBlock:^id(InspurOSSTask *_) {
             return nil;
         }];
         XCTAssertTrue(task.completed);
@@ -31,10 +31,10 @@
 
 - (void)testExecuteOnDispatchQueue {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0L);
-    OSSExecutor *queueExecutor = [OSSExecutor executorWithDispatchQueue:queue];
+    InspurOSSExecutor *queueExecutor = [InspurOSSExecutor executorWithDispatchQueue:queue];
     
-    OSSTask *task = [OSSTask taskWithResult:nil];
-    task = [task continueWithExecutor:queueExecutor withBlock:^id(OSSTask *_) {
+    InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
+    task = [task continueWithExecutor:queueExecutor withBlock:^id(InspurOSSTask *_) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         XCTAssertEqual(queue, dispatch_get_current_queue());
@@ -46,10 +46,10 @@
 
 - (void)testExecuteOnOperationQueue {
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    OSSExecutor *queueExecutor = [OSSExecutor executorWithOperationQueue:queue];
+    InspurOSSExecutor *queueExecutor = [InspurOSSExecutor executorWithOperationQueue:queue];
     
-    OSSTask *task = [OSSTask taskWithResult:nil];
-    task = [task continueWithExecutor:queueExecutor withBlock:^id(OSSTask *_) {
+    InspurOSSTask *task = [InspurOSSTask taskWithResult:nil];
+    task = [task continueWithExecutor:queueExecutor withBlock:^id(InspurOSSTask *_) {
         XCTAssertEqual(queue, [NSOperationQueue currentQueue]);
         return nil;
     }];
@@ -57,7 +57,7 @@
 }
 
 - (void)testMainThreadExecutor {
-    OSSExecutor *executor = [OSSExecutor mainThreadExecutor];
+    InspurOSSExecutor *executor = [InspurOSSExecutor mainThreadExecutor];
     
     XCTestExpectation *immediateExpectation = [self expectationWithDescription:@"test main thread executor on main thread"];
     [executor execute:^{

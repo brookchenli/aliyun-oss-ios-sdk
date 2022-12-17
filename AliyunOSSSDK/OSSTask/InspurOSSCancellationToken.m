@@ -8,12 +8,12 @@
  *
  */
 
-#import "OSSCancellationToken.h"
-#import "OSSCancellationTokenRegistration.h"
+#import "InspurOSSCancellationToken.h"
+#import "InspurOSSCancellationTokenRegistration.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OSSCancellationToken ()
+@interface InspurOSSCancellationToken ()
 
 @property (nullable, nonatomic, strong) NSMutableArray *registrations;
 @property (nonatomic, strong) NSObject *lock;
@@ -21,15 +21,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OSSCancellationTokenRegistration (OSSCancellationToken)
+@interface InspurOSSCancellationTokenRegistration (OSSCancellationToken)
 
-+ (instancetype)registrationWithToken:(OSSCancellationToken *)token delegate:(OSSCancellationBlock)delegate;
++ (instancetype)registrationWithToken:(InspurOSSCancellationToken *)token delegate:(OSSCancellationBlock)delegate;
 
 - (void)notifyDelegate;
 
 @end
 
-@implementation OSSCancellationToken
+@implementation InspurOSSCancellationToken
 
 @synthesize cancellationRequested = _cancellationRequested;
 
@@ -70,21 +70,21 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)notifyCancellation:(NSArray *)registrations {
-    for (OSSCancellationTokenRegistration *registration in registrations) {
+    for (InspurOSSCancellationTokenRegistration *registration in registrations) {
         [registration notifyDelegate];
     }
 }
 
-- (OSSCancellationTokenRegistration *)registerCancellationObserverWithBlock:(OSSCancellationBlock)block {
+- (InspurOSSCancellationTokenRegistration *)registerCancellationObserverWithBlock:(OSSCancellationBlock)block {
     @synchronized(self.lock) {
-        OSSCancellationTokenRegistration *registration = [OSSCancellationTokenRegistration registrationWithToken:self delegate:[block copy]];
+        InspurOSSCancellationTokenRegistration *registration = [InspurOSSCancellationTokenRegistration registrationWithToken:self delegate:[block copy]];
         [self.registrations addObject:registration];
 
         return registration;
     }
 }
 
-- (void)unregisterRegistration:(OSSCancellationTokenRegistration *)registration {
+- (void)unregisterRegistration:(InspurOSSCancellationTokenRegistration *)registration {
     @synchronized(self.lock) {
         [self throwIfDisposed];
         [self.registrations removeObject:registration];

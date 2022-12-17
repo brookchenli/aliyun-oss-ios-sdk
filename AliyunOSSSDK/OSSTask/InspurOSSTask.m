@@ -8,7 +8,7 @@
  *
  */
 
-#import "OSSTask.h"
+#import "InspurOSSTask.h"
 #import "OSSLog.h"
 #import "OSSConstants.h"
 #import "OSSDefine.h"
@@ -31,7 +31,7 @@ NSString *const OSSTaskMultipleExceptionsException = @"OSSMultipleExceptionsExce
 NSString *const OSSTaskMultipleErrorsUserInfoKey = @"errors";
 NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
-@interface OSSTask () {
+@interface InspurOSSTask () {
     id _result;
     NSError *_error;
     NSException *_exception;
@@ -47,7 +47,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 @end
 
-@implementation OSSTask
+@implementation InspurOSSTask
 
 #pragma mark - Initializer
 
@@ -115,7 +115,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return [[self alloc] initCancelled];
 }
 
-+ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<OSSTask *> *)tasks {
++ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<InspurOSSTask *> *)tasks {
     __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
         return [self taskWithResult:nil];
@@ -126,9 +126,9 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     NSMutableArray *errors = [NSMutableArray array];
     NSMutableArray *exceptions = [NSMutableArray array];
 
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
-    for (OSSTask *task in tasks) {
-        [task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
+    for (InspurOSSTask *task in tasks) {
+        [task continueWithBlock:^id(InspurOSSTask *task) {
             if (task.exception) {
                 @synchronized (lock) {
                     [exceptions addObject:task.exception];
@@ -173,13 +173,13 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return tcs.task;
 }
 
-+ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray<OSSTask *> *)tasks {
-    return [[self taskForCompletionOfAllTasks:tasks] continueWithSuccessBlock:^id(OSSTask *task) {
++ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray<InspurOSSTask *> *)tasks {
+    return [[self taskForCompletionOfAllTasks:tasks] continueWithSuccessBlock:^id(InspurOSSTask *task) {
         return [tasks valueForKey:@"result"];
     }];
 }
 
-+ (instancetype)taskForCompletionOfAnyTask:(nullable NSArray<OSSTask *> *)tasks
++ (instancetype)taskForCompletionOfAnyTask:(nullable NSArray<InspurOSSTask *> *)tasks
 {
     __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
@@ -193,9 +193,9 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     NSMutableArray<NSError *> *errors = [NSMutableArray new];
     NSMutableArray<NSException *> *exceptions = [NSMutableArray new];
     
-    OSSTaskCompletionSource *source = [OSSTaskCompletionSource taskCompletionSource];
-    for (OSSTask *task in tasks) {
-        [task continueWithBlock:^id(OSSTask *task) {
+    InspurOSSTaskCompletionSource *source = [InspurOSSTaskCompletionSource taskCompletionSource];
+    for (InspurOSSTask *task in tasks) {
+        [task continueWithBlock:^id(InspurOSSTask *task) {
             if (task.exception != nil) {
                 @synchronized(lock) {
                     [exceptions addObject:task.exception];
@@ -246,7 +246,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 
 + (instancetype)taskWithDelay:(int)millis {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, millis * NSEC_PER_MSEC);
     dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         tcs.result = nil;
@@ -254,12 +254,12 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return tcs.task;
 }
 
-+ (instancetype)taskWithDelay:(int)millis cancellationToken:(nullable OSSCancellationToken *)token {
++ (instancetype)taskWithDelay:(int)millis cancellationToken:(nullable InspurOSSCancellationToken *)token {
     if (token.cancellationRequested) {
-        return [OSSTask cancelledTask];
+        return [InspurOSSTask cancelledTask];
     }
 
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, millis * NSEC_PER_MSEC);
     dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         if (token.cancellationRequested) {
@@ -271,8 +271,8 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return tcs.task;
 }
 
-+ (instancetype)taskFromExecutor:(OSSExecutor *)executor withBlock:(nullable id (^)(void))block {
-    return [[self taskWithResult:nil] continueWithExecutor:executor withBlock:^id(OSSTask *task) {
++ (instancetype)taskFromExecutor:(InspurOSSExecutor *)executor withBlock:(nullable id (^)(void))block {
+    return [[self taskWithResult:nil] continueWithExecutor:executor withBlock:^id(InspurOSSTask *task) {
         return block();
     }];
 }
@@ -379,14 +379,14 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 #pragma mark - Chaining methods
 
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor withBlock:(OSSContinuationBlock)block {
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor withBlock:(OSSContinuationBlock)block {
     return [self continueWithExecutor:executor block:block cancellationToken:nil];
 }
 
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor
                            block:(OSSContinuationBlock)block
-               cancellationToken:(nullable OSSCancellationToken *)cancellationToken {
-    OSSTaskCompletionSource *tcs = [OSSTaskCompletionSource taskCompletionSource];
+               cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken {
+    InspurOSSTaskCompletionSource *tcs = [InspurOSSTaskCompletionSource taskCompletionSource];
 
     // Capture all of the state that needs to used when the continuation is complete.
     dispatch_block_t executionBlock = ^{
@@ -408,9 +408,9 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
             return;
         }
 
-        if ([result isKindOfClass:[OSSTask class]]) {
+        if ([result isKindOfClass:[InspurOSSTask class]]) {
 
-            id (^setupWithTask) (OSSTask *) = ^id(OSSTask *task) {
+            id (^setupWithTask) (InspurOSSTask *) = ^id(InspurOSSTask *task) {
                 if (cancellationToken.cancellationRequested || task.cancelled) {
                     [tcs cancel];
                 } else if (task.exception) {
@@ -426,7 +426,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
                 return nil;
             };
 
-            OSSTask *resultTask = (OSSTask *)result;
+            InspurOSSTask *resultTask = (InspurOSSTask *)result;
 
             if (resultTask.completed) {
                 setupWithTask(resultTask);
@@ -455,27 +455,27 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return tcs.task;
 }
 
-- (OSSTask *)continueWithBlock:(OSSContinuationBlock)block {
-    return [self continueWithExecutor:[OSSExecutor defaultExecutor] block:block cancellationToken:nil];
+- (InspurOSSTask *)continueWithBlock:(OSSContinuationBlock)block {
+    return [self continueWithExecutor:[InspurOSSExecutor defaultExecutor] block:block cancellationToken:nil];
 }
 
-- (OSSTask *)continueWithBlock:(OSSContinuationBlock)block cancellationToken:(nullable OSSCancellationToken *)cancellationToken {
-    return [self continueWithExecutor:[OSSExecutor defaultExecutor] block:block cancellationToken:cancellationToken];
+- (InspurOSSTask *)continueWithBlock:(OSSContinuationBlock)block cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken {
+    return [self continueWithExecutor:[InspurOSSExecutor defaultExecutor] block:block cancellationToken:cancellationToken];
 }
 
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor
                 withSuccessBlock:(OSSContinuationBlock)block {
     return [self continueWithExecutor:executor successBlock:block cancellationToken:nil];
 }
 
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor
                     successBlock:(OSSContinuationBlock)block
-               cancellationToken:(nullable OSSCancellationToken *)cancellationToken {
+               cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken {
     if (cancellationToken.cancellationRequested) {
-        return [OSSTask cancelledTask];
+        return [InspurOSSTask cancelledTask];
     }
 
-    return [self continueWithExecutor:executor block:^id(OSSTask *task) {
+    return [self continueWithExecutor:executor block:^id(InspurOSSTask *task) {
         if (task.faulted || task.cancelled) {
             return task;
         } else {
@@ -484,12 +484,12 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     } cancellationToken:cancellationToken];
 }
 
-- (OSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block {
-    return [self continueWithExecutor:[OSSExecutor defaultExecutor] successBlock:block cancellationToken:nil];
+- (InspurOSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block {
+    return [self continueWithExecutor:[InspurOSSExecutor defaultExecutor] successBlock:block cancellationToken:nil];
 }
 
-- (OSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block cancellationToken:(nullable OSSCancellationToken *)cancellationToken {
-    return [self continueWithExecutor:[OSSExecutor defaultExecutor] successBlock:block cancellationToken:cancellationToken];
+- (InspurOSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken {
+    return [self continueWithExecutor:[InspurOSSExecutor defaultExecutor] successBlock:block cancellationToken:cancellationToken];
 }
 
 #pragma mark - Syncing Task (Avoid it)
@@ -544,7 +544,7 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
 @end
 
-@implementation OSSTask(OSS)
+@implementation InspurOSSTask(OSS)
 
 - (BOOL)isSuccessful {
     if (self.cancelled || self.faulted) {
@@ -568,8 +568,8 @@ NSString *const OSSTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return nil;
 }
 
-- (OSSTask *)completed:(OSSCompleteBlock)block {
-    return [self continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+- (InspurOSSTask *)completed:(OSSCompleteBlock)block {
+    return [self continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         if ([task isSuccessful]) {
             block(YES, nil, task.result);
         } else {

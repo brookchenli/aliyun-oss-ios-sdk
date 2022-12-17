@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OSSConstants.h"
-#import "OSSTask.h"
+#import "InspurOSSTask.h"
 
 @class InspurOSSAllRequestNeededMessage;
 @class InspurOSSURLRequestRetryHandler;
@@ -72,7 +72,7 @@
 
 
 
-- (OSSTask *)buildInternalHttpRequest;
+- (InspurOSSTask *)buildInternalHttpRequest;
 - (void)reset;
 - (void)cancel;
 

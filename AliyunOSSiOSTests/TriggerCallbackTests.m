@@ -53,7 +53,7 @@
     request.callbackVar = @{@"var1": @"value1",
                             @"var2": @"value2"};
     
-    [[[self.client triggerCallBack:request] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[self.client triggerCallBack:request] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNil(task.error);
         
         return nil;

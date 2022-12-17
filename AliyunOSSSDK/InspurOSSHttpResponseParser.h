@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OSSConstants.h"
-#import "OSSTask.h"
+#import "InspurOSSTask.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initForOperationType:(OSSOperationType)operationType;
 - (void)consumeHttpResponse:(NSHTTPURLResponse *)response;
-- (OSSTask *)consumeHttpResponseBody:(NSData *)data;
+- (InspurOSSTask *)consumeHttpResponseBody:(NSData *)data;
 - (nullable id)constructResultObject;
 - (void)reset;
 

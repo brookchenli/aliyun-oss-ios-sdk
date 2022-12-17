@@ -53,16 +53,16 @@ static NSString * const kClientErrorMessageForCancelledTask = @"This task has be
 @interface InspurOSSClient()
 
 - (void)enableCRC64WithFlag:(OSSRequestCRCFlag)flag requestDelegate:(InspurOSSNetworkingRequestDelegate *)delegate;
-- (OSSTask *)preChecksForRequest:(InspurOSSMultipartUploadRequest *)request;
+- (InspurOSSTask *)preChecksForRequest:(InspurOSSMultipartUploadRequest *)request;
 - (void)checkRequestCrc64Setting:(InspurOSSRequest *)request;
-- (OSSTask *)checkNecessaryParamsOfRequest:(InspurOSSMultipartUploadRequest *)request;
-- (OSSTask *)checkPartSizeForRequest:(InspurOSSMultipartUploadRequest *)request;
+- (InspurOSSTask *)checkNecessaryParamsOfRequest:(InspurOSSMultipartUploadRequest *)request;
+- (InspurOSSTask *)checkPartSizeForRequest:(InspurOSSMultipartUploadRequest *)request;
 - (NSUInteger)judgePartSizeForMultipartRequest:(InspurOSSMultipartUploadRequest *)request fileSize:(unsigned long long)fileSize;
 - (unsigned long long)getSizeWithFilePath:(nonnull NSString *)filePath error:(NSError **)error;
 - (NSString *)readUploadIdForRequest:(InspurOSSResumableUploadRequest *)request recordFilePath:(NSString **)recordFilePath sequential:(BOOL)sequential;
 - (NSMutableDictionary *)localPartInfosDictoryWithUploadId:(NSString *)uploadId;
-- (OSSTask *)persistencePartInfos:(NSDictionary *)partInfos withUploadId:(NSString *)uploadId;
-- (OSSTask *)checkFileSizeWithRequest:(InspurOSSMultipartUploadRequest *)request;
+- (InspurOSSTask *)persistencePartInfos:(NSDictionary *)partInfos withUploadId:(NSString *)uploadId;
+- (InspurOSSTask *)checkFileSizeWithRequest:(InspurOSSMultipartUploadRequest *)request;
 + (NSError *)cancelError;
 
 @end
@@ -86,7 +86,7 @@ static NSObject *lock;
         NSOperationQueue * queue = [NSOperationQueue new];
         // using for resumable upload and compat old interface
         queue.maxConcurrentOperationCount = 3;
-        _ossOperationExecutor = [OSSExecutor executorWithOperationQueue:queue];
+        _ossOperationExecutor = [InspurOSSExecutor executorWithOperationQueue:queue];
         
         if (![endpoint oss_isNotEmpty]) {
             [NSException raise:NSInvalidArgumentException
@@ -128,7 +128,7 @@ static NSObject *lock;
     return self;
 }
 
-- (OSSTask *)invokeRequest:(InspurOSSNetworkingRequestDelegate *)request requireAuthentication:(BOOL)requireAuthentication {
+- (InspurOSSTask *)invokeRequest:(InspurOSSNetworkingRequestDelegate *)request requireAuthentication:(BOOL)requireAuthentication {
     /* if content-type haven't been set, we set one */
     if (!request.allNeededMessage.contentType.oss_isNotEmpty
         && ([request.allNeededMessage.httpMethod isEqualToString:@"POST"] || [request.allNeededMessage.httpMethod isEqualToString:@"PUT"])) {
@@ -163,7 +163,7 @@ static NSObject *lock;
 
 #pragma implement restful apis
 
-- (OSSTask *)getService:(InspurOSSGetServiceRequest *)request {
+- (InspurOSSTask *)getService:(InspurOSSGetServiceRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetService];
@@ -179,7 +179,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)listService:(InspurOSSListPageServiceRequest *)request {
+- (InspurOSSTask *)listService:(InspurOSSListPageServiceRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeListService];
@@ -195,7 +195,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)queryBucketExist:(InspurOSSQueryBucketExistRequest *)request {
+- (InspurOSSTask *)queryBucketExist:(InspurOSSQueryBucketExistRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeQueryBucketExist];
@@ -212,7 +212,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketLocation:(InspurOSSGetBucketLocationRequest *)request {
+- (InspurOSSTask *)getBucketLocation:(InspurOSSGetBucketLocationRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLocation];
@@ -229,7 +229,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketACL:(InspurOSSPutBucketACLRequest *)request {
+- (InspurOSSTask *)putBucketACL:(InspurOSSPutBucketACLRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionary];
@@ -254,7 +254,7 @@ static NSObject *lock;
 
 }
 
-- (OSSTask *)getBucketCORS:(InspurOSSGetBucketCORSRequest *)request {
+- (InspurOSSTask *)getBucketCORS:(InspurOSSGetBucketCORSRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketCORS];
@@ -271,7 +271,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketCORS:(InspurOSSPutBucketCORSRequest *)request {
+- (InspurOSSTask *)putBucketCORS:(InspurOSSPutBucketCORSRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -302,7 +302,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketCORS:(InspurOSSDeleteBucketCORSRequest *)request {
+- (InspurOSSTask *)deleteBucketCORS:(InspurOSSDeleteBucketCORSRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketCORS];
@@ -321,7 +321,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketVersioning:(InspurOSSGetVersioningRequest *)request {
+- (InspurOSSTask *)getBucketVersioning:(InspurOSSGetVersioningRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketVersioning];
@@ -338,7 +338,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketVersioning:(InspurOSSPutVersioningRequest *)request {
+- (InspurOSSTask *)putBucketVersioning:(InspurOSSPutVersioningRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -365,7 +365,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketEncryption:(InspurOSSGetBucketEncryptionRequest *)request {
+- (InspurOSSTask *)getBucketEncryption:(InspurOSSGetBucketEncryptionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketEncryption];
@@ -381,7 +381,7 @@ static NSObject *lock;
 
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
-- (OSSTask *)putBucketEncryption:(InspurOSSPutBucketEncryptionRequest *)request {
+- (InspurOSSTask *)putBucketEncryption:(InspurOSSPutBucketEncryptionRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -414,7 +414,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketEncryption:(InspurOSSDeleteBucketEncryptionRequest *)request {
+- (InspurOSSTask *)deleteBucketEncryption:(InspurOSSDeleteBucketEncryptionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketEncryption];
@@ -434,7 +434,7 @@ static NSObject *lock;
 }
 
 
-- (OSSTask *)getBucketWebsite:(InspurOSSGetBucketWebsiteRequest *)request {
+- (InspurOSSTask *)getBucketWebsite:(InspurOSSGetBucketWebsiteRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketWebsite];
@@ -451,7 +451,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketWebsite:(InspurOSSPutBucketWebsiteRequest *)request {
+- (InspurOSSTask *)putBucketWebsite:(InspurOSSPutBucketWebsiteRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -487,7 +487,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketWebsite:(InspurOSSDeleteBucketWebsiteRequest *)request {
+- (InspurOSSTask *)deleteBucketWebsite:(InspurOSSDeleteBucketWebsiteRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketWebsite];
@@ -507,7 +507,7 @@ static NSObject *lock;
 }
 
 
-- (OSSTask *)getBucketDomain:(InspurOSSGetBucketDomainRequest *)request {
+- (InspurOSSTask *)getBucketDomain:(InspurOSSGetBucketDomainRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketDomain];
@@ -524,7 +524,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketDomain:(InspurOSSPutBucketDomainRequest *)request {
+- (InspurOSSTask *)putBucketDomain:(InspurOSSPutBucketDomainRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -556,7 +556,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketDomain:(InspurOSSDeleteBucketDomainRequest *)request {
+- (InspurOSSTask *)deleteBucketDomain:(InspurOSSDeleteBucketDomainRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketDomain];
@@ -576,7 +576,7 @@ static NSObject *lock;
 }
 
 
-- (OSSTask *)getBucketLifeCycle:(InspurOSSGetBucketLifeCycleRequest *)request {
+- (InspurOSSTask *)getBucketLifeCycle:(InspurOSSGetBucketLifeCycleRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketLifeCycle];
@@ -593,7 +593,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketLifeCycle:(InspurOSSPutBucketLifeCycleRequest *)request {
+- (InspurOSSTask *)putBucketLifeCycle:(InspurOSSPutBucketLifeCycleRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -622,7 +622,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketLifeCycle:(InspurOSSDeleteBucketLifeCycleRequest *)request {
+- (InspurOSSTask *)deleteBucketLifeCycle:(InspurOSSDeleteBucketLifeCycleRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucketLifeCycle];
@@ -641,7 +641,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketPolicy:(InspurOSSGetBucketPolicyRequest *)request {
+- (InspurOSSTask *)getBucketPolicy:(InspurOSSGetBucketPolicyRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
 
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketPolicy];
@@ -658,7 +658,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putBucketPolicy:(InspurOSSPutBucketPolicyRequest *)request {
+- (InspurOSSTask *)putBucketPolicy:(InspurOSSPutBucketPolicyRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
 
@@ -695,7 +695,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucketPolicy:(InspurOSSDeleteBucketPolicyRequest *)request {
+- (InspurOSSTask *)deleteBucketPolicy:(InspurOSSDeleteBucketPolicyRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params oss_setObject:@"" forKey:@"policy"];
@@ -733,9 +733,9 @@ static NSObject *lock;
     }
 }
 
-- (OSSTask *)preChecksForRequest:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)preChecksForRequest:(InspurOSSMultipartUploadRequest *)request
 {
-    OSSTask *preTask = [self checkFileSizeWithRequest:request];
+    InspurOSSTask *preTask = [self checkFileSizeWithRequest:request];
     if (preTask) {
         return preTask;
     }
@@ -768,7 +768,7 @@ static NSObject *lock;
     }
 }
 
-- (OSSTask *)checkNecessaryParamsOfRequest:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)checkNecessaryParamsOfRequest:(InspurOSSMultipartUploadRequest *)request
 {
     NSError *error = nil;
     if (![request.bucketName oss_isNotEmpty]) {
@@ -781,24 +781,24 @@ static NSObject *lock;
                                 userInfo:@{OSSErrorMessageTOKEN: @"checkNecessaryParamsOfRequest requires nonnull uploadingFileURL!"}];
     }
     
-    OSSTask *errorTask = nil;
+    InspurOSSTask *errorTask = nil;
     if (error) {
-        errorTask = [OSSTask taskWithError:error];
+        errorTask = [InspurOSSTask taskWithError:error];
     }
     
     return errorTask;
 }
 
-- (OSSTask *)checkPartSizeForRequest:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)checkPartSizeForRequest:(InspurOSSMultipartUploadRequest *)request
 {
-    OSSTask *errorTask = nil;
+    InspurOSSTask *errorTask = nil;
     unsigned long long fileSize = [self getSizeWithFilePath:request.uploadingFileURL.path error:nil];
     
     if (request.partSize == 0 || (fileSize > 102400 && request.partSize < 102400)) {
         NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
                                              code:OSSClientErrorCodeInvalidArgument
                                          userInfo:@{OSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
-        errorTask = [OSSTask taskWithError:error];
+        errorTask = [InspurOSSTask taskWithError:error];
     }
     return errorTask;
 }
@@ -888,7 +888,7 @@ static NSObject *lock;
     return localPartInfoDict;
 }
 
-- (OSSTask *)persistencePartInfos:(NSDictionary *)partInfos withUploadId:(NSString *)uploadId
+- (InspurOSSTask *)persistencePartInfos:(NSDictionary *)partInfos withUploadId:(NSString *)uploadId
 {
     NSString *filePath = [[[NSString oss_documentDirectory] stringByAppendingPathComponent:kClientRecordNameWithCommonPrefix] stringByAppendingPathComponent:uploadId];
     if (![partInfos writeToFile:filePath atomically:YES])
@@ -897,12 +897,12 @@ static NSObject *lock;
                                              code:OSSClientErrorCodeFileCantWrite
                                          userInfo:@{OSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
         OSSLogDebug(@"[Error]: %@", error);
-        return [OSSTask taskWithError:error];
+        return [InspurOSSTask taskWithError:error];
     }
     return nil;
 }
 
-- (OSSTask *)checkPutObjectFileURL:(InspurOSSPutObjectRequest *)request {
+- (InspurOSSTask *)checkPutObjectFileURL:(InspurOSSPutObjectRequest *)request {
     NSError *error = nil;
     if (!request.uploadingFileURL || ![request.uploadingFileURL.path oss_isNotEmpty]) {
         error = [NSError errorWithDomain:OSSClientErrorDomain
@@ -920,13 +920,13 @@ static NSObject *lock;
     }
     
     if (error) {
-        return [OSSTask taskWithError:error];
+        return [InspurOSSTask taskWithError:error];
     } else {
-        return [OSSTask taskWithResult:nil];
+        return [InspurOSSTask taskWithResult:nil];
     }
 }
 
-- (OSSTask *)checkFileSizeWithRequest:(InspurOSSMultipartUploadRequest *)request {
+- (InspurOSSTask *)checkFileSizeWithRequest:(InspurOSSMultipartUploadRequest *)request {
     NSError *error = nil;
     if (!request.uploadingFileURL || ![request.uploadingFileURL.path oss_isNotEmpty]) {
         error = [NSError errorWithDomain:OSSClientErrorDomain
@@ -946,7 +946,7 @@ static NSObject *lock;
     }
     
     if (error) {
-        return [OSSTask taskWithError:error];
+        return [InspurOSSTask taskWithError:error];
     } else {
         return nil;
     }
@@ -972,7 +972,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (Bucket)
 
-- (OSSTask *)createBucket:(InspurOSSCreateBucketRequest *)request {
+- (InspurOSSTask *)createBucket:(InspurOSSCreateBucketRequest *)request {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *headerParams = [NSMutableDictionary dictionary];
     [headerParams oss_setObject:request.xOssACL forKey:OSSHttpHeaderBucketACL];
@@ -1002,7 +1002,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteBucket:(InspurOSSDeleteObjectRequest *)request {
+- (InspurOSSTask *)deleteBucket:(InspurOSSDeleteObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteBucket];
@@ -1018,7 +1018,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucket:(InspurOSSGetBucketRequest *)request {
+- (InspurOSSTask *)getBucket:(InspurOSSGetBucketRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucket];
@@ -1035,7 +1035,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketInfo:(InspurOSSGetBucketInfoRequest *)request {
+- (InspurOSSTask *)getBucketInfo:(InspurOSSGetBucketInfoRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketInfo];
@@ -1052,7 +1052,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getBucketACL:(InspurOSSGetBucketACLRequest *)request {
+- (InspurOSSTask *)getBucketACL:(InspurOSSGetBucketACLRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetBucketACL];
@@ -1075,7 +1075,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (Object)
 
-- (OSSTask *)headObject:(InspurOSSHeadObjectRequest *)request {
+- (InspurOSSTask *)headObject:(InspurOSSHeadObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeHeadObject];
@@ -1092,7 +1092,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getObject:(InspurOSSGetObjectRequest *)request {
+- (InspurOSSTask *)getObject:(InspurOSSGetObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSString * rangeString = nil;
@@ -1130,7 +1130,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getObjectACL:(InspurOSSGetObjectACLRequest *)request
+- (InspurOSSTask *)getObjectACL:(InspurOSSGetObjectACLRequest *)request
 {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectACL];
@@ -1151,7 +1151,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putObject:(InspurOSSPutObjectRequest *)request
+- (InspurOSSTask *)putObject:(InspurOSSPutObjectRequest *)request
 {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
@@ -1166,7 +1166,7 @@ static NSObject *lock;
         }
     }
     if (request.uploadingFileURL) {
-        OSSTask *checkIfEmptyTask = [self checkPutObjectFileURL:request];
+        InspurOSSTask *checkIfEmptyTask = [self checkPutObjectFileURL:request];
         if (checkIfEmptyTask.error) {
             return checkIfEmptyTask;
         }
@@ -1215,7 +1215,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putObjectACL:(InspurOSSPutObjectACLRequest *)request {
+- (InspurOSSTask *)putObjectACL:(InspurOSSPutObjectACLRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     if (request.uploadRetryCallback) {
         requestDelegate.retryCallback = request.uploadRetryCallback;
@@ -1242,7 +1242,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putObjectMetaData:(InspurOSSPutObjectMetaRequest *)request {
+- (InspurOSSTask *)putObjectMetaData:(InspurOSSPutObjectMetaRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     if (request.uploadRetryCallback) {
         requestDelegate.retryCallback = request.uploadRetryCallback;
@@ -1267,12 +1267,12 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request
+- (InspurOSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request
 {
     return [self appendObject:request withCrc64ecma:nil];
 }
 
-- (OSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request withCrc64ecma:(nullable NSString *)crc64ecma
+- (InspurOSSTask *)appendObject:(InspurOSSAppendObjectRequest *)request withCrc64ecma:(nullable NSString *)crc64ecma
 {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.lastCRC = crc64ecma;
@@ -1325,7 +1325,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteObject:(InspurOSSDeleteObjectRequest *)request {
+- (InspurOSSTask *)deleteObject:(InspurOSSDeleteObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObject];
@@ -1342,13 +1342,13 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteMultipleObjects:(InspurOSSDeleteMultipleObjectsRequest *)request
+- (InspurOSSTask *)deleteMultipleObjects:(InspurOSSDeleteMultipleObjectsRequest *)request
 {
     if ([request.keys count] == 0) {
         NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
                                              code:OSSClientErrorCodeInvalidArgument
                                          userInfo:@{OSSErrorMessageTOKEN: @"keys should not be empty"}];
-        return [OSSTask taskWithError:error];
+        return [InspurOSSTask taskWithError:error];
     }
     
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
@@ -1374,19 +1374,19 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)copyObject:(InspurOSSCopyObjectRequest *)request {
+- (InspurOSSTask *)copyObject:(InspurOSSCopyObjectRequest *)request {
     NSString *copySourceHeader = nil;
     if (request.sourceCopyFrom) {
         copySourceHeader = request.sourceCopyFrom;
     } else {
         if (![request.sourceBucketName oss_isNotEmpty]) {
             NSError *error = [NSError errorWithDomain:OSSClientErrorDomain code:OSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceBucketName should not be empty!"}];
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         
         if (![request.sourceObjectKey oss_isNotEmpty]) {
             NSError *error = [NSError errorWithDomain:OSSClientErrorDomain code:OSSClientErrorCodeInvalidArgument userInfo:@{NSLocalizedDescriptionKey: @"sourceObjectKey should not be empty!"}];
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         
         copySourceHeader = [NSString stringWithFormat:@"/%@/%@",request.bucketName, request.sourceObjectKey.oss_urlEncodedString];
@@ -1414,7 +1414,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putSymlink:(InspurOSSPutSymlinkRequest *)request {
+- (InspurOSSTask *)putSymlink:(InspurOSSPutSymlinkRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutSymlink];
@@ -1439,7 +1439,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getSymlink:(InspurOSSGetSymlinkRequest *)request {
+- (InspurOSSTask *)getSymlink:(InspurOSSGetSymlinkRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetSymlink];
     
@@ -1456,7 +1456,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)restoreObject:(InspurOSSRestoreObjectRequest *)request {
+- (InspurOSSTask *)restoreObject:(InspurOSSRestoreObjectRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeRestoreObject];
     
@@ -1473,7 +1473,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getObjectTagging:(InspurOSSGetObjectTaggingRequest *)request {
+- (InspurOSSTask *)getObjectTagging:(InspurOSSGetObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectTagging];
     
@@ -1490,7 +1490,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)putObjectTagging:(InspurOSSPutObjectTaggingRequest *)request {
+- (InspurOSSTask *)putObjectTagging:(InspurOSSPutObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypePutObjectTagging];
     
@@ -1509,7 +1509,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteObjectTagging:(InspurOSSDeleteObjectTaggingRequest *)request {
+- (InspurOSSTask *)deleteObjectTagging:(InspurOSSDeleteObjectTaggingRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteObjectTagging];
     
@@ -1526,7 +1526,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)getObjectVersions:(InspurOSSGetObjectVersionRequest *)request {
+- (InspurOSSTask *)getObjectVersions:(InspurOSSGetObjectVersionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeGetObjectVersions];
     
@@ -1542,7 +1542,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)deleteObjectVersion:(InspurOSSDeleteObjectVersionRequest *)request {
+- (InspurOSSTask *)deleteObjectVersion:(InspurOSSDeleteObjectVersionRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     requestDelegate.responseParser = [[InspurOSSHttpResponseParser alloc] initForOperationType:OSSOperationTypeDeleteObjectVersions];
@@ -1567,7 +1567,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (MultipartUpload)
 
-- (OSSTask *)listMultipartUploads:(InspurOSSListMultipartUploadsRequest *)request {
+- (InspurOSSTask *)listMultipartUploads:(InspurOSSListMultipartUploadsRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[request requestParams]];
@@ -1586,7 +1586,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)multipartUploadInit:(InspurOSSInitMultipartUploadRequest *)request {
+- (InspurOSSTask *)multipartUploadInit:(InspurOSSInitMultipartUploadRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionaryWithDictionary:request.objectMeta];
     
@@ -1620,7 +1620,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)uploadPart:(InspurOSSUploadPartRequest *)request {
+- (InspurOSSTask *)uploadPart:(InspurOSSUploadPartRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
@@ -1662,7 +1662,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)completeMultipartUpload:(InspurOSSCompleteMultipartUploadRequest *)request
+- (InspurOSSTask *)completeMultipartUpload:(InspurOSSCompleteMultipartUploadRequest *)request
 {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     NSMutableDictionary * headerParams = [NSMutableDictionary dictionary];
@@ -1698,7 +1698,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)listParts:(InspurOSSListPartsRequest *)request {
+- (InspurOSSTask *)listParts:(InspurOSSListPartsRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -1720,7 +1720,7 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)abortMultipartUpload:(InspurOSSAbortMultipartUploadRequest *)request {
+- (InspurOSSTask *)abortMultipartUpload:(InspurOSSAbortMultipartUploadRequest *)request {
     InspurOSSNetworkingRequestDelegate * requestDelegate = request.requestDelegate;
     
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObjectsAndKeys:request.uploadId, @"uploadId", nil];
@@ -1739,14 +1739,14 @@ static NSObject *lock;
     return [self invokeRequest:requestDelegate requireAuthentication:request.isAuthenticationRequired];
 }
 
-- (OSSTask *)abortResumableMultipartUpload:(InspurOSSResumableUploadRequest *)request
+- (InspurOSSTask *)abortResumableMultipartUpload:(InspurOSSResumableUploadRequest *)request
 {
     return [self abortMultipartUpload:request sequential:NO resumable:YES];
 }
 
-- (OSSTask *)abortMultipartUpload:(InspurOSSMultipartUploadRequest *)request sequential:(BOOL)sequential resumable:(BOOL)resumable {
+- (InspurOSSTask *)abortMultipartUpload:(InspurOSSMultipartUploadRequest *)request sequential:(BOOL)sequential resumable:(BOOL)resumable {
     
-    OSSTask *errorTask = nil;
+    InspurOSSTask *errorTask = nil;
     if(resumable) {
         InspurOSSResumableUploadRequest *resumableRequest = (InspurOSSResumableUploadRequest *)request;
         NSString *nameInfoString = [NSString stringWithFormat:@"%@%@%@%lu",request.md5String, resumableRequest.bucketName, resumableRequest.objectKey, (unsigned long)resumableRequest.partSize];
@@ -1802,11 +1802,11 @@ static NSObject *lock;
     return errorTask;
 }
 
-- (OSSTask *)multipartUpload:(InspurOSSMultipartUploadRequest *)request {
+- (InspurOSSTask *)multipartUpload:(InspurOSSMultipartUploadRequest *)request {
     return [self multipartUpload: request resumable: NO sequential: NO];
 }
 
-- (OSSTask *)processCompleteMultipartUpload:(InspurOSSMultipartUploadRequest *)request partInfos:(NSArray<OSSPartInfo *> *)partInfos clientCrc64:(uint64_t)clientCrc64 recordFilePath:(NSString *)recordFilePath localPartInfosPath:(NSString *)localPartInfosPath
+- (InspurOSSTask *)processCompleteMultipartUpload:(InspurOSSMultipartUploadRequest *)request partInfos:(NSArray<OSSPartInfo *> *)partInfos clientCrc64:(uint64_t)clientCrc64 recordFilePath:(NSString *)recordFilePath localPartInfosPath:(NSString *)localPartInfosPath
 {
     InspurOSSCompleteMultipartUploadRequest * complete = [InspurOSSCompleteMultipartUploadRequest new];
     complete.bucketName = request.bucketName;
@@ -1826,7 +1826,7 @@ static NSObject *lock;
         complete.callbackVar = request.callbackVar;
     }
     
-    OSSTask * completeTask = [self completeMultipartUpload:complete];
+    InspurOSSTask * completeTask = [self completeMultipartUpload:complete];
     [completeTask waitUntilFinished];
     
     if (completeTask.error) {
@@ -1866,7 +1866,7 @@ static NSObject *lock;
                     NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
                                                          code:OSSClientErrorCodeInvalidCRC
                                                      userInfo:@{OSSErrorMessageTOKEN:errorMessage}];
-                    return [OSSTask taskWithError:error];
+                    return [InspurOSSTask taskWithError:error];
                 }
             }
         }
@@ -1878,17 +1878,17 @@ static NSObject *lock;
         result.serverReturnJsonString = completeResult.serverReturnJsonString;
         result.remoteCRC64ecma = completeResult.remoteCRC64ecma;
         
-        return [OSSTask taskWithResult:result];
+        return [InspurOSSTask taskWithResult:result];
     }
 }
 
 
-- (OSSTask *)resumableUpload:(InspurOSSResumableUploadRequest *)request
+- (InspurOSSTask *)resumableUpload:(InspurOSSResumableUploadRequest *)request
 {
     return [self multipartUpload: request resumable: YES sequential: NO];
 }
 
-- (OSSTask *)processListPartsWithObjectKey:(nonnull NSString *)objectKey bucket:(nonnull NSString *)bucket uploadId:(NSString * _Nonnull *)uploadId uploadedParts:(nonnull NSMutableArray *)uploadedParts uploadedLength:(NSUInteger *)uploadedLength totalSize:(unsigned long long)totalSize partSize:(NSUInteger)partSize
+- (InspurOSSTask *)processListPartsWithObjectKey:(nonnull NSString *)objectKey bucket:(nonnull NSString *)bucket uploadId:(NSString * _Nonnull *)uploadId uploadedParts:(nonnull NSMutableArray *)uploadedParts uploadedLength:(NSUInteger *)uploadedLength totalSize:(unsigned long long)totalSize partSize:(NSUInteger)partSize
 {
     BOOL isTruncated = NO;
     int nextPartNumberMarker = 0;
@@ -1900,7 +1900,7 @@ static NSObject *lock;
         listParts.objectKey = objectKey;
         listParts.uploadId = *uploadId;
         listParts.partNumberMarker = nextPartNumberMarker;
-        OSSTask * listPartsTask = [self listParts:listParts];
+        InspurOSSTask * listPartsTask = [self listParts:listParts];
         [listPartsTask waitUntilFinished];
         
         if (listPartsTask.error)
@@ -1943,14 +1943,14 @@ static NSObject *lock;
         NSError *error = [NSError errorWithDomain:OSSClientErrorDomain
                                              code:OSSClientErrorCodeCannotResumeUpload
                                          userInfo:@{OSSErrorMessageTOKEN: @"The uploading file is inconsistent with before"}];
-        return [OSSTask taskWithError: error];
+        return [InspurOSSTask taskWithError: error];
     }
     return nil;
 }
 
-- (OSSTask *)processResumableInitMultipartUpload:(InspurOSSInitMultipartUploadRequest *)request recordFilePath:(NSString *)recordFilePath
+- (InspurOSSTask *)processResumableInitMultipartUpload:(InspurOSSInitMultipartUploadRequest *)request recordFilePath:(NSString *)recordFilePath
 {
-    OSSTask *task = [self multipartUploadInit:request];
+    InspurOSSTask *task = [self multipartUploadInit:request];
     [task waitUntilFinished];
     
     if(task.result && [recordFilePath oss_isNotEmpty])
@@ -1961,7 +1961,7 @@ static NSObject *lock;
             NSString *errorMessage = [NSString stringWithFormat:@"Can not get uploadId!"];
             NSError *error = [NSError errorWithDomain:OSSServerErrorDomain
                                                  code:OSSClientErrorCodeNilUploadid userInfo:@{OSSErrorMessageTOKEN:   errorMessage}];
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         
         NSFileManager *defaultFM = [NSFileManager defaultManager];
@@ -1972,7 +1972,7 @@ static NSObject *lock;
                                                      code:OSSClientErrorCodeFileCantWrite
                                                  userInfo:@{OSSErrorMessageTOKEN: @"uploadId for this task can't be stored persistentially!"}];
                 OSSLogDebug(@"[Error]: %@", error);
-                return [OSSTask taskWithError:error];
+                return [InspurOSSTask taskWithError:error];
             }
         }
         NSFileHandle * write = [NSFileHandle fileHandleForWritingAtPath:recordFilePath];
@@ -1982,7 +1982,7 @@ static NSObject *lock;
     return task;
 }
 
-- (OSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)upload:(InspurOSSMultipartUploadRequest *)request
         uploadIndex:(NSMutableArray *)alreadyUploadIndex
          uploadPart:(NSMutableArray *)alreadyUploadPart
               count:(NSUInteger)partCout
@@ -1995,7 +1995,7 @@ static NSObject *lock;
     NSObject *localLock = [[NSObject alloc] init];
     
     OSSRequestCRCFlag crcFlag = request.crcFlag;
-    __block OSSTask *errorTask;
+    __block InspurOSSTask *errorTask;
     __block NSMutableDictionary *localPartInfos = nil;
     
     if (crcFlag == OSSRequestCRCOpen) {
@@ -2009,7 +2009,7 @@ static NSObject *lock;
     NSError *readError;
     NSFileHandle *fileHande = [NSFileHandle fileHandleForReadingFromURL:request.uploadingFileURL error:&readError];
     if (readError) {
-        return [OSSTask taskWithError: readError];
+        return [InspurOSSTask taskWithError: readError];
     }
     
     NSData * uploadPartData;
@@ -2048,7 +2048,7 @@ static NSObject *lock;
                 [fileHande seekToOffset:request.partSize * (idx - 1) error:&error];
                 if (error) {
                     hasError = YES;
-                    errorTask = [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                            code:OSSClientErrorCodeFileCantRead
                                                                        userInfo:[error userInfo]]];
                     break;
@@ -2057,7 +2057,7 @@ static NSObject *lock;
                 uploadPartData = [fileHande readDataUpToLength:realPartLength error:&error];
                 if (error) {
                     hasError = YES;
-                    errorTask = [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                    errorTask = [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                            code:OSSClientErrorCodeFileCantRead
                                                                        userInfo:[error userInfo]]];
                     break;
@@ -2068,7 +2068,7 @@ static NSObject *lock;
             }
             
             NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-                OSSTask *uploadPartErrorTask = nil;
+                InspurOSSTask *uploadPartErrorTask = nil;
                 
                 [self executePartUpload:request
                totalBytesExpectedToSend:uploadFileSize
@@ -2098,13 +2098,13 @@ static NSObject *lock;
     localLock = nil;
     
     if (!errorTask && request.isCancelled) {
-        errorTask = [OSSTask taskWithError:[InspurOSSClient cancelError]];
+        errorTask = [InspurOSSTask taskWithError:[InspurOSSClient cancelError]];
     }
     
     return errorTask;
 }
 
-- (void)executePartUpload:(InspurOSSMultipartUploadRequest *)request totalBytesExpectedToSend:(unsigned long long)totalBytesExpectedToSend totalBytesSent:(NSUInteger *)totalBytesSent index:(NSUInteger)idx partData:(NSData *)partData alreadyUploadPart:(NSMutableArray *)uploadedParts localParts:(NSMutableDictionary *)localParts errorTask:(OSSTask **)errorTask
+- (void)executePartUpload:(InspurOSSMultipartUploadRequest *)request totalBytesExpectedToSend:(unsigned long long)totalBytesExpectedToSend totalBytesSent:(NSUInteger *)totalBytesSent index:(NSUInteger)idx partData:(NSData *)partData alreadyUploadPart:(NSMutableArray *)uploadedParts localParts:(NSMutableDictionary *)localParts errorTask:(InspurOSSTask **)errorTask
 {
     NSUInteger bytesSent = partData.length;
     
@@ -2120,7 +2120,7 @@ static NSObject *lock;
     uploadPart.contentMd5 = [InspurOSSUtil base64Md5ForData:partData];
     uploadPart.crcFlag = request.crcFlag;
     
-    OSSTask * uploadPartTask = [self uploadPart:uploadPart];
+    InspurOSSTask * uploadPartTask = [self uploadPart:uploadPart];
     [uploadPartTask waitUntilFinished];
     if (uploadPartTask.error) {
         if (labs(uploadPartTask.error.code) != 409) {
@@ -2172,40 +2172,40 @@ static NSObject *lock;
     [localPartInfoDict oss_setObject:partInfoDict forKey:keyString];
 }
 
-- (OSSTask *)sequentialMultipartUpload:(InspurOSSResumableUploadRequest *)request
+- (InspurOSSTask *)sequentialMultipartUpload:(InspurOSSResumableUploadRequest *)request
 {
     return [self multipartUpload:request resumable:YES sequential:YES];
 }
 
-- (OSSTask *)multipartUpload:(InspurOSSMultipartUploadRequest *)request resumable:(BOOL)resumable sequential:(BOOL)sequential
+- (InspurOSSTask *)multipartUpload:(InspurOSSMultipartUploadRequest *)request resumable:(BOOL)resumable sequential:(BOOL)sequential
 {
     if (resumable) {
         if (![request isKindOfClass:[InspurOSSResumableUploadRequest class]]) {
             NSError *typoError = [NSError errorWithDomain:OSSClientErrorDomain
                                                      code:OSSClientErrorCodeInvalidArgument
                                                  userInfo:@{OSSErrorMessageTOKEN: @"resumable multipart request should use instance of class OSSMultipartUploadRequest!"}];
-            return [OSSTask taskWithError: typoError];
+            return [InspurOSSTask taskWithError: typoError];
         }
     }
     
     [self checkRequestCrc64Setting:request];
-    OSSTask *preTask = [self preChecksForRequest:request];
+    InspurOSSTask *preTask = [self preChecksForRequest:request];
     if (preTask) {
         return preTask;
     }
     
-    return [[OSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(OSSTask *task) {
+    return [[InspurOSSTask taskWithResult:nil] continueWithExecutor:self.ossOperationExecutor withBlock:^id(InspurOSSTask *task) {
         
         __block NSUInteger uploadedLength = 0;
         uploadedLength = 0;
-        __block OSSTask * errorTask;
+        __block InspurOSSTask * errorTask;
         __block NSString *uploadId;
         __block NSString *randomObjectName;
 
         NSError *error;
         unsigned long long uploadFileSize = [self getSizeWithFilePath:request.uploadingFileURL.path error:&error];
         if (error) {
-            return [OSSTask taskWithError:error];
+            return [InspurOSSTask taskWithError:error];
         }
         
         NSUInteger partCount = [self judgePartSizeForMultipartRequest:request fileSize:uploadFileSize];
@@ -2214,11 +2214,11 @@ static NSObject *lock;
             NSError *checkPartSizeError = [NSError errorWithDomain:OSSClientErrorDomain
                                                  code:OSSClientErrorCodeInvalidArgument
                                              userInfo:@{OSSErrorMessageTOKEN: @"Part size must be greater than equal to 100KB"}];
-            return [OSSTask taskWithError:checkPartSizeError];
+            return [InspurOSSTask taskWithError:checkPartSizeError];
         }
         
         if (request.isCancelled) {
-            return [OSSTask taskWithError:[InspurOSSClient cancelError]];
+            return [InspurOSSTask taskWithError:[InspurOSSClient cancelError]];
         }
         
         NSString *recordFilePath = nil;
@@ -2245,7 +2245,7 @@ static NSObject *lock;
                 
                 localPartInfos = [[NSDictionary alloc] initWithContentsOfFile:localPartInfosPath];
                 
-                OSSTask *listPartTask = [self processListPartsWithObjectKey:request.objectKey
+                InspurOSSTask *listPartTask = [self processListPartsWithObjectKey:request.objectKey
                                                                      bucket:request.bucketName
                                                                    uploadId:&uploadId
                                                               uploadedParts:uploadedPart
@@ -2308,7 +2308,7 @@ static NSObject *lock;
             initRequest.sequential = sequential;
             initRequest.crcFlag = request.crcFlag;
             
-            OSSTask *task = [self processResumableInitMultipartUpload:initRequest
+            InspurOSSTask *task = [self processResumableInitMultipartUpload:initRequest
                                                        recordFilePath:recordFilePath];
             if (task.error)
             {
@@ -2329,12 +2329,12 @@ static NSObject *lock;
             {
                 InspurOSSResumableUploadRequest *resumableRequest = (InspurOSSResumableUploadRequest *)request;
                 if (resumableRequest.deleteUploadIdOnCancelling) {
-                    OSSTask *abortTask = [self abortMultipartUpload:request sequential:sequential resumable:resumable];
+                    InspurOSSTask *abortTask = [self abortMultipartUpload:request sequential:sequential resumable:resumable];
                     [abortTask waitUntilFinished];
                 }
             }
             
-            return [OSSTask taskWithError:[InspurOSSClient cancelError]];
+            return [InspurOSSTask taskWithError:[InspurOSSClient cancelError]];
         }
         
         if (sequential) {
@@ -2355,7 +2355,7 @@ static NSObject *lock;
         
         if(errorTask.error)
         {
-            OSSTask *abortTask;
+            InspurOSSTask *abortTask;
             if(resumable)
             {
                 InspurOSSResumableUploadRequest *resumableRequest = (InspurOSSResumableUploadRequest *)request;
@@ -2403,7 +2403,7 @@ static NSObject *lock;
     }];
 }
 
-- (OSSTask *)sequentialUpload:(InspurOSSMultipartUploadRequest *)request
+- (InspurOSSTask *)sequentialUpload:(InspurOSSMultipartUploadRequest *)request
                   uploadIndex:(NSMutableArray *)alreadyUploadIndex
                    uploadPart:(NSMutableArray *)alreadyUploadPart
                         count:(NSUInteger)partCout
@@ -2411,7 +2411,7 @@ static NSObject *lock;
                      fileSize:(unsigned long long)uploadFileSize
 {
     OSSRequestCRCFlag crcFlag = request.crcFlag;
-    __block OSSTask *errorTask;
+    __block InspurOSSTask *errorTask;
     __block NSMutableDictionary *localPartInfos = nil;
     
     if (crcFlag == OSSRequestCRCOpen) {
@@ -2425,7 +2425,7 @@ static NSObject *lock;
     NSError *readError;
     NSFileHandle *fileHande = [NSFileHandle fileHandleForReadingFromURL:request.uploadingFileURL error:&readError];
     if (readError) {
-        return [OSSTask taskWithError: readError];
+        return [InspurOSSTask taskWithError: readError];
     }
     
     NSUInteger realPartLength = request.partSize;
@@ -2436,7 +2436,7 @@ static NSObject *lock;
         }
         
         if (request.isCancelled) {
-            errorTask = [OSSTask taskWithError:[InspurOSSClient cancelError]];
+            errorTask = [InspurOSSTask taskWithError:[InspurOSSClient cancelError]];
             break;
         }
         
@@ -2464,7 +2464,7 @@ static NSObject *lock;
             uploadPart.contentMd5 = [InspurOSSUtil base64Md5ForData:uploadPartData];
             uploadPart.crcFlag = request.crcFlag;
             
-            OSSTask * uploadPartTask = [self uploadPart:uploadPart];
+            InspurOSSTask * uploadPartTask = [self uploadPart:uploadPart];
             [uploadPartTask waitUntilFinished];
             
             if (uploadPartTask.error) {
@@ -2528,7 +2528,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (PresignURL)
 
-- (OSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
                                  withObjectKey:(NSString *)objectKey
                         withExpirationInterval:(NSTimeInterval)interval {
     
@@ -2538,7 +2538,7 @@ static NSObject *lock;
                                     withParameters:@{}];
 }
 
-- (OSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
                                  withObjectKey:(NSString *)objectKey
                         withExpirationInterval:(NSTimeInterval)interval
                                 withParameters:(NSDictionary *)parameters {
@@ -2550,7 +2550,7 @@ static NSObject *lock;
                                     withParameters: parameters];
 }
 
-- (OSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
                                  withObjectKey:(NSString *)objectKey
                                     httpMethod:(NSString *)method
                         withExpirationInterval:(NSTimeInterval)interval
@@ -2563,7 +2563,7 @@ static NSObject *lock;
                                        withHeaders:@{}];
 }
 
-- (OSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
                                  withObjectKey:(NSString *)objectKey
                                     httpMethod:(NSString *)method
                         withExpirationInterval:(NSTimeInterval)interval
@@ -2582,14 +2582,14 @@ static NSObject *lock;
                                        withHeaders:header];
 }
 
-- (OSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignConstrainURLWithBucketName:(NSString *)bucketName
                                  withObjectKey:(NSString *)objectKey
                                     httpMethod:(NSString *)method
                         withExpirationInterval:(NSTimeInterval)interval
                                 withParameters:(NSDictionary *)parameters
                                    withHeaders:(NSDictionary *)headers
 {
-    return [[OSSTask taskWithResult:nil] continueWithBlock:^id(OSSTask *task) {
+    return [[InspurOSSTask taskWithResult:nil] continueWithBlock:^id(InspurOSSTask *task) {
         NSString * resource = [NSString stringWithFormat:@"/%@/%@", bucketName, objectKey];
         NSString * expires = [@((int64_t)[[NSDate oss_clockSkewFixedDate] timeIntervalSince1970] + interval) stringValue];
         NSString * xossHeader = @"";
@@ -2625,7 +2625,7 @@ static NSObject *lock;
         if ([self.credentialProvider isKindOfClass:[OSSFederationCredentialProvider class]]) {
             token = [(OSSFederationCredentialProvider *)self.credentialProvider getToken:&error];
             if (error) {
-                return [OSSTask taskWithError:error];
+                return [InspurOSSTask taskWithError:error];
             }
         } else if ([self.credentialProvider isKindOfClass:[OSSStsTokenCredentialProvider class]]) {
             token = [(OSSStsTokenCredentialProvider *)self.credentialProvider getToken];
@@ -2646,14 +2646,14 @@ static NSObject *lock;
             NSString * stringToSign = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@%@", method, patchContentMd5, patchContentType, expires, xossHeader, resource];
             wholeSign = [self.credentialProvider sign:stringToSign error:&error];
             if (error) {
-                return [OSSTask taskWithError:error];
+                return [InspurOSSTask taskWithError:error];
             }
         }
         
         NSArray * splitResult = [wholeSign componentsSeparatedByString:@":"];
         if ([splitResult count] != 2
             || ![((NSString *)[splitResult objectAtIndex:0]) hasPrefix:@"OSS "]) {
-            return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+            return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                               code:OSSClientErrorCodeSignFailed
                                                           userInfo:@{OSSErrorMessageTOKEN: @"the returned signature is invalid"}]];
         }
@@ -2699,11 +2699,11 @@ static NSObject *lock;
                                 pathStylePath,
                                 [InspurOSSUtil encodeURL:objectKey],
                                 [InspurOSSUtil populateQueryStringFromParameter:params]];
-        return [OSSTask taskWithResult:stringURL];
+        return [InspurOSSTask taskWithResult:stringURL];
     }];
 }
 
-- (OSSTask *)presignPublicURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignPublicURLWithBucketName:(NSString *)bucketName
                               withObjectKey:(NSString *)objectKey {
     
     return [self presignPublicURLWithBucketName:bucketName
@@ -2711,11 +2711,11 @@ static NSObject *lock;
                                  withParameters:@{}];
 }
 
-- (OSSTask *)presignPublicURLWithBucketName:(NSString *)bucketName
+- (InspurOSSTask *)presignPublicURLWithBucketName:(NSString *)bucketName
                               withObjectKey:(NSString *)objectKey
                              withParameters:(NSDictionary *)parameters {
     
-    return [[OSSTask taskWithResult:nil] continueWithBlock:^id(OSSTask *task) {
+    return [[InspurOSSTask taskWithResult:nil] continueWithBlock:^id(InspurOSSTask *task) {
         BOOL isPathStyle = false;
         NSURL * endpointURL = [NSURL URLWithString:self.endpoint];
         NSString * host = endpointURL.host;
@@ -2752,7 +2752,7 @@ static NSObject *lock;
                                     pathStylePath,
                                     [InspurOSSUtil encodeURL:objectKey],
                                     [InspurOSSUtil populateQueryStringFromParameter:parameters]];
-            return [OSSTask taskWithResult:stringURL];
+            return [InspurOSSTask taskWithResult:stringURL];
         } else {
             NSString * stringURL = [NSString stringWithFormat:@"%@://%@%@%@%@/%@",
                                     endpointURL.scheme,
@@ -2761,7 +2761,7 @@ static NSObject *lock;
                                     path,
                                     pathStylePath,
                                     [InspurOSSUtil encodeURL:objectKey]];
-            return [OSSTask taskWithResult:stringURL];
+            return [InspurOSSTask taskWithResult:stringURL];
         }
     }];
 }
@@ -2777,7 +2777,7 @@ static NSObject *lock;
     InspurOSSHeadObjectRequest * headRequest = [InspurOSSHeadObjectRequest new];
     headRequest.bucketName = bucketName;
     headRequest.objectKey = objectKey;
-    OSSTask * headTask = [self headObject:headRequest];
+    InspurOSSTask * headTask = [self headObject:headRequest];
     [headTask waitUntilFinished];
     NSError *headError = headTask.error;
     if (!headError) {
@@ -2798,7 +2798,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (ImageService)
 
-- (OSSTask *)imageActionPersist:(InspurOSSImagePersistRequest *)request
+- (InspurOSSTask *)imageActionPersist:(InspurOSSImagePersistRequest *)request
 {
     if (![request.fromBucket oss_isNotEmpty]
         || ![request.fromObject oss_isNotEmpty]
@@ -2808,7 +2808,7 @@ static NSObject *lock;
         NSError *error = [NSError errorWithDomain:OSSTaskErrorDomain
                                              code:OSSClientErrorCodeInvalidArgument
                                          userInfo:@{OSSErrorMessageTOKEN: @"imagePersist parameters not be empty!"}];
-        return [OSSTask taskWithError:error];
+        return [InspurOSSTask taskWithError:error];
     }
     
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
@@ -2837,7 +2837,7 @@ static NSObject *lock;
 
 @implementation InspurOSSClient (Callback)
 
-- (OSSTask *)triggerCallBack:(InspurOSSCallBackRequest *)request
+- (InspurOSSTask *)triggerCallBack:(InspurOSSCallBackRequest *)request
 {
     InspurOSSNetworkingRequestDelegate *requestDelegate = request.requestDelegate;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];

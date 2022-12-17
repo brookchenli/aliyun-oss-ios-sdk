@@ -12,14 +12,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class OSSTask<ResultType>;
+@class InspurOSSTask<ResultType>;
 
 /*!
  A OSSTaskCompletionSource represents the producer side of tasks.
  It is a task that also has methods for changing the state of the
  task by settings its completion values.
  */
-@interface OSSTaskCompletionSource<__covariant ResultType> : NSObject
+@interface InspurOSSTaskCompletionSource<__covariant ResultType> : NSObject
 
 /*!
  Creates a new unfinished task.
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  The task associated with this TaskCompletionSource.
  */
-@property (nonatomic, strong, readonly) OSSTask<ResultType> *task;
+@property (nonatomic, strong, readonly) InspurOSSTask<ResultType> *task;
 
 /*!
  Completes the task by setting the result.

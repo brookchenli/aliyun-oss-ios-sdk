@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OSSCancellationToken.h"
+#import "InspurOSSCancellationToken.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,20 +41,20 @@ extern NSString *const OSSTaskMultipleErrorsUserInfoKey;
  */
 extern NSString *const OSSTaskMultipleExceptionsUserInfoKey;
 
-@class OSSExecutor;
-@class OSSTask;
+@class InspurOSSExecutor;
+@class InspurOSSTask;
 
 /*!
  The consumer view of a Task. A OSSTask has methods to
  inspect the state of the task, and to add continuations to
  be run once the task is complete.
  */
-@interface OSSTask<__covariant ResultType> : NSObject
+@interface InspurOSSTask<__covariant ResultType> : NSObject
 
 /*!
  A block that can act as a continuation for a task.
  */
-typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
+typedef __nullable id(^OSSContinuationBlock)(InspurOSSTask<ResultType> *task);
 
 /*!
  Creates a task that is already completed with the given result.
@@ -84,7 +84,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  all of the input tasks have completed.
  @param tasks An `NSArray` of the tasks to use as an input.
  */
-+ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<OSSTask *> *)tasks;
++ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<InspurOSSTask *> *)tasks;
 
 /*!
  Returns a task that will be completed once all of the input tasks have completed.
@@ -92,7 +92,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  an `NSArray` of all task results in the order they were provided.
  @param tasks An `NSArray` of the tasks to use as an input.
  */
-+ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray<OSSTask *> *)tasks;
++ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray<InspurOSSTask *> *)tasks;
 
 /*!
  Returns a task that will be completed once there is at least one successful task.
@@ -100,7 +100,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  ignored.
  @param tasks An `NSArray` of the tasks to use as an input.
  */
-+ (instancetype)taskForCompletionOfAnyTask:(nullable NSArray<OSSTask *> *)tasks;
++ (instancetype)taskForCompletionOfAnyTask:(nullable NSArray<InspurOSSTask *> *)tasks;
 
 /*!
  Returns a task that will be completed a certain amount of time in the future.
@@ -115,7 +115,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  task will be finished (with result == nil).
  @param token The cancellation token (optional).
  */
-+ (instancetype)taskWithDelay:(int)millis cancellationToken:(nullable OSSCancellationToken *)token;
++ (instancetype)taskWithDelay:(int)millis cancellationToken:(nullable InspurOSSCancellationToken *)token;
 
 /*!
  Returns a task that will be completed after the given block completes with
@@ -127,7 +127,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-+ (instancetype)taskFromExecutor:(OSSExecutor *)executor withBlock:(nullable id (^)(void))block;
++ (instancetype)taskFromExecutor:(InspurOSSExecutor *)executor withBlock:(nullable id (^)(void))block;
 
 // Properties that will be set on the task once it is completed.
 
@@ -172,7 +172,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithBlock:(OSSContinuationBlock)block;
+- (InspurOSSTask *)continueWithBlock:(OSSContinuationBlock)block;
 
 /*!
  Enqueues the given block to be run once this task is complete.
@@ -186,7 +186,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithBlock:(OSSContinuationBlock)block cancellationToken:(nullable OSSCancellationToken *)cancellationToken;
+- (InspurOSSTask *)continueWithBlock:(OSSContinuationBlock)block cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken;
 
 /*!
  Enqueues the given block to be run once this task is complete.
@@ -197,7 +197,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor withBlock:(OSSContinuationBlock)block;
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor withBlock:(OSSContinuationBlock)block;
 /*!
  Enqueues the given block to be run once this task is complete.
  @param executor A OSSExecutor responsible for determining how the
@@ -208,9 +208,9 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  his method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor
                            block:(OSSContinuationBlock)block
-               cancellationToken:(nullable OSSCancellationToken *)cancellationToken;
+               cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken;
 
 /*!
  Identical to continueWithBlock:, except that the block is only run
@@ -222,7 +222,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block;
+- (InspurOSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block;
 
 /*!
  Identical to continueWithBlock:, except that the block is only run
@@ -235,7 +235,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block cancellationToken:(nullable OSSCancellationToken *)cancellationToken;
+- (InspurOSSTask *)continueWithSuccessBlock:(OSSContinuationBlock)block cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken;
 
 /*!
  Identical to continueWithExecutor:withBlock:, except that the block
@@ -249,7 +249,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor withSuccessBlock:(OSSContinuationBlock)block;
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor withSuccessBlock:(OSSContinuationBlock)block;
 
 /*!
  Identical to continueWithExecutor:withBlock:, except that the block
@@ -264,9 +264,9 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
  If block returns a OSSTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-- (OSSTask *)continueWithExecutor:(OSSExecutor *)executor
+- (InspurOSSTask *)continueWithExecutor:(InspurOSSExecutor *)executor
                     successBlock:(OSSContinuationBlock)block
-               cancellationToken:(nullable OSSCancellationToken *)cancellationToken;
+               cancellationToken:(nullable InspurOSSCancellationToken *)cancellationToken;
 
 /*!
  Waits until this operation is completed.
@@ -280,7 +280,7 @@ typedef __nullable id(^OSSContinuationBlock)(OSSTask<ResultType> *task);
 
 @class InspurOSSResult;
 
-@interface OSSTask(OSS)
+@interface InspurOSSTask(OSS)
 
 typedef void(^OSSCompleteBlock)(BOOL isSuccess, NSError * _Nullable error, InspurOSSResult * _Nullable result);
 
@@ -288,7 +288,7 @@ typedef void(^OSSCompleteBlock)(BOOL isSuccess, NSError * _Nullable error, Inspu
 
 - (NSError *)toError;
 
-- (OSSTask *)completed:(OSSCompleteBlock)block;
+- (InspurOSSTask *)completed:(OSSCompleteBlock)block;
 
 @end
 

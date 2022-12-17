@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OSSConstants.h"
-#import "OSSTask.h"
+#import "InspurOSSTask.h"
 
 /**
  All necessary information in one OSS request.
@@ -28,6 +28,6 @@
 @property (nonatomic, assign) BOOL isHostInCnameExcludeList;
 
 
-- (OSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType;
+- (InspurOSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType;
 
 @end

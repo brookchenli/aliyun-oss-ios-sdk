@@ -30,7 +30,7 @@
     _headerParams = [headerParams mutableCopy];
 }
 
-- (OSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType {
+- (InspurOSSTask *)validateRequestParamsInOperationType:(OSSOperationType)operType {
     NSString * errorMessage = nil;
     
     if (!self.endpoint) {
@@ -92,11 +92,11 @@
     }
     
     if (errorMessage) {
-        return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+        return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                           code:OSSClientErrorCodeInvalidArgument
                                                       userInfo:@{OSSErrorMessageTOKEN: errorMessage}]];
     } else {
-        return [OSSTask taskWithResult:nil];
+        return [InspurOSSTask taskWithResult:nil];
     }
 }
 

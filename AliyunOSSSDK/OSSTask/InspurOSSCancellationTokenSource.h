@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class OSSCancellationToken;
+@class InspurOSSCancellationToken;
 
 /*!
  OSSCancellationTokenSource represents the producer side of a CancellationToken.
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  It is a cancellation token that also has methods
  for changing the state of a token by cancelling it.
  */
-@interface OSSCancellationTokenSource : NSObject
+@interface InspurOSSCancellationTokenSource : NSObject
 
 /*!
  Creates a new cancellation token source.
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  The cancellation token associated with this CancellationTokenSource.
  */
-@property (nonatomic, strong, readonly) OSSCancellationToken *token;
+@property (nonatomic, strong, readonly) InspurOSSCancellationToken *token;
 
 /*!
  Whether cancellation has been requested for this token source.

@@ -52,7 +52,7 @@
     _response = response;
 }
 
-- (OSSTask *)consumeHttpResponseBody:(NSData *)data
+- (InspurOSSTask *)consumeHttpResponseBody:(NSData *)data
 {
     if (_crc64Verifiable&&(_operationTypeForThisParser == OSSOperationTypeGetObject))
     {
@@ -70,7 +70,7 @@
     
     if (self.onRecieveBlock) {
         self.onRecieveBlock(data);
-        return [OSSTask taskWithResult:nil];
+        return [InspurOSSTask taskWithResult:nil];
     }
     
     NSError * error;
@@ -86,21 +86,21 @@
             }
             if (![fm fileExistsAtPath:dirName] || error)
             {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                   code:OSSClientErrorCodeFileCantWrite
                                                               userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create dir at %@", dirName]}]];
             }
             [fm createFileAtPath:[self.downloadingFileURL path] contents:nil attributes:nil];
             if (![fm fileExistsAtPath:[self.downloadingFileURL path]])
             {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                   code:OSSClientErrorCodeFileCantWrite
                                                               userInfo:@{OSSErrorMessageTOKEN: [NSString stringWithFormat:@"Can't create file at %@", [self.downloadingFileURL path]]}]];
             }
             _fileHandle = [NSFileHandle fileHandleForWritingToURL:self.downloadingFileURL error:&error];
             if (error)
             {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSClientErrorDomain
                                                                   code:OSSClientErrorCodeFileCantWrite
                                                               userInfo:[error userInfo]]];
             }
@@ -111,7 +111,7 @@
                 [_fileHandle writeData:data];
             }
             @catch (NSException *exception) {
-                return [OSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
+                return [InspurOSSTask taskWithError:[NSError errorWithDomain:OSSServerErrorDomain
                                                                   code:OSSClientErrorCodeFileCantWrite
                                                               userInfo:@{OSSErrorMessageTOKEN: [exception description]}]];
             }
@@ -127,7 +127,7 @@
             [_collectingData appendData:data];
         }
     }
-    return [OSSTask taskWithResult:nil];
+    return [InspurOSSTask taskWithResult:nil];
 }
 
 - (void)parseResponseHeader:(NSHTTPURLResponse *)response toResultObject:(InspurOSSResult *)result
@@ -534,7 +534,7 @@
             
         case OSSOperationTypeDeleteBucket:
         {
-            OSSDeleteBucketResult * deleteBucketResult = [OSSDeleteBucketResult new];
+            InspurOSSDeleteBucketResult * deleteBucketResult = [InspurOSSDeleteBucketResult new];
             if (_response) {
                 [self parseResponseHeader:_response toResultObject:deleteBucketResult];
             }

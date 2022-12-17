@@ -44,7 +44,7 @@
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertTrue([task.error.userInfo[@"HostId"] isEqualToString:bucketEndpoint]);
         XCTAssertTrue([task.error.userInfo[@"Bucket"] isEqualToString:OSS_BUCKET_PUBLIC]);
         return task;
@@ -61,7 +61,7 @@
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         NSString *url = [NSString stringWithFormat:@"%@%@/%@/%@", scheme, cname, OSS_BUCKET_PUBLIC, OSS_MULTIPART_UPLOADKEY];
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:url]);
@@ -79,7 +79,7 @@
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         NSString *url = [NSString stringWithFormat:@"%@%@.%@/%@", scheme, OSS_BUCKET_PUBLIC, cname, OSS_MULTIPART_UPLOADKEY];
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:url]);
@@ -92,7 +92,7 @@
     get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         NSString *url = [NSString stringWithFormat:@"%@%@/%@", scheme, cname, OSS_MULTIPART_UPLOADKEY];
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:url]);
@@ -110,7 +110,7 @@
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         NSString *url = [NSString stringWithFormat:@"%@/%@", endpointPath, OSS_MULTIPART_UPLOADKEY];
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:url]);
@@ -127,7 +127,7 @@
     InspurOSSGetObjectRequest *get = [InspurOSSGetObjectRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
     get.objectKey = OSS_MULTIPART_UPLOADKEY;
-    [[[client getObject:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getObject:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         NSString *url = [NSString stringWithFormat:@"%@/%@", cnameEndpoint, OSS_MULTIPART_UPLOADKEY];
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:url]);
@@ -142,7 +142,7 @@
     InspurOSSClient *client = [[InspurOSSClient alloc] initWithEndpoint:cnameEndpoint credentialProvider:credentialProvider clientConfiguration:config];
     InspurOSSGetBucketRequest *get = [InspurOSSGetBucketRequest new];
     get.bucketName = OSS_BUCKET_PUBLIC;
-    [[[client getBucket:get] continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
+    [[[client getBucket:get] continueWithBlock:^id _Nullable(InspurOSSTask * _Nonnull task) {
         XCTAssertNotNil(task.error);
         XCTAssertTrue([task.error.userInfo[@"NSErrorFailingURLStringKey"] isEqualToString:[cnameEndpoint stringByAppendingString:@"/"]]);
         return task;

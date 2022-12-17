@@ -8,12 +8,12 @@
  *
  */
 
-#import "OSSCancellationToken.h"
-#import "OSSCancellationTokenRegistration.h"
-#import "OSSCancellationTokenSource.h"
-#import "OSSExecutor.h"
-#import "OSSTask.h"
-#import "OSSTaskCompletionSource.h"
+#import "InspurOSSCancellationToken.h"
+#import "InspurOSSCancellationTokenRegistration.h"
+#import "InspurOSSCancellationTokenSource.h"
+#import "InspurOSSExecutor.h"
+#import "InspurOSSTask.h"
+#import "InspurOSSTaskCompletionSource.h"
 
 
 NS_ASSUME_NONNULL_BEGIN

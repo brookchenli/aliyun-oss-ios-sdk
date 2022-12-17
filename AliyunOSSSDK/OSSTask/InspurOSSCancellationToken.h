@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OSSCancellationTokenRegistration.h"
+#import "InspurOSSCancellationTokenRegistration.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,7 +24,7 @@ typedef void(^OSSCancellationBlock)(void);
  Propagates notification that operations should be canceled.
  A OSSCancellationToken has methods to inspect whether the token has been cancelled.
  */
-@interface OSSCancellationToken : NSObject
+@interface InspurOSSCancellationToken : NSObject
 
 /*!
  Whether cancellation has been requested for this token source.
@@ -35,7 +35,7 @@ typedef void(^OSSCancellationBlock)(void);
  Register a block to be notified when the token is cancelled.
  If the token is already cancelled the delegate will be notified immediately.
  */
-- (OSSCancellationTokenRegistration *)registerCancellationObserverWithBlock:(OSSCancellationBlock)block;
+- (InspurOSSCancellationTokenRegistration *)registerCancellationObserverWithBlock:(OSSCancellationBlock)block;
 
 @end
 

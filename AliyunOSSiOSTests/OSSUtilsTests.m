@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <AliyunOSSiOS/OSSUtil.h>
+#import <AliyunOSSiOS/InspurOSSUtil.h>
 #import <AliyunOSSiOS/OSSIPv6Adapter.h>
 
 @interface OSSUtilsTests : XCTestCase

@@ -9,7 +9,7 @@
 #import "NSMutableData+OSS_CRC.h"
 #include "aos_crc64.h"
 
-@implementation NSMutableData (OSS_CRC)
+@implementation NSMutableData (InspurOSS_CRC)
 
 - (uint64_t)oss_crc64
 {
