@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OSSConstants.h"
+#import "InspurOSSConstants.h"
 
 /**
  The base class of request to OSS.

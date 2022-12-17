@@ -8,7 +8,7 @@
 
 #import "InspurOSSAllRequestNeededMessage.h"
 
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 #import "InspurOSSUtil.h"
 
 @implementation InspurOSSAllRequestNeededMessage

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OSSConstants.h"
+#import "InspurOSSConstants.h"
 #import "InspurOSSTask.h"
 
 @class InspurOSSAllRequestNeededMessage;

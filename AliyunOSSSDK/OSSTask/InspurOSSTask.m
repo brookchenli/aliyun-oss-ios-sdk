@@ -10,8 +10,8 @@
 
 #import "InspurOSSTask.h"
 #import "OSSLog.h"
-#import "OSSConstants.h"
-#import "OSSDefine.h"
+#import "InspurOSSConstants.h"
+#import "InspurOSSDefine.h"
 
 #import <libkern/OSAtomic.h>
 

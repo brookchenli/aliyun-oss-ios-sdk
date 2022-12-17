@@ -29,7 +29,7 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-#import "OSSXMLDictionary.h"
+#import "InspurOSSXMLDictionary.h"
 
 
 #pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
@@ -394,7 +394,7 @@
 @end
 
 
-@implementation NSDictionary(OSSXMLDictionary)
+@implementation NSDictionary(InspurOSSXMLDictionary)
 
 + (NSDictionary *)oss_dictionaryWithXMLParser:(NSXMLParser *)parser
 {

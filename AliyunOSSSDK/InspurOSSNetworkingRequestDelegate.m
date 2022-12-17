@@ -11,7 +11,7 @@
 #import "InspurOSSAllRequestNeededMessage.h"
 #import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSHttpResponseParser.h"
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 #import "InspurOSSUtil.h"
 #import "OSSLog.h"
 #import "OSSIPv6Adapter.h"

@@ -6,7 +6,7 @@
 //  Copyright © 2022年 Inspur. All rights reserved.
 //
 
-#import "OSSConstants.h"
+#import "InspurOSSConstants.h"
 
 NSString * const OSSXMLDictionaryAttributesKey = @"__attributes";
 NSString * const OSSXMLDictionaryCommentsKey = @"__comments";

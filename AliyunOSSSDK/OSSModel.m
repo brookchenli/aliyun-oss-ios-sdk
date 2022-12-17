@@ -5,13 +5,13 @@
 //  Created by xx on 8/16/15.
 //  Copyright (c) 2022 Inspur. All rights reserved.
 //
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 #import "OSSModel.h"
 #import "OSSBolts.h"
 #import "InspurOSSUtil.h"
 #import "InspurOSSNetworking.h"
 #import "OSSLog.h"
-#import "OSSXMLDictionary.h"
+#import "InspurOSSXMLDictionary.h"
 #if TARGET_OS_IOS
 #import <UIKit/UIDevice.h>
 #endif

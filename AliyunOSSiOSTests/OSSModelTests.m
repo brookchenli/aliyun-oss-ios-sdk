@@ -11,7 +11,7 @@
 #import <AliyunOSSiOS/InspurOSSUtil.h>
 
 @import AliyunOSSiOS.InspurOSSAllRequestNeededMessage;
-@import AliyunOSSiOS.OSSDefine;
+@import AliyunOSSiOS.InspurOSSDefine;
 
 @interface OSSModelTests : XCTestCase
 

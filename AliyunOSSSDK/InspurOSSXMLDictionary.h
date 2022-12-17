@@ -30,7 +30,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OSSConstants.h"
+#import "InspurOSSConstants.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
@@ -56,7 +56,7 @@
 @end
 
 
-@interface NSDictionary (OSSXMLDictionary)
+@interface NSDictionary (InspurOSSXMLDictionary)
 
 + (NSDictionary *)oss_dictionaryWithXMLParser:(NSXMLParser *)parser;
 + (NSDictionary *)oss_dictionaryWithXMLData:(NSData *)data;

@@ -9,8 +9,8 @@
 #import "InspurOSSHttpResponseParser.h"
 
 #import "NSMutableData+Inspur_OSS_CRC.h"
-#import "OSSXMLDictionary.h"
-#import "OSSDefine.h"
+#import "InspurOSSXMLDictionary.h"
+#import "InspurOSSDefine.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
 #import "OSSLog.h"

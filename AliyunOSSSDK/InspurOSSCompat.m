@@ -6,8 +6,8 @@
 //  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
-#import "OSSDefine.h"
-#import "OSSCompat.h"
+#import "InspurOSSDefine.h"
+#import "InspurOSSCompat.h"
 #import "OSSBolts.h"
 #import "OSSModel.h"
 

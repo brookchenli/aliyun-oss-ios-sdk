@@ -8,7 +8,7 @@
 
 #import "InspurOSSURLRequestRetryHandler.h"
 #import "InspurOSSNetworkingRequestDelegate.h"
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 
 @implementation InspurOSSURLRequestRetryHandler
 

@@ -7,13 +7,13 @@
 //
 
 #import "InspurOSSClient.h"
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
 #import "OSSLog.h"
 #import "OSSBolts.h"
 #import "InspurOSSNetworking.h"
-#import "OSSXMLDictionary.h"
+#import "InspurOSSXMLDictionary.h"
 #import "OSSIPv6Adapter.h"
 #import "InspurOSSImageProcess.h"
 

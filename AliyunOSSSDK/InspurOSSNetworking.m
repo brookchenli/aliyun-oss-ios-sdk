@@ -6,13 +6,13 @@
 //  Copyright (c) 2022 Inspur. All rights reserved.
 //
 
-#import "OSSDefine.h"
+#import "InspurOSSDefine.h"
 #import "InspurOSSNetworking.h"
 #import "OSSBolts.h"
 #import "OSSModel.h"
 #import "InspurOSSUtil.h"
 #import "OSSLog.h"
-#import "OSSXMLDictionary.h"
+#import "InspurOSSXMLDictionary.h"
 #import "InspurOSSInputStreamHelper.h"
 #import "InspurOSSNetworkingRequestDelegate.h"
 #import "InspurOSSURLRequestRetryHandler.h"

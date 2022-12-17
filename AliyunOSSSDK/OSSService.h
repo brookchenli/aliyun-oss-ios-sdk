@@ -10,8 +10,8 @@
 
 #define OSS_IOS_SDK_VERSION OSSSDKVersion
 
-#import "OSSDefine.h"
-#import "OSSConstants.h"
+#import "InspurOSSDefine.h"
+#import "InspurOSSConstants.h"
 
 #import "InspurOSSNetworking.h"
 #import "InspurOSSNetworkingRequestDelegate.h"

@@ -10,7 +10,7 @@
 #import "OSSTestMacros.h"
 #import <AliyunOSSiOS/AliyunOSSiOS.h>
 #import "OSSTestUtils.h"
-#import <AliyunOSSiOS/OSSDefine.h>
+#import <AliyunOSSiOS/InspurOSSDefine.h>
 
 #define SCHEME @"https://"
 #define ENDPOINT @"oss-cn-hangzhou.aliyuncs.com"
